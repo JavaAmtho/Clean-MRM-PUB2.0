@@ -150,13 +150,14 @@ new ContentFlowAddOn ('CSFlow', {
             console.log(item);
             GraphicDataStore.setCurrentFocusedItem(item);
             var url;
-            if (GraphicDataStore.currentFocusedItem.previewType === "image") {
+            var currentItem = GraphicDataStore.getCurrentFocusedItem();
+            if (currentItem.previewType === "image") {
                url = EngineDataStore.getPubUrl()+"?pubId="+item.content.id;
                window.open(url,"_blank");
             }
             else{
 
-                url = GraphicDataStore.currentFocusedItem.actualImage;
+                url = currentItem.actualImage;
                 if(url == null) return;
                 window.open(url, "popupWindow", "width=600,height=600,scrollbars=yes");
                 /*$.get(url,function(data){
@@ -208,21 +209,22 @@ new ContentFlowAddOn ('CSFlow', {
          */
         onMakeActive: function (item) {
             GraphicDataStore.setCurrentFocusedItem(item);
+            var currentItem = GraphicDataStore.getCurrentFocusedItem();
             var url;
-            var urlText = "Click here to open "+GraphicDataStore.currentFocusedItem.name;
-            if (GraphicDataStore.currentFocusedItem.previewType === "image") {
+            var urlText = "Click here to open "+currentItem.name;
+            if (currentItem.previewType === "image") {
                 url = EngineDataStore.getPubUrl()+"?pubId="+item.content.id;
              }
              else{
             	 urlText = "Click here to open video";
-                 url = GraphicDataStore.currentFocusedItem.actualImage;
+                 url = currentItem.actualImage;
              }
 
-            document.getElementById("coverInfoHeader").innerHTML= GraphicDataStore.currentFocusedItem.name;
-            document.getElementById("newCaption").innerHTML= GraphicDataStore.currentFocusedItem.name;
+            document.getElementById("coverInfoHeader").innerHTML= currentItem.name;
+            document.getElementById("newCaption").innerHTML= currentItem.name;
 
             //console.log(document.getElementById("coverDetail"));
-            document.getElementById("coverDetail").innerHTML="<br><b>Name: </b>"+GraphicDataStore.currentFocusedItem.name+"<br><br><b>Type: </b>"+GraphicDataStore.currentFocusedItem.previewType+"<br><br><b>Link: </b><a class='linkOfCoverflowItem' target='_blank'  href='"+url+"'>"+urlText+"</a>";
+            document.getElementById("coverDetail").innerHTML="<br><b>Name: </b>"+currentItem.name+"<br><br><b>Type: </b>"+currentItem.previewType+"<br><br><b>Link: </b><a class='linkOfCoverflowItem' target='_blank'  href='"+url+"'>"+urlText+"</a>";
 
         },
 
