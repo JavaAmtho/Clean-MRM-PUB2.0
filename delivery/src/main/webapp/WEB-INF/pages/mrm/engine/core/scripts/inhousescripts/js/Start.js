@@ -29,7 +29,7 @@ function parsePublicationDetailsObject(json){
 
 
 function getScreenMappingObject(){
-    Router.forward(EngineDataStore.getBaseURL()+"graphics/tacks/screenMapping.json",true,function(json){
+    Router.forward(EngineDataStore.getBaseURL()+"graphics/tacks/ScreenMapping.json",true,function(json){
         parseScreenMappingObject(json);
     });
 }

@@ -19,16 +19,12 @@ TemplateLoader.loadTemplate = function(key,callBack,containerID){
     //This sets the default value for the containerElementID
     containerID = typeof containerID !== ('undefined'||"") ? containerID : "mainContainer";
 
-    //Comment this and uncomment line below this while DEPLOYING
-     /*TemplateLoader.forward(EngineDataStore.getScreenMappingObject()[key].url,true,function(data){
-         TemplateLoader.designScreen(data,containerID);
-         if(callBack){
-            callBack();
-         }
-     });*/
+    if(EngineDataStore.getScreenMappingObject()[key].needStyle == "true"){
+        var styleName = EngineDataStore.getScreenMappingObject()[key].className;
+    }
 
     TemplateLoader.forward(EngineDataStore.getScreenMappingObject()[key].screenName,true,function(data){
-        TemplateLoader.designScreen(data,containerID);
+        TemplateLoader.designScreen(data,containerID,styleName);
         if(callBack){
             callBack();
         }
@@ -37,11 +33,11 @@ TemplateLoader.loadTemplate = function(key,callBack,containerID){
 
 }
 
-TemplateLoader.designScreen = function(data,containerID){
-    //Comment this while DEPLOYING
-    //data=eval('(' + data + ')');
+TemplateLoader.designScreen = function(data,containerID,styleName){
     var placeHolderElement = document.getElementById(containerID);
     placeHolderElement.innerHTML = data.html;
+
+    TemplateLoader.addStyleToContainer(containerID,styleName);
 
     if(data.events){
         TemplateLoader.attachEvents(data.events);
@@ -50,6 +46,10 @@ TemplateLoader.designScreen = function(data,containerID){
         TemplateLoader.createElements(data.elements);
     }
 
+}
+
+TemplateLoader.addStyleToContainer = function(containerID,styleName){
+    $("#"+containerID).addClass(styleName);
 }
 
 TemplateLoader.attachEvents = function(events){

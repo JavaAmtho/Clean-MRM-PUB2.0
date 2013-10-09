@@ -1,7 +1,42 @@
 {
-    "landingScreen":{"screenName":"/start","resourceName":"start.html","containerId":"","loadOnStartup":"false"},
-    "headerScreen":{"screenName":"/header","resourceName":"Header.html","containerId":"headerContainer","loadOnStartup":"true"},
-    "footerScreen":{"screenName":"/footer","resourceName":"footer.html","containerId":"footerContainer","loadOnStartup":"true"},
-    "loginScreen":{"screenName":"/login","resourceName":"login.html","containerId":"mainContainer","loadOnStartup":"false"},
-    "homeScreen":{"screenName":"/home","resourceName":"Home.html","containerId":"mainContainer","loadOnStartup":"true"}
+    "landingScreen": {
+        "screenName": "/start",
+        "resourceName": "start.html",
+        "className": "",
+        "needStyle": "false",
+        "containerId": "",
+        "loadOnStartup": "false"
+    },
+    "headerScreen": {
+        "screenName": "/header",
+        "resourceName": "Header.html",
+        "className": "header",
+        "needStyle": "true",
+        "containerId": "headerContainer",
+        "loadOnStartup": "true"
+    },
+    "footerScreen": {
+        "screenName": "/footer",
+        "resourceName": "footer.html",
+        "className": "footer",
+        "needStyle": "true",
+        "containerId": "footerContainer",
+        "loadOnStartup": "true"
+    },
+    "loginScreen": {
+        "screenName": "/login",
+        "resourceName": "login.html",
+        "className": "",
+        "needStyle": "false",
+        "containerId": "mainContainer",
+        "loadOnStartup": "false"
+    },
+    "homeScreen": {
+        "screenName": "/home",
+        "resourceName": "Home.html",
+        "className": "",
+        "needStyle": "false",
+        "containerId": "mainContainer",
+        "loadOnStartup": "true"
+    }
 }
