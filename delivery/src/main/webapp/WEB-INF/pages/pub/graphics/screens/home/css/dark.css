@@ -1588,7 +1588,7 @@ img.save {
 
 /*********************ISOTOPE STUFF END!!******************************/
 
-#dialog-confirm{
+#dialog-confirm,#dialog-incorrect-rules{
     display:none;
 }
 

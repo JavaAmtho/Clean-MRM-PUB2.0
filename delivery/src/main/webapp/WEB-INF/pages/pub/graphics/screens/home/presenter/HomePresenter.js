@@ -770,7 +770,8 @@ HomePresenter.saveRulesData = function (div) {
                 for (var j = 0; j < $whenConditions.length; j++) {
                     var variable = $($whenConditions[j]).children('.groupType')[0].value;
                     var value = $($whenConditions[j]).children('.value')[0].value;
-                    if ((variable != '-1' && variable != 'Choose') && (value != '-1' && value != 'Choose')) {
+                    console.log(variable + ":" + value)
+                    if ((variable != '-1' && variable != 'Select') && (value != '-1' && value != 'Select')) {
                         var condition = {};
                         var columnName = "variable";
                         condition[columnName] = variable;
@@ -779,6 +780,22 @@ HomePresenter.saveRulesData = function (div) {
                         var columnName = "value";
                         condition[columnName] = value;
                         condArray.push(condition)
+                    }
+                    else
+                    {
+                        $(function() {
+                            $( "#dialog-incorrect-rules" ).dialog({
+                                resizable: false,
+                                height:140,
+                                modal: true,
+                                buttons: {
+                                    OK: function() {
+                                        $( this ).dialog( "close" );
+                                    }
+                                }
+                            });
+                        });
+                        return;
                     }
                 }
 
@@ -809,7 +826,18 @@ HomePresenter.saveRulesData = function (div) {
             }
             else
             {
-                alert("Wrong Rule Configured!!!");
+                $(function() {
+                    $( "#dialog-incorrect-rules" ).dialog({
+                        resizable: false,
+                        height:140,
+                        modal: true,
+                        buttons: {
+                            OK: function() {
+                                $( this ).dialog( "close" );
+                            }
+                        }
+                    });
+                });
                 return;
             }
             pageRuleArr.push(pageRule);
@@ -888,14 +916,14 @@ HomePresenter.setRules = function (div) {
                     $(newDiv).addClass("thenChild");
                     $(newDiv).addClass("row-fluid");
                     //HomePresenter.getMAMFileNames()
-                    var pageNames = EngineDataStore.getMasterTemplateList();
+                    var masterTemplateFileNames = EngineDataStore.getMasterTemplateList();
                     var content = "<p class='hidden ruleID'>" + ruleId + "</p>";
                     content += "<p class='hidden wbdURL'>" + wbdURL + "</p>";
                     content += "<p class='hidden mamFileID'>" + mamFileID + "</p>";
-                    content += "<select onclick='event.stopPropagation()' onchange='HomePresenter.makeDirty(this.parentNode)' " +
+                    content += "<select onclick='event.stopPropagation()' onchange='HomePresenter.makeDirty(this.parentNode,true)' " +
                         "class='rulesText  template selectpicker span2' data-width='45%'><option selected='selected' disabled='disabled' value='-1'>Select Master Template</option>";
-                    for (var j = 0; j < pageNames.length; j++) {
-                        content += "<option value='" + pageNames[j].templateID + "'>" + pageNames[j].templateName + "</option>";
+                    for (var j = 0; j < masterTemplateFileNames.length; j++) {
+                        content += "<option value='" + masterTemplateFileNames[j].templateID + "'>" + masterTemplateFileNames[j].templateName + "</option>";
                     }
                     content += "</select>";
                     newDiv.innerHTML = newDiv.innerHTML + content;
@@ -907,7 +935,7 @@ HomePresenter.setRules = function (div) {
                     assortments = GraphicDataStore.getAssortmentsByID(div.id);
 
                     var assortmentList = assortments;
-                    content = "<select onchange='HomePresenter.makeDirty(this.parentNode)' onclick='event.stopPropagation()' " +
+                    content = "<select onchange='HomePresenter.makeDirty(this.parentNode,false)' onclick='event.stopPropagation()' " +
                         "class='rulesText assortment selectpicker span3' data-width='35%'><option selected='selected' disabled='disabled' value='-1'>Select Assortment</option>";
                     for (var j = 0; j < assortmentList.length; j++) {
                         content += "<option>" + assortmentList[j].name + "</option>";
@@ -950,7 +978,7 @@ HomePresenter.setRules = function (div) {
                             content += "</select>";
                             whenDiv.innerHTML = whenDiv.innerHTML + content;
 
-                            content = "<select onchange='HomePresenter.makeDirty(this.parentNode)' " +
+                            content = "<select onchange='HomePresenter.makeDirty(this.parentNode,false)' " +
                                 "onclick='event.stopPropagation()' onchange='HomePresenter.addValue(this,event)' class='rulesText operation selectpicker span2' data-width='auto'><option selected='selected'>=</option>" +
                                 "</select>";
                             whenDiv.innerHTML = whenDiv.innerHTML + content;
@@ -1085,8 +1113,8 @@ else
 HomePresenter.addValue = function (text, event) {
 
     $(text.parentNode).children('.dataDirty').html('1');
-    $(text.parentNode.parentNode).children('.wbdURL').html(" ");
-    $(text.parentNode.parentNode).children('.mamFileID').html(" ");
+    //$(text.parentNode.parentNode).children('.wbdURL').html(" ");
+    //$(text.parentNode.parentNode).children('.mamFileID').html(" ");
 
     //get all values inside div
     //logic to put chosen values in the classname for isotope filtering
@@ -1114,8 +1142,8 @@ HomePresenter.addValue = function (text, event) {
 
 HomePresenter.toggleRegionTargetGroup = function (toggle) {
         $(toggle.parentNode).children('.dataDirty').html('1');
-        $(toggle.parentNode.parentNode).children('.wbdURL').html(" ");
-        $(toggle.parentNode.parentNode).children('.mamFileID').html(" ");
+//        $(toggle.parentNode.parentNode).children('.wbdURL').html(" ");
+//        $(toggle.parentNode.parentNode).children('.mamFileID').html(" ");
 
     var options = "<select onclick='event.stopPropagation()' " +
         "onchange='HomePresenter.addValue(this,event)'  class='input rulesText value selectpicker span2' data-width='auto' type='text'>" +
@@ -1140,10 +1168,12 @@ HomePresenter.toggleRegionTargetGroup = function (toggle) {
     $('.selectpicker').selectBoxIt();
 }
 
-HomePresenter.makeDirty = function (reference) {
+HomePresenter.makeDirty = function (reference,shouldMakeDirty) {
     $(reference).children('.dataDirty').html('1');
-    $(reference).children('.wbdURL').html(" ");
-    $(reference).children('.mamFileID').html(" ");
+    if(shouldMakeDirty){
+        $(reference).children('.wbdURL').html(" ");
+        $(reference).children('.mamFileID').html(" ");
+    }
 }
 
 
@@ -1165,7 +1195,7 @@ HomePresenter.newWhen = function (reference, event) {
     content += "</select>";
     newDiv.innerHTML = newDiv.innerHTML + content;
 
-    content = "<select onchange='HomePresenter.makeDirty(this.parentNode)' " +
+    content = "<select onchange='HomePresenter.makeDirty(this.parentNode,false)' " +
         "onclick='event.stopPropagation()' onchange='HomePresenter.addValue(this,event)' class='rulesText operation selectpicker span2' data-width='auto'><option selected='selected'>=</option>" +
         "</select>";
     newDiv.innerHTML = newDiv.innerHTML + content;
@@ -1186,92 +1216,100 @@ HomePresenter.newWhen = function (reference, event) {
     $(".selectpicker").selectBoxIt({autoWidth:true});
 }
 
-HomePresenter.getMAMFileNames = function () {
-    if (!EngineDataStore.getMasterTemplateList()) {
-        GetMasterTemplateList.get(function (data) {
-            EngineDataStore.setMasterTemplateList(data);
-        });
-    }
-}
 
+/*
+    arguments : parentThenDiv - reference to the main then div to which the new rules have to be added
+    return : void
+    Description : Create a new rule(called on click of the main '+' button on the configure rules page)
+*/
+HomePresenter.newThen = function (parentThenDiv) {
+    //Set the dirty flag when new rule is added
+    $(parentThenDiv).children('.dataDirty').html('1');
 
-HomePresenter.newThen = function (reference, data) {
+    var newDiv = document.createElement("div");                                     //  new div creation
+    $(newDiv).addClass("thenChild row-fluid");                                      //  for new rule
 
-    $(reference).children('.dataDirty').html('1');
+    var masterTemplateFileNames = EngineDataStore.getMasterTemplateList();
 
-    var newDiv = document.createElement("div");
-    $(newDiv).addClass("thenChild row-fluid");
-    //HomePresenter.getMAMFileNames();
-    var pageNames = EngineDataStore.getMasterTemplateList();
-    var rulesCount = $(reference).find('.rulesCount').html();
-    var generateNumber = rulesCount ? (Number(rulesCount)) + 1 : 100;
-    $(reference).find('.rulesCount').html(generateNumber);
-    var ruleId = $(reference).closest('.masterPage')[0].id + "." + generateNumber;
+    /**************************Removed ruleID generation logic since it is already performed in saveRulesData.
+                                Incase needed refer to code before 9/10/2013*******************/
+    var content = "<p class='hidden ruleID'></p>";         //Empty 'p' tags
+    content += "<p class='hidden wbdURL'> </p>";           //to store wbdURL/wbdURL/mamFileID
+    content += "<p class='hidden mamFileID'> </p>";        //once generated
 
-    var content = "<p class='hidden ruleID'>" + ruleId + "</p>";
-    content += "<p class='hidden wbdURL'> </p>";
-    content += "<p class='hidden mamFileID'> </p>";
-    content += "<select onclick='event.stopPropagation()' onchange='HomePresenter.makeDirty(this.parentNode)' " +
-        "class='rulesText selectpicker  template ' ><option selected='selected' disabled='disabled' value='-1'>Select Master Template</option>";
-    for (var i = 0; i < pageNames.length; i++) {
-        content += "<option value=" + pageNames[i].templateID + ">" + pageNames[i].templateName + "</option>";
+    //Forming drop down with list of all the master template file names from CS
+    content += "<select onclick='event.stopPropagation()' onchange='HomePresenter.makeDirty(this.parentNode,true)' " +
+                "class='rulesText selectpicker  template ' >" +
+                "<option selected='selected' disabled='disabled' value='-1'>Select Master Template</option>";
+    for (var i = 0; i < masterTemplateFileNames.length; i++) {
+        content += "<option value=" + masterTemplateFileNames[i].templateID + ">" +
+                    masterTemplateFileNames[i].templateName + "</option>";
     }
     content += "</select>";
-    newDiv.innerHTML = newDiv.innerHTML + content;
+    newDiv.innerHTML = newDiv.innerHTML + content;     //Add master template filename dropdown to the new rule div
 
-    var assortments;
-    GetAssortments.get($(reference).closest(".masterPage").children('.pagePath').html(),$(reference).closest(".masterPage")[0].id,function(data){
-        GraphicDataStore.pushToAssortmentsList(reference.id,data);
-    });
-    assortments = GraphicDataStore.getAssortmentsByID(reference.id);
+    var assortmentList;
+    var pathToPage = $(parentThenDiv).closest(".masterPage").children('.pagePath').html();
+    var pageID = $(parentThenDiv).closest(".masterPage")[0].id;
 
-    var assortmentList = assortments;
-    content = "<select onchange='HomePresenter.makeDirty(this.parentNode)' onclick='event.stopPropagation()' " +
-        "class='rulesText assortment selectpicker span3' data-width='35%'><option selected='selected' value='-1'>Select Assortment</option>";
+    GetAssortments.get(pathToPage,pageID,function(data){                //
+        GraphicDataStore.pushToAssortmentsList(parentThenDiv.id,data);      //Get list of assortments
+    });                                                                 //    under the page
+    assortmentList = GraphicDataStore.getAssortmentsByID(parentThenDiv.id); //
+
+    //Form drop down with the list of assortments under the page from the server
+    content = "<select onchange='HomePresenter.makeDirty(this.parentNode,false)' onclick='event.stopPropagation()' " +
+                "class='rulesText assortment selectpicker span3' data-width='35%'>" +
+                "<option selected='selected' value='-1'>Select Assortment</option>";
     console.log(assortmentList)
     for (var i = 0; i < assortmentList.length; i++) {
         content += "<option>" + assortmentList[i].name + "</option>";
     }
     content += "</select>";
-    newDiv.innerHTML = newDiv.innerHTML + content;
+    newDiv.innerHTML = newDiv.innerHTML + content;//Add assortments dropdown to the new rule div
+
+    //Add the add new condition and remove rule buttons to the new rule div
     content = "<span class='buttons remove' onclick='HomePresenter.removeNew(this.parentNode,event)'>-</span>"
     newDiv.innerHTML = newDiv.innerHTML + content;
     content = "<span class='buttons addCondition' onclick='HomePresenter.newWhen(this.parentNode,event)'>+</span>"
     newDiv.innerHTML = newDiv.innerHTML + content;
-    content = "<p class='hidden dataDirty'>0</p>"
+
+    content = "<p class='hidden dataDirty'>0</p>"   //The dirty flag by default set to 0
     newDiv.innerHTML = newDiv.innerHTML + content;
-    reference.appendChild(newDiv);
-    $(".selectpicker").selectBoxIt({
-        autoWidth: false
-    });
+    parentThenDiv.appendChild(newDiv);      //Add the new rule div to the parent div
+
+    $(".selectpicker").selectBoxIt({    //  Initialize the
+        autoWidth: false                //  selectBoxIt component
+    });                                 //  on the drop down menus
 
 }
 
-
+/*
+    Desciption : Removes the rule condition or statement
+                    (called on click of the minus buttons in the rules)
+ */
 HomePresenter.removeNew = function (reference, event) {
-	console.log(reference);
     $(reference).children('.dataDirty').html('1');
     $(reference.parentNode).children('.dataDirty').html('1');
-    if ($(reference).hasClass('whenChild')) {
-
-        $(reference.parentNode).children('.wbdURL').html(" ");
-        $(reference.parentNode).children('.mamFileID').html(" ");
-    }
     reference.parentNode.removeChild(reference);
     return false;
 }
 
-
-
+/*
+    Description : Called by the splitter when the drag has ended or started
+                    in order to re-layout(position) the isotope elements properly
+ */
 HomePresenter.setContainerRelayout = function(){
     if($isotopeContainer){
         $isotopeContainer.isotope('reLayout');
     }
 }
 
-
+/*
+    Description : Creates a new view with all the pages under the publication.
+                    (Callback from GetAllPagesInPublication.get)
+ */
 HomePresenter.changeViewToShowAllPages = function(data){
-    console.log(data);
     $(document).trigger({
         type: "TREE_ITEM_CLICKED",
         uiData: data,
@@ -1279,51 +1317,15 @@ HomePresenter.changeViewToShowAllPages = function(data){
     });
 }
 
-
+/*
+    Description : Function called when the show all pages button is called.
+                    Brings up all the pages under the current publication
+*/
 HomePresenter.showAllPages = function(){
-    var publicationName = GraphicDataStore.getCurrentView();
+    var publicationName = GraphicDataStore.getCurrentView(); //Since the button shows up only when publication
+                                                             //is clicked the current view is the publication
     GetAllPagesInPublication.get(publicationName,HomePresenter.changeViewToShowAllPages);
 }
 
 
-/*
-
-HomePresenter.edit = function (tagsClass, tagNo, reference, event) {
-    console.log(reference.parentNode)
-    var elements = reference.parentNode.getElementsByClassName(tagsClass);
-    for (var i = 0; i < elements.length; i++) {
-        var element = elements[i];
-        console.log(element);
-        element.disabled = false;
-    }
-    var okButtons = reference.parentNode.getElementsByClassName("done");
-    for (var i = 0; i < okButtons.length; i++) {
-        okButtons[i].style.visibility = 'visible';
-    }
-    var editButtons = reference.parentNode.getElementsByClassName("edit");
-    for (var i = 0; i < okButtons.length; i++) {
-        editButtons[i].style.visibility = 'hidden';
-    }
-    event.stopPropagation();
-}
-
-HomePresenter.done = function (tagsClass, tagNo, reference, event) {
-    var elements = reference.parentNode.getElementsByClassName(tagsClass);
-    for (var i = 0; i < elements.length; i++) {
-        var element = elements[i];
-        console.log(element);
-        element.disabled = true;
-    }
-    var okButtons = reference.parentNode.getElementsByClassName("done");
-    for (var i = 0; i < okButtons.length; i++) {
-        okButtons[i].style.visibility = 'hidden';
-    }
-    var editButtons = reference.parentNode.getElementsByClassName("edit");
-    for (var i = 0; i < okButtons.length; i++) {
-        editButtons[i].style.visibility = 'visible';
-    }
-    event.stopPropagation();
-}
-
-*/
 
