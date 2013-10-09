@@ -53,12 +53,12 @@ var ContentFlowGlobal = {Flows: new Array, AddOns: {}, scriptName: "contentflow.
     } else {
         document.write('<link rel="stylesheet" href="' + B + '" type="text/css" media="screen" />')
     }
-    console.log('addStylesheet1'+B)  ;
+    //console.log('addStylesheet1'+B)  ;
 }, addStylesheets: function (C, B) {
     for (var A = 0; A < filename.length; A++) {
         this.addStylesheet(basepath + B[A])
     }
-    console.log('addStylesheet2')  ;
+    //console.log('addStylesheet2')  ;
 }, initPath: function () {
     this.scriptElement = this.getScriptElement(this.scriptName);
     if (!this.scriptElement) {
@@ -74,7 +74,7 @@ var ContentFlowGlobal = {Flows: new Array, AddOns: {}, scriptName: "contentflow.
     }
 }, init: function () {
 
-    console.log("init");
+    //console.log("init");
     this.addStylesheet(this.CSSBaseDir + "contentflow.css");
     this.addStylesheet(this.CSSBaseDir + "mycontentflow.css");
     this.loadAddOns = new Array();
@@ -84,7 +84,7 @@ var ContentFlowGlobal = {Flows: new Array, AddOns: {}, scriptName: "contentflow.
             if (A[C] == "") {
                 continue
             }
-            console.log('adding load script');
+            //console.log('adding load script');
             this.addScript(this.AddOnBaseDir + "ContentFlowAddOn_" + A[C] + ".js")
         }
     }
@@ -92,7 +92,7 @@ var ContentFlowGlobal = {Flows: new Array, AddOns: {}, scriptName: "contentflow.
     E.onloadInit();
     if (document.addEventListener) {
         if (this.Browser.WebKit) {
-            console.log('adding t');
+            //console.log('adding t');
             var D = setInterval(function () {
                 if (/loaded|complete/.test(document.readyState)) {
                     clearInterval(D);
@@ -100,13 +100,13 @@ var ContentFlowGlobal = {Flows: new Array, AddOns: {}, scriptName: "contentflow.
                 }
             }, 10)
         } else {
-            console.log('adding t2');
+            //console.log('adding t2');
             document.addEventListener("DOMContentLoaded", E.onloadInit, false)
         }
     } else {
-        console.log('adding t3');
+        //console.log('adding t3');
         if (this.Browser.IE) {
-            console.log('adding t4  ');
+            //console.log('adding t4  ');
             document.write("<script id=__ie_cf_onload defer src=javascript:void(0)><\/script>");
             var B = document.getElementById("__ie_cf_onload");
             B.onreadystatechange = function () {
@@ -118,23 +118,23 @@ var ContentFlowGlobal = {Flows: new Array, AddOns: {}, scriptName: "contentflow.
     }
     window.addEvent("load", E.onloadInit, false);
 }, onloadInit: function () {
-    console.log('onloadInit');
+    //console.log('onloadInit');
     if (arguments.callee.done) {
-        console.log('onloadInit 2');
+        //console.log('onloadInit 2');
         return
     }
-    console.log('onloadInit 3');
+    //console.log('onloadInit 3');
     for (var C = 0; C < ContentFlowGlobal.loadAddOns.length; C++) {
         var A = ContentFlowGlobal.loadAddOns[C];
-        console.log(ContentFlowGlobal.AddOns[A]);
+        //console.log(ContentFlowGlobal.AddOns[A]);
         if (!ContentFlowGlobal.AddOns[A]) {
             var G = ContentFlowGlobal;
-            console.log(G);
+            //console.log(G);
             window.setTimeout(G.onloadInit, 10);
             return
         }
     }
-    console.log('onloadInit 4');
+    //console.log('onloadInit 4');
     arguments.callee.done = true;
     if (window.Element && Element.implement && document.all && !window.opera) {
         for (var H in window.CFElement.prototype) {
@@ -145,17 +145,17 @@ var ContentFlowGlobal = {Flows: new Array, AddOns: {}, scriptName: "contentflow.
             }
         }
     }
-    console.log('onloadInit 5');
+    //console.log('onloadInit 5');
     for (var C = 0; C < ContentFlowGlobal.Flows.length; C++) {
-        console.log('onloadInit 5.0');
+        //console.log('onloadInit 5.0');
         ContentFlowGlobal.Flows[C].init()
     }
     var D = document.getElementsByTagName("div");
-    console.log(D);
+    //console.log(D);
     DIVS:for (var C = 0; C < D.length; C++) {
-        console.log('onloadInit 5.entry'+D[C].className);
+        //console.log('onloadInit 5.entry'+D[C].className);
         if (D[C].className.match(/\bContentFlow\b/)) {
-            console.log('onloadInit 5.1');
+            //console.log('onloadInit 5.1');
             for (var B = 0; B < ContentFlowGlobal.Flows.length; B++) {
                 if (D[C] == ContentFlowGlobal.Flows[B].Container) {
                     continue DIVS
@@ -164,9 +164,9 @@ var ContentFlowGlobal = {Flows: new Array, AddOns: {}, scriptName: "contentflow.
             var E = new ContentFlow(D[C], {}, false);
             E.init()
         }
-        console.log('onloadInit 5.exit');
+        //console.log('onloadInit 5.exit');
     }
-    console.log('onloadInit 6');
+    //console.log('onloadInit 6');
 }};
 ContentFlowGlobal.initPath();
 var ContentFlowAddOn = function (B, A, C) {
@@ -505,14 +505,14 @@ ContentFlowItem.prototype = {Browser: ContentFlowGlobal.Browser, makeActive: fun
     }
 }};
 var ContentFlow = function (A, B) {
-    console.log('onloadInit 5.2');
+    //console.log('onloadInit 5.2');
     if (A) {
         ContentFlowGlobal.Flows.push(this);
         this.Container = A;
         this._userConf = B ? B : {};
         this.conf = {};
         this._loadedAddOns = new Array()
-        console.log('onloadInit 5.3')
+        //console.log('onloadInit 5.3')
     } else {
         throw ("ContentFlow ERROR: No flow container node or id given")
     }
@@ -967,7 +967,7 @@ ContentFlow.prototype = {_imagesToLoad: 0, _activeItem: 0, _currentPosition: 0, 
     }, 10);
     return C
 }, _init: function () {
-    console.log('onloadInit 5.4')
+    //console.log('onloadInit 5.4')
     if (typeof (this.Container) == "string") {
         var B = document.getElementById(this.Container);
         if (B) {

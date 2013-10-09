@@ -65,7 +65,7 @@ var GanttChart = function(){
 
     Grids.OnRenderRow = function(grid, row, col){
 
-        console.log('rendering'+ row.type)
+        //console.log('rendering'+ row.type)
     }
 
     Grids.OnGetMenu = function(G,row,col){
@@ -406,16 +406,16 @@ var GanttChart = function(){
     }
     var ck_alpha = /^[A-Za-z]+$/;
     function checkAlpha(obj){
-        console.log(obj.val());
+        //console.log(obj.val());
         if (!ck_alpha.test(obj.val())) {
             obj.addClass( "ui-state-error") ;
-           console.log('false')
+           //console.log('false')
            return false;
         }
         else{
             obj.removeClass("ui-state-error")   ;
             return true;
-            console.log('true')
+            //console.log('true')
         }
     }
 
@@ -424,16 +424,16 @@ var GanttChart = function(){
 
     var ck_date = /^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$/;
     function checkDate(obj){
-        console.log(obj.val());
+        //console.log(obj.val());
         if (!ck_date.test(obj.val())) {
             obj.addClass( "ui-state-error") ;
-            console.log('false')
+            //console.log('false')
             return false;
         }
         else{
             obj.removeClass("ui-state-error")   ;
             return true;
-            console.log('true')
+            //console.log('true')
         }
     }
 
@@ -494,7 +494,7 @@ var GanttChart = function(){
                 var enddateDATE = new Date(enddate.val());     //    dates they have to be converted to date objects
 
                 if(startdateDATE>enddateDATE){
-                    console.log(startdateDATE)
+                    //console.log(startdateDATE)
                     errorMsg += "Please verify start and end dates!";
                     popupValid =  false;
                     startdate.addClass( "ui-state-error") ;

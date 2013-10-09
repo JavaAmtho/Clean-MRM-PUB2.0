@@ -44,9 +44,9 @@ new ContentFlowAddOn ('CSFlow', {
      */
     init: function() {
          //this.addScript();
-        console.log('init');
+        //console.lo('init');
         this.addStylesheet();
-        console.log('aftre init');
+        //console.lo('aftre init');
 
 
     },
@@ -71,14 +71,14 @@ new ContentFlowAddOn ('CSFlow', {
      * You can access also all public methods of the flow by 'flow.METHOD' (see documentation).
      */
     /*onloadInit: function (flow) {
-        console.log('on load init');
+        //console.lo('on load init');
     },
 */
     /* 
      * This method will be executed _after_ the initialization of each ContentFlow.
      */    
     afterContentFlowInit: function (flow) {
-        console.log('afterContentFlowInit');
+        //console.lo('afterContentFlowInit');
     },
     /*
      * ContentFlow configuration.
@@ -137,7 +137,7 @@ new ContentFlowAddOn ('CSFlow', {
          * called after the inactive item is clicked.
          */
         onclickInactiveItem : function (item) {
-            console.log('clickinactive')
+            //console.lo('clickinactive')
 
             moveTo(item,item)  ;
 
@@ -147,7 +147,7 @@ new ContentFlowAddOn ('CSFlow', {
          * called after the active item is clicked.
          */
         onclickActiveItem: function (item) {
-            console.log(item);
+            //console.lo(item);
             GraphicDataStore.setCurrentFocusedItem(item);
             var url;
             var currentItem = GraphicDataStore.getCurrentFocusedItem();
@@ -164,8 +164,8 @@ new ContentFlowAddOn ('CSFlow', {
 
                     data = data.replace("../admin.local","http://14.141.2.211/CS130Trunk/admin.local");
 >>>>>>> b5c07d2642c79d55337906c7d253e7bc50ec9cfe
-                    console.log(data)
-                    console.log( $( "#myPlayer" ) )
+                    //console.lo(data)
+                    //console.lo( $( "#myPlayer" ) )
                     $( "#myPlayer" ).dialog({
                         autoOpen: false,
                         height: 455,
@@ -200,7 +200,7 @@ new ContentFlowAddOn ('CSFlow', {
          * called when an item becomes inactive.
          */
         onMakeInactive: function (item) {
-            console.log('makeinactive')
+            //console.lo('makeinactive')
 
         },
 

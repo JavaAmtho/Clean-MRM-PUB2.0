@@ -9,7 +9,7 @@ var GanttChartPresenter = function(){
         ganttElements[i].style.visibility = "visible";
     }
 
-    console.log(ganttElements);
+    //console.log(ganttElements);
 
     this.design = function(id){
         var treeData;
