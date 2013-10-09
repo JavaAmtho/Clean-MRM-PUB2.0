@@ -1,0 +1,96 @@
+[
+    {
+        "id": "1",
+        "default": "true",
+        "name": "MarketingInitiative-Campaign-SubCampaign-CommunicationPlan-CommunicationChannel-Publication",
+        "structure": [
+            {
+                "name": "MarketingInitiative",
+                "icon": "something",
+                "possibleChild": ["Campaign"]
+            },
+            {
+                "name": "Campaign",
+                "icon": "something",
+                "possibleChild": ["SubCampaign"]
+            },
+            {
+                "name": "SubCampaign",
+                "icon": "something",
+                "possibleChild": ["CommunicationPlan"]
+            },
+            {
+                "name": "CommunicationPlan",
+                "icon": "something",
+                "possibleChild": ["CommunicationChannel"]
+            },
+            {
+                "name": "CommunicationChannel",
+                "icon": "something",
+                "possibleChild": ["Publication"]
+            },
+            {
+                "name": "Publication",
+                "icon": "something",
+                "possibleChild": ["Chapter","Page","Assortment"]
+            },
+            {
+                "name": "Chapter",
+                "icon": "something",
+                "possibleChild": ["Chapter","Page","Assortment"]
+            },
+            {
+                "name": "Page",
+                "icon": "something",
+                "possibleChild": ["Assortment"]
+            }
+        ]
+    },
+    {
+        "id": "2",
+        "default": "false",
+        "name": "Campaign-SubCampaign-MarketingInitiative-CommunicationPlan-CommunicationChannel-Publication",
+        "structure": [
+            {
+                "name": "Campaign",
+                "icon": "something",
+                "possibleChild": ["SubCampaign"]
+            },
+            {
+                "name": "SubCampaign",
+                "icon": "something",
+                "possibleChild": ["MarketingInitiative"]
+            },
+            {
+                "name": "MarketingInitiative",
+                "icon": "something",
+                "possibleChild": ["CommunicationPlan"]
+            },
+            {
+                "name": "CommunicationPlan",
+                "icon": "something",
+                "possibleChild": ["CommunicationChannel"]
+            },
+            {
+                "name": "CommunicationChannel",
+                "icon": "something",
+                "possibleChild": ["Publication"]
+            },
+            {
+                "name": "Publication",
+                "icon": "something",
+                "possibleChild": ["Chapter","Page","Assortment"]
+            },
+            {
+                "name": "Chapter",
+                "icon": "something",
+                "possibleChild": ["Chapter","Page","Assortment"]
+            },
+            {
+                "name": "Page",
+                "icon": "something",
+                "possibleChild": ["Assortment"]
+            }
+        ]
+    }
+]

@@ -1,0 +1,39 @@
+[
+    {
+        "id": "1",
+        "default": "true",
+        "name": "MarketingInitiative-Campaign-SubCampaign-CommunicationPlan-CommunicationChannel",
+        "structure": [
+            {
+                "name": "MarketingInitiative",
+                "icon": "something",
+                "possibleChild": ["Campaign"],
+                "possibleDropParent":[]
+            },
+            {
+                "name": "Campaign",
+                "icon": "something",
+                "possibleChild": ["SubCampaign"],
+                "possibleDropParent":["MarketingInitiative"]
+            },
+            {
+                "name": "SubCampaign",
+                "icon": "something",
+                "possibleChild": ["CommunicationPlan"],
+                "possibleDropParent":["Campaign"]
+            },
+            {
+                "name": "CommunicationPlan",
+                "icon": "something",
+                "possibleChild": ["CommunicationChannel"],
+                "possibleDropParent":["SubCampaign"]
+            },
+            {
+                "name": "CommunicationChannel",
+                "icon": "something",
+                "possibleChild": [],
+                "possibleDropParent":["CommunicationPlan"]
+            }
+        ]
+    }
+]
