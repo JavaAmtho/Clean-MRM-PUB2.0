@@ -1,3 +1,7 @@
+/**
+ *
+ * @constructor
+ */
 var GraphicDataStore = function(){
     var schemaArray=[];
     var currentSchema;
@@ -5,18 +9,34 @@ var GraphicDataStore = function(){
     var currentFocusedItem;
 }
 
+/**
+ *
+ * @param schemaData
+ */
 GraphicDataStore.setSchemaArray = function(schemaData){
     this.schemaArray = schemaData;
 }
 
+/**
+ *
+ * @returns {GraphicDataStore.schemaArray}
+ */
 GraphicDataStore.getSchemaArray = function(){
     return this.schemaArray;
 }
 
+/**
+ *
+ * @param channelDetails
+ */
 GraphicDataStore.setCommChannelDetails = function(channelDetails){
     this.commChannelDetails = channelDetails;
 }
 
+/**
+ *
+ * @returns {GraphicDataStore.commChannelDetails}
+ */
 GraphicDataStore.getCommChannelDetails = function(){
     return this.commChannelDetails;
 }
@@ -29,19 +49,36 @@ GraphicDataStore.setDefaultSchema = function(){
     }
 }
 
+/**
+ *
+ * @param schema
+ */
 GraphicDataStore.setCurrentSchema = function(schema){
     this.currentSchema = schema;
 }
 
-GraphicDataStore.getCurrentSchema = function(schema){
+/**
+ *
+ * @returns {GraphicDataStore.currentSchema}
+ */
+GraphicDataStore.getCurrentSchema = function(){
     return this.currentSchema;
 }
 
 
+/**
+ *
+ * @returns {string}
+ */
 GraphicDataStore.getFirstDimension = function(){
     return this.currentSchema.structure[0].name+"s";
 }
 
+/**
+ *
+ * @param dim
+ * @returns {possibleChild array for given dim type}
+ */
 GraphicDataStore.getPossibleChild = function(dim){
     if(dim === 'root'){
         var arr = [];
@@ -56,6 +93,11 @@ GraphicDataStore.getPossibleChild = function(dim){
     }
 }
 
+/**
+ *
+ * @param dim
+ * @returns {possibleDropParent array for given dim type}
+ */
 GraphicDataStore.getPossibleDropParent = function(dim){
     for(var i=0; i< this.currentSchema.structure.length; i++){
         if(dim === this.currentSchema.structure[i].name){
@@ -64,6 +106,10 @@ GraphicDataStore.getPossibleDropParent = function(dim){
     }
 }
 
+/**
+ *
+ * @param item in coverflow
+ */
 GraphicDataStore.setCurrentFocusedItem = function(item){
     var arr =   GraphicDataStore.getCommChannelDetails();
     for(var i=0; i< arr.length; i++){
@@ -73,6 +119,10 @@ GraphicDataStore.setCurrentFocusedItem = function(item){
     }
 }
 
+/**
+ *
+ * @returns {GraphicDataStore.currentFocusedItem}
+ */
 GraphicDataStore.getCurrentFocusedItem = function(){
     return this.currentFocusedItem;
 }
