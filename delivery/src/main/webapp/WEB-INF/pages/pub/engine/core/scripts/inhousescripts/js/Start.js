@@ -1,4 +1,8 @@
 var pubIdToOpen;
+
+/**
+ * document.ready function
+ */
 $(document).ready(function() {
 
    /* $("body").queryLoader2({
@@ -14,17 +18,29 @@ $(document).ready(function() {
     getPublicationDetailsObject();
 });
 
+/**
+ * getPublicationDetailsObject function
+ */
 function getPublicationDetailsObject(){
     Router.forward(EngineDataStore.getBaseURL()+"graphics/tacks/PublicationDetails.json",true,function(json){
         parsePublicationDetailsObject(json);
     });
 }
 
+/**
+ *
+ * @param json
+ */
 function parsePublicationDetailsObject(json){
     EngineDataStore.setPublicationDetailsArray(json);
     getScreenMappingObject();
 }
 
+/**
+ *
+ * @param name
+ * @returns {string}
+ */
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -32,12 +48,19 @@ function getParameterByName(name) {
     return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
+/**
+ * getScreenMappingObject function
+ */
 function getScreenMappingObject(){
     Router.forward(EngineDataStore.getBaseURL()+"graphics/tacks/screenMapping.json",true,function(json){
         parseScreenMappingObject(json);
     });
 }
 
+/**
+ *
+ * @param json
+ */
 function parseScreenMappingObject(json){
     EngineDataStore.setScreenMappingObject(json);
     $.each(json, function (key, item) {
@@ -48,12 +71,19 @@ function parseScreenMappingObject(json){
     getApiMappingObject();
 }
 
+/**
+ * getApiMappingObject function
+ */
 function getApiMappingObject(){
     Router.forward(EngineDataStore.getBaseURL()+"graphics/tacks/RequestMapping.json",true,function(json){
         parseApiMappingObject(json);
     });
 }
 
+/**
+ *
+ * @param json
+ */
 function parseApiMappingObject(json){
     EngineDataStore.setApiMappingObject(json);
     Router.loadRequest("getMasterTemplateList",false,function(data){

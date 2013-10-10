@@ -5,15 +5,32 @@
  * Time: 2:04 PM
  * Created for Events mapping.
  */
+
+/**
+ *
+ * @constructor
+ */
 function HtmlEventDesigner(){
 
 }
 
+/**
+ *
+ * @param id
+ * @param event
+ * @param func
+ * @param flag
+ */
 HtmlEventDesigner.addEvents = function(id,event,func,flag){
     var htmlElement = this.getElementBy(id);
     htmlElement.addEventListener(event,func,flag);
 }
 
+/**
+ *
+ * @param id
+ * @returns element by ID
+ */
 HtmlEventDesigner.getElementBy = function(id){
     return  document.getElementById(id);
 }

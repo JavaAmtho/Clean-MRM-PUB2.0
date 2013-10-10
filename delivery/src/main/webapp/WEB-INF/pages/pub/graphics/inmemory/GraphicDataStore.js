@@ -6,6 +6,10 @@
  * To change this template use File | Settings | File Templates.
  */
 
+/**
+ *
+ * @constructor
+ */
 var GraphicDataStore = function(){
     var schemaArray=[];
     var currentSchema;
@@ -20,11 +24,19 @@ var GraphicDataStore = function(){
     var currentPublication;
 }
 
+/**
+ *
+ * @param currentPublication
+ */
 GraphicDataStore.setCurrentPublication = function(currentPublication){
     console.log(currentPublication);
     this.currentPublication = currentPublication;
 }
 
+/**
+ *
+ * @returns currentPublication if true
+ */
 GraphicDataStore.getCurrentPublication = function(){
     if(this.currentPublication){
         return this.currentPublication;
@@ -34,6 +46,11 @@ GraphicDataStore.getCurrentPublication = function(){
     }
 }
 
+/**
+ *
+ * @param ruleID
+ * @returns true if loadingRulesList
+ */
 GraphicDataStore.checkIfRuleLoading = function(ruleID){
     if(!this.loadingRulesList){
         this.loadingRulesList = {};
@@ -46,6 +63,10 @@ GraphicDataStore.checkIfRuleLoading = function(ruleID){
     }
 }
 
+/**
+ *
+ * @param ruleID
+ */
 GraphicDataStore.stopLoadingStatus = function(ruleID){
     if(!this.loadingRulesList){
         this.loadingRulesList = {};
@@ -53,6 +74,10 @@ GraphicDataStore.stopLoadingStatus = function(ruleID){
     this.loadingRulesList[ruleID] = "";
 }
 
+/**
+ *
+ * @param ruleID
+ */
 GraphicDataStore.addRuleToLoadingList = function(ruleID){
     if(!this.loadingRulesList){
         this.loadingRulesList = {};
@@ -60,6 +85,11 @@ GraphicDataStore.addRuleToLoadingList = function(ruleID){
     this.loadingRulesList[ruleID] = "loading"
 }
 
+/**
+ *
+ * @param pageID
+ * @param assortments
+ */
 GraphicDataStore.pushToAssortmentsList = function(pageID,assortments){
     if(!this.assortmentsList){
         this.assortmentsList = {};
@@ -67,6 +97,11 @@ GraphicDataStore.pushToAssortmentsList = function(pageID,assortments){
     this.assortmentsList[pageID] = assortments;
 }
 
+/**
+ *
+ * @param pageID
+ * @returns Array assortmentList[] if assortmentList, else null
+ */
 GraphicDataStore.getAssortmentsByID = function(pageID){
     if(this.assortmentsList){
         return this.assortmentsList[pageID];
@@ -76,23 +111,44 @@ GraphicDataStore.getAssortmentsByID = function(pageID){
     }
 }
 
+/**
+ *
+ * @param obj
+ */
 GraphicDataStore.setCurrentView = function(obj){
     this.currentView = obj;
 }
 
+/**
+ *
+ * @returns currentView Object
+ */
 GraphicDataStore.getCurrentView = function(){
     return this.currentView;
 }
 
+/**
+ *
+ * @param obj
+ */
 GraphicDataStore.setMasterTemplateList = function(obj){
     this.masterTemplateList = obj;
 }
 
+/**
+ *
+ * @returns masterTemplateList Object
+ */
 GraphicDataStore.getMasterTemplateList = function(){
     return this.masterTemplateList;
 }
 
 
+/**
+ *
+ * @param id
+ * @returns pageRulesArr if Array[rules[i].pageRules] else undefined
+ */
 GraphicDataStore.getPageRuleById = function(id){
     if(this.pageRulesArr){
         return this.pageRulesArr[this.currentView + "." + id];
@@ -102,6 +158,10 @@ GraphicDataStore.getPageRuleById = function(id){
     }
 }
 
+/**
+ *
+ * @param rules
+ */
 GraphicDataStore.addAllPageRules = function(rules){
     if(!this.pageRulesArr){
         this.pageRulesArr = {};
@@ -115,6 +175,10 @@ GraphicDataStore.addAllPageRules = function(rules){
     }
 }
 
+/**
+ *
+ * @param rule
+ */
 GraphicDataStore.addToPageRules = function(rule){
     if(!this.pageRulesArr){
         this.pageRulesArr = {};
@@ -123,6 +187,12 @@ GraphicDataStore.addToPageRules = function(rule){
 }
 
 
+/**
+ *
+ * @param additionalInfo
+ * @param ruleID
+ * @param logicalPageID
+ */
 GraphicDataStore.addAdditionalInformationToPageRules = function(additionalInfo, ruleID, logicalPageID){
     console.log(this.pageRulesArr[logicalPageID]);
     if(this.pageRulesArr){
@@ -140,34 +210,65 @@ GraphicDataStore.addAdditionalInformationToPageRules = function(additionalInfo, 
 }
 
 
+/**
+ *
+ * @param obj
+ */
 GraphicDataStore.setCurrentAssortment = function(obj){
     this.currentAssortment = obj;
 }
 
+/**
+ *
+ * @returns currentAssortment Object
+ */
 GraphicDataStore.getCurrentAssortment = function(){
     return this.currentAssortment;
 }
 
+/**
+ *
+ * @param arr
+ */
 GraphicDataStore.setProdcutsArr = function(arr){
     this.prodcutsArr = arr;
 }
 
+/**
+ *
+ * @param item
+ */
 GraphicDataStore.addProdcut = function(item){
     this.prodcutsArr.push(item);
 }
 
+/**
+ *
+ * @returns prodcutsArr
+ */
 GraphicDataStore.getProdcutsArr = function(){
     return this.prodcutsArr;
 }
 
+/**
+ *
+ * @param schemaData
+ */
 GraphicDataStore.setSchemaArray = function(schemaData){
     this.schemaArray = schemaData;
 }
 
+/**
+ *
+ * @returns schemaData
+ */
 GraphicDataStore.getSchemaArray = function(){
     return this.schemaArray;
 }
 
+/**
+ * setDefaultSchema function
+ */
 GraphicDataStore.setDefaultSchema = function(){
     for(var i=0; i< this.schemaArray.length; i++){
         if(this.schemaArray[i].default == "true"){
@@ -176,25 +277,49 @@ GraphicDataStore.setDefaultSchema = function(){
     }
 }
 
+/**
+ *
+ * @param schema
+ */
 GraphicDataStore.setCurrentSchema = function(schema){
     this.currentSchema = schema;
     var schemaSplit = schema.name.split("-");
     this.publicationPosition = schemaSplit.indexOf("Publication");
 }
 
+/**
+ *
+ * @returns indexOf("Publication")
+ */
 GraphicDataStore.getPublicationPosition = function(){
     return this.publicationPosition;
 }
 
+/**
+ *
+ * @param schema
+ * @returns currentSchema
+ */
 GraphicDataStore.getCurrentSchema = function(schema){
     return this.currentSchema;
 }
 
 
+/**
+ *
+ * @returns {string}
+ */
 GraphicDataStore.getFirstDimension = function(){
+
+
     return this.currentSchema.structure[0].name+"s";
 }
 
+/**
+ *
+ * @param dim
+ * @returns ["MarketingInitiative"] if dim is 'root', else ["Campaign"] or ["SubCampaign"] etc.
+ */
 GraphicDataStore.getPossibleChild = function(dim){
     if(dim === 'root'){
         var arr = [];
@@ -211,6 +336,9 @@ GraphicDataStore.getPossibleChild = function(dim){
 
 }
 
+/**
+ * setSchemaLabel function
+ */
 GraphicDataStore.setSchemaLabel = function(){
     $("#txt").show();
     $("#txt").text(this.currentSchema.name);

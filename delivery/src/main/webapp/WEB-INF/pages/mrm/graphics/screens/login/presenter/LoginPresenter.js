@@ -1,11 +1,21 @@
+/**
+ *
+ * @constructor
+ */
 function LoginPresenter(){
 
 }
 
+/**
+ * getLogin function
+ */
 LoginPresenter.getLogin = function(){
     TemplateLoader.loadTemplate("homeScreen",LoginPresenter.makeLogoutBtnVisible);
 }
 
+/**
+ * makeLogoutButtonVisible function
+ */
 LoginPresenter.makeLogoutBtnVisible = function(){
     $(".logout").css( "visibility", "visible" );
     $(".wrapper").css( "visibility", "visible" );

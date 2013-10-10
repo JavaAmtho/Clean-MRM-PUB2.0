@@ -6,10 +6,20 @@
  * To change this template use File | Settings | File Templates.
  */
 
+/**
+ *
+ * @constructor
+ */
 function HtmlElementDesigner(){
 
 }
 
+/**
+ *
+ * @param id
+ * @param scriptName
+ * @param screenName
+ */
 HtmlElementDesigner.design = function(id,scriptName,screenName){
     var htmlElement = this.getElementBy(id);
     var className = scriptName;
@@ -20,10 +30,21 @@ HtmlElementDesigner.design = function(id,scriptName,screenName){
     })
 }
 
+/**
+ *
+ * @param id
+ * @returns element by ID
+ */
 HtmlElementDesigner.getElementBy = function(id){
     return  document.getElementById(id);
 }
 
+/**
+ *
+ * @param scriptName
+ * @param screenName
+ * @returns complete URL of particular js script
+ */
 HtmlElementDesigner.getScriptName = function(scriptName,screenName){
     var name = EngineDataStore.getBaseURL()+"graphics/screens/"+screenName+"/presenter/"+scriptName+".js";
     return name;

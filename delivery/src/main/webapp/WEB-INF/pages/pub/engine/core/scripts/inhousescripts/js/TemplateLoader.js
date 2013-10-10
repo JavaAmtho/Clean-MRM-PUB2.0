@@ -1,7 +1,17 @@
+/**
+ *
+ * @constructor
+ */
 var TemplateLoader = function(){
 
 }
 
+/**
+ *
+ * @param url
+ * @param async
+ * @param callback
+ */
 TemplateLoader.forward = function(url,async,callback){
     $.ajax({
         url:url,
@@ -15,6 +25,12 @@ TemplateLoader.forward = function(url,async,callback){
     });
 }
 
+/**
+ *
+ * @param key
+ * @param callBack
+ * @param containerID
+ */
 TemplateLoader.loadTemplate = function(key,callBack,containerID){
     //This sets the default value for the containerElementID
     containerID = typeof containerID !== ('undefined'||"") ? containerID : "mainContainer";
@@ -37,6 +53,11 @@ TemplateLoader.loadTemplate = function(key,callBack,containerID){
 
 }
 
+/**
+ *
+ * @param data
+ * @param containerID
+ */
 TemplateLoader.designScreen = function(data,containerID){
     //Comment this while DEPLOYING
     //data=eval('(' + data + ')');
@@ -52,6 +73,10 @@ TemplateLoader.designScreen = function(data,containerID){
 
 }
 
+/**
+ *
+ * @param events
+ */
 TemplateLoader.attachEvents = function(events){
     events=eval('(' + events + ')');
     for (var binding in events){
@@ -59,6 +84,10 @@ TemplateLoader.attachEvents = function(events){
     }
 }
 
+/**
+ *
+ * @param elements
+ */
 TemplateLoader.createElements = function(elements){
     elements=eval('(' + elements + ')');
     for (var element in elements){

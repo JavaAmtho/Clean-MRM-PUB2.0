@@ -1,7 +1,17 @@
+/**
+ *
+ * @constructor
+ */
 var TemplateLoader = function(){
 
 }
 
+/**
+ *
+ * @param url
+ * @param async
+ * @param callback
+ */
 TemplateLoader.forward = function(url,async,callback){
     $.ajax({
         url:url,
@@ -15,6 +25,12 @@ TemplateLoader.forward = function(url,async,callback){
     });
 }
 
+/**
+ *
+ * @param key
+ * @param callBack
+ * @param containerID
+ */
 TemplateLoader.loadTemplate = function(key,callBack,containerID){
     //This sets the default value for the containerElementID
     containerID = typeof containerID !== ('undefined'||"") ? containerID : "mainContainer";
@@ -33,6 +49,12 @@ TemplateLoader.loadTemplate = function(key,callBack,containerID){
 
 }
 
+/**
+ *
+ * @param data
+ * @param containerID
+ * @param styleName
+ */
 TemplateLoader.designScreen = function(data,containerID,styleName){
     var placeHolderElement = document.getElementById(containerID);
     placeHolderElement.innerHTML = data.html;
@@ -48,10 +70,19 @@ TemplateLoader.designScreen = function(data,containerID,styleName){
 
 }
 
+/**
+ *
+ * @param containerID
+ * @param styleName
+ */
 TemplateLoader.addStyleToContainer = function(containerID,styleName){
     $("#"+containerID).addClass(styleName);
 }
 
+/**
+ *
+ * @param events
+ */
 TemplateLoader.attachEvents = function(events){
     events=eval('(' + events + ')');
     for (var binding in events){
@@ -59,6 +90,10 @@ TemplateLoader.attachEvents = function(events){
     }
 }
 
+/**
+ *
+ * @param elements
+ */
 TemplateLoader.createElements = function(elements){
     elements=eval('(' + elements + ')');
     for (var element in elements){
