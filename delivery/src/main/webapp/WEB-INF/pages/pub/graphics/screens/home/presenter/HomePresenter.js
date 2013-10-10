@@ -463,16 +463,19 @@ HomePresenter.unHideAssortPanel = function () {
 }
 
 
-var regions = ['Germany', 'India', 'USA'];
-var targetGroups = ['Men', 'Women','Kids'];
-var groupTypes = ['Region', 'Target Group'];
-var masterTemplateList = new Array();
+var regions = ['Germany', 'India', 'USA'];          //
+var targetGroups = ['Men', 'Women','Kids'];         //static data for the dropdowns
+var groupTypes = ['Region', 'Target Group'];        //
 
-//Open the WBD URL in a popout window
-HomePresenter.openURL = function (reference) {
-	console.log(reference);
-    var urlToOpen = $(reference).children('.wbdURL').html();
-    urlToOpen = urlToOpen.replace(/&amp;/g, '&');
+/*
+ arguments : childPageInnerDiv - the respective child page inner div of the popout icon
+ return : void
+ Description : Open the WBD URL in a popout window
+ */
+HomePresenter.openURL = function (childPageInnerDiv) {
+    //Get the wbd url from the hidden data in the div
+    var urlToOpen = $(childPageInnerDiv).children('.wbdURL').html();
+    urlToOpen = urlToOpen.replace(/&amp;/g, '&'); //In case of any problems with wbd try uncommenting
     var config = EngineDataStore.getPublicationDetailsArray()["Config"];
     urlToOpen = urlToOpen.replace("../admin", config.host+config.context+"/admin");
     var screenParams = [
@@ -480,17 +483,22 @@ HomePresenter.openURL = function (reference) {
         'width=' + (screen.width - 100),
         'fullscreen=yes'
     ].join(',');
-    window.open(urlToOpen, '_blank', screenParams); // <- This is what makes it open in a new window.
+    window.open(urlToOpen, '_blank', screenParams); //Open url in popup window
 }
 
-//add click event once the WBD url has been received and also display the popout icon
-HomePresenter.addClickEventForWBDPopup = function (url, innerDiv) {
+/*
+ arguments : childPageInnerDiv - the respective child page inner div of the popout icon
+             url - the url that has been received from CS and need to be embedded into the child page
+ return : void
+ Description : display the popup icon and add a click event to it once the WBD url has been received
+                (called once the wbd has been created and the url is received)
+ */
+HomePresenter.addClickEventForWBDPopup = function (url, childPageInnerDiv) {
 	
-	var config = EngineDataStore.getPublicationDetailsArray()["Config"];
-    url = url.replace("../admin",  config.host+config.context+"/admin");
-    var $childPage = $(innerDiv);
+//	var config = EngineDataStore.getPublicationDetailsArray()["Config"];
+//    url = url.replace("../admin",  config.host+config.context+"/admin");
+    var $childPage = $(childPageInnerDiv);
     $childPage.children('.wbdURL').html(url);
-    //$childPage.attr('ondblclick', "event.stopPropagation()");
     $imageReference = $childPage.children('.popupImage');
     $imageReference.attr('onclick', "HomePresenter.openURL(this.parentNode)");
     $imageReference.removeClass('hidden');
@@ -499,35 +507,41 @@ HomePresenter.addClickEventForWBDPopup = function (url, innerDiv) {
     }, 1000);
 }
 
-//Make server call to create WBD according to the data from the page rules and get the url to open it
-HomePresenter.openWhiteBoard = function (divReference, event) {
+/*
+ arguments : childPageInnerDiv - the respective child page inner div of the popout icon
+ return : void
+ Description : Make server call to create WBD according to the data from the page rules and get the url to open it
+ */
+HomePresenter.openWhiteBoard = function (childPageInnerDiv) {
 
     var publicationID = GraphicDataStore.getCurrentPublication();
-    var $innerDiv = $(divReference);
-    if (!$innerDiv.hasClass('inner')) {
+    var $innerDiv = $(childPageInnerDiv);
+    /*if (!$innerDiv.hasClass('inner')) {
         $innerDiv = $innerDiv.children('.inner');
-    }
+    }*/
     var ruleID = $innerDiv.children('.ruleID').html();
     var logicalPageID = $innerDiv.children('.logicalPageID').html();
     GraphicDataStore.addRuleToLoadingList(ruleID);
-    CreateWBD.createWBD(ruleID, GraphicDataStore.getCurrentView() + "." + logicalPageID, publicationID, function (data) {
-        console.log(data);
+    CreateWBD.createWBD(ruleID, GraphicDataStore.getCurrentView() + "." + logicalPageID, publicationID,
+                            function (data) {
         if (data == 'error') {
             alert("Error creating WBD!!");
-            $('.childPages').trigger("loadingError",[ruleID]);
+            $('.childPages').trigger("loadingError",[ruleID]);  //trigger the loading error event
         }
         else {
-            $("[id = '"+logicalPageID+"']").children('.rule').children('.then').children('.dataDirty').html('1');
-            console.log($("[id = '"+logicalPageID+"']"))
-            GraphicDataStore.addAdditionalInformationToPageRules(data,ruleID,GraphicDataStore.getCurrentView() + "." + logicalPageID);
-            $('.childPages').trigger("loadingDone",[ruleID,data.editorURL]);
+            var $parentMasterPageRuleReference = $("[id = '"+logicalPageID+"']").children('.rule').children('.then');
+            //Set the parent master page data as dirty so that it gets reset later with the new wbd url and mamfileid
+            $parentMasterPageRuleReference.children('.dataDirty').html('1');
+            GraphicDataStore.addAdditionalInformationToPageRules(data,ruleID,
+                        GraphicDataStore.getCurrentView() + "." + logicalPageID);
+            $('.childPages').trigger("loadingDone",[ruleID,data.editorURL]);    //trigger the loading done event
         }
         GraphicDataStore.stopLoadingStatus(ruleID)
     });
     $innerDiv.children('.loading-overlay').toggleClass('hidden');       //toggle loading screen
-    $innerDiv.children('.loading-message').toggleClass('hidden');
+    $innerDiv.children('.loading-message').toggleClass('hidden');       //
 
-    /*jQuery.getJSON("http://14.141.2.211/CS13.0Trunk/admin/rest/whiteboard/3/"+ $(divReference).children('.inner').children('.templateName').html(),function(data){
+    /*jQuery.getJSON("http://14.141.2.211/CS13.0Trunk/admin/rest/whiteboard/3/"+ $(childPageInnerDiv).children('.inner').children('.templateName').html(),function(data){
      console.log("WBD created "+data);
      mamFileID = data;
      console.log("Wbd stillWorking : "+stillWorking);
@@ -535,10 +549,10 @@ HomePresenter.openWhiteBoard = function (divReference, event) {
      stillWorking = false;
      }
      else{
-     HomePresenter.createMergeList(mamFileID, json,$(divReference).children('.inner'));
+     HomePresenter.createMergeList(mamFileID, json,$(childPageInnerDiv).children('.inner'));
      }
-     console.log($(divReference).children('.inner').children('.assortment'))
-     jQuery.getJSON("Data/"+$(divReference).children('.inner').children('.assortment').html()+".json",function(data) {
+     console.log($(childPageInnerDiv).children('.inner').children('.assortment'))
+     jQuery.getJSON("Data/"+$(childPageInnerDiv).children('.inner').children('.assortment').html()+".json",function(data) {
      console.log("Assortment Loaded "+data);
      var json1 = "["
      $.each( data, function( key, val ) {
@@ -559,131 +573,146 @@ HomePresenter.openWhiteBoard = function (divReference, event) {
      console.log("Json stillWorking after : "+stillWorking);
      }
      else{
-     HomePresenter.createMergeList(mamFileID, json,$(divReference).children('.inner'));
+     HomePresenter.createMergeList(mamFileID, json,$(childPageInnerDiv).children('.inner'));
      }
      });*/
 }
 
 
-//Open up the child pages if they exist
-HomePresenter.expandPages = function (div, event) {
+/*
+ arguments : masterPageDiv - the respective child page inner div of the popout icon
+ return : void
+ Description : Open up the child pages if they exist
+ */
+function setClassNamesToChildPagesForFilterByCondition(childPageDiv) {
+    for (var j = 0; j < $dimensionValues.length; j++) {
+        var filterType = $($dimensionValues[j]).children('.groupType')[0].value;                                                                //logic written
+        if (filterType == 'Region') {
+            if ($(childPageDiv).hasClass('anyRegion')) {
+                $(childPageDiv).removeClass('anyRegion')
+            }
+        }
+        else if (filterType == 'Target Group') {
+            if ($(childPageDiv).hasClass('anyTargetGroup')) {
+                $(childPageDiv).removeClass('anyTargetGroup');
+            }
+        }
+        if (!$($dimensionValues[j]).hasClass('hidden')) {                //     for
+            $(childPageDiv).addClass($($dimensionValues[j]).children('.value')[0].value.toLowerCase()); // filtering
+        }                                                                //     logic
+    }                                                                    //
+}
+HomePresenter.expandCollapseChildPages = function (masterPageDiv, event) {
 
     var $container = $isotopeContainer;
     //Check if master page has been expanded into the child pages
-    if (!$(div).hasClass('opened')) {
-    	    
-    	    console.log("expand page");
-            var $dirtyFields = $(div).find('.dataDirty');
-            var isDirty = getDataDirtyFlag($dirtyFields);
-            if (isDirty) {
-                HomePresenter.setRules(div);
-            }
-            //If not then expand master page to child pages
-            //$(div).children('.expand').html("-");   //change '+' button to '-' to indicate expansion
-            $(div).children('.expand').css('background-image','url("../../../graphics/screens/home/images/collapse.png")');
+    if (!$(masterPageDiv).hasClass('opened')) {
+        //Expand the master page into its child pages
+            var $dirtyFields = $(masterPageDiv).find('.dataDirty'); //
+            var isDirty = getDataDirtyFlag($dirtyFields);           //Check if dirty(in case previously wbd created)
+            if (isDirty) {                                          //***NOT SURE IF I HAVE TO KEEP THIS*****
+                HomePresenter.setRules(masterPageDiv);              //***REMEMBER TO CHECK AND DELETE********
+            }                                                       //
+            //$(masterPageDiv).children('.expand').html("-");   //change '+' button to '-' to indicate expansion
+            $(masterPageDiv).children('.expand').css('background-image',
+                                        'url("../../../graphics/screens/home/images/collapse.png")');
             var $masterTemplate;
             var $assortment;
             var $itemsToInsert = new Array();
-            var $results = $(div).children('.rule').children('.then').children('.thenChild');
-            var $size = $results.length;
-            if ($size > 0) {
-                $(div).toggleClass('opened');
+            var $rules = $(masterPageDiv).children('.rule').children('.then').children('.thenChild');
+            var rulesCount = $rules.length;
+            if (rulesCount > 0) {   //if no rules then 'opened' class does not need to be added
+                $(masterPageDiv).toggleClass('opened');
             }
             //iterate through the rules
-            for (var i = 0; i < $size; i++) {
-                $values = $($results[i]).children('.rulesText')
-                $masterTemplate = $($results[i]).children('.template')[0].value;  //
-                $assortment = $($results[i]).children('.assortment')[0].value;    //Get all data
-                var ruleID = $($results[i]).children('.ruleID').html();           //to be used in
-                var wbdURL = $($results[i]).children('.wbdURL').html();           //Child pages
-                var mamFileID = $($results[i]).children('.mamFileID').html();     //
+            for (var i = 0; i < rulesCount; i++) {
+                $values = $($rules[i]).children('.rulesText')
+                $masterTemplate = $($rules[i]).children('.template')[0].value;  //
+                $assortment = $($rules[i]).children('.assortment')[0].value;    //Get all data
+                var ruleID = $($rules[i]).children('.ruleID').html();           //to be used in
+                var wbdURL = $($rules[i]).children('.wbdURL').html();           //Child pages
+                var mamFileID = $($rules[i]).children('.mamFileID').html();     //
 
+                var childPageDiv = document.createElement("div");     //create new div for the child page
+                var innerContent = '';
+                $(childPageDiv).addClass('anyTargetGroup');
+                $(childPageDiv).addClass('anyRegion');
+                $(childPageDiv).addClass('childPages');
 
-                var newDiv = document.createElement("div");     //create new div for the child page
-                var content = '';
-                $(newDiv).addClass('anyTargetGroup');
-                $(newDiv).addClass('anyRegion');
-                if ($(div).hasClass('odd')) {
-                    $(newDiv).addClass('odd');                               //According to whether odd
-                    content += "<div class='childPages inner odd' ";        //or even page set the class names
+                var childPageInnerDiv = document.createElement("div");
+                $(childPageInnerDiv).addClass("childPages");
+                $(childPageInnerDiv).addClass("inner");
 
+                if ($(masterPageDiv).hasClass('odd')) {
+                    $(childPageDiv).addClass('odd');                               //According to whether odd
+                    //innerContent += "<div class='childPages inner odd' ";        //or even page set the class names
+                    $(childPageInnerDiv).addClass("odd");
                 }
                 else {
-                    $(newDiv).addClass('even');
-                    content += "<div class='childPages inner even' ";
+                    $(childPageDiv).addClass('even');
+                    innerContent += "<div class='childPages inner even' ";
+                    $(childPageInnerDiv).addClass("even");
                 }
+
                 if (wbdURL != " ") {
-                    content += "ondblclick=''>";
-                    content += "<img onclick='HomePresenter.openURL(this.parentNode)' " +             //Add the popout icon
-                        "src='../../../graphics/screens/home/images/popup_icon.png' " +   //and set whether
-                        "class='popupImage'/>";                    //to be visible or not
-                    HomePresenter.addClickEventForWBDPopup(wbdURL, newDiv);
+                    $(childPageInnerDiv).attr('ondblclick','');
+//                    innerContent += "ondblclick=''>";
+                    innerContent += "<img onclick='HomePresenter.openURL(this.parentNode)' " +   //Add the popout icon
+                        "src='../../../graphics/screens/home/images/popup_icon.png' " +     //and set to be visible
+                        "class='popupImage'/>";                                             //with ondblclick
+                    HomePresenter.addClickEventForWBDPopup(wbdURL, childPageDiv);
                 }
                 else{
-                        content += "ondblclick='HomePresenter.openWhiteBoard(this,event)'>";
-                    content += "<img onclick='HomePresenter.openURL(this.parentNode)' " +             //Add the popout icon
-                        "src='../../../graphics/screens/home/images/popup_icon.png' " +   //and set whether
-                        "class='popupImage hidden'/>";                    //to be visible or not
+                    $(childPageInnerDiv).attr('ondblclick','HomePresenter.openWhiteBoard(this,event)');
+//                        innerContent += "ondblclick='HomePresenter.openWhiteBoard(this,event)'>";
+                    innerContent += "<img onclick='HomePresenter.openURL(this.parentNode)' " +   //Add the popout icon
+                        "src='../../../graphics/screens/home/images/popup_icon.png' " +     //and set to be
+                        "class='popupImage hidden'/>";                                      //invisible
                 }
 
                 var checkLoading = GraphicDataStore.checkIfRuleLoading(ruleID) ? "":" hidden";
 
-                content += "<div class='loading-overlay" + checkLoading + "' ondblclick='event.stopPropagation()'></div>" +
+                innerContent += "<div class='loading-overlay" + checkLoading + "' ondblclick='event.stopPropagation()'></div>" +
                     "<img ondblclick='event.stopPropagation()' " +                    //Add the loading screen
                     "src='../../../graphics/screens/home/images/load.gif' " +         //image and background
                     "class='loading-message"+ checkLoading +"'/>"                                       //        div
 
-                $(newDiv).addClass('childPages');
 
-
-                $dimensionValues = $($results[i]).children('.whenChild');
-                
-                
+                var iTHRuleReference = $rules[i];
+                $dimensionValues = $(iTHRuleReference).children('.whenChild');
 
                 if ($dimensionValues.length > 0) {                                       //
-                    for (var j = 0; j < $dimensionValues.length; j++) {
-                        var filterType = $($dimensionValues[j]).children('.groupType')[0].value;                                                                //logic written
-                        if(filterType == 'Region'){
-                            if($(newDiv).hasClass('anyRegion')){
-                                $(newDiv).removeClass('anyRegion')
-                            }
-                        }
-                        else if(filterType == 'Target Group'){
-                            if($(newDiv).hasClass('anyTargetGroup')){
-                                $(newDiv).removeClass('anyTargetGroup');
-                            }
-                        }
-                        if (!$($dimensionValues[j]).hasClass('hidden')) {                //     for
-                            $(newDiv).addClass($($dimensionValues[j]).children('.value')[0].value.toLowerCase()); // filtering
-                        }                                                                //     logic
-                    }                                                                    //
+                    setClassNamesToChildPagesForFilterByCondition(childPageDiv);
                 }
-                content += "<div class='childPageName' >" + ruleID + "</div>";
-                content += "<p class='hidden logicalPageID'>" + div.id + "</p>";              //
-                content += "<p class='hidden ruleID'>" + ruleID + "</p>";                     //Data stored
-                content += "<p class='childPagesText'>Mstr Templ ID: </p>";
-                content += "<p class='childPagesText data templateName' >" + $masterTemplate + "</p>";//into child
-                content += "<p class='childPagesText'>Assrtmnt Name: </p>";
-                content += "<p class='childPagesText data assortment' >" + $assortment + "</p>";      //
-                content += "<p class='hidden data wbdURL'> " + wbdURL + " </p>";              //
-                content += "<p class='hidden data mamFileID'>" + mamFileID + "</p>";          //
-                content += "</div>";
-                newDiv.innerHTML = newDiv.innerHTML + content;
 
-                $itemsToInsert[i] = newDiv;
+                innerContent += "<div class='childPageName' >" + ruleID + "</div>";
+                innerContent += "<p class='hidden logicalPageID'>" + masterPageDiv.id + "</p>";
+                innerContent += "<p class='hidden ruleID'>" + ruleID + "</p>";
+                innerContent += "<p class='childPagesText'>Mstr Templ ID: </p>";
+                innerContent += "<p class='childPagesText data templateName' >" + $masterTemplate + "</p>";
+                innerContent += "<p class='childPagesText'>Assrtmnt Name: </p>";
+                innerContent += "<p class='childPagesText data assortment' >" + $assortment + "</p>";
+                innerContent += "<p class='hidden data wbdURL'> " + wbdURL + " </p>";
+                innerContent += "<p class='hidden data mamFileID'>" + mamFileID + "</p>";
+//                innerContent += "</div>";
+                $(childPageInnerDiv).html(innerContent);
+                $(childPageDiv).html(childPageInnerDiv);
+//                childPageDiv.innerHTML = childPageDiv.innerHTML + innerContent;
+
+                $itemsToInsert[i] = childPageDiv;
             }
-            $container.isotope('insert', $($itemsToInsert), $(div));
+            $container.isotope('insert', $($itemsToInsert), $(masterPageDiv));
         }
     else {
-        //$(div).children('.expand').html("+");
-        $(div).children('.expand').css('background-image','url("../../../graphics/screens/home/images/expand.png")');
-        var $logicalPageIDOfParentOfChild = $('.childPages').children('.inner').children('.logicalPageID:contains(' + div.id + ')');
+        //$(masterPageDiv).children('.expand').html("+");
+        $(masterPageDiv).children('.expand').css('background-image','url("../../../graphics/screens/home/images/expand.png")');
+        //jquery reference of all children having the parent's logicalpage id
+        var $logicalPageIDOfParentOfChild = $('.childPages').children('.inner').children('.logicalPageID:contains(' + masterPageDiv.id + ')');
         var $childPages = $('.childPages').has($logicalPageIDOfParentOfChild);
         $childPages.unbind("loadingError");
-//        $container.isotope('remove', $('.' + $(div)[0].id));
+        $childPages.unbind("loadingDone");
         $container.isotope('remove',$childPages);
-        //$('.' + $(div)[0].id).unbind("loadingError");
-        $(div).toggleClass('opened');
+        $(masterPageDiv).toggleClass('opened');
     }
 
 
@@ -852,11 +881,10 @@ HomePresenter.saveRulesData = function (div) {
         finalJson[columnName] = GraphicDataStore.getCurrentView() + "." + div.id;
         var columnName = "pageRules";
         finalJson[columnName] = pageRuleArr;
-        alert("Saved Successfully");
         //Sending Save call
         SavePageRules.save("saveRules", finalJson, HomePresenter.onSaveSuccess);
         GraphicDataStore.addToPageRules(finalJson);
-
+        alert("Saved Successfully");
 
         for (var i = 0; i < $dirtyFields.length; i++) {
             $dirtyFields[i].innerHTML = '0';
@@ -872,27 +900,6 @@ HomePresenter.saveRulesData = function (div) {
 HomePresenter.onSaveSuccess = function (data) {
     console.log(data);
 }
-
-HomePresenter.toggleRulesView = function (div) {
-    $(div).toggleClass('rules-opened');
-    $isotopeContainer.isotope('reLayout');
-    $(div).children(".openRules").toggle();
-    $(div).children(".rule").toggle();
-    $(div).children(".name").toggle();
-    $(div).children(".type").toggle();
-    $(div).children(".buttonsHolder").toggle();
-}
-
-
-function getDataDirtyFlag($dirtyFields) {
-    var isDirty = false;
-    for (var i = 0; i < $dirtyFields.length; i++) {
-        var checkDirty = ($dirtyFields[i].innerHTML === '1');
-        isDirty |= checkDirty;
-    }
-    return isDirty;
-}
-
 
 HomePresenter.setRules = function (div) {
     console.log("***setRules");
@@ -1032,7 +1039,41 @@ HomePresenter.setRules = function (div) {
     });
 }
 
+/*
+ arguments : parentMasterPageDiv - the respective master page div reference
+ return : void
+ Description : toggle each of the elements that need to be removed or added according to
+                whether the rules menu is opened or closed
+ */
+HomePresenter.toggleRulesView = function (parentMasterPageDiv) {
+    $(parentMasterPageDiv).toggleClass('rules-opened');         //enlarge the master page size to fir the rules menu
+    $(parentMasterPageDiv).children(".openRules").toggle();     //toggle view of the open rules menu button
+    $(parentMasterPageDiv).children(".rule").toggle();          //toggle the rules menu(all the drop-downs)
+    $(parentMasterPageDiv).children(".name").toggle();          //toggle the master page name display
+    $(parentMasterPageDiv).children(".buttonsHolder").toggle(); //toggle the div behind the buttons
 
+    $isotopeContainer.isotope('reLayout');  //re-layout the isotope positioning once the rules menu has been opened
+}
+
+/*
+ arguments : $dirtyFields - jquery reference of all the data dirty flags
+ return : boolean - if overall data is dirty or not
+ Description : check if any of the rules are dirty
+ */
+function getDataDirtyFlag($dirtyFields) {
+    var isDirty = false;
+    for (var i = 0; i < $dirtyFields.length; i++) {
+        var checkDirty = ($dirtyFields[i].innerHTML === '1');
+        isDirty |= checkDirty;
+    }
+    return isDirty;
+}
+
+/*
+ arguments : parentMasterPageDiv - the respective master page div reference
+ return : void
+ Description : check if rules exist and display the expand rules button
+ */
 HomePresenter.displayExpandRulesButton = function(parentMasterPageDiv) {
     var $rules = $(parentMasterPageDiv).children('.rule').children('.then').children('.thenChild');
     if ($rules.length > 0) {
@@ -1040,17 +1081,21 @@ HomePresenter.displayExpandRulesButton = function(parentMasterPageDiv) {
     }
 }
 
-
+/*
+ arguments : parentMasterPageDiv - the respective master page div reference
+ return : void
+ Description : Open the rules configuration menu
+ */
 HomePresenter.openRulesConfigurationMenu = function(parentMasterPageDiv) {
+    //When opening the rules configuration menu the expand button(if visible) needs to be hidden
     $(parentMasterPageDiv).children(".expand").css('display',"none");
-    //open the rules configuration menu
     HomePresenter.toggleRulesView(parentMasterPageDiv);
 }
 
 /*
- arguments : groupTypeDropDown - reference to the master page div
+ arguments : parentMasterPageDiv - reference to the master page div
  return : void
- Description : Open or close the rules configuration menu
+ Description : Open or close the rules configuration menu according to situation
  */
 HomePresenter.toggleOpenCloseRules = function (parentMasterPageDiv) {
 
@@ -1132,7 +1177,7 @@ HomePresenter.toggleOpenCloseRules = function (parentMasterPageDiv) {
     else{
         //When child pages have been expanded and rules configuration menu button clicked
         //collapse all the child pages and open the rules configuration menu
-        HomePresenter.expandPages(parentMasterPageDiv);
+        HomePresenter.expandCollapseChildPages(parentMasterPageDiv);
         HomePresenter.openRulesConfigurationMenu(parentMasterPageDiv);
 
     }
