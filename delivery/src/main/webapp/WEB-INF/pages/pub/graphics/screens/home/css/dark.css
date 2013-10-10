@@ -1,36 +1,67 @@
-.darktabs {
-    border-bottom-color: #040404;
-}
+/******* GLOBAL CSS *******/
 
-.menubar {
-    width: 10%;
-    float: left;
-    position: relative;
-    margin-left: 0px;
-    margin-top: 0px;
-    min-height: 600px;
+html{
     height: 100%;
-    background-color: #373737;
-    border-top: 1px solid #100E10;
-    border-bottom: 1px solid #100E10;
-
 }
 
-.assestsJQList {
-    position: relative;
-
+body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: 100%;
+    min-height: 100%;
+    color: #333333;
+    background-color: #ececec;
+    font-family: calibri;
+    font-size: 90%;
+    overflow: hidden;
 }
 
+h1, h2, h3 {
+    margin: .8em 0 .2em 0;
+    padding: 0;
+}
+
+/****** CSS FOR DYNATREE ******/
 #leftTree {
     padding-left: 15px;
     margin-top: 5px;
 }
 
+/****** CSS FOR LOGIN SCREEN ******/
+
+.loginViewContainerCSS {
+    padding: 15px 20px 10px 10px;
+}
+
+.legendCSS {
+    padding: 0px 0px 0px 0px;
+}
+
+/******* CSS FOR HEADER STARTS HERE ********/
+
+.header {
+    position: relative;
+    top: 0px;
+    clear: both;
+    float: left;
+    width: 100%;
+    height: 50px;
+    overflow: hidden;
+    background-color: #343434;
+
+}
+
 .logo {
     padding: 25px 0 0 0;
+    /*
+        padding: 15px 20px 10px 10px;
+    */
     overflow: hidden;
     /*background-image: 'url("'+EngineGraphicsData.getBaseUrl()+'+")';*/
-    background-image: url("/delivery/pages/pub/graphics/screens/home/images/cs_logo.png");
+    /*
+        background-image: url("/delivery/pages/mrm/graphics/screens/home/images/cs_logo.png");
+    */
 }
 
 .profileLogo {
@@ -52,352 +83,29 @@
 
 .logobounce {
     height: 64px;
-    width: 300px;
+    width: 400px;
     float: left;
 }
 
 .logoutdiv {
-    height: 64px;
-    width: 64px;
+    height: 40px;
+    width: 70px;
     float: right;
+    top: 0px;
 }
 
-#leftbar {
-    width: 25px;
-    background-color: #262626;
-    float: left;
-    height: 100%;
+.animatedbounce {
+    margin: 17px 0 0 10px;
+    height: 30%;
+    width: 70%;
 }
 
 .logout {
     border: #fbb450;
     float: right;
-    margin: 15px 10px 0 0;
+    margin: 18px 15px 0 0;
     visibility: hidden;
-    height: 40px;
-    width: 40px;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    /* This removes the border around the viewport in old versions of IE */
-    width: 100%;
-    min-height: 100%;
-    color: #333333;
-    background-color: #ececec;
-    font-family: calibri;
-    /* Minimum width of layout - remove line if not required */
-    /* The min-width property does not work in old versions of Internet Explorer */
-    font-size: 90%;
-    overflow: hidden;
-}
-
-a {
-    color: #369;
-}
-
-/*a:hover {
-    color: #fff;
-    background: #369;
-    text-decoration: none;
-}*/
-
-h1, h2, h3 {
-    margin: .8em 0 .2em 0;
-    padding: 0;
-}
-
-/*p {
-    margin:.4em 0 .8em 0;
-    padding:0;
-}*/
-img {
-    margin: 0px 0 5px;
-}
-
-#ads img {
-    display: block;
-    padding-top: 10px;
-}
-
-/* Header styles */
-.header {
-    position: relative;
-    background-color: #343434;
-    top: 0px;
-    clear: both;
-    float: left;
-    width: 100%;
-    height: 50px;
-    border-bottom: 2px solid #565656;
-    overflow: hidden;
-
-}
-
-.animatedbounce {
-    margin: 12px 0 0 10px;
-}
-
-/*#header p,
-#header h1,
-#header h2 {
-    padding:.4em 15px 0 15px;
-    margin:0;
-}
-#header ul {
-    clear:left;
-    float:left;
-    width:100%;
-    list-style:none;
-    margin:10px 0 0 0;
-    padding:0;
-}
-#header ul li {
-    display:inline;
-    list-style:none;
-    margin:0;
-    padding:0;
-}
-#header ul li a {
-    display:block;
-    float:left;
-    margin:0 0 0 1px;
-    padding:3px 10px;
-    text-align:center;
-    background:#eee;
-    color:#000;
-    text-decoration:none;
-    position:relative;
-    left:15px;
-    line-height:1.3em;
-}
-#header ul li a:hover {
-    background:#369;
-    color:#fff;
-}
-#header ul li a.active,
-#header ul li a.active:hover {
-    color:#fff;
-    background:#000;
-    font-weight:bold;
-}
-#header ul li a span {
-    display:block;
-}*/
-/* 'widths' sub menu */
-#layoutdims {
-    clear: both;
-    background: #eee;
-    border-top: 4px solid #000;
-    margin: 0;
-    padding: 6px 15px !important;
-    text-align: right;
-}
-
-/* column container */
-.colmask {
-    position: relative; /* This fixes the IE7 overflow hidden bug */
-    /*clear:both;*/
-    float: left;
-    min-width: 500px;
-    width: 100%; /* width of whole page */
-    height: 600px !important;
-    /*overflow:hidden;		*//* This chops off any overhanging divs */
-}
-
-/* common column settings */
-.colleft {
-    float: left;
-    width: 20%;
-    height: 100%;
-    min-height: 500px;
-    position: relative;
-    margin-left: 0px;
-    overflow-x: scroll;
-    overflow-y: scroll;
-    overflow: visible;
-    background-color: white;
-}
-
-.colmid {
-    float: left;
-    position: relative;
-    margin-left: 0px;
-    height: 100px;
-    min-height: 500px;
-    width: 0.5%;
-    background-color: #BBBBBB;
-}
-
-.colmenu {
-    float: left;
-    margin-left: 0px;
-    position: relative;
-    width: 30px;
-    background-color: #000000;
-    height: 100%;
-
-}
-
-.colright {
-    float: left;
-    position: relative;
-    width: 80%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    height:auto;
-    margin-left: 0px;
-}
-
-/* 2 Column (left menu) settings */
-.leftmenu {
-    background: #fff; /* right column background colour */
-}
-
-.leftmenu {
-    right: 75%; /* right column width */
-    background: #f4f4f4; /* left column background colour */
-}
-
-.leftmenu .col1 {
-    width: 71%; /* right column content width */
-    left: 102%; /* 100% plus left column left padding */
-}
-
-.leftmenu .col2 {
-    width: 21%; /* left column content width (column width minus left and right padding) */
-    left: 6%; /* (right column left and right padding) plus (left column left padding) */
-}
-
-.leftmenu .col3 {
-    display: inline-block;
-    vertical-align: bottom;
-    width: 2%;
-    left: 6%;
-    height: 550px;
-    /*margin-top: -99999px;*/
-    background: #888; /* (right column left and right padding) plus (left column left padding) */
-}
-
-.separator {
-    display: inline-block;
-    vertical-align: bottom;
-    width: 5%;
-    left: 6%;
-    height: 99999px;
-    margin-top: -99999px;
-    background: #888;
-}
-
-/* Footer styles */
-/*
-#footer {
-    clear:both;
-    float:left;
-    width:100%;
-    border-top:1px solid #000;
-
-}
-*/
-/*
-.footer p {
-  */
-/*  padding:10px;
-    margin:0;*//*
-
-    font-size: 15px;
-}
-*/
-
-/*
-Top Bar Animation Section starts
-  */
-.selectLblCSS {
-    text-align: center;
-    background-image: url('/delivery/pages/pub/graphics/screens/home/images/grad.png');
-    background-repeat: repeat-x;
-    font-family:tahoma;
-    font-size: 12px;
-    height: auto;
-    color: #505050;
-    font-weight: bolder;
-    /* padding-top: 5px;*/
-    /* background-color: #EEEEEE;*/
-    cursor: pointer;
-
-
-
-}
-
-.customSelectCSS {
-    position: relative;
-    width: 80%;
-}
-
-.mainAnimationContainerCSS {
-    vertical-align: middle;
-    background-color: white;
-    min-height: 35px;
-    height: auto;
-    padding: 3px;
-    display: none;
-
-    border-bottom: 1px solid #bbbbbb;
-}
-
-.formatTxt {
-    margin: 5px;
-    vertical-align: middle;
-    width: auto;
-    /* min-height: 27px;*/
-    height: auto;
-    line-height: 16px;
-    /* background-color: #EEEEEE;*/
-    background-image: url('/delivery/pages/pub/graphics/screens/home/images/grad.png');
-    background-repeat: repeat-x;
-    float: left;
-    text-align: center;
-    font-size: 12px;
-    font-weight: bolder;
-    font-family: tahoma;
-    color: #505050;
-
-    /* border-bottom: 1px solid #BBBBBB;*/
-
-    margin-left: 10px;
-}
-
-/*
-Top Bar Animation Section Ends
-  */
-
-/*
-    * CSS designed for index.html
-    * Created by Ravi Sharma.
-    * User: cs6
-    * Date: 25/07/13
-    * Time: 1:30 PM
-*/
-
-
-html{
-    height: 100%;
-}
-
-.holder {
-    min-height: 100%;
-    position: relative;
-}
-
-/*p{
-    font-family: arial;
-    font-size: 14pt;
-}*/
-
-.logo {
-    padding: 15px 20px 10px 10px;
+    width: 70px;
 }
 
 .logoutBtnCSS {
@@ -406,94 +114,12 @@ html{
     margin: 15px 10px 0px 0px;
 }
 
-/*
-Top Bar Animation Section starts
-  */
+/******* CSS FOR HEADER  ENDS HERE ********/
 
-/* Top Bar Animation Section Ends  */
 
-/*
-.header{
-    height: 60px;
-    clear:both;
-    float:left;
-    width:100%;
-    border-bottom:1px solid #000;
-}*/
-
-.loginViewContainerCSS {
-    padding: 15px 20px 10px 10px;
-}
-
-.legendCSS {
-    padding: 0px 0px 0px 0px;
-}
-
-.mainContainer {
-    height: 630px;
-    float: left;
-    position: relative;
-    width: 100%;
-    margin-top: 0px;
-    overflow: auto;
-    border-bottom: 1px solid #bbb;
-    /*position: relative;*/
-}
-
-.container {
-    width: 100%;
-    padding-left: 100px;
-    background-color: white;
-    border-bottom: 2px solid #565656;
-}
-
-.UIContainer {
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    position: absolute;
-    background-color: #999999;
-}
-
-#leftPanel {
-    width:100%;
-    height: 100%;
-    float:left;
-    position: relative;
-    background-color: white;
-    min-height: 600px;
-    overflow:auto;
-    /* border-right: #0e0e0e solid thin;*/
-    margin-left: 0px;
-    margin-top: 0px;
-}
-
-#rightPanel {
-    height: 100%;
-    width: 100%;
-    margin-top: 0px;
-    float: left;
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: white;
-}
-
-#lefttree {
-    padding-left: 5px;
-}
-
-#rightPanelView {
-    height: 100%;
-    width: 98.5%;
-    float: left;
-    position: relative;
-    overflow-x: hidden;
-}
+/****** CSS FOR FOOTER ******/
 
 .footer {
-    /*float: left;*/
     position: relative;
     background-image: url('/delivery/pages/pub/graphics/screens/home/images/grad.png');
     height: 27px;
@@ -507,7 +133,6 @@ Top Bar Animation Section starts
 }
 
 #footertxt {
-
     margin-top: 5px;
     text-align: center;
     font-size: 15px;
@@ -515,34 +140,112 @@ Top Bar Animation Section starts
     font-family: calibri;
 }
 
-.notificationCSS {
+/****** CSS FOR DARK GREY BAR ON THE LEFT (CURRENTLY REMOVED-OHD VERSION)*******/
 
-    font-family: "verdana";
-    font-size: 10px;
+#leftbar {
+    width: 25px;
+    background-color: #262626;
+    float: left;
+    height: 100%;
+}
+
+/******* CSS FOR DIV CONTAINING LEFT AND RIGHT PANELS *******/
+
+.colmask {
+    position: relative;
+    float: left;
+    min-width: 500px;
+    width: 100%;
+    height: 600px !important;
+}
+
+
+/******* CSS FOR SELECT VIEW (CURRENTLY DISABLED_OHD VERSION) *******/
+
+.mainAnimationContainerCSS {
+    vertical-align: middle;
+    background-color: white;
+    min-height: 35px;
+    height: auto;
+    padding: 3px;
+    display: none;
+    border-bottom: 1px solid #bbbbbb;
+}
+
+.selectLblCSS {
     text-align: center;
-    height: 20px;
-
-    border: #0e0e0e solid thin;
-    /*
-    border-right: #0e0e0e solid thin;
-    border-bottom: #0e0e0e solid thin;
-      */
-    position: fixed;
-
-    left: 45%;
-    margin-left: -150px;
-    top: 40px;
-    background-color: #bfbfbf;
-
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
-.notificationTxtCSS {
+    background-image: url('/delivery/pages/pub/graphics/screens/home/images/grad.png');
+    background-repeat: repeat-x;
+    font-family:tahoma;
     font-size: 12px;
+    height: auto;
+    color: #505050;
+    font-weight: bolder;
+    cursor: pointer;
 }
+
+#viewOptionNew{
+    width: 150px;
+    height: 24px;
+    overflow: hidden;
+    float: right;
+    right: 10px;
+    position: absolute;
+    display: none;
+}
+
+
+/******* CSS FOR CONTAINER HOLDING COLMASK *******/
+
+.mainContainer {
+    height: 630px;
+    float: left;
+    position: relative;
+    width: 100%;
+    margin-top: 0px;
+    overflow: auto;
+    border-bottom: 1px solid #bbb;
+}
+
+
+/******* CSS FOR LEFT PANEL CONTAINING TREE *******/
+
+#leftPanel {
+    width:100%;
+    height: 100%;
+    float:left;
+    position: relative;
+    background-color: white;
+    min-height: 600px;
+    overflow:auto;
+    margin-left: 0px;
+    margin-top: 0px;
+}
+
+
+/******* CSS FOR RIGHT PANEL *******/
+
+#rightPanel {
+    height: 100%;
+    width: 100%;
+    margin-top: 0px;
+    float: left;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+}
+
+#rightPanelView {
+    height: 100%;
+    width: 98.5%;
+    float: left;
+    position: relative;
+    overflow-x: hidden;
+}
+
+
+/******* CSS FOR DIV ABOVE RIGHT PANEL VIEW *******/
 
 #dim {
     position: relative;
@@ -554,8 +257,6 @@ Top Bar Animation Section starts
     height: 100%;
 }
 
-/* Right hand side Panel viewHolderCSS */
-
 .viewHolderCSS {
     padding: 0px;
     position: relative;
@@ -565,11 +266,9 @@ Top Bar Animation Section starts
     height: 100%;
     overflow-y: auto;
     min-height: 550px;
-    /* overflow-x:scroll;
-     overflow-y: scroll;*/
 }
 
-/* CSS for Assortment Panel*/
+/********* CSS FOR ASSORT PANEL STARTS ************/
 
 #assortPanel {
     margin-top: 10px;
@@ -585,8 +284,6 @@ Top Bar Animation Section starts
     z-index: 9999;
     background-position: 30% 30%;
 }
-
-
 
 #assortPanelHeader {
     position: relative;
@@ -623,12 +320,10 @@ Top Bar Animation Section starts
     text-align: center;
 }
 
-#asBTN {
-    margin-top: 15px;
+/********* CSS FOR ASSORT PANEL ENDS ************/
 
-}
 
-/* CSS for laeft slide Panel for Assortment*/
+/********* CSS FOR RIGHT SLIDING PANEL WITH MENU BAR **********/
 
 #rightMenuBar {
     z-index: 1000;
@@ -643,8 +338,10 @@ Top Bar Animation Section starts
     border-top: 1px solid #BBBBBB;
 }
 
-#panel {
 
+/**** Panel Containing PIM/MAM Tree, Products and Search ****/
+
+#panel {
     text-align: center;
     color: #505050;
     font-family: tahoma;
@@ -668,6 +365,8 @@ Top Bar Animation Section starts
    display: none;
 
 }
+
+/**** Header for Panel ****/
 
 .assetType {
     padding-top: 5px;
@@ -700,7 +399,6 @@ Top Bar Animation Section starts
     border-top-right-radius: 10px;
     margin-top: 5px;
     margin-bottom: 5px;
-
 }
 
 #assetsTree {
@@ -711,33 +409,23 @@ Top Bar Animation Section starts
     background-color: white;
     border-top: 1px solid #BBBBBB;
     border-bottom: 1px solid #BBBBBB;
-    /* border-left: 1px solid #BBBBBB;*/
-    /* border-right: 1px solid #BBBBBB;*/
     top: 0px;
     width: 100%;
     height: 280px;
     text-align: left;
-
 }
 
 #assetDetails {
     overflow-x: auto;
-    /*
-        overflow-y: auto;
-    */
     font-weight: lighter;
     font-style: italic;
     margin-top: 3px;
     background-color: white;
     border-top: 1px solid #BBBBBB;
     border-bottom: 1px solid #BBBBBB;
-    /* border-left: 1px solid #BBBBBB;*/
-    /* border-right: 1px solid #BBBBBB;*/
-
     top: 0px;
     width: 100%;
     min-height: 250px;
-
 }
 
 #assetSearch input {
@@ -749,29 +437,64 @@ Top Bar Animation Section starts
     width: 98%;
 }
 
+/**** PIM MAM MIM Buttons ****/
+
 .rightMenu {
     border-bottom: 1px solid #BBBBBB;
     width: 30px;
     height: 30px;
-
 }
 
 #btnPIM {
     background-image: url("../images/icons/PIM.png");
-
 }
 
 #btnMIM {
     background-image: url("../images/icons/MIM.png");
-
 }
 
 #btnMAM {
     background-image: url("../images/icons/MAM.png");
-
 }
 
-/* Tile, List and Detail View Item Renderer CSS Section Starts */
+/******** Tile, List and Detail View Item Renderer CSS Section Starts **********/
+
+.tileBtnCSS {
+    /*background: 'url("'+EngineDataStore.getBaseURL()+'graphics/screens/home/images/icons/tile.png")';*/
+    background-image: url("../images/icons/tile.png");
+    background-repeat: no-repeat;
+    border: 0px;
+    width: 28px;
+    height: 22px;
+    margin-top: 2px;
+    float: right;
+    margin-right: 0px;
+}
+
+.listBtnCSS {
+    /*background: 'url("'+EngineDataStore.getBaseURL()+'graphics/screens/home/images/icons/list.png")';*/
+    background-image: url("../images/icons/list.png");
+    background-repeat: no-repeat;
+    border: 0px;
+    width: 28px;
+    height: 22px;
+    margin-top: 2px;
+    float: right;
+    margin-right: 6px;
+}
+
+.detailBtnCSS {
+    /*background: 'url("'+EngineDataStore.getBaseURL()+'graphics/screens/home/images/icons/detail.png")';*/
+    background-image: url("../images/icons/detail.png");
+    background-repeat: no-repeat;
+    border: 0px;
+    width: 28px;
+    height: 22px;
+    margin-top: 2px;
+    float: right;
+    margin-right: 6px;
+}
+
 .tileImgCSS {
     position: absolute;
     top: 50px;
@@ -807,7 +530,6 @@ Top Bar Animation Section starts
 
 .tileViewImgTxtCSS {
     position: absolute;
-
     font-size: 12px;
     text-align: center;
     left: -1px;
@@ -885,138 +607,51 @@ Top Bar Animation Section starts
     width: 95%;
     padding: 5px;
     margin: 5px;
-
 }
 
 .viewOptionCSS {
     position: relative;
-    /*background: 'url("'+EngineDataStore.getBaseURL()+'graphics/screens/home/images/icons/tile.png")';*/
-    /*
-        background-image: url('../images/icons/');
-    */
     background-repeat: repeat-x;
-    /*display: none;*/
-
-    /* background-color:#777777;*/
     padding-top: 2px;
     float: left;
     height: 28px;
-    /*height: auto;*/
     width: 100%;
     border-bottom: 1px solid #BBBBBB;
     background-image: linear-gradient(rgb(248, 248, 248), rgb(228, 229, 231));
-}
-
-.tileBtnCSS {
     /*background: 'url("'+EngineDataStore.getBaseURL()+'graphics/screens/home/images/icons/tile.png")';*/
-    background-image: url("../images/icons/tile.png");
-    background-repeat: no-repeat;
-    border: 0px;
-    width: 28px;
-    height: 22px;
-    margin-top: 2px;
-    float: right;
-    margin-right: 0px;
-
 }
 
-.listBtnCSS {
-    /*background: 'url("'+EngineDataStore.getBaseURL()+'graphics/screens/home/images/icons/list.png")';*/
-    background-image: url("../images/icons/list.png");
-    background-repeat: no-repeat;
-    border: 0px;
-    width: 28px;
-    height: 22px;
-    margin-top: 2px;
-    float: right;
-    margin-right: 6px;
-
-}
-
-.detailBtnCSS {
-    /*background: 'url("'+EngineDataStore.getBaseURL()+'graphics/screens/home/images/icons/detail.png")';*/
-    background-image: url("../images/icons/detail.png");
-    background-repeat: no-repeat;
-    border: 0px;
-    width: 28px;
-    height: 22px;
-    margin-top: 2px;
-    float: right;
-    margin-right: 6px;
-}
-
-/* Tile, List and Detail View Item Renderer CSS Section Ends */
-/*
-
-#listBoxContentsubtab1{
-
-    height:100% !important;
-    width: 100% !important;
-
-
-}
-
-#listBoxContentsubtab1 > div
-{
-    max-height: 400px !important;
-    height: auto !important;
-    width: 100% !important;
-    overflow-y: scroll;
-}
-
-.jqx-listitem-state-normal{
-    width:100% !important;
-}
-
-.jqx-listitem-element{
-    margin-top: 4px;
-    visibility: visible !important;
-    border: 1px solid #EEEEEE;
-}
-
-#listBoxContentsubtab1 span{
-    visibility: visible !important;
-}
-
-.subtab2{
-    overflow-y: auto;
-}*/
-
+/******* CSS OVERRIDING JQX LIST (LIST IN ASSORTMENT PANEL AND DETAILS OF ITEMS FROM PIM MAM TREE) *********/
 .jqx-listitem-state-normal {
     height: 58px !important;
     position: relative !important;
     border: 1px solid #BBBBBB !important;
     float: left !important;
     margin: 1px !important;
+    font-family: tahoma !important;
+    width: 72% !important;
     background-image: linear-gradient(left bottom,  #fefefc 15%, #ededeb 100%) !important) ;
     background-image: -o-linear-gradient(left bottom,  #fefefc 15%, #ededeb 100%) !important);
     background-image: -moz-linear-gradient(left bottom, #fefefc 15%, #ededeb 100%) !important;
     background-image: -webkit-linear-gradient(left bottom, #fefefc 15%, #ededeb 100%) !important);
     background-image: -ms-linear-gradient(left bottom,  #fefefc 15%, #ededeb 100%) !important);
     box-shadow: 2px 2px 7px 2px #bbb !important;
-    font-family: tahoma !important;
-
-    width: 72% !important;
-    /*  padding: 5px !important;
-      margin: 5px !important;*/
 }
 
 .jqx-listitem-element{
     height: 60px !important;
-
 }
 
+
+/***** DIV CONTAINING GANTT COMPONENT ******/
 #mrmGanttChart{
     min-height: 285px;
     height: 100%;
     width: 100%;
     z-index: 9;
-    /*
-        resize: vertical;
-    */
 }
 
-/************************PAGE STUFF STARTS!!!!!********************/
+/********* CSS FOR PAGE STUFF STARTS **********/
 
 .masterPage {
     z-index: 100;
@@ -1027,7 +662,6 @@ Top Bar Animation Section starts
     float: left;
     position: relative;
     color: #222;
-
     border: 1px solid #ccc;
     box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3), 1px 1px 3px rgba(0, 0, 0, 0.9);
     overflow: visible;
@@ -1040,18 +674,11 @@ Top Bar Animation Section starts
 }
 
 .childPages {
-
     width: 120px;
     height: 160px;
     padding: 0;
     margin-left: 20px;
     margin-top: 20px;
-    /*margin: 20px;
-    float: left;
-    position: relative;
-*//*
-    padding: 8px;
-*/
     color: #222;
     background: transparent;
     overflow: hidden;
@@ -1080,12 +707,6 @@ Top Bar Animation Section starts
     transition: all 0.2s ease-in;
 }
 
-
-/*.childPages .inner:hover {
-    text-shadow: 0 0 5px white, 0 0 5px white;
-    *//*cursor: pointer;*//*
-}*/
-
 .masterPage.odd {
     background-color: #638FDB;
 }
@@ -1101,7 +722,6 @@ Top Bar Animation Section starts
 .childPages.even.inner {
     background-color: #C9CDDB;
 }
-
 
 .popupImage{
     position:absolute;
@@ -1125,7 +745,6 @@ Top Bar Animation Section starts
     cursor:pointer;
 }
 
-
 .masterPage > .type {
     line-height: 1.5em;
     bottom: 20%;
@@ -1133,7 +752,6 @@ Top Bar Animation Section starts
     font-size: 11px;
     position: absolute;
 }
-
 
 .childPageName {
     margin-top:5px;
@@ -1144,7 +762,6 @@ Top Bar Animation Section starts
     font-family: tahoma;
     font-weight: bold;
     text-shadow: 1px 1px 2px grey;
-
     color: #FFF;
 }
 
@@ -1154,49 +771,19 @@ Top Bar Animation Section starts
     line-height: 8px;
 }
 
-
 .masterPage.rules-opened {
-    /*    -webkit-transform: rotateY(180deg);
-    -o-transform: rotateY(180deg);
-    transform: rotateY(180deg);
-
-    -webkit-transition: all .5s ease-out;
-    -moz-transition: all .5s ease-out;
-    -o-transition: all .5s ease-out;*/
     z-index: 100;
     background: #7894C4;
     box-shadow: 0px 0px 600px 10px #000 inset;
-
-
-    height: 420px;
-    width: 420px;
+    height: 340px;
+    width: 400px;
     background-repeat:no-repeat;
     background-size: cover;
 }
 
-/*.masterPage.is-restored {
-     -webkit-transform: rotateY(0deg);
-    -o-transform: rotateY(0deg);
-    transform: rotateY(0deg);
-
-    -webkit-transition: all .5s ease-in;
-    -moz-transition: all .5s ease-in;
-    -o-transition: all .5s ease-in;
-
-    height: 150px;
-    width:  106px;
-
-}*/
-
 .open {
     position: absolute;
-    /*bottom: -10px;
-    left: 5px;
-*/
 }
-
-
-
 
 .selected {
     border-bottom: 1px solid #d1d1d1;
@@ -1216,9 +803,6 @@ Top Bar Animation Section starts
     transition: opacity 0.3s ease-out;
 }
 
-
-
-
 h2.expand {
     cursor:pointer;
     position: absolute;
@@ -1236,11 +820,6 @@ h2.expand {
     -o-transition: all 0.3s ease-out;
     transition: all 0.3s ease-out;
 }
-
-/*h2.close:hover{
-    cursor:pointer;
-    color:black;
-}*/
 
 .loading-overlay {
     z-index: 200;
@@ -1266,9 +845,9 @@ h2.expand {
     user-select: none;
 }
 
-/************************PAGE STUFF ENDS!!!!!********************/
+/********* CSS FOR PAGE STUFF ENDS **********/
 
-/************************RULE STUFF START!!!!!********************/
+/********* CSS FOR RULE STUFF STARTS *********/
 
 .rule {
     height: 100%;
@@ -1285,28 +864,26 @@ h2.expand {
     margin: 0 0 0 55%;
 }
 
-/*.rulesText {
-    height: 25px;
-    width: 125px;
-    position: relative;
-    margin: 2px;
-    padding: 0px;
-}*/
-
 .operation {
     padding: 0px;
     width: 41px;
     margin: 0.5px;
+    min-width:50px !important;
+    max-width: 50px !important;
 }
 
 .groupType {
     margin: 0.5px;
-    width: 108px
+    width: 108px;
+    min-width:100px !important;
+    max-width: 110px !important;
 }
 
 .value {
     margin: 0.5px;
-    width: 109px
+    width: 109px;
+    min-width:75px !important;
+    max-width: 100px !important;
 }
 
 .buttons {
@@ -1322,12 +899,15 @@ h2.expand {
     transition: all 0.3s ease-out;
 }
 
-.buttons:hover{
+.then > .buttons:hover{
     cursor: pointer;
-    text-shadow: 0 0 2px white, 0 0 2px white;
+    text-shadow: 0 0 3px white !important;
 }
 
-
+.then > .buttons{
+    padding: 0px 2px 2px 10px;
+    text-shadow: 0px 0px 1px white;
+}
 
 .addNewThen {
     font-size: 22px;
@@ -1362,20 +942,18 @@ h2.close:hover {
     opacity: 0.9;
     color: red;
     text-shadow: 0 0 2px red, 0 0 2px red;
-
 }
 
 h2.close {
     position: absolute;
-    top: 0.7%;
-    left: 92%;
+    top: 0%;
+    right: 3%;
     z-index: 50;
     line-height: 0px;
     opacity: 1;
-    color: darkred;
+    color: #de0000;
     font-size: 16px;
     text-shadow: 0 0px 0 darkred;
-
     -webkit-transition: text-shadow 0.2s ease-in;
     -moz-transition: text-shadow 0.2s ease-in;
     -ms-transition: text-shadow 0.2s ease-in;
@@ -1384,13 +962,14 @@ h2.close {
 }
 
 img.save:hover {
-    box-shadow: 0 0 2px white, 0 0 2px white;
+    box-shadow: 0 0 4px white;
 }
 
 img.save {
+    box-shadow: 0px 0px 2px white;
     line-height: 0px;
     top: 2.1%;
-    left: 8%;
+    left: 9%;
     font-size: 15px;
     position: absolute;
     text-decoration: none;
@@ -1414,14 +993,9 @@ img.save {
     top:10px;
 }
 
+/********* CSS FOR RULE STUFF ENDS **********/
 
-/************************RULE STUFF ENDS!!!!!********************/
-/*for hidden fields and unwanted divs in certain views*/
-.hidden {
-    visiblity: hidden;
-}
-
-/*********************DIMESNION STUFF START!!!!!*****************/
+/********* CSS FOR DIMENSION STUFF STARTS **********/
 
 .dimension , .chapter, .assortmentItem{
     text-wrap: normal;
@@ -1437,14 +1011,11 @@ img.save {
     box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3), 1px 1px 3px rgba(0, 0, 0, 0.9);
     background-size: cover;
     background-repeat:no-repeat;
-
 }
 
 .dimension {
-
     -webkit-border-top-right-radius: 1.2em;
     -moz-border-radius-topright: 1.2em;
-
 }
 
 .chapter.even{
@@ -1453,8 +1024,6 @@ img.save {
     background-image: -moz-linear-gradient(left bottom, #8ebb8b 22%, #afdda9 61%);
     background-image: -webkit-linear-gradient(left bottom, #8ebb8b 22%, #afdda9 61%);
     background-image: -ms-linear-gradient(left bottom, #8ebb8b 22%, #afdda9 61%);
-
-
 }
 
 .chapter.odd{
@@ -1463,8 +1032,6 @@ img.save {
     background-image: -moz-linear-gradient(left bottom,#8ebf8c 22%, #a6d3a2 61%);
     background-image: -webkit-linear-gradient(left bottom,#8ebf8c 22%, #a6d3a2 61%);
     background-image: -ms-linear-gradient(left bottom, ##8ebf8c 22%, #a6d3a2 61%);
-
-
 }
 
 .assortmentItem.even{
@@ -1473,8 +1040,6 @@ img.save {
     background-image: -moz-linear-gradient(left bottom, #9d8c82 2%, #b8a7a3 51%, #d4a7a5 76%);
     background-image: -webkit-linear-gradient(left bottom, #9d8c82 2%, #b8a7a3 51%, #d4a7a5 76%);
     background-image: -ms-linear-gradient(left bottom, #9d8c82 2%, #b8a7a3 51%, #d4a7a5 76%);
-
-
 }
 
 .assortmentItem.odd{
@@ -1483,8 +1048,6 @@ img.save {
     background-image: -moz-linear-gradient(left bottom, #83736b 2%, #9c8b87 51%, #ba8f8d 76%);
     background-image: -webkit-linear-gradient(left bottom, #83736b 2%, #9c8b87 51%, #ba8f8d 76%);
     background-image: -ms-linear-gradient(left bottom, #83736b 2%, #9c8b87 51%, #ba8f8d 76%);
-
-
 }
 
 .dimension.even{
@@ -1493,17 +1056,6 @@ img.save {
     background-image: -moz-linear-gradient(left bottom, #b0b0ae 40%, #d7d7d7 70%, #d8d8d8 90%);
     background-image: -webkit-linear-gradient(left bottom, #b0b0ae 40%, #d7d7d7 70%, #d8d8d8 90%);
     background-image: -ms-linear-gradient(left bottom, #b0b0ae 40%, #d7d7d7 70%, #d8d8d8 90%);
-
-   /* background-image: -webkit-gradient(
-        linear,
-        left bottom,
-        right top,
-        color-stop(0.42, #98BACC),
-        color-stop(0.71, #B7E0F5),
-        color-stop(0.86, #DCFFFF)
-    );*/
-
-
 }
 
 .dimension.odd{
@@ -1512,7 +1064,6 @@ img.save {
     background-image: -moz-linear-gradient(left bottom, #aeaeac 40%, #c3c3c1 70%, #d3d3d1 90%);
     background-image: -webkit-linear-gradient(left bottom, #aeaeac 40%, #c3c3c1 70%, #d3d3d1 90%);
     background-image: -ms-linear-gradient(left bottom, #aeaeac 40%, #c3c3c1 70%, #d3d3d1 90%);
-
 }
 
 .dimension * {
@@ -1520,7 +1071,6 @@ img.save {
 }
 
 .type {
-
     line-height: 1.5em;
     bottom: 17px;
     left: 0.5em;
@@ -1535,20 +1085,31 @@ img.save {
     font-size: 15px;
     line-height: 1.2em;
     font-family: tahoma;
-
     word-break: break-all;
     text-shadow: 1px 1px 1px #343434;
-
-
     color: #FFF;
     width: 80%;
     margin: 7%;
 }
 
+#showAllPagesBtn{
+    width: auto;
+    height: 21px;
+    position: absolute;
+    float: right;
+    margin-top: 1px !important;
+    right: 10px;
+    cursor: pointer;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 
-/*********************DIMESNION STUFF END!!!!!*****************/
 
-/*************ISOTOPE STUFF START!!******************************/
+/********* CSS FOR DIMENSION STUFF ENDS **********/
+
+/********* CSS FOR ISOTOPE STUFF STARTS **********/
 
 .isotope-item {
     z-index: 2;
@@ -1586,11 +1147,13 @@ img.save {
     transition-property: transform, opacity;
 }
 
-/*********************ISOTOPE STUFF END!!******************************/
+/********* CSS FOR ISOTOPE STUFF ENDS **********/
 
 #dialog-confirm,#dialog-incorrect-rules{
     display:none;
 }
+
+/******** OVERRIDEN CSS FOR POPUP *********/
 
 .ui-dialog-titlebar-close{
     background-image: url(../images/_close.png);
@@ -1622,8 +1185,6 @@ img.save {
     box-shadow: inset 0 0 4px 1px rgba(0, 0, 0, 0.4);
 }
 
-
-
 .ui-dialog-titlebar {
     text-align: center;
     height: 25px !important;
@@ -1636,8 +1197,6 @@ img.save {
 }
 
 .ui-dialog-content {
-    /*padding: 10px !important;*/
-    /*padding-top: 0px !important;*/
     overflow: hidden !important;
     text-align: center;
     line-height: 18px;
@@ -1662,8 +1221,6 @@ img.save {
     margin:0 auto;
 }
 
-
-
 .navbar-inverse .nav .active > a, .navbar-inverse .nav .active > a:hover, .navbar-inverse .nav .active > a:focus {
     background-color: #FFFFFF;
     color: #4D4D4F;
@@ -1678,6 +1235,8 @@ img.save {
     text-decoration: none;
 }
 
+
+/********* CSS FOR PAPER-STACK EFFECT ***********/
 /*
 
 .paper-stack {
@@ -1719,20 +1278,17 @@ img.save {
 */
 
 
+/******** OVERRIDDEN CSS  FOR BOOTSTRAP BUTTONS *********/
+
 .btn-group{
     margin: 0 auto !important;
     top:0px;
-
 }
 
 .btn-group > .btn{
     font-size: 12px;
     line-height: 14px;
     font-family: tahoma;
-    /*
-        margin: 5px !important;
-    */
-
 }
 
 #mainAnimationContainer > .bootstrap-select:not([class*="span"]){
@@ -1741,60 +1297,38 @@ img.save {
     float: left;
 }
 
+/********** OVERRIDDEN CSS FOR DROPDOWN ***********/
+
 .btn-group > .dropdown-menu {
     font-size: 11px;
     padding: 0;
-
 }
 
 .dropdown-menu > .inner{
     font-size: 12px;
 }
 
+
+/********** OVERRIDDEN CSS FOR DYNATREE ICONS ***********/
+
+
 .dynatree-ico-ef span.dynatree-icon {
     background-image: url("../images/icons/520610-folder-16.png");
     background-position: 0 0 !important;
     opacity: .8;
-
 }
 
 .dynatree-ico-cf span.dynatree-icon {
     background-image: url("../images/icons/520611-folder_2-16.png");
     background-position: 0 0 !important;
     opacity: .8;
-
 }
 
-.dynatree-exp-el span.dynatree-expander{
-
-}
-
-#viewOptionNew{
-    width: 150px;
-    height: 24px;
-    overflow: hidden;
-    float: right;
-    right: 10px;
-    position: absolute;
-    display: none;
-
-}
-
-.then > .buttons{
-    padding: 2px 2px 2px 5px;
-}
-/*
-.btn-inverse:hover, .btn-inverse:focus{
-    background-color: #343434;
-}*/
-
+/********* CSS FOR MAC-LIKE BUTTONS STARTS **********/
 
 .jqx-fill-state-pressed{
     background-color: #777777 !important;
 }
-
-
-
 
 .pure-button-error {
     background: none repeat scroll 0% 0% rgb(202, 60, 60);
@@ -1820,22 +1354,17 @@ img.save {
 }
 
 .pure-button-left {
-
     border-radius: 10px 0px 0px 10px !important;
 }
 
 .pure-button-right {
-
     border-radius: 0px 10px 10px 0px !important;
 }
 
 
 .pure-button-single {
-
     border-radius: 10px 10px 10px 10px !important;
 }
-
-
 
 .pure-button:focus {
     outline: 0px none;
@@ -1851,7 +1380,6 @@ a.pure-button:focus, .pure-button:focus, .calendarButtonPressed{
     color: white;
     transition: box-shadow 0.1s linear 0s;
     text-decoration: none;
-
 }
 
 .pure-button {
@@ -1868,7 +1396,6 @@ a.pure-button:focus, .pure-button:focus, .calendarButtonPressed{
     transition: box-shadow 0.1s linear 0s;
 }
 
-
 button, html input[type="button"], input[type="reset"], input[type="submit"] {
     cursor: pointer;
 }
@@ -1882,44 +1409,36 @@ button, input {
 html, button, input, select, textarea {
     font-family: sans-serif;
 }
-body, .pure-g [class*="pure-u"], .pure-g-r [class*="pure-u"] {
-    font-family: "proxima-nova",sans-serif;
-}
-.pure-g-r [class*="pure-u"] {
-    font-family: sans-serif;
-}
-.pure-u-1, .pure-u-1-2, .pure-u-1-3, .pure-u-2-3, .pure-u-1-4, .pure-u-3-4, .pure-u-1-5, .pure-u-2-5, .pure-u-3-5, .pure-u-4-5, .pure-u-1-6, .pure-u-5-6, .pure-u-1-8, .pure-u-3-8, .pure-u-5-8, .pure-u-7-8, .pure-u-1-12, .pure-u-5-12, .pure-u-7-12, .pure-u-11-12, .pure-u-1-24, .pure-u-5-24, .pure-u-7-24, .pure-u-11-24, .pure-u-13-24, .pure-u-17-24, .pure-u-19-24, .pure-u-23-24 {
-    letter-spacing: normal;
-    word-spacing: normal;
-    text-rendering: auto;
-}
-.pure-g-r {
-    letter-spacing: -0.31em;
-    font-family: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
-}
-
-
-#homeListCalendarView{
-    margin-left:250px;
-}
 
 ul.clearfix
 {
     list-style-type:   none ;
     left: 0;
 }
+
 li.csIsotopeFilters,li#targetRegionText,li#targetGroupText{
     float: left;
     margin-bottom: 0.2em;
-    margin: 0px;
     padding: 0px;
     border:0px;
     left:70px !important;
-
     font: inherit;
     vertical-align: baseline;
+}
 
+li#targetRegionText , li#targetGroupText{
+    margin-top: 3px;
+    font-family: tahoma;
+    font-weight: bold;
+    font-size: 11px;
+}
 
+#targetGroupText, #targetRegionText{
+    font-size: 11px;
+    font-weight: bold;
+    font-family: tahoma;
+    width: 100px;
+    left:0;
 }
 
 .option-combo{
@@ -1929,7 +1448,9 @@ li.csIsotopeFilters,li#targetRegionText,li#targetGroupText{
 }
 
 .option-set{
-    width: auto;
+    width: 300px;
+    float: right;
+    right: 0px;
 }
 
 .targetGroup{
@@ -1943,33 +1464,26 @@ li.csIsotopeFilters,li#targetRegionText,li#targetGroupText{
     font-family: tahoma;
     font-size: 11px;
     font-weight: bold;
-
 }
-/*
-a.pure-button:hover, a.pure-button{
-    background-color: white;
-    text-decoration: none;
-}*/
-
-
 
 .btn-custom-mini{
     line-height: 10px;
     height: 10px;
 }
 
-
 .bootstrap-select.btn-group .dropdown-menu li > a {
     border-bottom: 1px solid #dddddd;
     width: 100%;
 }
 
-
 .bootstrap-select.btn-group, .bootstrap-select.btn-group[class*="span"] {
     margin-left: 7px !important;
 }
 
+/********* CSS FOR MAC-LIKE BUTTONS ENDS **********/
 
+
+/******** OVERRIDDEN CSS FOR JQX SCROLL BARS ********/
 
 .jqx-icon-arrow-right{
     background-image: url('../images/arr_right.png') !important;
@@ -1992,16 +1506,12 @@ a.pure-button:hover, a.pure-button{
 }
 
 #btnSaveAssort{
-
     float: left;
     background-position: 2px 2px;
     background-size: 20px 20px;
     background-repeat: no-repeat;
     padding-top: 5px;
     padding-left: 10px;
-    /*
-        background-color: #000000;
-    */
 }
 
 h2.openRules{
@@ -2022,7 +1532,6 @@ h2.openRules{
 
 .region{
     float:right;
-
     right: 470px;
 }
 
@@ -2033,21 +1542,13 @@ h2.openRules{
     max-width: 40%;
 }
 
-#targetGroupText, #targetRegionText{
-    font-size: 11px;
-    font-weight: bold;
-    font-family: tahoma;
-    width: 100px;
-    left:0;
-
+.template{
+    min-width:180px !important;
+    max-width: 180px !important;
+    white-space: normal;
 }
 
-
-.option-set {
-    width: 300px;
-    float: right;
-    right: 0px;
-}
+/******** CSS FOR DROPDOWN BOXIT (RULES) *********/
 
 .selectboxit-container .selectboxit {
     margin: 5px 5px 0 5px !important;
@@ -2055,64 +1556,12 @@ h2.openRules{
     max-width: 150px;
 }
 
-.template{
-    min-width:180px !important;
-    max-width: 180px !important;
-    white-space: normal;
-}
-
-
-
 .selectboxit-container *{
     font-size: 12px !important;
 }
 
-li#targetRegionText , li#targetGroupText{
-    margin-top: 3px;
-    font-family: tahoma;
-    font-weight: bold;
-    font-size: 11px;
-}
-
-.groupType{
-    min-width:100px !important;
-    max-width: 110px !important;
-}
-
-.operation{
-    min-width:50px !important;
-    max-width: 50px !important;
-}
-
-.value{
-    min-width:75px !important;
-    max-width: 100px !important;
-}
-
-
 .selectboxit-arrow-container {
-
-    /* Encloses the down arrow in a box */
     border-left: 1px solid #ccc;
-
-}
-
-
-
-#showAllPagesBtn{
-    width: auto;
-    height: 21px;
-    position: absolute;
-    float: right;
-    margin-top: 1px !important;
-    right: 10px;
-    cursor: pointer;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-
-
 }
 
 td > img{

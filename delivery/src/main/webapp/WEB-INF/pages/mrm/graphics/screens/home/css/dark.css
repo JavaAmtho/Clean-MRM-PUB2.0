@@ -1,58 +1,54 @@
 body {
-    margin:0;
-    padding:0;
-    border:0;
+    margin: 0;
+    padding: 0;
+    border: 0;
     min-height: 600px;
-    width:100%;
+    width: 100%;
     height: auto;
     color: #333333;
     background-color: #ffffff;
-    font-size:10px;
+    font-size: 10px;
     overflow: scroll;
 }
 
-.assestsJQList{
-    position:relative;
-
-}
-
-#leftTree{
-    padding-left: 15px;
-    margin-top: 30px;
+.assestsJQList {
+    position: relative;
 }
 
 /****** CSS FOR LOGIN SCREEN ******/
 
-.loginViewContainerCSS{
+.loginViewContainerCSS {
     padding: 15px 20px 10px 10px;
 }
 
-.legendCSS{
+.legendCSS {
     padding: 0px 0px 0px 0px;
 }
 
 /******* CSS FOR HEADER STARTS HERE ********/
 
 .header {
-    position:relative;
-    top:0px;
-    clear:both;
-    float:left;
-    width:100%;
+    position: relative;
+    top: 0px;
+    clear: both;
+    float: left;
+    width: 100%;
     height: 50px;
     overflow: hidden;
     background-color: #343434;
 
 }
 
-.logo{
+.logo {
     padding: 25px 0 0 0;
-/*
-    padding: 15px 20px 10px 10px;
-*/
+    /*
+        padding: 15px 20px 10px 10px;
+    */
     overflow: hidden;
     /*background-image: 'url("'+EngineGraphicsData.getBaseUrl()+'+")';*/
-    background-image: url("/delivery/pages/mrm/graphics/screens/home/images/cs_logo.png");
+    /*
+        background-image: url("/delivery/pages/mrm/graphics/screens/home/images/cs_logo.png");
+    */
 }
 
 .profileLogo {
@@ -60,47 +56,47 @@ body {
     float: right;
     visibility: hidden;
 }
+
 .wrapper {
     float: right;
-    height:50px;
-    width:50px;
-    border-radius:50px;
-    border:4px solid white;
-    overflow:hidden ;
-    margin:5px 35px 0 0;
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    border: 4px solid white;
+    overflow: hidden;
+    margin: 5px 35px 0 0;
     visibility: hidden;
 }
 
-.logobounce{
-    height:64px;
-    width:400px;
+.logobounce {
+    height: 64px;
+    width: 400px;
     float: left;
 }
 
-
-.logoutdiv{
-    height:40px;
-    width:70px;
+.logoutdiv {
+    height: 40px;
+    width: 70px;
     float: right;
     top: 0px;
 }
 
-.animatedbounce{
-    margin: 17px 0 0 10px  ;
+.animatedbounce {
+    margin: 17px 0 0 10px;
     height: 30%;
     width: 70%;
 }
 
-.logout{
-    border:#fbb450;
+.logout {
+    border: #fbb450;
     float: right;
     margin: 18px 15px 0 0;
     visibility: hidden;
     width: 70px;
 }
 
-.logoutBtnCSS{
-    border:#fbb450;
+.logoutBtnCSS {
+    border: #fbb450;
     float: right;
     margin: 15px 10px 0px 0px;
 }
@@ -109,7 +105,7 @@ body {
 
 /******* CSS FOR FOOTER *********/
 
-.footer{
+.footer {
     font-family: tahoma;
     text-align: center;
     position: relative;
@@ -117,90 +113,37 @@ body {
     height: 27px;
     color: white;
     font-size: 12px;
-    width:100%;
+    width: 100%;
     border: 1px solid rgb(187, 187, 187);
     float: left;
-    top:0px;
+    top: 0px;
 }
 
-#footertxt{
-
+#footertxt {
     margin-top: 5px;
     text-align: center;
     font-size: 15px;
     font-weight: bolder;
 }
 
-
 a {
-    color:#555;
+    color: #555;
     text-decoration: underline;
 }
 
 a:hover {
-    color:#000;
-    text-decoration:underline;
+    color: #000;
+    text-decoration: underline;
 }
 
 h1, h2, h3 {
-    margin:.8em 0 .2em 0;
-    padding:0;
+    margin: .8em 0 .2em 0;
+    padding: 0;
 }
-
-/* column container */
-.colmask {
-    position:relative;
-    float:left;
-    min-width: 500px;
-    width:100%;
-    height: 100%;
-}
-
-/* common column settings */
-.colleft {
-    float:left;
-    width:20%;
-    height: 100%;
-    min-height: 600px;
-    position:relative;
-    margin-left:0px;
-    overflow-x: scroll;
-    overflow-y: scroll;
-    background-color: white;
-}
-
-.colmid{
-    float:left;
-    position:relative;
-    margin-left: 0px;
-    height: 100px;
-    min-height:600px;
-    width: 0.5%;
-    background-color: #BBBBBB;
-}
-
-.colright{
-    float:left;
-    position: relative;
-    width:80%;
-    height: 100%;
-    min-height: 600px;
-    margin-left:0px;
-}
-
-.colmenu{
-    float:left;
-    margin-left: 0px;
-    position:relative;
-    width:30px;
-    background-color: #000000;
-    height:100%;
-}
-
 
 /***** SPAN WHICH HOLDS BUTTONS IN GROUP ******/
 
-#homeListCalendarView{
+#homeListCalendarView {
     margin-left: -1%;
     position: relative;
     width: 200px;
@@ -208,7 +151,7 @@ h1, h2, h3 {
     text-align: left;
 }
 
-#yearMonthWeek{
+#yearMonthWeek {
     visibility: hidden;
     margin-left: 35%;
     width: 20%;
@@ -216,17 +159,16 @@ h1, h2, h3 {
     text-align: center;
 }
 
-#prevTodayNext{
+#prevTodayNext {
     visibility: hidden;
     margin-right: 2%;
     float: right;
 }
 
-
 /****** BAR WHICH HOLDS ALL THE BUTTONS *******/
 
-#ganttBtnHolder{
-    background-image: linear-gradient(#f8f8f8,#e4e5e7);
+#ganttBtnHolder {
+    background-image: linear-gradient(#f8f8f8, #e4e5e7);
     background-repeat: repeat-x;
     background-position: 0px 0px;
     height: 20px;
@@ -236,17 +178,17 @@ h1, h2, h3 {
     overflow: hidden;
 }
 
-.mainContainer{
+.mainContainer {
     float: left;
     position: relative;
     width: 100%;
     min-height: 570px;
-    height:auto;
+    height: auto;
     margin-top: 0px;
     overflow: hidden;
 }
 
-select{
+select {
     height: 25px !important;
     font-size: 12px !important;
 }
@@ -258,28 +200,28 @@ select{
     *zoom: 1;
 }
 
-#mediaView{
+#mediaView {
     border-radius: 5px;
     border: 1px solid #149bdf;
-    height:300px;
-    width:500px;
+    height: 300px;
+    width: 500px;
     background-color: lightcyan;
     background-image: url(../images/magazine.jpg);
     margin: 0px auto;
 }
 
-#mrmGanttChart{
+#mrmGanttChart {
     min-height: 285px;
     height: 100%;
     width: 100%;
     z-index: 9;
 }
 
-.inputDate{
+.inputDate {
     width: 80% !important;
 }
 
-.labelOfPopup{
+.labelOfPopup {
     font-size: 11px;
     width: 100% !important;
 }
@@ -294,24 +236,26 @@ select{
 
 }
 
-#endDateAligner{
-    top:-63px !important;
+#endDateAligner {
+    top: -63px !important;
     left: 250px;
 }
 
-#currencyAligner{
-    top:-38px !important;
+#currencyAligner {
+    top: -38px !important;
     left: 250px;
     width: 20% !important;
 }
 
-#currency{
+#currency {
     width: 40% !important;
     height: 27px !important;
 }
 
+/******** JQUERY-UI.CSS OVERRIDDEN CSS STARTS (CSS FOR POPUP, CALENDAR ETC.) *********/
+
 .ui-datepicker-year {
-    height:17px !important;
+    height: 17px !important;
     font-size: 11px !important;
     padding: 0 !important;
     width: 40% !important;
@@ -332,18 +276,31 @@ select{
     padding-top: 0px !important;
 }
 
-.ui-widget-header{
+.ui-widget-header {
     background-color: #343434;
     background-image: none !important;
     color: white;
     border: none !important;
 }
 
-.ui-dialog-buttonpane{
+.ui-dialog-buttonpane {
     background-color: #c9c9c9 !important;
 }
 
-/******** CSS FOR POPUP**********/
+.ui-dialog {
+    z-index: 99999 !important;
+}
+
+.ui-widget-overlay {
+    background-color: #343434 !important;
+    opacity: .8 !important;
+    background-repeat: repeat;
+
+}
+
+/******** JQUERY-UI.CSS OVERRIDDEN CSS ENDS *********/
+
+/******** CSS FOR POPUP STARTS **********/
 
 label, input {
     display: block;
@@ -394,7 +351,9 @@ div#users-contain table td, div#users-contain table th {
     top: 5px
 }
 
-/*$$$$$$$$$ USE THIS SECTION FOR OTHER THEME FOR BUTTONS $$$$$$$$$$$$$$*/
+/******** CSS FOR POPUP ENDS **********/
+
+/*********** USE THIS SECTION FOR OTHER THEME FOR BUTTONS ***********/
 /*
 
 .pure-button {
@@ -424,23 +383,19 @@ div#users-contain table td, div#users-contain table th {
 
 */
 
-
-
-
-
-
+/********** CSS FOR BUTTONS (MAC THEME) STARTS ************/
 
 .pure-button-error {
     background: none repeat scroll 0% 0% rgb(202, 60, 60);
 }
+
 .pure-button-success, .pure-button-error, .pure-button-warning, .pure-button-secondary {
     color: white;
     border-radius: 4px 4px 4px 4px;
     text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
 }
 
-
-.pure-button,  .button111 , .button111:focus{
+.pure-button, .button111, .button111:focus {
     font-size: 11px !important;
     padding: 4px 8px 4px 6px !important;
     color: rgba(0, 0, 0, 0.8);
@@ -460,35 +415,32 @@ div#users-contain table td, div#users-contain table th {
     cursor: pointer;
     -moz-user-select: none;
     -webkit-user-select: none;
-    -ms-user-select:none;
-    user-select:none;
+    -ms-user-select: none;
+    user-select: none;
 
 }
 
 .pure-button-left {
-
     border-radius: 10px 0px 0px 10px !important;
 }
 
 .pure-button-right {
-
     border-radius: 0px 10px 10px 0px !important;
 }
-
 
 .pure-button:focus {
     outline: 0px none;
 }
-.pure-button-hover, .pure-button:hover, .button111:hover{
+
+.pure-button-hover, .pure-button:hover, .button111:hover {
     background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.05) 40%, rgba(0, 0, 0, 0.1));
 }
 
-.pure-button:focus, .calendarButtonPressed{
+.pure-button:focus, .calendarButtonPressed {
     background-image: linear-gradient(#777777, #343434);
     color: white;
     transition: box-shadow 0.1s linear 0s;
     text-decoration: none;
-
 }
 
 .pure-button {
@@ -499,148 +451,66 @@ div#users-contain table td, div#users-contain table th {
     box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.15) inset, 0px 0px 3px rgba(0, 0, 0, 0.2) inset;
 }
 
+/********** CSS FOR BUTTONS (MAC THEME) ENDS ************/
 
-button, html input[type="button"], input[type="reset"], input[type="submit"] {
-    cursor: pointer;
-}
-button, select {
-    text-transform: none;
-}
-button, input {
-    line-height: normal;
-}
+/********** CSS FOR COVERFLOW STARTS (CSS ONLY FOR CONTAINERS, MAIN CSS IN CS_ADD-ON) ************/
 
-html, button, input, select, textarea {
-    font-family: sans-serif;
-}
-body, .pure-g [class*="pure-u"], .pure-g-r [class*="pure-u"] {
-    font-family: "proxima-nova",sans-serif;
-}
-.pure-g-r [class*="pure-u"] {
-    font-family: sans-serif;
-}
-.pure-u-1, .pure-u-1-2, .pure-u-1-3, .pure-u-2-3, .pure-u-1-4, .pure-u-3-4, .pure-u-1-5, .pure-u-2-5, .pure-u-3-5, .pure-u-4-5, .pure-u-1-6, .pure-u-5-6, .pure-u-1-8, .pure-u-3-8, .pure-u-5-8, .pure-u-7-8, .pure-u-1-12, .pure-u-5-12, .pure-u-7-12, .pure-u-11-12, .pure-u-1-24, .pure-u-5-24, .pure-u-7-24, .pure-u-11-24, .pure-u-13-24, .pure-u-17-24, .pure-u-19-24, .pure-u-23-24 {
-    letter-spacing: normal;
-    word-spacing: normal;
-    text-rendering: auto;
-}
-.pure-g-r {
-    letter-spacing: -0.31em;
-    font-family: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
-}
-
-
-/*
-.GEToolbarRow{
-    visibility: hidden !important;
-}
-
-*/
-
-
-.ui-dialog{
-    z-index: 99999 !important;
-}
-
-#myImageFlow{
+#myImageFlow {
     margin-top: -50px;
 
 }
 
-#imageflowContainer{
+#imageflowContainer {
     border-radius: 4px;
     margin: 4px 4px 4px 4px;
-
     background: transparent;
     border: 1px solid #c5c5c5;
     position: relative;
     float: left;
-    width:60%;
-
+    width: 60%;
     z-index: 5;
     height: 335px !important;
-    /* border: 1px #c5c5c5;
-     box-shadow:  0px 0px 3px 1px rgba(0, 0, 0, 0.5) inset, 0px 0px 3px 1px rgba(0, 0, 0, 0.5) inset;
-     transition: box-shadow .5s;*/
 }
 
-#coverInfo{
+#coverInfo {
 
-    float : right;
+    float: right;
     width: 38%;
     position: relative;
-/*
-    background-color: #808080;
-*/
     height: 335px;
     z-index: 1;
     border: 1px solid #c5c5c5;
     border-radius: 4px;
     margin: 4px;
 
-
 }
 
-#coverMaster{
+#coverMaster {
     z-index: 0;
     width: 100%;
     border: 2px solid #c5c5c5;
     border-radius: 4px;
-    background-color:white;
+    background-color: white;
     height: 350px;
 }
 
-#coverMain{
-   display: none;
+#coverMain {
+    display: none;
 }
 
-
-.linkOfCoverflowItem{
+.linkOfCoverflowItem {
     word-wrap: break-word;
 }
 
-.ui-widget-overlay{
-    background-color: #343434 !important;
-    opacity: .8 !important;
-    background: url("/delivery/pages/mrm/graphics/screens/home/images/custom_layout.png");
-    background-repeat: repeat;
+/********** CSS FOR COVERFLOW ENDS ************/
 
-}
-
-#myPlayer{
-    padding: 1px !important;
-    overflow: hidden;
-}
-
-#myPlayer > .ui-dialog-titlebar{
-    width: 10px !important;
-
-}
-
-/*
-#myImageFlow:hover{
-    box-shadow:  1px 1px 5px 3px rgba(0, 0, 0, 0.5) inset, -1px -1px 5px 3px rgba(0, 0, 0, 0.5) inset;
-
-}*/
-
-/*
-#patcher{
-    height: 22px;
-    width: 50px;
-    background-color: #eaeff2;
-    top:122px;
-    left:5px;
-    position: absolute;
-    z-index: 99999;
-}
-*/
-
+/********** OVERRIDDEN CSS FOR GANTT **********/
 
 .GECellSpaceEdit:hover {
     background-color: white !important;
-cursor: text !important;
+    cursor: text !important;
 }
 
-.GEClassFocusedCell{
-    background-color:#eee !important;
+.GEClassFocusedCell {
+    background-color: #eee !important;
 }
