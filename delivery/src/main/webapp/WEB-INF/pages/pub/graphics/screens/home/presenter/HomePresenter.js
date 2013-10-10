@@ -421,7 +421,7 @@ HomePresenter.searchList = function (e) {
             SearchPimAsset.search(e.currentTarget.value, HomePresenter.populateAssetsList);
         }
         if (currentPanelId == "btnMAM") {
-            SearchPimAsset.search(e.currentTarget.value, HomePresenter.populateAssetsList);
+            SearchMamAsset.search(e.currentTarget.value, HomePresenter.populateAssetsList);
         }
 
     }

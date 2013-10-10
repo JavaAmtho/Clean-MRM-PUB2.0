@@ -8,5 +8,8 @@
     "getTree3":"pub/testdrive/mocks/tree/Tree3.json",
     "btnPIM":"testdrive/mocks/tree/PimAssets.json",
     "btnMAM":"testdrive/mocks/tree/MamAssets.json",
-    "btnMIM":"testdrive/mocks/tree/AssetTree.json"
+    "btnMIM":"testdrive/mocks/tree/AssetTree.json",
+    "searchPimAssets":"pub/testdrive/mocks/tree/SearchPimAssets.json",
+    "searchMamAssets":"pub/testdrive/mocks/tree/SearchMamAssets.json",
+    "getMasterTemplateList" : "pub/testdrive/mocks/GetAllMasterTemplates.json"
 }
