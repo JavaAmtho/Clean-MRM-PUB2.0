@@ -2,10 +2,10 @@
     {
         "id": "1",
         "default": "true",
-        "name": "Marketing Initiative-Campaign-SubCampaign-Communication Plan-Communication Channel",
+        "name": "MarketingInitiative-Campaign-SubCampaign-CommunicationPlan-CommunicationChannel",
         "structure": [
             {
-                "name": "Marketing Initiative",
+                "name": "MarketingInitiative",
                 "icon": "something",
                 "possibleChild": ["Campaign"],
                 "possibleDropParent":[]
@@ -14,25 +14,25 @@
                 "name": "Campaign",
                 "icon": "something",
                 "possibleChild": ["SubCampaign"],
-                "possibleDropParent":["Marketing Initiative"]
+                "possibleDropParent":["MarketingInitiative"]
             },
             {
                 "name": "SubCampaign",
                 "icon": "something",
-                "possibleChild": ["Communication Plan"],
+                "possibleChild": ["CommunicationPlan"],
                 "possibleDropParent":["Campaign"]
             },
             {
-                "name": "Communication Plan",
+                "name": "CommunicationPlan",
                 "icon": "something",
-                "possibleChild": ["Communication Channel"],
+                "possibleChild": ["CommunicationChannel"],
                 "possibleDropParent":["SubCampaign"]
             },
             {
-                "name": "Communication Channel",
+                "name": "CommunicationChannel",
                 "icon": "something",
                 "possibleChild": [],
-                "possibleDropParent":["Communication Plan"]
+                "possibleDropParent":["CommunicationPlan"]
             }
         ]
     }

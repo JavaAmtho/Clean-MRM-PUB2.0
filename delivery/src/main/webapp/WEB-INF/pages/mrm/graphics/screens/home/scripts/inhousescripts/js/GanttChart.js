@@ -450,7 +450,10 @@ var GanttChart = function(){
         //alert(JSON.stringify(data))
     }
 
-
+    /**
+     *
+     * @param data
+     */
     function onDropSuccess(data){
         //Need to handle
 
