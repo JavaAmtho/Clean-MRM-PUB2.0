@@ -2,10 +2,10 @@
     {
         "id": "1",
         "default": "true",
-        "name": "Marketing Initiative-Campaign-SubCampaign-Communication Plan-Communication Channel",
+        "name": "MarketingInitiative-Campaign-SubCampaign-CommunicationPlan-CommunicationChannel-Publication",
         "structure": [
             {
-                "name": "Marketing Initiative",
+                "name": "MarketingInitiative",
                 "icon": "something",
                 "possibleChild": ["Campaign"]
             },
@@ -17,15 +17,15 @@
             {
                 "name": "SubCampaign",
                 "icon": "something",
-                "possibleChild": ["Communication Plan"]
+                "possibleChild": ["CommunicationPlan"]
             },
             {
-                "name": "Communication Plan",
+                "name": "CommunicationPlan",
                 "icon": "something",
-                "possibleChild": ["Communication Channel"]
+                "possibleChild": ["CommunicationChannel"]
             },
             {
-                "name": "Communication Channel",
+                "name": "CommunicationChannel",
                 "icon": "something",
                 "possibleChild": ["Publication"]
             },
@@ -49,7 +49,7 @@
     {
         "id": "2",
         "default": "false",
-        "name": "Campaign-SubCampaign-Marketing Initiative-Communication Plan-Communication Channel",
+        "name": "Campaign-SubCampaign-MarketingInitiative-CommunicationPlan-CommunicationChannel-Publication",
         "structure": [
             {
                 "name": "Campaign",
@@ -59,20 +59,20 @@
             {
                 "name": "SubCampaign",
                 "icon": "something",
-                "possibleChild": ["Marketing Initiative"]
+                "possibleChild": ["MarketingInitiative"]
             },
             {
-                "name": "Marketing Initiative",
+                "name": "MarketingInitiative",
                 "icon": "something",
-                "possibleChild": ["Communication Plan"]
+                "possibleChild": ["CommunicationPlan"]
             },
             {
-                "name": "Communication Plan",
+                "name": "CommunicationPlan",
                 "icon": "something",
-                "possibleChild": ["Communication Channel"]
+                "possibleChild": ["CommunicationChannel"]
             },
             {
-                "name": "Communication Channel",
+                "name": "CommunicationChannel",
                 "icon": "something",
                 "possibleChild": ["Publication"]
             },
