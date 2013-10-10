@@ -1,10 +1,29 @@
 var pubIdToOpen;
 $(document).ready(function() {
-    $("body").queryLoader2();
+
+   /* $("body").queryLoader2({
+        barColor: "#6e6d73",
+        backgroundColor: "#343434",
+        percentage: true,
+        barHeight: 1,
+        completeAnimation: "grow"
+    });*/
+
     pubIdToOpen = getParameterByName("pubId");
     EngineDataStore.setBaseURL("../../../");
-    getScreenMappingObject();
+    getPublicationDetailsObject();
 });
+
+function getPublicationDetailsObject(){
+    Router.forward(EngineDataStore.getBaseURL()+"graphics/tacks/PublicationDetails.json",true,function(json){
+        parsePublicationDetailsObject(json);
+    });
+}
+
+function parsePublicationDetailsObject(json){
+    EngineDataStore.setPublicationDetailsArray(json);
+    getScreenMappingObject();
+}
 
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
@@ -46,5 +65,8 @@ function getApiMappingObject(){
 function parseApiMappingObject(json){
     //json=eval('(' + json + ')');
     EngineDataStore.setApiMappingObject(json);
+    Router.loadRequest("getMasterTemplateList",false,function(data){
+        EngineDataStore.setMasterTemplateList(data);
+    });
 }
 

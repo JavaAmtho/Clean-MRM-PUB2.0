@@ -68,10 +68,10 @@ Router.loadRequest = function(key,async,callBack,params){
             case "3":
                 key = "getViewStructure3";
                 break;
-            case "MI-Campaign-SubCampaign-CP-CC-Publication":
+            case "MarketingInitiative-Campaign-SubCampaign-CommunicationPlan-CommunicationChannel-Publication":
                 key = "getTree1";
                 break;
-            case "Campaign-SubCampaign-MI-CP-CC-Publication":
+            case "Campaign-SubCampaign-MarketingInitiative-CommunicationPlan-CommunicationChannel-Publication":
                 key = "getTree2";
                 break;
             case "Campaign-Publication-MasterPublication":
