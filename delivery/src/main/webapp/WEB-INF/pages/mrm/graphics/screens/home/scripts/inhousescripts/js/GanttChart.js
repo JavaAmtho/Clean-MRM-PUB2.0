@@ -10,14 +10,19 @@ var GanttChart = function(){
     var cellOldValue;
 
 
-
+    /**
+     * @param id
+     */
     this.createGanttChart = function(id){
         TreeGrid({Layout:{Url:EngineDataStore.getBaseURL()+"graphics/screens/home/scripts/inHouseScripts/js/Def_temp.xml"},
         Data:{Script:"myData"},Debug:""},id);
     }
 
 
-
+    /**
+     * @param G
+     * @constructor
+     */
     Grids.OnGanttStart = function(G){
 
         setTimeout(function() {
@@ -63,11 +68,26 @@ var GanttChart = function(){
 
     }*/
 
+    /**
+     * @param grid
+     * @param row
+     * @param col
+     * @constructor
+     */
     Grids.OnRenderRow = function(grid, row, col){
 
         //console.log('rendering'+ row.type)
     }
 
+    /**
+     * Get Context Menu
+     * Logic for Highlighting Row on Right Click
+     * @param G
+     * @param row
+     * @param col
+     * @returns {{Items: Array}}
+     * @constructor
+     */
     Grids.OnGetMenu = function(G,row,col){
         Grids[0].Focus(row,0,0);
         var possibleDim=[];
@@ -100,14 +120,33 @@ var GanttChart = function(){
         return menu;
     }
 
+    /**
+     * @param grid
+     * @param row
+     * @param col
+     * @param Menu
+     * @param GanttXY
+     * @returns true
+     * @constructor
+     */
     Grids.OnGanttMenu = function(grid,row,col,Menu,GanttXY) {
         return true;
     }
 
+    /**
+     * Delete a row from Gantt
+     */
     GanttChart.onDeleteSuccess=function(){
         Grids[0].DeleteRow(currentRow,2);
     }
 
+    /**
+     * @param G
+     * @param row
+     * @param col
+     * @param name
+     * @constructor
+     */
     Grids.OnContextMenu = function(G,row,col,name){
 
         currentRow = row;
@@ -129,6 +168,13 @@ var GanttChart = function(){
         }
     }
 
+    /**
+     * @param grid
+     * @param row
+     * @param type
+     * @returns {number}
+     * @constructor
+     */
     Grids.OnCanRowDelete = function(grid,row,type){
         if(type==1){
             var r=confirm("Are you sure you want to delete "+ row.name+" ?");
@@ -148,7 +194,13 @@ var GanttChart = function(){
         }
     }
 
-
+    /**
+     * @param grid
+     * @param row
+     * @param col
+     * @returns true if row is root otherwise false
+     * @constructor
+     */
     Grids.OnStartDrag = function(grid,row,col){
         //To suppress the dragging as per the dimension type
         if(row.type == "root") {
@@ -157,6 +209,16 @@ var GanttChart = function(){
         return false;
     }
 
+    /**
+     * @param grid
+     * @param row
+     * @param togrid
+     * @param torow
+     * @param type
+     * @param copy
+     * @returns {number}
+     * @constructor
+     */
     Grids.OnCanDrop = function(grid,row,togrid,torow,type,copy){
         dropTargetType = GraphicDataStore.getPossibleDropParent(row.type);
         var dropTargetFound = $.inArray(torow.type, dropTargetType)
@@ -167,6 +229,13 @@ var GanttChart = function(){
 
     }
 
+    /**
+     * @param grid
+     * @param row
+     * @param col
+     * @param val
+     * @constructor
+     */
     Grids.OnAfterValueChanged = function(grid,row,col,val){
         //cellOldValue = row[col];
         if(row.id != "AR1"){
@@ -179,11 +248,13 @@ var GanttChart = function(){
 
     }
 
+    /**
+     * @param grid
+     * @param row
+     * @constructor
+     */
      Grids.OnExpand = function(grid,row){
 
-         if(row.type == 'root'){
-             Grids[0].SetValue(row,"CanDelete","0",1);
-         }
         /* if(row.Level === 5){
              var arr = [];
              var length =  row.childNodes.length;
@@ -204,6 +275,13 @@ var GanttChart = function(){
          }*/
      }
 
+    /**
+     * Restrict delete of root node
+     * @param grid
+     * @param row
+     * @param col
+     * @constructor
+     */
     Grids.OnRenderRow = function(grid,row,col){
        if(row.type == 'root'){
            Grids[0].SetValue(row,"CanDelete","0");
@@ -212,6 +290,16 @@ var GanttChart = function(){
        }
     }
 
+    /**
+     * @param G
+     * @param row
+     * @param col
+     * @param width
+     * @param comp
+     * @param crit
+     * @returns string containing HTML to display Gantt Bar w.r.t. type
+     * @constructor
+     */
     Grids.OnGetGanttHtml = function(G,row,col,width,comp,crit){
         switch(row.type){
             case "MarketingInitiative":
@@ -235,10 +323,30 @@ var GanttChart = function(){
 
     }
 
+    /**
+     * @param grid
+     * @param row
+     * @param col
+     * @param Menu
+     * @param GanttXY
+     * @returns true
+     * @constructor
+     */
     Grids.OnGanttMenu = function(grid,row,col,Menu,GanttXY) {
         return true;
     }
 
+    /**
+     * @param grid
+     * @param row
+     * @param togrid
+     * @param torow
+     * @param type
+     * @param X
+     * @param Y
+     * @param copy
+     * @constructor
+     */
     Grids.OnEndDrag = function(grid,row,togrid,torow,type,X,Y,copy){
        if(type === 2){
            var oldPathForChild = row.path;
@@ -261,6 +369,14 @@ var GanttChart = function(){
 
     //SetEvent("OnClick","g1",function(){ alert("G1 clicked");} );
 
+    /**
+     * @param grid
+     * @param row
+     * @param col
+     * @param x
+     * @param y
+     * @constructor
+     */
     Grids.OnClick = function(grid,row,col,x,y){
 
         if(row.id != "Header"){
@@ -280,7 +396,9 @@ var GanttChart = function(){
     }
 
 
-
+    /**
+     * @param data
+     */
     Grids.onPublicationHandler = function(data){
     	var pubImageList = EngineDataStore.getPublicationDetailsArray();
     	$.each(data, function(key, value){
@@ -298,6 +416,23 @@ var GanttChart = function(){
         HomePresenter.createFlow(data);
     }
 
+    /**
+     * @param grid
+     * @param row
+     * @param col
+     * @param name
+     * @param start
+     * @param end
+     * @param oldstart
+     * @param oldend
+     * @param dir
+     * @param XY
+     * @param keyprefix
+     * @param clientX
+     * @param clientY
+     * @param ToRow
+     * @constructor
+     */
     Grids.OnEndDragGantt = function(grid, row, col, name, start, end,
         oldstart, oldend, dir, XY, keyprefix, clientX, clientY, ToRow){
 
@@ -308,18 +443,23 @@ var GanttChart = function(){
             GanttChartPresenter.updateDimension(prefix,row,GanttChartPresenter.onUpdate)
     }
 
-
+    /**
+     * @param data
+     */
     GanttChartPresenter.onUpdate = function(data){
         //alert(JSON.stringify(data))
     }
 
 
-
     function onDropSuccess(data){
         //Need to handle
+
     }
 
-
+    /**
+     * Assigning icons to rows w.r.t. type
+     * @param data
+     */
     function addNode(data){
         if(data !== "error"){
             closeDimensionDialog();
@@ -367,6 +507,12 @@ var GanttChart = function(){
         }
     }
 
+    /**
+     * @param o
+     * @param regexp
+     * @param n
+     * @returns true if validation is successful otherwise false
+     */
     function checkRegexp( o, regexp, n ) {
         if ( !( regexp.test( o.val() ) ) ) {
             o.addClass( "ui-state-error" );
@@ -376,6 +522,11 @@ var GanttChart = function(){
             return true;
         }
     }
+
+    /**
+     * Update alert in popup
+     * @param t
+     */
     function updateTips( t ) {
         tips
             .text( t )
@@ -385,6 +536,10 @@ var GanttChart = function(){
         }, 500 );
     }
 
+    /**
+     * @param obj
+     * @returns true if validation is successful
+     */
     function checkNull(obj){
         if(obj.val()==""){
             obj.addClass( "ui-state-error") ;
@@ -395,7 +550,13 @@ var GanttChart = function(){
             return true;
         }
     }
+
     var ck_alpha = /^[A-Za-z]+$/;
+
+    /**
+     * @param obj
+     * @returns true if validation is successful
+     */
     function checkAlpha(obj){
         //console.log(obj.val());
         if (!ck_alpha.test(obj.val())) {
@@ -411,9 +572,12 @@ var GanttChart = function(){
     }
 
 
-
-
     var ck_date = /^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$/;
+
+    /**
+     * @param obj
+     * @returns true if validation is successful
+     */
     function checkDate(obj){
         //console.log(obj.val());
         if (!ck_date.test(obj.val())) {
@@ -429,7 +593,12 @@ var GanttChart = function(){
     }
 
 
-
+    /**
+     * @param G
+     * @param row
+     * @param col
+     * @param name
+     */
     function showPopUp(G,row,col,name){
         $( "#dialog-form" ).dialog({
             height: 490,
@@ -569,6 +738,13 @@ var GanttChart = function(){
         $("#dialog-form").dialog( "close" );
     }
 
+    /**
+     * @param name
+     * @param type
+     * @param path
+     * @param icon
+     * @returns new row{{id: string, title: name, type: type, path: path, nameIcon: icon, Items: Array}}
+     */
     function  createNewRow(name,type,path,icon){
         var newRowNode = {
             "id": "",
@@ -585,6 +761,10 @@ var GanttChart = function(){
         //alert(123);
     }
 
+    /**
+     * @param dim
+     * @returns true
+     */
     function isFolder(dim){
         var flag =true;
         /*if(dim == "Page" || dim == "Assortment"){
@@ -593,6 +773,11 @@ var GanttChart = function(){
         return flag;
     }
 
+    /**
+     * @param type
+     * @param action
+     * @returns path(URL Prefix) w.r.t. type
+     */
     var getUrlPrefix=function(type,action){
            switch(type){
             case "Chapter":
@@ -608,9 +793,10 @@ var GanttChart = function(){
 
 }
 
-
-
-
+/**
+ * Flush data in popup form
+ * @param form
+ */
 function clearForm(form)
 {
     $(":input", form).each(function()

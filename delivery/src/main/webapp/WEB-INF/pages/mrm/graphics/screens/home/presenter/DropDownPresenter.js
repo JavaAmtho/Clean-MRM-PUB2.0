@@ -1,3 +1,7 @@
+/**
+ *
+ * @constructor
+ */
 var DropDownPresenter = function(){
 
     this.design = function(id)

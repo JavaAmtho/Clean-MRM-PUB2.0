@@ -1,3 +1,6 @@
+/**
+ * @constructor
+ */
 var DropDownJS = function(){
 
     this.createDropDown = function(dropDownObj,data){

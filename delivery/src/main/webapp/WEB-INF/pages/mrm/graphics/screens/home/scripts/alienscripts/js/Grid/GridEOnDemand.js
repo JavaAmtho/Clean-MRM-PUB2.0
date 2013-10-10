@@ -6,9 +6,15 @@
 // Check the script path carefully, the most errors are caused because of wrong path
 // The LoadGridE is asynchronous function, set func to be called after the script is loaded
 
+/**
+ *
+ * @param path
+ * @param func
+ * @constructor
+ */
 function LoadGridE(path, func){
 if(LoadGridE.Loaded!=null) return;
-if(!path) { 
+if(!path) {
    var S = document.getElementsByTagName("script");
    for(var i=0;i<S.length;i++){
       if(S[i].src && S[i].src.indexOf("GridEOnDemand.js")>=0){
@@ -27,7 +33,7 @@ try {
       if(window.StartTreeGrid) { StartTreeGrid(); if(func) func(); }
       else setTimeout(Finish,100);
       }
-   Finish();   
+   Finish();
    }
 catch(e){
    alert("Cannot download TreeGrid script!\r\n\r\nError message:\r\n"+(e.message ? e.message:e));
@@ -35,11 +41,11 @@ catch(e){
 }
 
 
-if(!window.Grids){ 
+if(!window.Grids){
    var Grids = new Array();
    Grids.OnDemand = true;
    }
-if(!window.TCalc) { 
+if(!window.TCalc) {
    var TCalc = function(){ };
    TCalc.OnDemand = true;
    }
