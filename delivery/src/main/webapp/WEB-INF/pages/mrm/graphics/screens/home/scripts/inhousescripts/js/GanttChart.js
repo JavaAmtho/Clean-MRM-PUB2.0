@@ -315,17 +315,8 @@ var GanttChart = function(){
 
 
 
-    function onDropSuccess(){
-       /* if(draggedNode.data.type == "Assortment"){
-            var cb = draggedNode.toDict(true, function(dict){
-                //dict.title = "Copy of " + dict.title;
-                delete dict.key; // Remove key, so a new one will be created
-            });
-            droppedSrcNode.addChild(cb);
-        }
-        else{
-            draggedNode.move(droppedSrcNode, dragHitMode);
-        }*/
+    function onDropSuccess(data){
+        //Need to handle
     }
 
 

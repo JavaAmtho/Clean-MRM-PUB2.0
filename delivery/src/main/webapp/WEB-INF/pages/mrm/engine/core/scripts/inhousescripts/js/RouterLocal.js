@@ -11,10 +11,16 @@ Router.forwardWithPost = function(url,async,reqBody,callback){
         dataType:"json",
         async:async,
         success:function(result){
-            callback(result);
+            callback(reqBody);
         },
         error: function (error) {
-            callback("error");
+            if(url == "/delivery/publication/get/cp1"){
+                Router.loadRequest("getPublications",true,Grids.onPublicationHandler);
+            }
+            else{
+                callback(reqBody);
+            }
+
         }
     });
 }

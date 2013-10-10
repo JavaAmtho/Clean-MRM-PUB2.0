@@ -1,5 +1,6 @@
 {
     "getAllSchema":"mrm/testdrive/mocks/viewstructure/AllViewStructures.json",
     "getViewStructure1":"mrm/testdrive/mocks/viewstructure/ViewStructure1.json",
-    "getTree1":"mrm/testdrive/mocks/tree/Tree1.json"
+    "getTree1":"mrm/testdrive/mocks/tree/Tree1.json",
+    "getPublications":"mrm/testdrive/mocks/coverflow/Publications.json"
 }
