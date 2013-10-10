@@ -795,7 +795,7 @@ HomePresenter.saveRulesData = function (div) {
                                 }
                             });
                         });
-                        return;
+                        return false;
                     }
                 }
 
@@ -838,7 +838,7 @@ HomePresenter.saveRulesData = function (div) {
                         }
                     });
                 });
-                return;
+                return false;
             }
             pageRuleArr.push(pageRule);
 
@@ -861,10 +861,11 @@ HomePresenter.saveRulesData = function (div) {
         for (var i = 0; i < $dirtyFields.length; i++) {
             $dirtyFields[i].innerHTML = '0';
         }
-
+        return true;
     }
     else {
         alert("No changes detected. No save operation performed.");
+        return true;
     }
 }
 
@@ -911,16 +912,14 @@ HomePresenter.setRules = function (div) {
                     var mamFileID = pageRules[i].additionalInformation.mamFileID;
                     var wbdURL = pageRules[i].additionalInformation.editUrl;
                     /***********Then Div creation***********/
-                    //var data = ''//Get Data from data store or CS
                     var newDiv = document.createElement("div");
                     $(newDiv).addClass("thenChild");
                     $(newDiv).addClass("row-fluid");
-                    //HomePresenter.getMAMFileNames()
                     var masterTemplateFileNames = EngineDataStore.getMasterTemplateList();
                     var content = "<p class='hidden ruleID'>" + ruleId + "</p>";
                     content += "<p class='hidden wbdURL'>" + wbdURL + "</p>";
                     content += "<p class='hidden mamFileID'>" + mamFileID + "</p>";
-                    content += "<select onclick='event.stopPropagation()' onchange='HomePresenter.makeDirty(this.parentNode,true)' " +
+                    content += "<select onclick='event.stopPropagation()' onchange='HomePresenter.makeRuleDirty(this.parentNode,true)' " +
                         "class='rulesText  template selectpicker span2' data-width='45%'><option selected='selected' disabled='disabled' value='-1'>Select Master Template</option>";
                     for (var j = 0; j < masterTemplateFileNames.length; j++) {
                         content += "<option value='" + masterTemplateFileNames[j].templateID + "'>" + masterTemplateFileNames[j].templateName + "</option>";
@@ -935,7 +934,7 @@ HomePresenter.setRules = function (div) {
                     assortments = GraphicDataStore.getAssortmentsByID(div.id);
 
                     var assortmentList = assortments;
-                    content = "<select onchange='HomePresenter.makeDirty(this.parentNode,false)' onclick='event.stopPropagation()' " +
+                    content = "<select onchange='HomePresenter.makeRuleDirty(this.parentNode,false)' onclick='event.stopPropagation()' " +
                         "class='rulesText assortment selectpicker span3' data-width='35%'><option selected='selected' disabled='disabled' value='-1'>Select Assortment</option>";
                     for (var j = 0; j < assortmentList.length; j++) {
                         content += "<option>" + assortmentList[j].name + "</option>";
@@ -945,7 +944,7 @@ HomePresenter.setRules = function (div) {
 
                     content = "<span class='buttons remove' onclick='HomePresenter.removeNew(this.parentNode,event)'>-</span>"
                     newDiv.innerHTML = newDiv.innerHTML + content;
-                    content = "<span class='buttons addCondition' onclick='HomePresenter.newWhen(this.parentNode,event)'>+</span>"
+                    content = "<span class='buttons addCondition' onclick='HomePresenter.newCondition(this.parentNode)'>+</span>"
                     newDiv.innerHTML = newDiv.innerHTML + content;
                     content = "<p class='hidden dataDirty'>0</p>"
                     newDiv.innerHTML = newDiv.innerHTML + content;
@@ -969,7 +968,7 @@ HomePresenter.setRules = function (div) {
                             $(whenDiv).addClass("whenChild");
 
                             var variablesList = groupTypes;
-                            content = "&nbsp;&nbsp;<select onchange='HomePresenter.toggleRegionTargetGroup(this)' " +
+                            content = "&nbsp;&nbsp;<select onchange='HomePresenter.modifyValueDropDown(this)' " +
                                 "onclick='event.stopPropagation()' class='rulesText groupType selectpicker span2' data-width='auto' value='-1'>" +
                                 "<option selected='selected' disabled='disabled'>Choose</option>";
                             for (var k = 0; k < variablesList.length; k++) {
@@ -978,13 +977,13 @@ HomePresenter.setRules = function (div) {
                             content += "</select>";
                             whenDiv.innerHTML = whenDiv.innerHTML + content;
 
-                            content = "<select onchange='HomePresenter.makeDirty(this.parentNode,false)' " +
-                                "onclick='event.stopPropagation()' onchange='HomePresenter.addValue(this,event)' class='rulesText operation selectpicker span2' data-width='auto'><option selected='selected'>=</option>" +
+                            content = "<select onchange='HomePresenter.makeRuleDirty(this.parentNode,false)' " +
+                                "onclick='event.stopPropagation()' onchange='HomePresenter.makeDirty(this,event)' class='rulesText operation selectpicker span2' data-width='auto'><option selected='selected'>=</option>" +
                                 "</select>";
                             whenDiv.innerHTML = whenDiv.innerHTML + content;
 
                             content = "<select onclick='event.stopPropagation()' " +
-                                "onchange='HomePresenter.addValue(this,event)'  class='input rulesText value selectpicker span2' data-width='auto' type='text'>" +
+                                "onchange='HomePresenter.makeDirty(this.parentNode,event)'  class='input rulesText value selectpicker span2' data-width='auto' type='text'>" +
                                 "<option selected='selected' disabled='disabled' value='-1'>Choose</option>";
 
                             if (groupType == 'Region') {
@@ -1014,7 +1013,7 @@ HomePresenter.setRules = function (div) {
 
                             /******************Setting dropdown Values****************************/
                             $(whenDiv).children('.groupType').val(groupType);
-                            //HomePresenter.toggleRegionTargetGroup($(whenDiv).children('.groupType')[0], false)
+                            //HomePresenter.modifyValueDropDown($(whenDiv).children('.groupType')[0], false)
                             $(whenDiv).children('.operation').val(operation);
                             $(whenDiv).children('.value').val(value);
 
@@ -1034,186 +1033,220 @@ HomePresenter.setRules = function (div) {
 }
 
 
-HomePresenter.openRules = function (div, event) {
-    if (!$(div).hasClass('opened')) {
-        if ($(div).hasClass('rules-opened')) {
-            var $dirtyFields = $(div).find('.dataDirty');
+HomePresenter.displayExpandRulesButton = function(parentMasterPageDiv) {
+    var $rules = $(parentMasterPageDiv).children('.rule').children('.then').children('.thenChild');
+    if ($rules.length > 0) {
+        $(parentMasterPageDiv).children(".expand").toggle();
+    }
+}
+
+
+HomePresenter.openRulesConfigurationMenu = function(parentMasterPageDiv) {
+    $(parentMasterPageDiv).children(".expand").css('display',"none");
+    //open the rules configuration menu
+    HomePresenter.toggleRulesView(parentMasterPageDiv);
+}
+
+/*
+ arguments : groupTypeDropDown - reference to the master page div
+ return : void
+ Description : Open or close the rules configuration menu
+ */
+HomePresenter.toggleOpenCloseRules = function (parentMasterPageDiv) {
+
+    if (!$(parentMasterPageDiv).hasClass('opened')) { //check if the master page has been expanded to its child pages
+        //if pages not expanded then proceed straight for open/close rules menu
+        if ($(parentMasterPageDiv).hasClass('rules-opened')) {  //check if the rules configuration menu in open
+            //If opened then proceed to close the rules menu
+            var $dirtyFields = $(parentMasterPageDiv).find('.dataDirty');      //Get all the dirty flags
             var isDirty = getDataDirtyFlag($dirtyFields);
-            if (isDirty) {
-                $closeButton = $(div).find('.close');
+            if (isDirty) {                                                     //Check if any dirty flag is set
+
+                //If dirty then open up the dialog confirming close or save of rules
                 $(function () {
                     $("#dialog-confirm").dialog({
                         resizable: false,
                         height: 140,
                         modal: true,
                         buttons: {
+                            //Actions to perform if user chooses the 'Save' option
                             "Save": function () {
+                                //close the dialog box
                                 $(this).dialog("close");
-                                HomePresenter.saveRulesData(div);
-                                HomePresenter.setRules(div);
-                                var $thenChildren = $(div).children('.rule').children('.then').children('.thenChild');
-                                if ($thenChildren.length > 0) {
-                                    if ($(div).children(".expand").css('display') == 'none') {
-                                        $(div).children(".expand").toggle();
-                                    }
-                                }
 
-                                HomePresenter.toggleRulesView(div);
-                            },
-                            "Discard": function () {
-                                $(this).dialog("close");
-                                HomePresenter.setRules(div);
-                                var $thenChildren = $(div).children('.rule').children('.then').children('.thenChild');
-                                if ($thenChildren.length > 0) {
-                                    if ($(div).children(".expand").css('display') == 'none') {
-                                        $(div).children(".expand").toggle();
-                                    }
+                                //Save the rules
+                                var isSaveSuccess = HomePresenter.saveRulesData(parentMasterPageDiv);
+                                if(isSaveSuccess){ //Check if successfully saved
+
+                                    //show the expand rules button on the master page if rules exist
+                                    HomePresenter.displayExpandRulesButton(parentMasterPageDiv);
+
+                                    //close the rules configuration menu
+                                    HomePresenter.toggleRulesView(parentMasterPageDiv);
                                 }
-                                HomePresenter.toggleRulesView(div);
                             },
+
+                            //Actions to perform if user chooses the 'Discard' option
+                            "Discard": function () {
+                                //Close the dialog box
+                                $(this).dialog("close");
+
+                                //show the expand rules button on the master page if rules exist
+                                HomePresenter.displayExpandRulesButton(parentMasterPageDiv);
+
+                                //close the rules configuration menu
+                                HomePresenter.toggleRulesView(parentMasterPageDiv);
+
+                                //Discard currently set values and pickup up last saved rules
+                                HomePresenter.setRules(parentMasterPageDiv);
+                            },
+
+                            //Actions to perform if user chooses the 'Cancel' option
                             "Cancel": function () {
                                 $(this).dialog("close");
                             }
                         }
                     });
                 });
-            } else {
-                HomePresenter.setRules(div);
-                var $thenChildren = $(div).children('.rule').children('.then').children('.thenChild');
-                if ($thenChildren.length > 0) {
-                    if ($(div).children(".expand").css('display') == 'none') {
-                        $(div).children(".expand").toggle();
-                    }
-                }
+            }
+            else {  //Case when close is clicked and data is not dirty
 
-                HomePresenter.toggleRulesView(div);
+                /******Not sure why its been called so commented 09/10/2013******/
+                /****Please revert code if any issues****/
+                //HomePresenter.setRules(parentMasterPageDiv);
+
+                //show the expand rules button on the master page if rules exist
+                HomePresenter.displayExpandRulesButton(parentMasterPageDiv);
+
+                //close the rules configuration menu
+                HomePresenter.toggleRulesView(parentMasterPageDiv);
             }
         }
         else {
-            if ($(div).children(".expand").css('display') == 'block') {
-                $(div).children(".expand").toggle();
-            }
-
-            console.log(div)
-            HomePresenter.toggleRulesView(div);
+            //Rules menu is closed so proceed to opening rules configuration menu
+            HomePresenter.openRulesConfigurationMenu(parentMasterPageDiv);
         }
 
     }
 
-else
-{
-    HomePresenter.expandPages(div, event);
-    $(div).children(".expand").toggle();
-    HomePresenter.toggleRulesView(div);
+    else{
+        //When child pages have been expanded and rules configuration menu button clicked
+        //collapse all the child pages and open the rules configuration menu
+        HomePresenter.expandPages(parentMasterPageDiv);
+        HomePresenter.openRulesConfigurationMenu(parentMasterPageDiv);
 
-}
-}
-
-
-HomePresenter.addValue = function (text, event) {
-
-    $(text.parentNode).children('.dataDirty').html('1');
-    //$(text.parentNode.parentNode).children('.wbdURL').html(" ");
-    //$(text.parentNode.parentNode).children('.mamFileID').html(" ");
-
-    //get all values inside div
-    //logic to put chosen values in the classname for isotope filtering
-    /* var $values = $(text).closest('.then').children('.thenChild').children('.whenChild').children('.value');
-     var dimension = $(text).siblings('.groupType')[0].value;
-     var value = text.value;
-     $parentDiv = $(text).closest('.rules-opened');
-     var isOdd = $(text).closest('.rules-opened').hasClass('odd');
-     var $filterClasses = '';
-     for (var i = 0; i < $values.length; i++) {
-     if (!$($values[i]).hasClass('hidden')) {
-     $filterClasses = $filterClasses + ' ' + $values[i].value.toLowerCase();
-     }
-     }
-     var basicClasses;
-     if (isOdd) {
-     basicClasses = 'masterPage odd large any';
-     }
-     else {
-     basicClasses = 'masterPage even large any';
-     }
-     var $newClasses = basicClasses + ' ' + $filterClasses;
-     $parentDiv.removeClass().addClass(basicClasses + ' ' + $filterClasses);*/
+    }
 }
 
-HomePresenter.toggleRegionTargetGroup = function (toggle) {
-        $(toggle.parentNode).children('.dataDirty').html('1');
-//        $(toggle.parentNode.parentNode).children('.wbdURL').html(" ");
-//        $(toggle.parentNode.parentNode).children('.mamFileID').html(" ");
+
+/*
+ arguments : groupTypeDropDown - reference to the group type drop down(target group/region select drop-down)
+ return : void
+ Description : According to value selected in the group type drop-down modify the values in the value drop-down
+ */
+HomePresenter.modifyValueDropDown = function (groupTypeDropDown) {
+        $(groupTypeDropDown.parentNode).children('.dataDirty').html('1');
+
+    //We encountered some issues after using the new drop-down component while modifying the
+    //values in the drop-down. So instead of modifying the values we replace the entire
+    //drop-down manually.
 
     var options = "<select onclick='event.stopPropagation()' " +
-        "onchange='HomePresenter.addValue(this,event)'  class='input rulesText value selectpicker span2' data-width='auto' type='text'>" +
-        "<option disable='disabled' value='-1'>Select</option>";
-    if (toggle.selectedIndex == 1) {
-        var regionsList = regions;
-        for (var i = 0; i < regionsList.length; i++) {
-            options += "<option>" + regionsList[i] + "</option>";
-        }
+                    "onchange='HomePresenter.makeDirty(this.parentNode,event)'  " +
+                    "class='input rulesText value selectpicker span2' " +
+                    "data-width='auto' type='text'>" +
+                    "<option disable='disabled' value='-1'>Select</option>";
+
+    if (groupTypeDropDown.selectedIndex == 1) {
+        var regionsList = regions;                                      //
+        for (var i = 0; i < regionsList.length; i++) {                  //  If selected index is 1(Region)
+            options += "<option>" + regionsList[i] + "</option>";       //  then add regions list to the drop-down
+        }                                                               //
     }
-    else if (toggle.selectedIndex == 2) {
-        var targetGroupsList = targetGroups;
-        for (var i = 0; i < targetGroupsList.length; i++) {
-            options += "<option>" + targetGroupsList[i] + "</option>";
-        }
+    else if (groupTypeDropDown.selectedIndex == 2) {
+        var targetGroupsList = targetGroups;                            //
+        for (var i = 0; i < targetGroupsList.length; i++) {             //  If selected index is 2(Target Group)
+            options += "<option>" + targetGroupsList[i] + "</option>";  //  then add target groups list to drop-down
+        }                                                               //
     }
     options += "</select>";
-    $(toggle).siblings('.value').remove();
-    console.log($(toggle).siblings('.selectboxit-container'));
-    var $operationDropdown = $(toggle).siblings('.selectboxit-container');
+
+    $(groupTypeDropDown).siblings('.value').remove();               //remove the existing drop-down
+    //Get the last operator drop-down component and add the values drop-down after it
+    var $operationDropdown = $(groupTypeDropDown).siblings('.selectboxit-container');
     $($operationDropdown[$operationDropdown.length-1]).after(options);
-    $('.selectpicker').selectBoxIt();
+    $('.selectpicker').selectBoxIt();   //initialize the selectBoxIt component on the drop-downs
 }
 
-HomePresenter.makeDirty = function (reference,shouldMakeDirty) {
-    $(reference).children('.dataDirty').html('1');
-    if(shouldMakeDirty){
-        $(reference).children('.wbdURL').html(" ");
-        $(reference).children('.mamFileID').html(" ");
+/*
+ arguments : parentDiv - reference to the parent rule for the condition to be marked dirty
+             ifResetWBD - boolean indicating if the wbd url and mamFileID need to be reset
+ return : void
+ Description : indicate data as dirty due to changes and also reset wbdurl and mam file id accordingly
+ */
+HomePresenter.makeRuleDirty = function (parentDiv,ifResetWBD) {
+    HomePresenter.makeDirty(parentDiv);
+    if(ifResetWBD){
+        $(parentDiv).children('.wbdURL').html(" ");
+        $(parentDiv).children('.mamFileID').html(" ");
     }
 }
 
+HomePresenter.makeDirty = function (text, event) {
+    $(text).children('.dataDirty').html('1');
+}
 
-HomePresenter.newWhen = function (reference, event) {
 
-    $(reference).children('.dataDirty').html('1');
-    //Set dirty flag to the then child
+/*
+ arguments : parentThenChildDiv - reference to the parent rule for the condition to be added
+ return : void
+ Description : Create a new condition for the rule(Called on the '+' next to the rule)
+ */
+HomePresenter.newCondition = function (parentThenChildDiv) {
+    //Set dirty flag to the paren thenChild
+    $(parentThenChildDiv).children('.dataDirty').html('1');
 
-    var newDiv = document.createElement("div");
-    $(newDiv).addClass("whenChild row-fluid");
+
+    var newConditionDiv = document.createElement("div");        //Create new condition
+    $(newConditionDiv).addClass("whenChild row-fluid");         //in the parent rule div
 
     var variablesList = groupTypes;
-    content = "&nbsp;&nbsp;<select onchange='HomePresenter.toggleRegionTargetGroup(this)' " +
-        "onclick='event.stopPropagation()' class='rulesText groupType selectpicker span2' data-width='auto' value='-1'>" +
-        "<option selected='selected' disabled='disabled'>Choose</option>";
-    for (var i = 0; i < variablesList.length; i++) {
-        content += "<option>" + variablesList[i] + "</option>";
-    }
+    content = "&nbsp;&nbsp;<select onchange='HomePresenter.modifyValueDropDown(this)' " +  //Form drop-down
+                "onclick='event.stopPropagation()' " +                                         //   with the
+                "class='rulesText groupType selectpicker span2' " +                            //     group
+                "data-width='auto' value='-1'>" +                                              //     types
+                "<option selected='selected' disabled='disabled'>Choose</option>";             //  i.e. Region,
+    for (var i = 0; i < variablesList.length; i++) {                                           //    Target
+        content += "<option>" + variablesList[i] + "</option>";                                //    Group e.t.c
+    }                                                                                          //
     content += "</select>";
-    newDiv.innerHTML = newDiv.innerHTML + content;
+    newConditionDiv.innerHTML = newConditionDiv.innerHTML + content;    //Add the drop-down to the parent div
 
-    content = "<select onchange='HomePresenter.makeDirty(this.parentNode,false)' " +
-        "onclick='event.stopPropagation()' onchange='HomePresenter.addValue(this,event)' class='rulesText operation selectpicker span2' data-width='auto'><option selected='selected'>=</option>" +
-        "</select>";
-    newDiv.innerHTML = newDiv.innerHTML + content;
+    content = "<select class='rulesText operation selectpicker span2' data-width='auto'>" +
+                "<option selected='selected'>=</option>" +
+                "</select>";
+    newConditionDiv.innerHTML = newConditionDiv.innerHTML + content;   //Add the operator drop-down to the parent div
 
-    content = "<select onclick='event.stopPropagation()' " +
-        "onchange='HomePresenter.addValue(this,event)'  class='input rulesText value selectpicker span2' data-width='auto' type='text'>" +
-        "<option selected='selected' disabled='disabled' value='-1'>Choose</option></select>";
-    newDiv.innerHTML = newDiv.innerHTML + content;
+    content = "<select onclick='event.stopPropagation()' " +                                    //
+                "onchange='HomePresenter.makeDirty(this.parentNode,event)'  " +                 //Form the basic
+                "class='input rulesText value selectpicker span2' " +                           //drop-down
+                "data-width='auto' type='text'>" +                                              //for the
+                "<option selected='selected' disabled='disabled' value='-1'>Choose</option>" +  //value field
+                "</select>";                                                                    //
+    newConditionDiv.innerHTML = newConditionDiv.innerHTML + content;    //Add the value drop-down to the parent div
 
+
+    //Add the '-' button to let user remove the condition
     var content = "&nbsp;&nbsp;<span class='buttons remove' " +
         "onclick='HomePresenter.removeNew(this.parentNode,event)'>-</span>";
-    newDiv.innerHTML = newDiv.innerHTML + content;
+    newConditionDiv.innerHTML = newConditionDiv.innerHTML + content;
 
+    //create dirty flag and initialize to 0
     content = "<p class='hidden dataDirty'>0</p>"
-    newDiv.innerHTML = newDiv.innerHTML + content;
+    newConditionDiv.innerHTML = newConditionDiv.innerHTML + content;
 
-    reference.appendChild(newDiv);
-    $(".selectpicker").selectBoxIt({autoWidth:true});
+    parentThenChildDiv.appendChild(newConditionDiv);    //Append the condition to the parent div
+    $(".selectpicker").selectBoxIt({autoWidth:true});   //Initialize the selectBoxitComponent on all drop-downs
 }
 
 
@@ -1222,23 +1255,24 @@ HomePresenter.newWhen = function (reference, event) {
     return : void
     Description : Create a new rule(called on click of the main '+' button on the configure rules page)
 */
-HomePresenter.newThen = function (parentThenDiv) {
-    //Set the dirty flag when new rule is added
+HomePresenter.newRule = function (parentThenDiv) {
+    //Set the main dirty flag when new rule is added
     $(parentThenDiv).children('.dataDirty').html('1');
 
-    var newDiv = document.createElement("div");                                     //  new div creation
-    $(newDiv).addClass("thenChild row-fluid");                                      //  for new rule
+    var newRuleDiv = document.createElement("div");         //  new div creation
+    $(newRuleDiv).addClass("thenChild row-fluid");          //  for new rule
 
     var masterTemplateFileNames = EngineDataStore.getMasterTemplateList();
 
     /**************************Removed ruleID generation logic since it is already performed in saveRulesData.
                                 Incase needed refer to code before 9/10/2013*******************/
+
     var content = "<p class='hidden ruleID'></p>";         //Empty 'p' tags
     content += "<p class='hidden wbdURL'> </p>";           //to store wbdURL/wbdURL/mamFileID
     content += "<p class='hidden mamFileID'> </p>";        //once generated
 
     //Forming drop down with list of all the master template file names from CS
-    content += "<select onclick='event.stopPropagation()' onchange='HomePresenter.makeDirty(this.parentNode,true)' " +
+    content += "<select onclick='event.stopPropagation()' onchange='HomePresenter.makeRuleDirty(this.parentNode,true)' " +
                 "class='rulesText selectpicker  template ' >" +
                 "<option selected='selected' disabled='disabled' value='-1'>Select Master Template</option>";
     for (var i = 0; i < masterTemplateFileNames.length; i++) {
@@ -1246,11 +1280,12 @@ HomePresenter.newThen = function (parentThenDiv) {
                     masterTemplateFileNames[i].templateName + "</option>";
     }
     content += "</select>";
-    newDiv.innerHTML = newDiv.innerHTML + content;     //Add master template filename dropdown to the new rule div
+    newRuleDiv.innerHTML = newRuleDiv.innerHTML + content;     //Add master template filename dropdown to the new rule div
 
     var assortmentList;
-    var pathToPage = $(parentThenDiv).closest(".masterPage").children('.pagePath').html();
-    var pageID = $(parentThenDiv).closest(".masterPage")[0].id;
+    var $parentPageReference = $(parentThenDiv).closest(".masterPage");
+    var pathToPage = $parentPageReference.children('.pagePath').html();
+    var pageID = $parentPageReference[0].id;
 
     GetAssortments.get(pathToPage,pageID,function(data){                //
         GraphicDataStore.pushToAssortmentsList(parentThenDiv.id,data);      //Get list of assortments
@@ -1258,7 +1293,7 @@ HomePresenter.newThen = function (parentThenDiv) {
     assortmentList = GraphicDataStore.getAssortmentsByID(parentThenDiv.id); //
 
     //Form drop down with the list of assortments under the page from the server
-    content = "<select onchange='HomePresenter.makeDirty(this.parentNode,false)' onclick='event.stopPropagation()' " +
+    content = "<select onchange='HomePresenter.makeRuleDirty(this.parentNode,false)' onclick='event.stopPropagation()' " +
                 "class='rulesText assortment selectpicker span3' data-width='35%'>" +
                 "<option selected='selected' value='-1'>Select Assortment</option>";
     console.log(assortmentList)
@@ -1266,17 +1301,17 @@ HomePresenter.newThen = function (parentThenDiv) {
         content += "<option>" + assortmentList[i].name + "</option>";
     }
     content += "</select>";
-    newDiv.innerHTML = newDiv.innerHTML + content;//Add assortments dropdown to the new rule div
+    newRuleDiv.innerHTML = newRuleDiv.innerHTML + content;//Add assortments dropdown to the new rule div
 
     //Add the add new condition and remove rule buttons to the new rule div
     content = "<span class='buttons remove' onclick='HomePresenter.removeNew(this.parentNode,event)'>-</span>"
-    newDiv.innerHTML = newDiv.innerHTML + content;
-    content = "<span class='buttons addCondition' onclick='HomePresenter.newWhen(this.parentNode,event)'>+</span>"
-    newDiv.innerHTML = newDiv.innerHTML + content;
+    newRuleDiv.innerHTML = newRuleDiv.innerHTML + content;
+    content = "<span class='buttons addCondition' onclick='HomePresenter.newCondition(this.parentNode)'>+</span>"
+    newRuleDiv.innerHTML = newRuleDiv.innerHTML + content;
 
     content = "<p class='hidden dataDirty'>0</p>"   //The dirty flag by default set to 0
-    newDiv.innerHTML = newDiv.innerHTML + content;
-    parentThenDiv.appendChild(newDiv);      //Add the new rule div to the parent div
+    newRuleDiv.innerHTML = newRuleDiv.innerHTML + content;
+    parentThenDiv.appendChild(newRuleDiv);      //Add the new rule div to the parent div
 
     $(".selectpicker").selectBoxIt({    //  Initialize the
         autoWidth: false                //  selectBoxIt component
