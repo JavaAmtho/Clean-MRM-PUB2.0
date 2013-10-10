@@ -36,26 +36,7 @@ Router.forwardAPIRequests = function(url,async,callback){
         });
 }
 
-Router.forwardWithPost = function(url,async,reqBody,callback){
-    $.ajax({
-        url:url,
-        contentType: "application/json",
-        type:"POST",
-        data:JSON.stringify(reqBody),
-        dataType:"json",
-        async:async,
-        success:function(result){
-            callback(result);
-        },
-        error: function (error) {
-            callback("error");
-        }
-    });
-}
-
 Router.loadRequest = function(key,async,callBack,params){
-    //Comment this while DEPLOYING and uncomment belove
-	
     if(params){
 
         switch(params){
@@ -79,7 +60,6 @@ Router.loadRequest = function(key,async,callBack,params){
                 break;
         }
         Router.forwardAPIRequests(EngineDataStore.getApiMappingObject()[key],async,function(data){
-            //data=eval('(' + data + ')');
             callBack(data);
         });
     }
@@ -89,39 +69,4 @@ Router.loadRequest = function(key,async,callBack,params){
         });
     }
 
-    //Uncomment this while DEPLOYING and comment above
-    /*if(params){
-        Router.forward(EngineDataStore.getApiMappingObject()[key]+params,async,function(data){
-            callBack(data);
-        });
-    }
-    else{
-        Router.forward(EngineDataStore.getApiMappingObject()[key],async,function(data){
-            callBack(data);
-        });
-    }*/
-
 }
-
-
-/*
-Router.forwardWithParams = function(url,path,type,callback){
-    $.ajax({
-        url:url,
-        data:{path:path},
-        dataType:'json',
-        */
-/* beforeSend: function(xhr){
-         xhr.setRequestHeader('myName','rohan')
-         },*//*
-
-        type: type,
-        success:function(result){
-            callback(result);
-        },
-        error: function (error) {
-            callback("error");
-        }
-    });
-
-}*/

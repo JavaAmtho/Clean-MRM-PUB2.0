@@ -10,7 +10,7 @@ var DynaLazyTree = function(){
             },
             onLazyRead: function(node){
                 node.appendAjax({
-                    url: EngineDataStore.getBaseURL()+"/delivery/lo/"+urls+"/"+node.data.id,//getChildURL(node.data.id),
+                    url: urls+"/"+node.data.id,//getChildURL(node.data.id),
                     success: function(node, data) {
                         //node.addChild(data);
                         HomePresenter.populateAssetsList(data);

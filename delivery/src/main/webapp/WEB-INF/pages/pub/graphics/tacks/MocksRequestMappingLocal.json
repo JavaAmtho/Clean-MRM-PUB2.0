@@ -6,7 +6,7 @@
     "getTree1":"pub/testdrive/mocks/tree/Tree1.json",
     "getTree2":"pub/testdrive/mocks/tree/Tree2.json",
     "getTree3":"pub/testdrive/mocks/tree/Tree3.json",
-    "btnPIM":"../testdrive/mocks/tree/PimAssets.json",
-    "btnMAM":"../testdrive/mocks/tree/MamAssets.json",
-    "btnMIM":"../testdrive/mocks/tree/AssetTree.json"
+    "btnPIM":"testdrive/mocks/tree/PimAssets.json",
+    "btnMAM":"testdrive/mocks/tree/MamAssets.json",
+    "btnMIM":"testdrive/mocks/tree/AssetTree.json"
 }
