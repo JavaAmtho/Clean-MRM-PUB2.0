@@ -315,3 +315,7 @@
 .jqx-listitem-element{
     height: 60px !important;
 }
+
+td > img{
+    max-height: 45px !important;
+}

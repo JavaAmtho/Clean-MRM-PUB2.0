@@ -4,16 +4,16 @@
 	<p class="hidden pagePath">{{path}}</p>
     <div class='buttonsHolder {{hiddenCSS}}' >
     </div>
-    <h2 class='openRules {{hiddenCSS}}' onclick='HomePresenter.toggleOpenCloseRules(this.parentNode)'></h2>
+    <h2 class='openRules {{hiddenCSS}}' onclick='PagePresenter.toggleOpenCloseRules(this.parentNode)'></h2>
 
-    <h2 class='expand {{hiddenCSS}}' onclick='HomePresenter.expandCollapseChildPages(this.parentNode)'></h2>
+    <h2 class='expand {{hiddenCSS}}' onclick='PagePresenter.expandCollapseChildPages(this.parentNode)'></h2>
 
     <div class="rule">
-        <img src='../../../graphics/screens/home/images/save.png' class='save' onclick='HomePresenter.saveRulesData(this.parentNode.parentNode)'/>
-        <h2 class='close' onclick='HomePresenter.toggleOpenCloseRules(this.parentNode.parentNode)'>X</h2>
+        <img src='../../../graphics/screens/home/images/save.png' class='save' onclick='PagePresenter.saveRulesData(this.parentNode.parentNode)'/>
+        <h2 class='close' onclick='PagePresenter.toggleOpenCloseRules(this.parentNode.parentNode)'>X</h2>
 
         <div class="then">
-            <div class="buttons addNewThen" onclick="HomePresenter.newRule(this.parentNode)">+</div>
+            <div class="buttons addNewThen" onclick="PagePresenter.newRule(this.parentNode)">+</div>
             <p class="hidden dataDirty">1</p>
         </div>
     </div>

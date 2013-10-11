@@ -714,6 +714,24 @@ img.save {
     text-align: center;
 }
 
+/******** CSS FOR DROPDOWN BOXIT (RULES) *********/
+
+.selectboxit-container .selectboxit {
+    margin: 5px 5px 0 5px !important;
+    min-width:150px;
+    max-width: 150px;
+}
+
+.selectboxit-container *{
+    font-size: 12px !important;
+}
+
+.selectboxit-arrow-container {
+    border-left: 1px solid #ccc;
+}
+
+
+
 /********* CSS FOR ASSORT PANEL ENDS ************/
 
 
