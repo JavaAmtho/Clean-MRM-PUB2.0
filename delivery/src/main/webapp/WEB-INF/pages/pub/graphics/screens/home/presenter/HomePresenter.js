@@ -1353,6 +1353,3 @@ HomePresenter.showAllPages = function(){
                                                              //is clicked the current view is the publication
     GetAllPagesInPublication.get(publicationName,HomePresenter.changeViewToShowAllPages);
 }
-
-
-

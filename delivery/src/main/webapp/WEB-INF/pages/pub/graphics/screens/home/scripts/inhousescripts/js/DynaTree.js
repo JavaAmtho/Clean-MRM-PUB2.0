@@ -1,10 +1,19 @@
 var temp;
 
+/**
+ *
+ * @constructor
+ */
 var DynaTree = function(){
     var currentPath;
     var parentNode;
     var newNode
 
+    /**
+     *
+     * @param type
+     * @returns {boolean}
+     */
     function menuExists(type){
         var contextMenusHolder = document.getElementById('menus')
         uls = contextMenusHolder.getElementsByTagName('ul');
@@ -16,6 +25,11 @@ var DynaTree = function(){
         return false;
     }
 
+    /**
+     *
+     * @param type
+     * @param menuOptions
+     */
     function createList(type,menuOptions){
         var contextMenusHolder = document.getElementById('menus');
         var options = menuOptions;
@@ -35,7 +49,12 @@ var DynaTree = function(){
         contextMenusHolder.appendChild(list);
     }
 
-    // --- Contextmenu --------------------------------------------------
+    /**
+     * Contextmenu
+     *
+     * @param span
+     * @param type
+     */
     function bindContextMenu(span,type) {
 
         var possibleDim=[];
@@ -76,6 +95,10 @@ var DynaTree = function(){
         }
     }
 
+    /**
+     *
+     * @param data
+     */
     function addNode(data){
         if(data){
             parentNode.addChild(newNode).activate();
@@ -93,6 +116,14 @@ var DynaTree = function(){
         }
     }
 
+    /**
+     *
+     * @param name
+     * @param type
+     * @param path
+     * @param flag
+     * @returns {{id: Empty String, title: name, type: type, path: path, isFolder: 'true' if folder, products: Empty Array}}
+     */
     function createAssortmentNode(name,type,path,flag){
         var flag = isFolder(type);
         var newNode = {
@@ -106,6 +137,14 @@ var DynaTree = function(){
         return newNode;
     }
 
+    /**
+     *
+     * @param name
+     * @param type
+     * @param path
+     * @param flag
+     * @returns {{id: Empty String, title: name, type: type, path: path, isFolder: 'true' if folder, children: Empty Array}}
+     */
     function createNode(name,type,path,flag){
         var flag = isFolder(type);
         var newNode = {
@@ -119,6 +158,11 @@ var DynaTree = function(){
         return newNode;
     }
 
+    /**
+     *
+     * @param dim
+     * @returns true if dim equals 'Page' or 'Assortment'
+     */
     function isFolder(dim){
         var flag =true;
         if(dim == "Page" || dim == "Assortment"){
@@ -127,6 +171,12 @@ var DynaTree = function(){
         return flag;
     }
 
+    /**
+     *
+     * @param type
+     * @param action
+     * @returns a part of URL w.r.t. type
+     */
     var getUrlPrefix=function(type,action){
         switch(type){
             case "Chapter":
@@ -139,6 +189,9 @@ var DynaTree = function(){
         return "/delivery/dimension/"+action+"/";
     }
 
+    /**
+     * function onDropSuccess
+     */
     function onDropSuccess(){
         console.log(draggedNode + "draggedNode")
         console.log(droppedSrcNode + "droppedSrcNode NEW")
@@ -170,6 +223,11 @@ var DynaTree = function(){
     var droppedSrcNode;
     var oldParentNode;
 
+    /**
+     *
+     * @param treeObj
+     * @param data
+     */
     this.createTree = function(treeObj,data){
 
         $(document).bind("expandParentNode", function onExpandParentNode(e){
@@ -247,6 +305,14 @@ var DynaTree = function(){
                         }
 
                     },
+
+                    /**
+                     *
+                     * @param node
+                     * @param sourceNode
+                     * @returns ["over"] if sourceNode datatype equals 'Assortment' and nodedatatype equals 'Page'; or node datatype equals 'Publication' or 'Chapter'
+                     * else false
+                     */
                     onDragEnter: function(node, sourceNode) {
                         if(sourceNode.data.type == "Assortment"){
                             if(node.data.type == "Page"){
@@ -260,6 +326,15 @@ var DynaTree = function(){
                             return false;
                         }
                     },
+
+                    /**
+                     *
+                     * @param sourceNode
+                     * @param node
+                     * @param hitMode
+                     * @param ui
+                     * @param draggable
+                     */
                     onDrop: function(sourceNode, node, hitMode, ui, draggable) {
                         draggedNode = node;
                         droppedSrcNode = sourceNode;
@@ -303,6 +378,12 @@ var DynaTree = function(){
                 return myPagesColl;
             }*/
 
+            /**
+             *
+             * @param name
+             * @param searchFrom
+             * @returns {undefined} if name equals null; node object if found
+             */
             function searchFolderNodeWithName(name, searchFrom) {
                 if (name == null) {
                     return undefined;

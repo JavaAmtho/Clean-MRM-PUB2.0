@@ -5,10 +5,20 @@
  * Time: 8:56 PM
  */
 
+/**
+ *
+ * @constructor
+ */
 function MustacheWrapper(){
 
 }
 
+/**
+ *
+ * @param templateURL
+ * @param templateData
+ * @param callBack
+ */
 MustacheWrapper.createUI = function(templateURL, templateData, callBack){
     var str = "";
     if(templateURL == "")

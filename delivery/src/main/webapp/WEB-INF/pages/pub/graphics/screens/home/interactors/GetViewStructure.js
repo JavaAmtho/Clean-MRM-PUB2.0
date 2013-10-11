@@ -1,11 +1,23 @@
+/**
+ *
+ * @constructor
+ */
 function GetViewStructure(){
 
 }
 
+/**
+ *
+ * @param schemaId
+ */
 GetViewStructure.get = function(schemaId){
     Router.loadRequest("getSchema",true,GetViewStructure.onViewStructureSuccess,schemaId);
 }
 
+/**
+ *
+ * @param data
+ */
 GetViewStructure.onViewStructureSuccess = function(data){
     GraphicDataStore.setCurrentSchema(data);
     GraphicDataStore.setSchemaLabel();
@@ -21,10 +33,17 @@ GetViewStructure.onViewStructureSuccess = function(data){
     });
 }
 
+/**
+ * function getAll
+ */
 GetViewStructure.getAll = function(){
     Router.loadRequest("getAllSchema",true,GetViewStructure.onViewStructuresLoaded);
 }
 
+/**
+ *
+ * @param data
+ */
 GetViewStructure.onViewStructuresLoaded = function(data){
     GraphicDataStore.setSchemaArray(data);
     GraphicDataStore.setDefaultSchema();

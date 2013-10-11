@@ -1,5 +1,14 @@
+/**
+ *
+ * @constructor
+ */
 var DropDownJS = function(){
 
+    /**
+     *
+     * @param dropDownObj
+     * @param data
+     */
     this.createDropDown = function(dropDownObj,data){
         var jsonlist = data;
         for(var i=0; i< jsonlist.length; i ++){

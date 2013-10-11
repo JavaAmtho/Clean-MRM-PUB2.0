@@ -1,3 +1,7 @@
+/**
+ *
+ * @constructor
+ */
 var TreeSelector = function(){
 
     this.design = function(id)
@@ -30,6 +34,10 @@ var TreeSelector = function(){
 
 }
 
+/**
+ *
+ * @returns new TreeSelector
+ */
 TreeSelector.getInstance = function(){
     return new TreeSelector();
 }

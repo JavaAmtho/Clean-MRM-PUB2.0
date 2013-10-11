@@ -1,3 +1,7 @@
+/**
+ *
+ * @constructor
+ */
 var DropDownPresenter = function(){
 
     this.design = function(id)
@@ -15,14 +19,26 @@ var DropDownPresenter = function(){
 
 }
 
+/**
+ *
+ * @returns new DropDownPresenter object
+ */
 DropDownPresenter.getInstance = function(){
     return new DropDownPresenter();
 }
 
+/**
+ *
+ * @param structId
+ */
 DropDownPresenter.getAllViewStructure = function(structId){
     GetViewStructure.getAll();
 }
 
+/**
+ *
+ * @param structId
+ */
 DropDownPresenter.getViewStructureById = function(structId){
     GetViewStructure.get(structId);
 }

@@ -49,7 +49,7 @@ GraphicDataStore.getCurrentPublication = function(){
 /**
  *
  * @param ruleID
- * @returns true if loadingRulesList
+ * @returns true if loadingRulesList[rileID] equals 'loading' else false
  */
 GraphicDataStore.checkIfRuleLoading = function(ruleID){
     if(!this.loadingRulesList){

@@ -1,3 +1,7 @@
+/**
+ *
+ * @constructor
+ */
 var DropDownSelector = function(){
 
     this.design = function(id)
@@ -15,6 +19,10 @@ var DropDownSelector = function(){
 
 }
 
+/**
+ *
+ * @returns new DropDownSelector
+ */
 DropDownSelector.getInstance = function(){
     return new DropDownSelector();
 }

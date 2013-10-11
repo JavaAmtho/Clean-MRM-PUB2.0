@@ -1,3 +1,7 @@
+/**
+ *
+ * @constructor
+ */
 var AssetTreeSelector = function(){
     var treeObj;
     this.design = function(id){
@@ -11,6 +15,10 @@ var AssetTreeSelector = function(){
 
 }
 
+/**
+ *
+ * @returns new AssetTreeSelector
+ */
 AssetTreeSelector.getInstance = function(){
     return new AssetTreeSelector();
 }

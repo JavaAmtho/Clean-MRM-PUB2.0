@@ -1,7 +1,14 @@
+/**
+ *
+ * @constructor
+ */
 function GetLogin(){
 
 }
 
+/**
+ * function login
+ */
 GetLogin.login = function(){
     Router.loadTemplate("homeScreen");
     $(".logout").css( "visibility", "visible" );

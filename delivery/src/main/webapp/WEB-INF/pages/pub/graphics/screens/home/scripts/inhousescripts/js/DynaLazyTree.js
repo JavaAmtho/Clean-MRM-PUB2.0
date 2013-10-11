@@ -1,3 +1,7 @@
+/**
+ *
+ * @constructor
+ */
 var DynaLazyTree = function(){
     this.createTree = function(treeObj,urls){
         $(treeObj).dynatree({
@@ -33,7 +37,11 @@ var DynaLazyTree = function(){
         HomePresenter.searchList(e);
     });
 
-
+    /**
+     *
+     * @param id
+     * @returns complete URL of PIM/MAM mocks
+     */
     function getChildURL(id){
         var url;
        if(id==62){
