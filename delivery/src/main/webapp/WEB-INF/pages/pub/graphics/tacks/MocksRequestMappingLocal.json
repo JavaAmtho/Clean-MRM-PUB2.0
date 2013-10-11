@@ -15,5 +15,5 @@
     "getAllPageRules" : "pub/testdrive/mocks/GetAllPageRules.json",
     "getAssortmentsList" : "pub/testdrive/mocks/GetAssortmentList.json",
     "getAllPagesUnderPublication" : "pub/testdrive/mocks/GetAllPagesForPublication.json",
-    "createWBD" : "pub/testdrive/mocks/GetAllPagesForPublication.json"
+    "createWBD" : "pub/testdrive/mocks/CreateWBD.json"
 }
