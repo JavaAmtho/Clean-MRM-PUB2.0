@@ -466,7 +466,8 @@ HomePresenter.unHideAssortPanel = function () {
 var regions = ['Germany', 'India', 'USA'];          //
 var targetGroups = ['Men', 'Women','Kids'];         //static data for the dropdowns
 var groupTypes = ['Region', 'Target Group'];        //
-
+const collapseIconPath = 'url("../../../graphics/screens/home/images/collapse.png")';
+const expandIconPath = 'url("../../../graphics/screens/home/images/expand.png")';
 /*
  arguments : childPageInnerDiv - the respective child page inner div of the popout icon
  return : void
@@ -584,7 +585,7 @@ HomePresenter.openWhiteBoard = function (childPageInnerDiv) {
  return : void
  Description : Open up the child pages if they exist
  */
-function setClassNamesToChildPagesForFilterByCondition(childPageDiv) {
+HomePresenter.setClassNamesToChildPagesForFilterByCondition = function(childPageDiv, $dimensionValues) {
     for (var j = 0; j < $dimensionValues.length; j++) {
         var filterType = $($dimensionValues[j]).children('.groupType')[0].value;                                                                //logic written
         if (filterType == 'Region') {
@@ -602,22 +603,97 @@ function setClassNamesToChildPagesForFilterByCondition(childPageDiv) {
         }                                                                //     logic
     }                                                                    //
 }
+
+HomePresenter.createChildPageData = function(rule, masterPageDiv) {
+    var $masterTemplate = $(rule).children('.template')[0].value;   //
+    var $assortment = $(rule).children('.assortment')[0].value;     //Get all data
+    var ruleID = $(rule).children('.ruleID').html();                //to be used in
+    var wbdURL = $(rule).children('.wbdURL').html();                //Child pages
+    var mamFileID = $(rule).children('.mamFileID').html();          //
+    var childPageData = '';
+    childPageData += "<div class='childPageName' >" + ruleID + "</div>";
+    childPageData += "<p class='hidden logicalPageID'>" + masterPageDiv.id + "</p>";
+    childPageData += "<p class='hidden ruleID'>" + ruleID + "</p>";
+    childPageData += "<p class='childPagesText'>Mstr Templ ID: </p>";
+    childPageData += "<p class='childPagesText data templateName' >" + $masterTemplate + "</p>";
+    childPageData += "<p class='childPagesText'>Assrtmnt Name: </p>";
+    childPageData += "<p class='childPagesText data assortment' >" + $assortment + "</p>";
+    childPageData += "<p class='hidden data wbdURL'> " + wbdURL + " </p>";
+    childPageData += "<p class='hidden data mamFileID'>" + mamFileID + "</p>";
+    return childPageData;
+}
+
+HomePresenter.createChildPageLoadingScreen = function(rule) {
+    var ruleID = $(rule).children('.ruleID').html();
+    var loadingOverlayDiv = document.createElement("div");
+    $(loadingOverlayDiv).addClass('loading-overlay');
+    $(loadingOverlayDiv).attr('ondblclick', 'event.stopPropagation()');
+
+    var loadingImage = document.createElement("img");
+    $(loadingImage).addClass('loading-message');
+    $(loadingImage).attr('src', '../../../graphics/screens/home/images/load.gif');
+    $(loadingImage).attr('ondblclick', 'event.stopPropagation()');
+    if (!GraphicDataStore.checkIfRuleLoading(ruleID)) {
+        $(loadingImage).addClass('hidden');
+        $(loadingOverlayDiv).addClass('hidden');
+    }
+    return {loadingOverlayDiv: loadingOverlayDiv, loadingImage: loadingImage};
+}
+
+HomePresenter.createChildPageInnerDiv = function(rule, masterPageDiv) {
+
+
+    var childPageInnerDiv = document.createElement("div");
+    $(childPageInnerDiv).addClass("childPages");
+    $(childPageInnerDiv).addClass("inner");
+
+    if ($(masterPageDiv).hasClass('odd')) {
+        $(childPageInnerDiv).addClass("odd");
+    }
+    else {
+        $(childPageInnerDiv).addClass("even");
+    }
+    $(childPageInnerDiv).attr('ondblclick', 'HomePresenter.openWhiteBoard(this,event)');
+
+    var wbdURL = $(rule).children('.wbdURL').html();
+    var popupImage = document.createElement("img");
+    $(popupImage).addClass('popupImage');
+    $(popupImage).addClass('hidden');
+    $(popupImage).attr('src', '../../../graphics/screens/home/images/popup_icon.png');
+    $(popupImage).attr('onclick', 'HomePresenter.openURL(this.parentNode)');
+    if (wbdURL != " ") {
+        $(childPageInnerDiv).removeAttr('ondblclick');
+        $(popupImage).removeClass('hidden');
+    }
+    $(childPageInnerDiv).append(popupImage);
+
+    var loadingScreen = HomePresenter.createChildPageLoadingScreen(rule);
+    var loadingOverlayDiv = loadingScreen.loadingOverlayDiv;
+    var loadingImage = loadingScreen.loadingImage;
+    $(childPageInnerDiv).append(loadingOverlayDiv);
+    $(childPageInnerDiv).append(loadingImage);
+
+    var childPageData = HomePresenter.createChildPageData(rule, masterPageDiv);
+    $(childPageInnerDiv).append(childPageData);
+
+    return childPageInnerDiv;
+}
+
+
 HomePresenter.expandCollapseChildPages = function (masterPageDiv, event) {
 
     var $container = $isotopeContainer;
     //Check if master page has been expanded into the child pages
     if (!$(masterPageDiv).hasClass('opened')) {
         //Expand the master page into its child pages
-            var $dirtyFields = $(masterPageDiv).find('.dataDirty'); //
-            var isDirty = getDataDirtyFlag($dirtyFields);           //Check if dirty(in case previously wbd created)
+        var $dirtyFields = $(masterPageDiv).find('.dataDirty');
+        var isDirty = getDataDirtyFlag($dirtyFields);               //Check if dirty(in case previously wbd created)
             if (isDirty) {                                          //***NOT SURE IF I HAVE TO KEEP THIS*****
                 HomePresenter.setRules(masterPageDiv);              //***REMEMBER TO CHECK AND DELETE********
             }                                                       //
             //$(masterPageDiv).children('.expand').html("-");   //change '+' button to '-' to indicate expansion
-            $(masterPageDiv).children('.expand').css('background-image',
-                                        'url("../../../graphics/screens/home/images/collapse.png")');
-            var $masterTemplate;
-            var $assortment;
+
+        $(masterPageDiv).children('.expand').css('background-image',collapseIconPath);
             var $itemsToInsert = new Array();
             var $rules = $(masterPageDiv).children('.rule').children('.then').children('.thenChild');
             var rulesCount = $rules.length;
@@ -626,78 +702,27 @@ HomePresenter.expandCollapseChildPages = function (masterPageDiv, event) {
             }
             //iterate through the rules
             for (var i = 0; i < rulesCount; i++) {
-                $values = $($rules[i]).children('.rulesText')
-                $masterTemplate = $($rules[i]).children('.template')[0].value;  //
-                $assortment = $($rules[i]).children('.assortment')[0].value;    //Get all data
-                var ruleID = $($rules[i]).children('.ruleID').html();           //to be used in
-                var wbdURL = $($rules[i]).children('.wbdURL').html();           //Child pages
-                var mamFileID = $($rules[i]).children('.mamFileID').html();     //
 
+                var currentRule = $rules[i];
                 var childPageDiv = document.createElement("div");     //create new div for the child page
-                var innerContent = '';
                 $(childPageDiv).addClass('anyTargetGroup');
                 $(childPageDiv).addClass('anyRegion');
                 $(childPageDiv).addClass('childPages');
-
-                var childPageInnerDiv = document.createElement("div");
-                $(childPageInnerDiv).addClass("childPages");
-                $(childPageInnerDiv).addClass("inner");
-
                 if ($(masterPageDiv).hasClass('odd')) {
-                    $(childPageDiv).addClass('odd');                               //According to whether odd
-                    //innerContent += "<div class='childPages inner odd' ";        //or even page set the class names
-                    $(childPageInnerDiv).addClass("odd");
+                    $(childPageDiv).addClass('odd');
                 }
                 else {
                     $(childPageDiv).addClass('even');
-                    innerContent += "<div class='childPages inner even' ";
-                    $(childPageInnerDiv).addClass("even");
                 }
 
-                if (wbdURL != " ") {
-                    $(childPageInnerDiv).attr('ondblclick','');
-//                    innerContent += "ondblclick=''>";
-                    innerContent += "<img onclick='HomePresenter.openURL(this.parentNode)' " +   //Add the popout icon
-                        "src='../../../graphics/screens/home/images/popup_icon.png' " +     //and set to be visible
-                        "class='popupImage'/>";                                             //with ondblclick
-                    HomePresenter.addClickEventForWBDPopup(wbdURL, childPageDiv);
+                var $dimensionValues = $(currentRule).children('.whenChild');
+
+                if ($dimensionValues.length > 0) {
+                    HomePresenter.setClassNamesToChildPagesForFilterByCondition(childPageDiv,$dimensionValues);
                 }
-                else{
-                    $(childPageInnerDiv).attr('ondblclick','HomePresenter.openWhiteBoard(this,event)');
-//                        innerContent += "ondblclick='HomePresenter.openWhiteBoard(this,event)'>";
-                    innerContent += "<img onclick='HomePresenter.openURL(this.parentNode)' " +   //Add the popout icon
-                        "src='../../../graphics/screens/home/images/popup_icon.png' " +     //and set to be
-                        "class='popupImage hidden'/>";                                      //invisible
-                }
+                var childPageInnerDiv = HomePresenter.createChildPageInnerDiv(currentRule, masterPageDiv);
 
-                var checkLoading = GraphicDataStore.checkIfRuleLoading(ruleID) ? "":" hidden";
-
-                innerContent += "<div class='loading-overlay" + checkLoading + "' ondblclick='event.stopPropagation()'></div>" +
-                    "<img ondblclick='event.stopPropagation()' " +                    //Add the loading screen
-                    "src='../../../graphics/screens/home/images/load.gif' " +         //image and background
-                    "class='loading-message"+ checkLoading +"'/>"                                       //        div
-
-
-                var iTHRuleReference = $rules[i];
-                $dimensionValues = $(iTHRuleReference).children('.whenChild');
-
-                if ($dimensionValues.length > 0) {                                       //
-                    setClassNamesToChildPagesForFilterByCondition(childPageDiv);
-                }
-
-                innerContent += "<div class='childPageName' >" + ruleID + "</div>";
-                innerContent += "<p class='hidden logicalPageID'>" + masterPageDiv.id + "</p>";
-                innerContent += "<p class='hidden ruleID'>" + ruleID + "</p>";
-                innerContent += "<p class='childPagesText'>Mstr Templ ID: </p>";
-                innerContent += "<p class='childPagesText data templateName' >" + $masterTemplate + "</p>";
-                innerContent += "<p class='childPagesText'>Assrtmnt Name: </p>";
-                innerContent += "<p class='childPagesText data assortment' >" + $assortment + "</p>";
-                innerContent += "<p class='hidden data wbdURL'> " + wbdURL + " </p>";
-                innerContent += "<p class='hidden data mamFileID'>" + mamFileID + "</p>";
-//                innerContent += "</div>";
-                $(childPageInnerDiv).html(innerContent);
-                $(childPageDiv).html(childPageInnerDiv);
-//                childPageDiv.innerHTML = childPageDiv.innerHTML + innerContent;
+                $(childPageDiv).append(childPageInnerDiv);
 
                 $itemsToInsert[i] = childPageDiv;
             }
@@ -705,7 +730,7 @@ HomePresenter.expandCollapseChildPages = function (masterPageDiv, event) {
         }
     else {
         //$(masterPageDiv).children('.expand').html("+");
-        $(masterPageDiv).children('.expand').css('background-image','url("../../../graphics/screens/home/images/expand.png")');
+        $(masterPageDiv).children('.expand').css('background-image', expandIconPath);
         //jquery reference of all children having the parent's logicalpage id
         var $logicalPageIDOfParentOfChild = $('.childPages').children('.inner').children('.logicalPageID:contains(' + masterPageDiv.id + ')');
         var $childPages = $('.childPages').has($logicalPageIDOfParentOfChild);
@@ -725,20 +750,15 @@ HomePresenter.expandCollapseChildPages = function (masterPageDiv, event) {
             $innerDiv.children('.loading-overlay').addClass('hidden');                  //
             $innerDiv.children('.loading-message').addClass('hidden');                  //need to modify
         }                                                                               //
-        //               $(this).unbind("loadingDone");                                 //  logic so that
     });                                                                                 //
                                                                                         //
     $('.childPages').bind("loadingError",function(event,ruleIDFinishLoading){           //  toggle class can
         var $innerDiv = $(this).children('.inner');                                     //
         var ruleIDnew = $innerDiv.children('.ruleID').html();                           //   be used
         if(ruleIDFinishLoading == ruleIDnew){                                           //
-            console.log('1231')                                                         //
-            console.log($innerDiv.children('.loading-overlay').attr('class'));          //
             $innerDiv.children('.loading-overlay').addClass('hidden');                  //
-            console.log($innerDiv.children('.loading-overlay').attr('class'));          //
             $innerDiv.children('.loading-message').addClass('hidden');                  //
         }                                                                               //
-//                $(this).unbind("loadingError");
     });
 
 
@@ -772,21 +792,39 @@ HomePresenter.expandCollapseChildPages = function (masterPageDiv, event) {
  */
 
 
-HomePresenter.saveRulesData = function (div) {
-    var $dirtyFields = $(div).find('.dataDirty');
+HomePresenter.openIncorrectRulesDialog = function() {
+    $(function () {
+        $("#dialog-incorrect-rules").dialog({
+            resizable: false,
+            height: 140,
+            modal: true,
+            buttons: {
+                OK: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
+}
+
+HomePresenter.saveRulesData = function (masterPageDiv) {
+    var $dirtyFields = $(masterPageDiv).find('.dataDirty');
     var isDirty = getDataDirtyFlag($dirtyFields);
     if (isDirty) {
-        var $thenStatements = $(div).children('.rule').children('.then').children('.thenChild');
+
+        var $rules = $(masterPageDiv).children('.rule').children('.then').children('.thenChild');
 
         var pageRuleArr = [];
 
-        for (var i = 0; i < $thenStatements.length; i++) {
+        for (var i = 0; i < $rules.length; i++) {
             var pageRule = {};
-            var masterPageID = $($thenStatements[i]).children('.template')[0].value;
-            var assortmentID = $($thenStatements[i]).children('.assortment')[0].value;
+            var currentRule = $rules[i]
+            var masterPageID = $(currentRule).children('.template')[0].value;
+            var assortmentID = $(currentRule).children('.assortment')[0].value;
 
             var ruleResult = {};
-            if ((masterPageID != '-1' && masterPageID != 'Select') && (assortmentID != '-1' && assortmentID != 'Select')) {
+            if ((masterPageID != '-1' && masterPageID != 'Select') &&
+                (assortmentID != '-1' && assortmentID != 'Select')) {
 
                 var columnName = "masterPageId";
                 ruleResult[columnName] = masterPageID;
@@ -795,59 +833,44 @@ HomePresenter.saveRulesData = function (div) {
 
 
                 var condArray = [];
-                var $whenConditions = $($thenStatements[i]).children('.whenChild');
-                for (var j = 0; j < $whenConditions.length; j++) {
-                    var variable = $($whenConditions[j]).children('.groupType')[0].value;
-                    var value = $($whenConditions[j]).children('.value')[0].value;
-                    console.log(variable + ":" + value)
-                    if ((variable != '-1' && variable != 'Select') && (value != '-1' && value != 'Select')) {
+                var $ruleConditions = $(currentRule).children('.whenChild');
+                for (var j = 0; j < $ruleConditions.length; j++) {
+                    var currentCondition = $ruleConditions[j];
+                    var variable = $(currentCondition).children('.groupType')[0].value;
+                    var value = $(currentCondition).children('.value')[0].value;
+                    if ((variable != '-1' && variable != 'Select') &&
+                        (value != '-1' && value != 'Select')) {
                         var condition = {};
                         var columnName = "variable";
                         condition[columnName] = variable;
                         var columnName = "operator";
-                        condition[columnName] = $($whenConditions[j]).children('.operation')[0].value;
+                        condition[columnName] = $(currentCondition).children('.operation')[0].value;
                         var columnName = "value";
                         condition[columnName] = value;
                         condArray.push(condition)
                     }
                     else
                     {
-                        $(function() {
-                            $( "#dialog-incorrect-rules" ).dialog({
-                                resizable: false,
-                                height:140,
-                                modal: true,
-                                buttons: {
-                                    OK: function() {
-                                        $( this ).dialog( "close" );
-                                    }
-                                }
-                            });
-                        });
+                        HomePresenter.openIncorrectRulesDialog();
                         return false;
                     }
                 }
-
-
-                var wbdURL = $($thenStatements[i]).children('.wbdURL').html();
-                var mamFileID = $($thenStatements[i]).children('.mamFileID').html();
-
 
                 var columnName = "ruleResult";
                 pageRule[columnName] = ruleResult;
                 var columnName = "ruleConditions";
                 pageRule[columnName] = condArray;
                 var columnName = "ruleID";
-                var ruleID = div.id + "." + i;
-                $($thenStatements[i]).children('.ruleID').html(ruleID);
+                var ruleID = masterPageDiv.id + "." + i;
+                $(currentRule).children('.ruleID').html(ruleID);
                 pageRule[columnName] = ruleID;
 
                 var additional = {};
                 var columnName = "mamFileID";
-                var mamFileID = $($thenStatements[i]).children('.mamFileID').html()
+                var mamFileID = $(currentRule).children('.mamFileID').html()
                 additional[columnName] = mamFileID;
                 var columnName = "editUrl";
-                var editUrl = $($thenStatements[i]).children('.wbdURL').html()
+                var editUrl = $(currentRule).children('.wbdURL').html()
                 additional[columnName] = editUrl;
 
                 var columnName = "additionalInformation";
@@ -855,30 +878,18 @@ HomePresenter.saveRulesData = function (div) {
             }
             else
             {
-                $(function() {
-                    $( "#dialog-incorrect-rules" ).dialog({
-                        resizable: false,
-                        height:140,
-                        modal: true,
-                        buttons: {
-                            OK: function() {
-                                $( this ).dialog( "close" );
-                            }
-                        }
-                    });
-                });
+                HomePresenter.openIncorrectRulesDialog();
                 return false;
             }
             pageRuleArr.push(pageRule);
 
         }
 
-
         var finalJson = {};
 
         var columnName = "logicalPageID";
         
-        finalJson[columnName] = GraphicDataStore.getCurrentView() + "." + div.id;
+        finalJson[columnName] = GraphicDataStore.getCurrentView() + "." + masterPageDiv.id;
         var columnName = "pageRules";
         finalJson[columnName] = pageRuleArr;
         //Sending Save call
