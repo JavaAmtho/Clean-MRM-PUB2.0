@@ -541,42 +541,6 @@ HomePresenter.openWhiteBoard = function (childPageInnerDiv) {
     });
     $innerDiv.children('.loading-overlay').toggleClass('hidden');       //toggle loading screen
     $innerDiv.children('.loading-message').toggleClass('hidden');       //
-
-    /*jQuery.getJSON("http://14.141.2.211/CS13.0Trunk/admin/rest/whiteboard/3/"+ $(childPageInnerDiv).children('.inner').children('.templateName').html(),function(data){
-     console.log("WBD created "+data);
-     mamFileID = data;
-     console.log("Wbd stillWorking : "+stillWorking);
-     if(stillWorking){
-     stillWorking = false;
-     }
-     else{
-     HomePresenter.createMergeList(mamFileID, json,$(childPageInnerDiv).children('.inner'));
-     }
-     console.log($(childPageInnerDiv).children('.inner').children('.assortment'))
-     jQuery.getJSON("Data/"+$(childPageInnerDiv).children('.inner').children('.assortment').html()+".json",function(data) {
-     console.log("Assortment Loaded "+data);
-     var json1 = "["
-     $.each( data, function( key, val ) {
-     //console.log(val)
-     json1 +="{\"id\":\"" + val.id +"\"}";
-     if(key != data.length-1){
-     json1+=","
-     }
-     })
-     json1 +="]"
-     //console.log(json1)
-     //json = JSON.parse(json1);
-     json = json1;
-     console.log(json) ;
-     console.log("Json stillWorking : "+stillWorking);
-     if(stillWorking){
-     stillWorking = false;
-     console.log("Json stillWorking after : "+stillWorking);
-     }
-     else{
-     HomePresenter.createMergeList(mamFileID, json,$(childPageInnerDiv).children('.inner'));
-     }
-     });*/
 }
 
 
@@ -763,34 +727,6 @@ HomePresenter.expandCollapseChildPages = function (masterPageDiv, event) {
 
 
 }
-
-/*
- HomePresenter.createMergeList = function (mamFileID, json, $loading) {
- jQuery.post("http://14.141.2.211/CS13.0Trunk/admin/rest/whiteboard/4/" + mamFileID, json, function (data){
- console.log("merge list prepared");
-
- jQuery.get("http://14.141.2.211/CS13.0Trunk/admin/rest/whiteboard/5/" + mamFileID, function (url) {
- $loading.children('.loading-overlay').toggleClass('hidden');
- $loading.children('.loading-message').toggleClass('hidden');
- url = url.replace("../admin", "http://14.141.2.211/CS13.0Trunk/admin");
- console.log(url);
- var screenParams = [
- 'height=' + (screen.height - 100),
- 'width=' + (screen.width - 100),
- 'fullscreen=yes'
- ].join(',');
-
- window.open(url, '_blank', screenParams); // <- This is what makes it open in a new window.
- });
- });
-
- }, "json");
-
-
-
- }
- */
-
 
 HomePresenter.openIncorrectRulesDialog = function() {
     $(function () {
