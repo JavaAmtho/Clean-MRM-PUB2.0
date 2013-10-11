@@ -1214,10 +1214,7 @@ img.save {
 }
 
 .ui-widget{
-    font-size: 11px !important;
-    background-color: #fff !important;
-    z-index: 950 !important;
-
+    font-size: 11px; !important
 }
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset{
     margin:0 auto;
