@@ -20,8 +20,8 @@
                         "assortmentId": "Assrt1"
                     },
                     "additionalInformation": {
-                        "mamFileID": " ",
-                        "editUrl": " "
+                        "mamFileID": "8202",
+                        "editUrl": "../admin/forward.php?forward=modules|mam|gui|editFiles.php&module=mam&class=Mamfile&MamfileID=8202&CSTicketID=91af4b848b78cf79c7f15f7a54713a72"
                     },
                     "ruleID": "Page1.0"
                 }
