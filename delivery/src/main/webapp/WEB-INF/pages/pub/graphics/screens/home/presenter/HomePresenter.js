@@ -562,10 +562,10 @@ HomePresenter.setClassNamesToChildPagesForFilterByCondition = function(childPage
                 $(childPageDiv).removeClass('anyTargetGroup');
             }
         }
-        if (!$($dimensionValues[j]).hasClass('hidden')) {                //     for
-            $(childPageDiv).addClass($($dimensionValues[j]).children('.value')[0].value.toLowerCase()); // filtering
-        }                                                                //     logic
-    }                                                                    //
+        if (!$($dimensionValues[j]).hasClass('hidden')) {
+            $(childPageDiv).addClass($($dimensionValues[j]).children('.value')[0].value.toLowerCase());
+        }
+    }
 }
 
 HomePresenter.createChildPageData = function(rule, masterPageDiv) {
@@ -848,65 +848,112 @@ HomePresenter.onSaveSuccess = function (data) {
     console.log(data);
 }
 
-HomePresenter.setRules = function (div) {
-    console.log("***setRules");
-    var $dirtyFields = $(div).find('.dataDirty');
+function createDefaultDisabledDropDownOption() {
+    var dropDownOptions = document.createElement("option");
+    $(dropDownOptions).attr('selected', 'selected');
+    $(dropDownOptions).attr('disabled', 'disabled');
+    $(dropDownOptions).attr('value', '-1');
+    $(dropDownOptions).html('Select');
+    return dropDownOptions;
+}
+
+
+function createDropDownOption(dropDownListID, dropDownDisplayName) {
+    var dropDownOptions = document.createElement("option");
+    $(dropDownOptions).attr('value', dropDownListID);
+    $(dropDownOptions).html(dropDownDisplayName);
+    return dropDownOptions;
+}
+
+function createRuleStatement(pageRule, parentMasterPageDiv) {
+    var ruleId = pageRule.ruleID;
+    var mamFileID = pageRule.additionalInformation.mamFileID;
+    var wbdURL = pageRule.additionalInformation.editUrl;
+    /***********Then Div creation***********/
+    var newRuleStatementDiv = document.createElement("div");
+    $(newRuleStatementDiv).addClass("thenChild");
+    $(newRuleStatementDiv).addClass("row-fluid");
+    var masterTemplateFileNames = EngineDataStore.getMasterTemplateList();
+    var ruleDataContent = "<p class='hidden ruleID'>" + ruleId + "</p>";
+    ruleDataContent += "<p class='hidden wbdURL'>" + wbdURL + "</p>";
+    ruleDataContent += "<p class='hidden mamFileID'>" + mamFileID + "</p>";
+    $(newRuleStatementDiv).append(ruleDataContent);
+
+    var masterTemplateDropDown = document.createElement("select");
+    $(masterTemplateDropDown).addClass('rulesText  template selectpicker span2');
+    $(masterTemplateDropDown).attr('onchange','HomePresenter.makeRuleDirty(this.parentNode,true)');
+    $(masterTemplateDropDown).attr('data-width','45%');
+
+    var dropDownOptions;
+    dropDownOptions = createDefaultDisabledDropDownOption();
+    $(dropDownOptions).html('Select Master Template');
+    $(masterTemplateDropDown).append(dropDownOptions);
+/*
+    ruleDataContent += "<select onchange='HomePresenter.makeRuleDirty(this.parentNode,true)' " +
+        "class='rulesText  template selectpicker span2' data-width='45%'><option selected='selected' disabled='disabled' value='-1'>Select Master Template</option>";
+    */
+    for (var j = 0; j < masterTemplateFileNames.length; j++) {
+        var masterTemplateID = masterTemplateFileNames[j].templateID;
+        var masterTemplateName = masterTemplateFileNames[j].templateName;
+
+        dropDownOptions = createDropDownOption(masterTemplateID, masterTemplateName);
+        $(masterTemplateDropDown).append(dropDownOptions);
+        //ruleDataContent += "<option value='" + masterTemplateFileNames[j].templateID + "'>" + masterTemplateFileNames[j].templateName + "</option>";
+    }
+//    ruleDataContent += "</select>";
+//    console.log(masterTemplateDropDown.innerHTML)
+
+    $(newRuleStatementDiv).append(masterTemplateDropDown);
+//    console.log($(newRuleStatementDiv).html())
+//    newRuleStatementDiv.innerHTML = newRuleStatementDiv.innerHTML + dropDownOptions;
+
+    var assortments;
+    GetAssortments.get($(parentMasterPageDiv).children('.pagePath').html(), parentMasterPageDiv.id, function (data) {
+        GraphicDataStore.pushToAssortmentsList(parentMasterPageDiv.id, data);
+    });
+    assortments = GraphicDataStore.getAssortmentsByID(parentMasterPageDiv.id);
+
+    var assortmentList = assortments;
+    ruleDataContent = "<select onchange='HomePresenter.makeRuleDirty(this.parentNode,false)' onclick='event.stopPropagation()' " +
+        "class='rulesText assortment selectpicker span3' data-width='35%'><option selected='selected' disabled='disabled' value='-1'>Select Assortment</option>";
+    for (var j = 0; j < assortmentList.length; j++) {
+        ruleDataContent += "<option>" + assortmentList[j].name + "</option>";
+    }
+    ruleDataContent += "</select>";
+//    newRuleStatementDiv.innerHTML = newRuleStatementDiv.innerHTML + ruleDataContent;
+    $(newRuleStatementDiv).append(ruleDataContent);
+    ruleDataContent = "<span class='buttons remove' onclick='HomePresenter.removeNew(this.parentNode,event)'>-</span>"
+//    newRuleStatementDiv.innerHTML = newRuleStatementDiv.innerHTML + ruleDataContent;
+    $(newRuleStatementDiv).append(ruleDataContent);
+    ruleDataContent = "<span class='buttons addCondition' onclick='HomePresenter.newCondition(this.parentNode)'>+</span>"
+//    newRuleStatementDiv.innerHTML = newRuleStatementDiv.innerHTML + ruleDataContent;
+    $(newRuleStatementDiv).append(ruleDataContent);
+    ruleDataContent = "<p class='hidden dataDirty'>0</p>"
+//    newRuleStatementDiv.innerHTML = newRuleStatementDiv.innerHTML + ruleDataContent;
+    $(newRuleStatementDiv).append(ruleDataContent);
+    return newRuleStatementDiv;
+}
+
+
+HomePresenter.setRules = function (parentMasterPageDiv) {
+    var $dirtyFields = $(parentMasterPageDiv).find('.dataDirty');
     var isDirty = getDataDirtyFlag($dirtyFields);
     if (isDirty) {
-        $(div).find('.thenChild').remove();
+        $(parentMasterPageDiv).find('.thenChild').remove();
         $dirtyFields.html('0');
-        var pageRules = GraphicDataStore.getPageRuleById(div.id);
+        var pageRules = GraphicDataStore.getPageRuleById(parentMasterPageDiv.id);
         if(pageRules){
-            var $thenReference = $(div).children('.rule').children('.then');
+            var $thenReference = $(parentMasterPageDiv).children('.rule').children('.then');
             for (var i = 0; i < pageRules.length; i++) {
-                if (pageRules[i].ruleResult) {
+                var pageRule = pageRules[i]
+                if (pageRule.ruleResult) {
+                    var ruleStatementDiv = createRuleStatement(pageRule, parentMasterPageDiv);
+                    $thenReference.append(ruleStatementDiv);
+                    /*****************Setting drop down values************************/
                     var masterPageId = pageRules[i].ruleResult.masterPageId;
                     var assortmentName = pageRules[i].ruleResult.assortmentId;
-                    var ruleId = pageRules[i].ruleID;
-                    var mamFileID = pageRules[i].additionalInformation.mamFileID;
-                    var wbdURL = pageRules[i].additionalInformation.editUrl;
-                    /***********Then Div creation***********/
-                    var newDiv = document.createElement("div");
-                    $(newDiv).addClass("thenChild");
-                    $(newDiv).addClass("row-fluid");
-                    var masterTemplateFileNames = EngineDataStore.getMasterTemplateList();
-                    var content = "<p class='hidden ruleID'>" + ruleId + "</p>";
-                    content += "<p class='hidden wbdURL'>" + wbdURL + "</p>";
-                    content += "<p class='hidden mamFileID'>" + mamFileID + "</p>";
-                    content += "<select onclick='event.stopPropagation()' onchange='HomePresenter.makeRuleDirty(this.parentNode,true)' " +
-                        "class='rulesText  template selectpicker span2' data-width='45%'><option selected='selected' disabled='disabled' value='-1'>Select Master Template</option>";
-                    for (var j = 0; j < masterTemplateFileNames.length; j++) {
-                        content += "<option value='" + masterTemplateFileNames[j].templateID + "'>" + masterTemplateFileNames[j].templateName + "</option>";
-                    }
-                    content += "</select>";
-                    newDiv.innerHTML = newDiv.innerHTML + content;
-
-                    var assortments;
-                    GetAssortments.get($(div).children('.pagePath').html(),div.id,function(data){
-                            GraphicDataStore.pushToAssortmentsList(div.id,data);
-                    });
-                    assortments = GraphicDataStore.getAssortmentsByID(div.id);
-
-                    var assortmentList = assortments;
-                    content = "<select onchange='HomePresenter.makeRuleDirty(this.parentNode,false)' onclick='event.stopPropagation()' " +
-                        "class='rulesText assortment selectpicker span3' data-width='35%'><option selected='selected' disabled='disabled' value='-1'>Select Assortment</option>";
-                    for (var j = 0; j < assortmentList.length; j++) {
-                        content += "<option>" + assortmentList[j].name + "</option>";
-                    }
-                    content += "</select>";
-                    newDiv.innerHTML = newDiv.innerHTML + content;
-
-                    content = "<span class='buttons remove' onclick='HomePresenter.removeNew(this.parentNode,event)'>-</span>"
-                    newDiv.innerHTML = newDiv.innerHTML + content;
-                    content = "<span class='buttons addCondition' onclick='HomePresenter.newCondition(this.parentNode)'>+</span>"
-                    newDiv.innerHTML = newDiv.innerHTML + content;
-                    content = "<p class='hidden dataDirty'>0</p>"
-                    newDiv.innerHTML = newDiv.innerHTML + content;
-
-                    $thenReference.append(newDiv);
-                    /*****************Setting drop down values************************/
-                    $(newDiv).children('.template').val(masterPageId);
-                    $(newDiv).children('.assortment').val(assortmentName);
+                    $(ruleStatementDiv).children('.template').val(masterPageId);
+                    $(ruleStatementDiv).children('.assortment').val(assortmentName);
 
 
                     var ruleConditions = pageRules[i].ruleConditions;
@@ -962,7 +1009,7 @@ HomePresenter.setRules = function (div) {
                             content = "<p class='hidden dataDirty'>0</p>"
                             whenDiv.innerHTML = whenDiv.innerHTML + content;
 
-                            newDiv.appendChild(whenDiv);
+                            ruleStatementDiv.appendChild(whenDiv);
 
 
                             /******************Setting dropdown Values****************************/
