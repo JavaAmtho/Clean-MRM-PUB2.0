@@ -1,0 +1,34 @@
+{
+    "listOfPageRules": [
+        {
+            "pageRules": [
+                {
+                    "ruleConditions": [
+                        {
+                            "variable": "Region",
+                            "operator": "=",
+                            "value": "Germany"
+                        },
+                        {
+                            "variable": "Target Group",
+                            "operator": "=",
+                            "value": "Men"
+                        }
+                    ],
+                    "ruleResult": {
+                        "masterPageId": "1458",
+                        "assortmentId": "Assrt1"
+                    },
+                    "additionalInformation": {
+                        "mamFileID": " ",
+                        "editUrl": " "
+                    },
+                    "ruleID": "Page1.0"
+                }
+            ],
+            "id": "Pricelist.Page1",
+            "key": null,
+            "objectKey": null
+        }
+    ]
+}

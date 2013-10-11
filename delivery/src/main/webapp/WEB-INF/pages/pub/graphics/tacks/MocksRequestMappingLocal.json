@@ -11,5 +11,7 @@
     "btnMIM":"testdrive/mocks/tree/AssetTree.json",
     "searchPimAssets":"pub/testdrive/mocks/tree/SearchPimAssets.json",
     "searchMamAssets":"pub/testdrive/mocks/tree/SearchMamAssets.json",
-    "getMasterTemplateList" : "pub/testdrive/mocks/GetAllMasterTemplates.json"
+    "getMasterTemplateList" : "pub/testdrive/mocks/GetAllMasterTemplates.json",
+    "getAllPageRules" : "pub/testdrive/mocks/GetAllPageRules.json",
+    "getAssortmentsList" : "pub/testdrive/mocks/GetAssortmentList.json"
 }
