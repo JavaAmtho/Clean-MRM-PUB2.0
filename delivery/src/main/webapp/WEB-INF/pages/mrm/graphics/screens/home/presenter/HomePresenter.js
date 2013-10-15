@@ -3,100 +3,62 @@ function HomePresenter(){
 }
 
 HomePresenter.date = new Date();
-HomePresenter.units = "months";
+HomePresenter.units = "month";
 
-HomePresenter.createProductsJSON = function(){
-    var jsonData = {};
-    var columnName = "products";
-    jsonData[columnName] = GraphicDataStore.getProdcutsArr();
-    var columnName = "id";
-    jsonData[columnName] = GraphicDataStore.getCurrentAssortment().id;
-    UpdateAssortment.update(GraphicDataStore.getCurrentAssortment(),jsonData,HomePresenter.hideAssortPanel);
-}
-
-HomePresenter.dayView = function (){
-    HomePresenter.units = "days";
-    Grids[0].ChangeZoom("days");
-}
-
-HomePresenter.monthView = function (){
-    HomePresenter.units="months";
-    Grids[0].ChangeZoom("months");
-}
-
-HomePresenter.weekView = function (){
-    HomePresenter.units="weeks";
-    Grids[0].ChangeZoom("weeks");
-}
-
-HomePresenter.yearView = function (){
-    HomePresenter.units="years"
-    Grids[0].ChangeZoom("years");
-}
-
-HomePresenter.viewTree = function(){
-    var show = new Array("name");
-    var hide = new Array("startDate","endDate","ganttChart","manager","budgetOwner","budget");
-    Grids[0].ChangeColsVisibility(show,hide,0);
-    var ganttElements = document.getElementsByClassName("GanttProperties");
-    for(var i = 0; i < ganttElements.length; i++) {
-        ganttElements[i].style.visibility = "hidden";
-    }
-    $("#treeGantt").removeClass("calendarButtonPressed") ;
-
-
+HomePresenter.setView = function (){
+    var unitName = event.currentTarget.id;
+    HomePresenter.units = unitName;
+    Grids[0].ChangeZoom(unitName);
 }
 
 HomePresenter.viewTreeAndFields = function(){
     var show = new Array("name","startDate","endDate","manager","budgetOwner","budget");
     var hide = new Array("ganttChart");
-    Grids[0].ChangeColsVisibility(show,hide,0);
-    var ganttElements = document.getElementsByClassName("GanttProperties");
-    for(var i = 0; i < ganttElements.length; i++) {
-        ganttElements[i].style.visibility = "hidden";
-    }
-    $("#treeGantt").removeClass("calendarButtonPressed") ;
+    HomePresenter.switchGanttPersepective(show,hide);
+    $("#treeGantt").removeClass("calendarButtonPressed");
 }
 
 HomePresenter.viewTreeAndGantt = function(){
     var show = new Array("name","ganttChart");
     var hide = new Array("startDate","endDate","manager","budgetOwner","budget");
+    HomePresenter.switchGanttPersepective(show,hide);
+    $("#treeGantt").addClass("calendarButtonPressed");
+}
+
+HomePresenter.switchGanttPersepective =function(show,hide){
     Grids[0].ChangeColsVisibility(show,hide,0);
     var ganttElements = document.getElementsByClassName("GanttProperties");
     for(var i = 0; i < ganttElements.length; i++) {
         ganttElements[i].style.visibility = "visible";
     }
     HomePresenter.date = new Date(Grids[0].GetGanttDate(0));
-    $("#treeGantt").addClass("calendarButtonPressed");
 }
 
 HomePresenter.scrollNext = function(){
     switch(HomePresenter.units){
-
-        case "years" :
+        case "year" :
             var year = HomePresenter.date.getFullYear();
             year++;
             HomePresenter.date.setFullYear(year);
             HomePresenter.date.setDate(1);
             HomePresenter.date.setMonth(1);
             break;
-        case "months" :
+        case "month" :
             var month = HomePresenter.date.getMonth();
             month++;
             HomePresenter.date.setMonth(month);
             HomePresenter.date.setDate(1);
             break;
-        case "weeks" :
+        case "week" :
             var year = HomePresenter.date.getW();
             year++;
             HomePresenter.date.setYear(year);
             break;
-        case "days" :
+        case "day" :
             var day = HomePresenter.date.getDate();
             day++;
             HomePresenter.date.setDate(day);
             break;
-
     }
     Grids[0].ScrollToDate(HomePresenter.date,"Left");
 }
@@ -104,25 +66,25 @@ HomePresenter.scrollNext = function(){
 HomePresenter.scrollPrev = function(){
     switch(HomePresenter.units){
 
-        case "years" :
+        case "year" :
             var year = HomePresenter.date.getFullYear();
             year--;
             HomePresenter.date.setFullYear(year);
             HomePresenter.date.setDate(1);
             HomePresenter.date.setMonth(1);
             break;
-        case "months" :
+        case "month" :
             var month = HomePresenter.date.getMonth();
             month--;
             HomePresenter.date.setMonth(month);
             HomePresenter.date.setDate(1);
             break;
-        case "weeks" :
+        case "week" :
             var year = HomePresenter.date.getW();
             year--;
             HomePresenter.date.setYear(year);
             break;
-        case "days" :
+        case "day" :
             var day = HomePresenter.date.getDate();
             day--;
             HomePresenter.date.setDate(day);
@@ -238,50 +200,3 @@ HomePresenter.addImagesToFlow = function(details){
         img.appendTo('.flow');
     }
 }
-
-
-
-
-
-
-
-
-
-/* var publications = [
- {
- "id":"1",
- "name":"Publication 1",
- "previewImage":"../../../graphics/screens/home/images/img/Chrysanthemum.jpg",
- "actualImage": "../../../graphics/screens/home/images/img/Chrysanthemum.jpg",
- "previewType": "image"
- },
- {
- "id":"2",
- "name":"Publication 2",
- "previewImage": "http://192.168.135.104/CS13.0Trunk/admin/FileServer.php?src=F%3A%2FContentServ%2Fhtdocs%2FCS13.0Trunk%2FCSLive%2Fdata%2F.cs%2Fmam%2Fvolumes%2F75%2Ffiles%2F7547%2Fthumbs%2Fmaster.jpg&SecurityID=972146a8ada263573f41419871cc011f&rand=1378896763",
- "actualImage": "http://192.168.135.104/CS13.0Trunk/admin/forward.php?forward=../CSLive/playCSVideoPlayerUsingMamFile.php&mamFileNo=7547",
- "previewType": "video"
- },
- {
- "id":"3",
- "name":"Publication 3",
- "previewImage":"../../../graphics/screens/home/images/img/Hydrangeas.jpg",
- "actualImage": "../../../graphics/screens/home/images/img/Hydrangeas.jpg",
- "previewType": "image"
- },
- {
- "id":"4",
- "name":"Publication 4",
- "previewImage":"../../../graphics/screens/home/images/img/Jellyfish.jpg",
- "actualImage": "../../../graphics/screens/home/images/img/Jellyfish.jpg",
- "previewType": "image"
- },
- {
- "id":"5",
- "name":"Publication 5",
- "previewImage": "http://192.168.135.104/CS13.0Trunk/admin/FileServer.php?src=F%3A%2FContentServ%2Fhtdocs%2FCS13.0Trunk%2FCSLive%2Fdata%2F.cs%2Fmam%2Fvolumes%2F75%2Ffiles%2F7546%2Fthumbs%2Fmaster.jpg&SecurityID=972146a8ada263573f41419871cc011f&rand=1378896774",
- "actualImage": "http://192.168.135.104/CS13.0Trunk/admin/forward.php?forward=../CSLive/playCSVideoPlayerUsingMamFile.php&mamFileNo=7546",
- "previewType": "video"
- }
- ];
- */

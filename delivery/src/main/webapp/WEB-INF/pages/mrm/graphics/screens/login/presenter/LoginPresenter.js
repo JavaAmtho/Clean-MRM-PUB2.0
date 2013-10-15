@@ -1,6 +1,6 @@
 /**
  *
- * @constructor
+ * @constructor  LoginPresenter
  */
 function LoginPresenter(){
 
@@ -8,6 +8,7 @@ function LoginPresenter(){
 
 /**
  * getLogin function
+ * @description calls homeScreen load template function to load home page
  */
 LoginPresenter.getLogin = function(){
     TemplateLoader.loadTemplate("homeScreen",LoginPresenter.makeLogoutBtnVisible);
@@ -15,6 +16,7 @@ LoginPresenter.getLogin = function(){
 
 /**
  * makeLogoutButtonVisible function
+ * @description makes logout button visible
  */
 LoginPresenter.makeLogoutBtnVisible = function(){
     $(".logout").css( "visibility", "visible" );

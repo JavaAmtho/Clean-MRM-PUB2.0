@@ -11,6 +11,7 @@ var Router = function(){
  * @param url
  * @param async
  * @param callback
+ * @description AJAX request to a server with GET method
  */
 Router.forward = function(url,async,callback){
     $.ajax({
@@ -32,6 +33,7 @@ Router.forward = function(url,async,callback){
  * @param async
  * @param reqBody
  * @param callback
+ * @description AJAX request to a server with POST method
  */
 Router.forwardWithPost = function(url,async,reqBody,callback){
     $.ajax({
@@ -55,7 +57,8 @@ Router.forwardWithPost = function(url,async,reqBody,callback){
  * @param key
  * @param async
  * @param callBack
- * @param params
+ * @param params   This gets append to the url
+ * @description common gateway for all GET methods with or without params
  */
 Router.loadRequest = function(key,async,callBack,params){
     if(params){
@@ -69,30 +72,3 @@ Router.loadRequest = function(key,async,callBack,params){
         });
     }
 }
-
-
-
-
-
-
-/*
-Router.forwardWithParams = function(url,path,type,callback){
-    $.ajax({
-        url:url,
-        data:{path:path},
-        dataType:'json',
-        */
-/* beforeSend: function(xhr){
-         xhr.setRequestHeader('myName','rohan')
-         },*//*
-
-        type: type,
-        success:function(result){
-            callback(result);
-        },
-        error: function (error) {
-            callback("error");
-        }
-    });
-
-}*/

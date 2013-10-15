@@ -96,25 +96,25 @@
                             &lt;span  style='text-align: left;float: left;font-size: 11px'>Budget:&lt;/span>
                             &lt;span style='text-align: right;float: right;margin-left:65px;font-size: 11px'>
                             *budget**currency*&lt;/span>&lt;/div>"
-              GanttZoom= "months"
+              GanttZoom= "month"
               GanttExclude = " w#1/5/2013~1/7/2013"
               GanttClass="GanttOrange"
               GanttZoomList="[
-                            { Name: 'years', GanttUnits: 'M', GanttChartRound: 'y', GanttWidth: 65,
+                            { Name: 'year', GanttUnits: 'M', GanttChartRound: 'y', GanttWidth: 65,
                             GanttHeader1: 'y#yyyy', GanttHeader2: 'M#MMM',
                             GanttBackground: 'M#1/1/2008#1', GanttRight: '0', GanttLeft: '0' },
 
-                            { Name: 'months', GanttUnits: 'w', GanttChartRound: 'M', GanttWidth: 170,
+                            { Name: 'month', GanttUnits: 'w', GanttChartRound: 'M', GanttWidth: 170,
                             GanttHeader1: 'M#MMMM yyyy', GanttHeader2: 'w#Week ddddddd', GanttHeader3: 'd#dd',
                             GanttBackground: 'w#1/6/2008#1', GanttRight: '0', GanttLeft: '0'
                             },
 
-                            { Name: 'weeks', GanttUnits: 'd', GanttChartRound: 'w', GanttWidth: 100,
+                            { Name: 'week', GanttUnits: 'd', GanttChartRound: 'w', GanttWidth: 100,
                             GanttHeader1: 'w#MMMM yyyy Week ddddddd', GanttHeader2: 'd#dddd',
                             GanttBackground: 'd#1/2/2008#1'
                             },
 
-                            { Name: 'days', GanttUnits: 'h', GanttChartRound: 'd', GanttWidth: 30,
+                            { Name: 'day', GanttUnits: 'h', GanttChartRound: 'd', GanttWidth: 30,
                             GanttBackground: 'h#01#1',
                             GanttHeader1: 'd#dddd d MMMM yyyy', GanttHeader2: 'h#HH'
                             }

@@ -20,6 +20,7 @@ function HtmlEventDesigner(){
  * @param event
  * @param func
  * @param flag
+ * @description adds events to the particular dom element
  */
 HtmlEventDesigner.addEvents = function(id,event,func,flag){
     var htmlElement = this.getElementBy(id);
@@ -30,6 +31,7 @@ HtmlEventDesigner.addEvents = function(id,event,func,flag){
  *
  * @param id
  * @returns element by ID
+ * @description gets the particular dom element
  */
 HtmlEventDesigner.getElementBy = function(id){
     return  document.getElementById(id);

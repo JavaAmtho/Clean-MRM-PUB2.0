@@ -1,6 +1,6 @@
 /**
  * document.ready function
- *
+ * @description Entry point of the application
  */
 $(document).ready(function() {
      loadInitialConfigurations();
@@ -9,6 +9,7 @@ $(document).ready(function() {
 
 /**
  * loadInitialConfigurations
+ * @description Loads InitialConfiguration.json file which has baseURl and other important configuration details
  */
 function loadInitialConfigurations(){
     Router.forward("../../../graphics/tacks/InitialConfiguration.json",true,function(json){
@@ -18,8 +19,8 @@ function loadInitialConfigurations(){
 }
 
 /**
- *
  * @param data
+ * @description Parse the InitialConfiguration.json file and stores it to the cloud
  */
 function parseInitialConfiguration(data){
     EngineDataStore.setBaseURL(data.baseUrl);
@@ -29,6 +30,7 @@ function parseInitialConfiguration(data){
 
 /**
  * getPublicationDetails
+ * @description Loads PublicationDetails.json file which has information about which image to show for Publication in coverflow
  */
 function getPublicationDetailsObject(){
     Router.forward(EngineDataStore.getBaseURL()+"graphics/tacks/PublicationDetails.json",true,function(json){
@@ -37,8 +39,8 @@ function getPublicationDetailsObject(){
 }
 
 /**
- *
  * @param json
+ * @description Stores PublicationDetails.json file information to the cloud
  */
 function parsePublicationDetailsObject(json){
     EngineDataStore.setPublicationDetailsArray(json);
@@ -48,6 +50,7 @@ function parsePublicationDetailsObject(json){
 
 /**
  * getApiMappingObject
+ * @description Loads ScreenMapping.json file which has information about which screen needs to be loaded as per the requested URL
  */
 function getScreenMappingObject(){
     Router.forward(EngineDataStore.getBaseURL()+"graphics/tacks/ScreenMapping.json",true,function(json){
@@ -58,6 +61,7 @@ function getScreenMappingObject(){
 /**
  *
  * @param json
+ * @description Stores ScreenMapping.json file information to the cloud
  */
 function parseScreenMappingObject(json){
     EngineDataStore.setScreenMappingObject(json);
@@ -71,6 +75,7 @@ function parseScreenMappingObject(json){
 
 /**
  * getApiMappingObject
+ * @description Loads RequestMapping.json file which has information about which REST API needs to be called as per the requested URL
  */
 function getApiMappingObject(){
     Router.forward(EngineDataStore.getBaseURL()+"graphics/tacks/RequestMapping.json",true,function(json){
@@ -79,8 +84,8 @@ function getApiMappingObject(){
 }
 
 /**
- *
  * @param json
+ * @description Stores RequestMapping.json file information to the cloud
  */
 function parseApiMappingObject(json){
     EngineDataStore.setApiMappingObject(json);
