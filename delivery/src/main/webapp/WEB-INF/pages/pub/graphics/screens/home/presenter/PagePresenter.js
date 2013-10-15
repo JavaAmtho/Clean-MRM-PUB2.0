@@ -8,8 +8,9 @@ function PagePresenter() {
 var regions = ['Germany', 'India', 'USA'];          //
 var targetGroups = ['Men', 'Women','Kids'];         //static data for the dropdowns
 var groupTypes = ['Region', 'Target Group'];        //
-const collapseIconPath = 'url("../../../graphics/screens/home/images/collapse.png")';
-const expandIconPath = 'url("../../../graphics/screens/home/images/expand.png")';
+const COLLAPSE_ICON_URL = 'url("../../../graphics/screens/home/images/collapse.png")';
+const EXPAND_ICON_URL = 'url("../../../graphics/screens/home/images/expand.png")';
+const LOADING_IMAGE_URL = '../../../graphics/screens/home/images/load.gif';
 
 /**
  *
@@ -133,7 +134,7 @@ PagePresenter.createRuleStatement = function(parentMasterPageDiv, pageRule){
     GetAssortments.get($(parentMasterPageDiv).children('.pagePath').html(), parentMasterPageDiv.id, function (data) {
         GraphicDataStore.pushToAssortmentsList(parentMasterPageDiv.id, data);
     });
-    var assortmentList = GraphicDataStore.getAssortmentsByID(parentMasterPageDiv.id);
+    var assortmentList = GraphicDataStore.getAssortmentsByPageID(parentMasterPageDiv.id);
     var assortmentsDropDown = document.createElement("select");
     $(assortmentsDropDown).addClass('rulesText assortment selectpicker span3');
     $(assortmentsDropDown).attr('onchange','PagePresenter.makeRuleDirty(this.parentNode,true)');
@@ -440,7 +441,7 @@ PagePresenter.createChildPageLoadingScreen = function(rule) {
 
     var loadingImage = document.createElement("img");
     $(loadingImage).addClass('loading-message');
-    $(loadingImage).attr('src', '../../../graphics/screens/home/images/load.gif');
+    $(loadingImage).attr('src', LOADING_IMAGE_URL);
     $(loadingImage).attr('ondblclick', 'event.stopPropagation()');
     if (!GraphicDataStore.checkIfRuleLoading(ruleID)) {
         $(loadingImage).addClass('hidden');
@@ -531,7 +532,7 @@ PagePresenter.expandCollapseChildPages = function (masterPageDiv) {
     //Check if master page has been expanded into the child pages
     if (!$(masterPageDiv).hasClass('opened')) {
         //Expand the master page into its child pages
-        $(masterPageDiv).children('.expand').css('background-image',collapseIconPath);
+        $(masterPageDiv).children('.expand').css('background-image',COLLAPSE_ICON_URL);
         var $itemsToInsert = new Array();
         var $rules = $(masterPageDiv).children('.rule').children('.then').children('.thenChild');
         var rulesCount = $rules.length;
@@ -567,7 +568,7 @@ PagePresenter.expandCollapseChildPages = function (masterPageDiv) {
         $container.isotope('insert', $($itemsToInsert), $(masterPageDiv));
     }
     else {
-        $(masterPageDiv).children('.expand').css('background-image', expandIconPath);
+        $(masterPageDiv).children('.expand').css('background-image', EXPAND_ICON_URL);
         //jquery reference of all children having the parent's logicalpage id
         var $logicalPageIDOfParentOfChild = $('.childPages').children('.inner').children('.logicalPageID:contains(' + masterPageDiv.id + ')');
         var $childPages = $('.childPages').has($logicalPageIDOfParentOfChild);

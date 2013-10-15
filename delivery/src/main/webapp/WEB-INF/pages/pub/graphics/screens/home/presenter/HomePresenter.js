@@ -10,6 +10,10 @@ var filters = {};
 
 var pages = {};
 
+/**
+ *
+ * @param evt
+ */
 HomePresenter.handleViewChange = function (evt) {
     switch (evt.currentTarget.id) {
         case "tileView":
@@ -29,6 +33,11 @@ HomePresenter.handleViewChange = function (evt) {
     }
 }
 
+/**
+ *
+ * @param evt
+ * @param currentTemplateView
+ */
 HomePresenter.loadViewItems = function (evt, currentTemplateView) {
     var pageIDs = [];
     var publicationPosition = GraphicDataStore.getPublicationPosition();
@@ -167,6 +176,10 @@ HomePresenter.loadViewItems = function (evt, currentTemplateView) {
 
 var currentPanelId;
 
+/**
+ *
+ * @param evt
+ */
 HomePresenter.slidePanel = function (evt) {
     currentPanelId = evt.currentTarget.id;
 
@@ -195,11 +208,18 @@ HomePresenter.slidePanel = function (evt) {
     HomePresenter.changeSelectedBtn(evt.currentTarget.id);
 }
 
+/**
+ *
+ */
 HomePresenter.clearList = function () {
     var contextMenusHolder = document.getElementById('menus');
     contextMenusHolder.innerHTML = "";
 }
 
+/**
+ *
+ * @param btn
+ */
 HomePresenter.btnFocus = function (btn) {
     $('.tileBtnCSS').css("border", "0px");
     $('.listBtnCSS').css("border", "0px");
@@ -207,6 +227,10 @@ HomePresenter.btnFocus = function (btn) {
     $(btn).css("border", "1px solid black");
 }
 
+/**
+ *
+ * @param btnId
+ */
 HomePresenter.createTree = function (btnId) {
     var urls;
     urls = EngineDataStore.getBaseURL() + EngineDataStore.getApiMappingObject()[btnId];
@@ -216,12 +240,19 @@ HomePresenter.createTree = function (btnId) {
     darkTree.createTree(treeObj, urls);
 }
 
+/**
+ *
+ */
 HomePresenter.reset = function () {
     $("#btnMIM").css("background-image", "url(/delivery/pages/pub/graphics/screens/home/images/icons/MIM.png)");
     $("#btnPIM").css("background-image", "url(/delivery/pages/pub/graphics/screens/home/images/icons/PIM.png)");
     $("#btnMAM").css("background-image", "url(/delivery/pages/pub/graphics/screens/home/images/icons/MAM.png)");
 }
 
+/**
+ *
+ * @param btnId
+ */
 HomePresenter.changeSelectedBtn = function (btnId) {
     HomePresenter.reset();
     var urls;
@@ -249,6 +280,11 @@ $(document).bind("TREE_ITEM_CLICKED", function itemClickedHandler(e) {
 
 });
 
+/**
+ *
+ * @param node
+ * @returns {Array}
+ */
 HomePresenter.getChildrenForSelectedNode = function (node) {
 
     var nodeDetails = [];
@@ -264,6 +300,11 @@ HomePresenter.getChildrenForSelectedNode = function (node) {
     return nodeDetails;
 }
 
+/**
+ *
+ * @param node
+ * @returns {Array}
+ */
 HomePresenter.getProductsForSelectedNode = function (node) {
 
     var nodeDetails = [];
@@ -278,6 +319,10 @@ HomePresenter.getProductsForSelectedNode = function (node) {
     return nodeDetails;
 }
 
+/**
+ *
+ * @param rendererData
+ */
 HomePresenter.showAssortmentPanel = function (rendererData) {
 
 
@@ -305,6 +350,10 @@ HomePresenter.showAssortmentPanel = function (rendererData) {
 
 }
 
+/**
+ *
+ * @param data
+ */
 HomePresenter.populateAssetsList = function (data) {
     //Converting the div into the jqwidget list with the renderer for that list
     $("#assetDetails").jqxListBox('beginUpdate');
@@ -327,6 +376,9 @@ HomePresenter.populateAssetsList = function (data) {
 
 }
 
+/**
+ *
+ */
 HomePresenter.addEventListeners = function () {
 
     $('.jqx-listitem-element').bind('dropTargetEnter', function (event) {
@@ -373,6 +425,10 @@ HomePresenter.addEventListeners = function () {
     });
 }
 
+/**
+ *
+ * @param e
+ */
 HomePresenter.searchList = function (e) {
     console.log(e.currentTarget)
     if (e.keyCode == 13) {
@@ -385,6 +441,12 @@ HomePresenter.searchList = function (e) {
     }
 }
 
+/**
+ *
+ * @param existingItems
+ * @param newLabel
+ * @returns {boolean}
+ */
 HomePresenter.productAlreadyExists = function (existingItems, newLabel) {
     if (existingItems) {
         for (var i = 0; i < existingItems.length; i++) {
@@ -396,11 +458,17 @@ HomePresenter.productAlreadyExists = function (existingItems, newLabel) {
     return false;
 }
 
+/**
+ *
+ */
 HomePresenter.hideAssortPanel = function () {
     $('#assortPanel').hide();
     $('#dim').show();
 }
 
+/**
+ *
+ */
 HomePresenter.createProductsJSON = function () {
     var jsonData = {};
     var columnName = "products";
@@ -414,6 +482,9 @@ HomePresenter.createProductsJSON = function () {
     });
 }
 
+/**
+ *
+ */
 HomePresenter.unHideAssortPanel = function () {
     $("#dim").hide();
     $("#assortPanel").show();

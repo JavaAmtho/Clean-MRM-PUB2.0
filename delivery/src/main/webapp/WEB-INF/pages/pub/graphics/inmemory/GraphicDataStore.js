@@ -27,6 +27,7 @@ var GraphicDataStore = function(){
 /**
  *
  * @param currentPublication
+ * @description set the publication name of the current view element
  */
 GraphicDataStore.setCurrentPublication = function(currentPublication){
     console.log(currentPublication);
@@ -36,6 +37,7 @@ GraphicDataStore.setCurrentPublication = function(currentPublication){
 /**
  *
  * @returns currentPublication if true
+ * @description get the name of the current view's publication
  */
 GraphicDataStore.getCurrentPublication = function(){
     if(this.currentPublication){
@@ -50,6 +52,7 @@ GraphicDataStore.getCurrentPublication = function(){
  *
  * @param ruleID
  * @returns true if loadingRulesList[rileID] equals 'loading' else false
+ * @description check if the rule has a loading status
  */
 GraphicDataStore.checkIfRuleLoading = function(ruleID){
     if(!this.loadingRulesList){
@@ -66,6 +69,7 @@ GraphicDataStore.checkIfRuleLoading = function(ruleID){
 /**
  *
  * @param ruleID
+ * @description remove the loading status from the rule
  */
 GraphicDataStore.stopLoadingStatus = function(ruleID){
     if(!this.loadingRulesList){
@@ -77,6 +81,7 @@ GraphicDataStore.stopLoadingStatus = function(ruleID){
 /**
  *
  * @param ruleID
+ * @description add the loading status to the rule
  */
 GraphicDataStore.addRuleToLoadingList = function(ruleID){
     if(!this.loadingRulesList){
@@ -89,6 +94,7 @@ GraphicDataStore.addRuleToLoadingList = function(ruleID){
  *
  * @param pageID
  * @param assortments
+ * @description add the assortment to the list of assortments for the respective page
  */
 GraphicDataStore.pushToAssortmentsList = function(pageID,assortments){
     if(!this.assortmentsList){
@@ -101,8 +107,9 @@ GraphicDataStore.pushToAssortmentsList = function(pageID,assortments){
  *
  * @param pageID
  * @returns Array assortmentList[] if assortmentList, else null
+ * @description get all the assortments for the respective page
  */
-GraphicDataStore.getAssortmentsByID = function(pageID){
+GraphicDataStore.getAssortmentsByPageID = function(pageID){
     if(this.assortmentsList){
         return this.assortmentsList[pageID];
     }
@@ -114,6 +121,7 @@ GraphicDataStore.getAssortmentsByID = function(pageID){
 /**
  *
  * @param obj
+ * @description set the name of the view element that is activate on the tree
  */
 GraphicDataStore.setCurrentView = function(obj){
     this.currentView = obj;
@@ -122,6 +130,7 @@ GraphicDataStore.setCurrentView = function(obj){
 /**
  *
  * @returns currentView Object
+ * @description get the name of the currently activate element on the dyna tree
  */
 GraphicDataStore.getCurrentView = function(){
     return this.currentView;
@@ -130,6 +139,7 @@ GraphicDataStore.getCurrentView = function(){
 /**
  *
  * @param obj
+ * @description set the list of master template ids
  */
 GraphicDataStore.setMasterTemplateList = function(obj){
     this.masterTemplateList = obj;
@@ -138,6 +148,7 @@ GraphicDataStore.setMasterTemplateList = function(obj){
 /**
  *
  * @returns masterTemplateList Object
+ * @description get the list of master template ids
  */
 GraphicDataStore.getMasterTemplateList = function(){
     return this.masterTemplateList;
@@ -148,6 +159,7 @@ GraphicDataStore.getMasterTemplateList = function(){
  *
  * @param id
  * @returns pageRulesArr if Array[rules[i].pageRules] else undefined
+ * @description get the page rule for a particular page
  */
 GraphicDataStore.getPageRuleById = function(id){
     if(this.pageRulesArr){
@@ -161,6 +173,7 @@ GraphicDataStore.getPageRuleById = function(id){
 /**
  *
  * @param rules
+ * @description add all the page rules for all the pages
  */
 GraphicDataStore.addAllPageRules = function(rules){
     if(!this.pageRulesArr){
@@ -178,6 +191,7 @@ GraphicDataStore.addAllPageRules = function(rules){
 /**
  *
  * @param rule
+ * @description add a rule corresponding to a page
  */
 GraphicDataStore.addToPageRules = function(rule){
     if(!this.pageRulesArr){
@@ -192,6 +206,7 @@ GraphicDataStore.addToPageRules = function(rule){
  * @param additionalInfo
  * @param ruleID
  * @param logicalPageID
+ * @description add the additional information(mamFileID and wbdURL) to an existing rule
  */
 GraphicDataStore.addAdditionalInformationToPageRules = function(additionalInfo, ruleID, logicalPageID){
     console.log(this.pageRulesArr[logicalPageID]);
