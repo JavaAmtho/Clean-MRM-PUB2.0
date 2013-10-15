@@ -11,7 +11,11 @@ var groupTypes = ['Region', 'Target Group'];        //
 const collapseIconPath = 'url("../../../graphics/screens/home/images/collapse.png")';
 const expandIconPath = 'url("../../../graphics/screens/home/images/expand.png")';
 
-
+/**
+ *
+ * @returns the created drop down option element
+ * @Description create a default disabled option for the drop down menu
+ */
 PagePresenter.createDefaultDisabledDropDownOption = function() {
     var dropDownOptions = document.createElement("option");
     $(dropDownOptions).attr('selected', 'selected');
@@ -26,6 +30,7 @@ PagePresenter.createDefaultDisabledDropDownOption = function() {
  * @param dropDownDisplayName : display name in the drop down list
  * @param dropDownListID : id value to be used in the drop down
  * @returns the created drop down option element
+ * @Description create an option tag for the dropdown menu
  */
 PagePresenter.createDropDownOption = function(dropDownDisplayName, dropDownListID) {
     var dropDownOption = document.createElement("option");
@@ -39,7 +44,7 @@ PagePresenter.createDropDownOption = function(dropDownDisplayName, dropDownListI
 /**
  *
  * @param parentMasterPageDiv : reference to the parent masterpage div
- * Sets the already saved page rules
+ * @Descritpion Sets the already saved page rules
  */
 PagePresenter.setRules = function (parentMasterPageDiv) {
     var $dirtyFields = $(parentMasterPageDiv).find('.dataDirty');
@@ -91,6 +96,8 @@ PagePresenter.setRules = function (parentMasterPageDiv) {
  * @param pageRule : rule statement data
  * @param parentMasterPageDiv : parent master page div reference
  * @returns rule statement div
+ * @Description Create the rule statement div with the drop down
+ *              menus for master template and assortment
  */
 PagePresenter.createRuleStatement = function(parentMasterPageDiv, pageRule){
     var ruleId = pageRule ? pageRule.ruleID : "";
@@ -142,7 +149,7 @@ PagePresenter.createRuleStatement = function(parentMasterPageDiv, pageRule){
     $(newRuleStatementDiv).append(assortmentsDropDown);
 
     var ruleConfigureButtons = "<span title='Remove the rule statement' class='buttons remove' " +
-        "onclick='PagePresenter.removeNew(this.parentNode,event)'>-</span>"
+        "onclick='PagePresenter.removeNew(this.parentNode)'>-</span>"
     ruleConfigureButtons += "<span title='Add a new rule condition' class='buttons addCondition' " +
         "onclick='PagePresenter.addNewRuleCondition(this.parentNode)'>+</span>"
     $(newRuleStatementDiv).append(ruleConfigureButtons);
@@ -156,6 +163,7 @@ PagePresenter.createRuleStatement = function(parentMasterPageDiv, pageRule){
  *
  * @param groupType : selected group filter
  * @returns rule condition div
+ * @Description create the rule condition div and its drop downs (group type, operator and value)
  */
 PagePresenter.createRuleConditionDiv = function(groupType) {
     var newRuleConditionDiv = document.createElement("div");
@@ -212,7 +220,7 @@ PagePresenter.createRuleConditionDiv = function(groupType) {
 
     var ruleConditionsConfigurationButton = "&nbsp;&nbsp;<span title='Remove the rule condition' " +
                                             "class='buttons remove' " +
-                                            "onclick='PagePresenter.removeNew(this.parentNode,event)'>-</span>";
+                                            "onclick='PagePresenter.removeNew(this.parentNode)'>-</span>";
     $(newRuleConditionDiv).append(ruleConditionsConfigurationButton);
 
     var ruleConditionsData = "<p class='hidden dataDirty'>0</p>"
@@ -370,6 +378,7 @@ PagePresenter.openWhiteBoard = function (childPageInnerDiv) {
  *
  * @param childPageDiv : reference to the main child page div
  * @param $dimensionValues
+ * @Description according to the rule conditions set, add values to the classname for the filtering
  */
 PagePresenter.setClassNamesToChildPagesForFilterByCondition = function(childPageDiv, $dimensionValues) {
     for (var j = 0; j < $dimensionValues.length; j++) {
@@ -391,6 +400,13 @@ PagePresenter.setClassNamesToChildPagesForFilterByCondition = function(childPage
     }
 }
 
+/**
+ *
+ * @param rule
+ * @param masterPageDiv
+ * @returns tags with hidden data for child pages
+ * @Description create hidden data for the child pages
+ */
 PagePresenter.createChildPageData = function(rule, masterPageDiv) {
     var $masterTemplate = $(rule).children('.template')[0].value;   //
     var $assortment = $(rule).children('.assortment')[0].value;     //Get all data
@@ -410,6 +426,12 @@ PagePresenter.createChildPageData = function(rule, masterPageDiv) {
     return childPageData;
 }
 
+/**
+ *
+ * @param rule
+ * @returns the overlay div and the image tag
+ * @Description create the overlay div and the image placeholder for the loading screen
+ */
 PagePresenter.createChildPageLoadingScreen = function(rule) {
     var ruleID = $(rule).children('.ruleID').html();
     var loadingOverlayDiv = document.createElement("div");
@@ -427,6 +449,13 @@ PagePresenter.createChildPageLoadingScreen = function(rule) {
     return {loadingOverlayDiv: loadingOverlayDiv, loadingImage: loadingImage};
 }
 
+/**
+ *
+ * @param rule
+ * @param masterPageDiv
+ * @returns inner div for the child page
+ * @Description create the inner div for the child page
+ */
 PagePresenter.createChildPageInnerDiv = function(rule, masterPageDiv) {
 
 
@@ -466,6 +495,9 @@ PagePresenter.createChildPageInnerDiv = function(rule, masterPageDiv) {
     return childPageInnerDiv;
 }
 
+/**
+ * @Description function that binds the childpages to the loadingDone and loadingError events
+ */
 PagePresenter.bindChildPagesToCustomLoadingWBDEvent = function() {
     $('.childPages').bind("loadingDone", function (event, ruleIDFinishLoading, wbdURL) {
         var $innerDiv = $(this).children('.inner');
@@ -838,11 +870,11 @@ PagePresenter.toggleOpenCloseRules = function (parentMasterPageDiv) {
     }
 }
 
-/*
- arguments : parentDiv - reference to the parent rule for the condition to be marked dirty
- ifResetWBD - boolean indicating if the wbd url and mamFileID need to be reset
- return : void
- Description : indicate data as dirty due to changes and also reset wbdurl and mam file id accordingly
+/**
+ *
+ * @param parentDiv reference to the parent rule for the condition to be marked dirty
+ * @param ifResetWBD  boolean indicating if the wbd url and mamFileID need to be reset
+ * @Description : indicate data as dirty due to changes and also reset wbdurl and mam file id accordingly
  */
 PagePresenter.makeRuleDirty = function (parentDiv,ifResetWBD) {
     PagePresenter.makeDirty(parentDiv);
@@ -857,20 +889,21 @@ PagePresenter.makeDirty = function (text, event) {
 }
 
 
-/*
- Desciption : Removes the rule condition or statement
- (called on click of the minus buttons in the rules)
+/**
+ *
+ * @param reference
+ * @Desciption : Removes the rule condition or statement
+                (called on click of the minus buttons in the rules)
  */
-PagePresenter.removeNew = function (reference, event) {
+PagePresenter.removeNew = function (reference) {
     $(reference).children('.dataDirty').html('1');
     $(reference.parentNode).children('.dataDirty').html('1');
     reference.parentNode.removeChild(reference);
-    return false;
 }
 
-/*
- Description : Called by the splitter when the drag has ended or started
- in order to re-layout(position) the isotope elements properly
+/**
+ * @Description : Called by the splitter when the drag has ended or started
+                    in order to re-layout(position) the isotope elements properly
  */
 PagePresenter.setContainerRelayout = function(){
     if($isotopeContainer){
@@ -878,9 +911,11 @@ PagePresenter.setContainerRelayout = function(){
     }
 }
 
-/*
- Description : Creates a new view with all the pages under the publication.
- (Callback from GetAllPagesInPublication.get)
+/**
+ *
+ * @param data
+ * @Description : Creates a new view with all the pages under the publication.
+                (Callback from GetAllPagesInPublication.get)
  */
 PagePresenter.changeViewToShowAllPages = function(data){
     $(document).trigger({
@@ -890,9 +925,9 @@ PagePresenter.changeViewToShowAllPages = function(data){
     });
 }
 
-/*
- Description : Function called when the show all pages button is called.
- Brings up all the pages under the current publication
+/**
+ * @Description : Function called when the show all pages button is called.
+                Brings up all the pages under the current publication
  */
 PagePresenter.showAllPages = function(){
     var publicationName = GraphicDataStore.getCurrentView(); //Since the button shows up only when publication
