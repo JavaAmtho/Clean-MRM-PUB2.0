@@ -1,7 +1,20 @@
+/**
+ *
+ * @constructor      CreateDimensions
+ */
 function CreateDimensions(){
 
 }
 
+/**
+ *
+ * @param prefix
+ * @param action
+ * @param input
+ * @param currentPath
+ * @param flag
+ * @param callBack
+ */
 CreateDimensions.createDim = function(prefix,action,input,currentPath,flag,callBack){
     var reqBody = new Object();
     reqBody.name=input.name;

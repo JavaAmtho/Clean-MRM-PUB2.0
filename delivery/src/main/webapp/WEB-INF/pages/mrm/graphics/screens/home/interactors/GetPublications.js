@@ -1,7 +1,16 @@
+/**
+ *
+ * @constructor       GetPublications
+ */
 function GetPublications(){
 
 }
 
+/**
+ *
+ * @param comChannelObj
+ * @param callBack
+ */
 GetPublications.get = function(comChannelObj,callBack){
 
     var reqBody = new Object();

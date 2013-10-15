@@ -1,7 +1,17 @@
+/**
+ *
+ * @constructor       UpdateDimension
+ */
 function UpdateDimension(){
 
 }
 
+/**
+ *
+ * @param prefix
+ * @param row
+ * @param callBack
+ */
 UpdateDimension.updateDim = function(prefix,row,callBack){
     var input = new Object();
     input.name=row.name;

@@ -21,33 +21,28 @@ var DropDownPresenter = function(){
 
 }
 
+/**
+ *
+ * @returns {DropDownPresenter}
+ */
 DropDownPresenter.getInstance = function(){
     return new DropDownPresenter();
 }
 
+/**
+ *
+ * @param structId
+ * @description calls GetViewStructure interactor's getAll method
+ */
 DropDownPresenter.getAllViewStructure = function(structId){
     GetViewStructure.getAll();
 }
 
+/**
+ *
+ * @param structId
+ * @description calls GetViewStructure interactor's getViewStructureById method
+ */
 DropDownPresenter.getViewStructureById = function(structId){
     GetViewStructure.get(structId);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*$('#selectLbl').text("Select View");
-  $('#schemaDropDown').hide();
-  $('#mainAnimationContainer').animate({height: actualHeight}, 500);*/
-
-

@@ -1,7 +1,20 @@
+/**
+ *
+ * @constructor   DragDimension
+ */
 function DragDimension(){
 
 }
 
+/**
+ *
+ * @param prefix
+ * @param row
+ * @param oldPath
+ * @param flag
+ * @param newPath
+ * @param callBack
+ */
 DragDimension.dragAndDropDimensions = function(prefix,row,oldPath,flag,newPath,callBack){
     var input = new Object();
     input.name=row.name;

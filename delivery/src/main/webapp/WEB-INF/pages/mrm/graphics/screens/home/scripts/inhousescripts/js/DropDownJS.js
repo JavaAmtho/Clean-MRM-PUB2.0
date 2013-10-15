@@ -7,6 +7,7 @@ var DropDownJS = function(){
      *
      * @param dropDownObj
      * @param data
+     * @description creates dropdown
      */
     this.createDropDown = function(dropDownObj,data){
         var jsonlist = data;
