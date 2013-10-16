@@ -12,7 +12,7 @@ var DynaTree = function(){
     /**
      *
      * @param type
-     * @returns {boolean}
+     * @returns {boolean}  if the context menu exists for this type of dimension
      */
     function menuExists(type){
         var contextMenusHolder = document.getElementById('menus')
@@ -29,6 +29,7 @@ var DynaTree = function(){
      *
      * @param type
      * @param menuOptions
+     * @description creates a list if menu doesn't exist for the given type of dimension
      */
     function createList(type,menuOptions){
         var contextMenusHolder = document.getElementById('menus');
@@ -98,6 +99,7 @@ var DynaTree = function(){
     /**
      *
      * @param data
+     * @description callBack on adding new node in tree
      */
     function addNode(data){
         if(data){
@@ -112,7 +114,7 @@ var DynaTree = function(){
              parentNode.data.children.push(newNode);
         }
         else{
-            alert("Duplicate names are not allowed");
+            alertify.error("Duplicate names are not allowed");
         }
     }
 
@@ -123,6 +125,7 @@ var DynaTree = function(){
      * @param path
      * @param flag
      * @returns {{id: Empty String, title: name, type: type, path: path, isFolder: 'true' if folder, products: Empty Array}}
+     * @description creates an assortment node
      */
     function createAssortmentNode(name,type,path,flag){
         var flag = isFolder(type);
@@ -385,23 +388,6 @@ var DynaTree = function(){
                 }
             });
 
-           /* var myPagesColl;
-
-            function findPagesForPub(data){
-                 if(data.length>0){
-                     for(var i=0; i< data.length; i++){
-                         if(data[i].type == "Page"){
-                             myPagesColl.push(data[i]);
-                         }
-                         else{
-                             findPagesForPub(data[i].children);
-                         }
-                     }
-
-                 }
-                return myPagesColl;
-            }*/
-
             /**
              *
              * @param name
@@ -441,12 +427,6 @@ var DynaTree = function(){
                 limit: 30,
                 position: '20%'
             });
-//            $('.colmask').splitter({splitVertical:true,A:$('#leftPanel'),B:$('#rightPanel'),closeableto:100});
-            //$('#coverMain').fadeIn(600);
-
-               // alert(pubIdToOpen);
-            /*var manode = $(treeObj).dynatree("getTree");
-            console.log(manode)*/
         }
     }
 

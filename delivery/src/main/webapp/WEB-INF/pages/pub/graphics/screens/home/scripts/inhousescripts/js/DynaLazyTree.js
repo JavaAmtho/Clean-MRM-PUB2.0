@@ -42,7 +42,7 @@ var DynaLazyTree = function(){
      * @param id
      * @returns complete URL of PIM/MAM mocks
      */
-    function getChildURL(id){
+    /*function getChildURL(id){
         var url;
        if(id==62){
            url = EngineDataStore.getBaseURL()+"../testdrive/mocks/tree/PimAssets.json"
@@ -54,5 +54,5 @@ var DynaLazyTree = function(){
             url = EngineDataStore.getBaseURL()+"../testdrive/mocks/tree/PimAssets.json"
         }
        return url;
-    }
+    }*/
 };
