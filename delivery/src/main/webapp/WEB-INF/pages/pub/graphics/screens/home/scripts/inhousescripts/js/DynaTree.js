@@ -191,6 +191,8 @@ var DynaTree = function(){
 
     /**
      * function onDropSuccess
+     * @description called on end of the drag event while dragging and
+     *              dropping an element in the dyna tree
      */
     function onDropSuccess(){
         console.log(draggedNode + "draggedNode")
@@ -242,9 +244,20 @@ var DynaTree = function(){
         }else{
             $(treeObj).dynatree({
                 children: data,
+                /**
+                 *
+                 * @param node
+                 * @param span
+                 */
                 onCreate: function(node, span){
                     bindContextMenu(span,node.data.type);
                 },
+                /**
+                 *
+                 * @param flag
+                 * @param node
+                 * @description called on expansion of an element in the dyna tree
+                 */
                 onExpand : function(flag, node){
                 	console.log(flag);
                 	if(!flag)
@@ -255,6 +268,11 @@ var DynaTree = function(){
                     }else{
                     }
                 },
+                /**
+                 *
+                 * @param node
+                 * @description called when a node in the tree is activate i.e. clicked on
+                 */
                 onActivate: function(node) {
                     var nodeType = "Dimension";
                     var data;
@@ -294,6 +312,12 @@ var DynaTree = function(){
                 },
                 dnd: {
                     preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
+                    /**
+                     *
+                     * @param node
+                     * @returns {boolean}
+                     * @description called when a drag event has started
+                     */
                     onDragStart: function(node) {
 
                         if(node.data.type == "Chapter"||node.data.type == "Page"||node.data.type == "Assortment" ) {

@@ -211,6 +211,7 @@
                     } else if (current_splitter.orientation == 'vertical') {
                         $('body').css('cursor', 'col-resize');
                     }
+                    //TODO : remove custom implementation and find way to use original js
                     PagePresenter.setContainerRelayout();
                     return false;
                 }
@@ -218,7 +219,8 @@
                 $('.splitterMask').remove();
                 current_splitter = null;
                 $('body').css('cursor', 'auto');
-                    PagePresenter.setContainerRelayout();
+                //TODO : remove custom implementation and find way to use original js
+                PagePresenter.setContainerRelayout();
             }).bind('mousemove.splitter', function(e) {
                 if (current_splitter !== null) {
                     var limit = current_splitter.limit;
@@ -252,6 +254,7 @@
                             return false;
                         }
                     }
+                    //TODO : remove custom implementation and find way to use original js
                     PagePresenter.setContainerRelayout();
                 }
             });

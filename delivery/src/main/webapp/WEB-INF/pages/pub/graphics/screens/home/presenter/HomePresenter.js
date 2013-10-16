@@ -34,9 +34,89 @@ HomePresenter.handleViewChange = function (evt) {
 }
 
 /**
+ * @description set each dimension as even or odd which assigns different colour to them
+ */
+HomePresenter.setEvenOddClassesToDimensions = function() {
+    $isotopeContainer.find('.masterPage,.dimension,.chapter,.assortmentItem').each(function (key, value) {
+        var $this = $(this),
+            number = key + 1;
+        if (number % 2 == 1) {
+            $this.addClass('odd');
+        }
+        else {
+            $this.addClass('even');
+        }
+    });
+}
+
+/**
+ * @description if the node that is activated contains pages then set all the pages
+ *              with their respective rules
+ */
+HomePresenter.setAllPageRulesOnActivateOfNode = function() {
+    var $masterPages = $("#viewHolder").children('.masterPage');
+    for (var i = 0; i < $masterPages.length; i++) {
+        var pageRule = $masterPages[i].id;
+        if (pageRule != null && pageRule.length > 0) {
+            PagePresenter.setRules($masterPages[i]);
+            //set the + button as displayed or hidden as per the rules data present
+            var $thenChildren = $($masterPages[i]).children('.rule').children('.then').children('.thenChild');
+            if ($thenChildren.length > 0) {
+                if ($($masterPages[i]).children(".expand").css('display') == 'none') {
+                    $($masterPages[i]).children(".expand").toggle();
+                }
+            }
+        }
+    }
+}
+
+/**
+ * @description bind the filter buttons to a click event that performs the filtering operation
+ */
+HomePresenter.bindClickEventToFilterButtons = function() {
+    $('.filter a').click(function () {
+
+        var $this = $(this);
+        // don't proceed if already selected
+        if ($this.hasClass('calendarButtonPressed')) {
+            return;
+        }
+
+        var $optionSet = $this.parents('.option-set');
+        // change selected class
+        $optionSet.find('.calendarButtonPressed').removeClass('calendarButtonPressed');
+        $this.addClass('calendarButtonPressed');
+
+        var group = $optionSet.attr('data-filter-group');
+        filters[ group ] = $this.attr('data-filter-value');
+        // convert object into array
+        var bothRegions;
+        var bothTgs;
+        var isoFilters = [];
+        for (var prop in filters) {
+            if (filters[prop].indexOf("anyRegion") != -1)
+                bothRegions = filters[prop].split(",");
+            else if (filters[prop].indexOf("anyTargetGroup") != -1)
+                bothTgs = filters[prop].split(",");
+            isoFilters.push(filters[ prop ])
+        }
+        var selector;
+        if (bothRegions != undefined && bothTgs != undefined) {
+            selector = bothRegions[0] + bothTgs[1] + "," + bothRegions[1] + bothTgs[0] + "," + bothRegions[0] + bothTgs[0] + "," + bothRegions[1] + bothTgs[1];
+        }
+        else {
+            selector = isoFilters.join('');
+        }
+        $isotopeContainer.isotope({ filter: selector });
+
+        return false;
+    });
+}
+/**
  *
  * @param evt
  * @param currentTemplateView
+ * @description load all the view items under the activated node i.e. node that is clicked
  */
 HomePresenter.loadViewItems = function (evt, currentTemplateView) {
     var pageIDs = [];
@@ -47,7 +127,6 @@ HomePresenter.loadViewItems = function (evt, currentTemplateView) {
             var css = "";
             var stackcss = "";
             if (ref.type == "Page") {
-
                 pageIDs.push(GraphicDataStore.getCurrentView() + "." + ref.title);
                 css = "masterPage anyRegion anyTargetGroup";
                 console.log("CSS : " + css);
@@ -74,7 +153,6 @@ HomePresenter.loadViewItems = function (evt, currentTemplateView) {
                 ref.backgroundImageStyle = "background-image: url("+config.host+config.context+pubImageList[ref.title].imageURL+")";
                 console.log(ref.backgroundImageStyle);
             }
-
         }
 
     });
@@ -92,21 +170,9 @@ HomePresenter.loadViewItems = function (evt, currentTemplateView) {
         $('#viewHolder').html(currentViewStr);
 
         //Set rules for all the master Pages
-        if(pages.pageIDs != null && pages.pageIDs.length > 0){
-            var $masterPages =  $("#viewHolder").children('.masterPage');
-            for(var i = 0 ; i < $masterPages.length ; i++){
-                var pageRule = $masterPages[i].id;
-                if(pageRule != null && pageRule.length > 0){
-                    PagePresenter.setRules($masterPages[i]);
-                    //set the + button as displayed or hidden as per the rules data present
-                    var $thenChildren = $($masterPages[i]).children('.rule').children('.then').children('.thenChild');
-                    if ($thenChildren.length > 0) {
-                        if ($($masterPages[i]).children(".expand").css('display') == 'none') {
-                            $($masterPages[i]).children(".expand").toggle();
-                        }
-                    }
-                }
-            }
+
+        if (pages.pageIDs != null && pages.pageIDs.length > 0) {
+            HomePresenter.setAllPageRulesOnActivateOfNode();
         }
 
 
@@ -117,57 +183,11 @@ HomePresenter.loadViewItems = function (evt, currentTemplateView) {
 
         $isotopeContainer = $('#viewHolder');
 
-        $isotopeContainer.find('.masterPage,.dimension,.chapter,.assortmentItem').each(function (key, value) {
-            var $this = $(this),
-                number = key + 1;
-            if (number % 2 == 1) {
-                $this.addClass('odd');
-            }
-            else {
-                $this.addClass('even');
-            }
-        });
+        HomePresenter.setEvenOddClassesToDimensions();
 
         $isotopeContainer.isotope();
 
-        $('.filter a').click(function () {
-
-            var $this = $(this);
-            // don't proceed if already selected
-            if ($this.hasClass('calendarButtonPressed')) {
-                return;
-            }
-
-            var $optionSet = $this.parents('.option-set');
-            // change selected class
-            $optionSet.find('.calendarButtonPressed').removeClass('calendarButtonPressed');
-            $this.addClass('calendarButtonPressed');
-
-            var group = $optionSet.attr('data-filter-group');
-            filters[ group ] = $this.attr('data-filter-value');
-            // convert object into array
-            var bothRegions;
-            var bothTgs;
-            var isoFilters = [];
-            for (var prop in filters) {
-                if(filters[prop].indexOf("anyRegion")!=-1)
-                    bothRegions=filters[prop].split(",");
-                else if(filters[prop].indexOf("anyTargetGroup")!=-1)
-                    bothTgs=filters[prop].split(",");
-                isoFilters.push(filters[ prop ])
-            }
-            var selector;
-            if(bothRegions!=undefined && bothTgs!=undefined)
-            {
-                selector=bothRegions[0]+ bothTgs[1]+","+bothRegions[1]+bothTgs[0]+","+bothRegions[0]+bothTgs[0]+","+bothRegions[1]+bothTgs[1];
-            }
-            else{
-                selector = isoFilters.join('');
-            }
-            $isotopeContainer.isotope({ filter: selector });
-
-            return false;
-        });
+        HomePresenter.bindClickEventToFilterButtons();
 
 
 

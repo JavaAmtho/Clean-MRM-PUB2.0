@@ -454,6 +454,7 @@
     _init : function( callback ) {
 
       this.$filteredAtoms = this._filter( this.$allAtoms );
+      //TODO : remove custom implementation and find way to use original isotope js
       //this._sort();
       this.reLayout( callback );
 
@@ -757,7 +758,6 @@
       var $newAtoms = this._getAtoms( $content );
       // add new atoms to atoms pools
       this.$allAtoms = this.$allAtoms.add( $newAtoms );
-      //this.$allAtoms.splice(1,0,$newAtoms[0]);
       if ( callback ) {
         callback( $newAtoms );
       }
@@ -768,6 +768,7 @@
       insert : function( $content,$prev, callback ) {
           // position items
           //this.element.append( $content );
+          //TODO : remove custom implementation and find way to use original isotope js
           if($prev){
               $prev.after($content);
           }
@@ -778,6 +779,7 @@
       this.addItems( $content, function( $newAtoms ) {
         var $newFilteredAtoms = instance._filter( $newAtoms );
         instance._addHideAppended( $newFilteredAtoms );
+          //TODO : remove custom implementation and find way to use original isotope js
         //instance._sort();
         instance.reLayout();
         instance._revealAppended( $newFilteredAtoms, callback );
@@ -844,6 +846,7 @@
       if ( $content.filter( ':not(.' + this.options.hiddenClass + ')' ).length ) {
         // if any non-hidden content needs to be removed
         this.styleQueue.push({ $el: $content, style: this.options.hiddenStyle });
+          //TODO : remove custom implementation and find way to use original isotope js
         //this._sort();
         this.reLayout( removeContent );
       } else {
