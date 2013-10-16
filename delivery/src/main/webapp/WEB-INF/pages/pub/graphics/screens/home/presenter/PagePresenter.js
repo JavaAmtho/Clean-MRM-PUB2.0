@@ -6,7 +6,7 @@ function PagePresenter() {
 }
 
 var regions = ['Germany', 'India', 'USA'];          //
-var targetGroups = ['Men', 'Women','Kids'];         //static data for the dropdowns
+var targetGroups = ['Men', 'Women', 'Kids'];        //static data for the dropdowns
 var groupTypes = ['Region', 'Target Group'];        //
 const COLLAPSE_ICON_URL = 'url("../../../graphics/screens/home/images/collapse.png")';
 const EXPAND_ICON_URL = 'url("../../../graphics/screens/home/images/expand.png")';
@@ -15,9 +15,9 @@ const LOADING_IMAGE_URL = '../../../graphics/screens/home/images/load.gif';
 /**
  *
  * @returns the created drop down option element
- * @Description create a default disabled option for the drop down menu
+ * @description create a default disabled option for the drop down menu
  */
-PagePresenter.createDefaultDisabledDropDownOption = function() {
+PagePresenter.createDefaultDisabledDropDownOption = function () {
     var dropDownOptions = document.createElement("option");
     $(dropDownOptions).attr('selected', 'selected');
     $(dropDownOptions).attr('disabled', 'disabled');
@@ -31,11 +31,11 @@ PagePresenter.createDefaultDisabledDropDownOption = function() {
  * @param dropDownDisplayName : display name in the drop down list
  * @param dropDownListID : id value to be used in the drop down
  * @returns the created drop down option element
- * @Description create an option tag for the dropdown menu
+ * @description create an option tag for the dropdown menu
  */
-PagePresenter.createDropDownOption = function(dropDownDisplayName, dropDownListID) {
+PagePresenter.createDropDownOption = function (dropDownDisplayName, dropDownListID) {
     var dropDownOption = document.createElement("option");
-    if(dropDownListID){
+    if (dropDownListID) {
         $(dropDownOption).attr('value', dropDownListID);
     }
     $(dropDownOption).html(dropDownDisplayName);
@@ -45,7 +45,7 @@ PagePresenter.createDropDownOption = function(dropDownDisplayName, dropDownListI
 /**
  *
  * @param parentMasterPageDiv : reference to the parent masterpage div
- * @Descritpion Sets the already saved page rules
+ * @description Sets the already saved page rules
  */
 PagePresenter.setRules = function (parentMasterPageDiv) {
     var $dirtyFields = $(parentMasterPageDiv).find('.dataDirty');
@@ -54,7 +54,7 @@ PagePresenter.setRules = function (parentMasterPageDiv) {
         $(parentMasterPageDiv).find('.thenChild').remove();
         $dirtyFields.html('0');
         var pageRules = GraphicDataStore.getPageRuleById(parentMasterPageDiv.id);
-        if(pageRules){
+        if (pageRules) {
             var $thenReference = $(parentMasterPageDiv).children('.rule').children('.then');
             for (var i = 0; i < pageRules.length; i++) {
                 var pageRule = pageRules[i]
@@ -68,7 +68,7 @@ PagePresenter.setRules = function (parentMasterPageDiv) {
                     $(ruleStatementDiv).children('.assortment').val(assortmentName);
 
                     var ruleConditions = pageRules[i].ruleConditions;
-                    if(ruleConditions){
+                    if (ruleConditions) {
                         for (var j = 0; j < ruleConditions.length; j++) {
                             var groupType = ruleConditions[j].variable;
                             var operation = ruleConditions[j].operator;
@@ -97,10 +97,10 @@ PagePresenter.setRules = function (parentMasterPageDiv) {
  * @param pageRule : rule statement data
  * @param parentMasterPageDiv : parent master page div reference
  * @returns rule statement div
- * @Description Create the rule statement div with the drop down
+ * @description Create the rule statement div with the drop down
  *              menus for master template and assortment
  */
-PagePresenter.createRuleStatement = function(parentMasterPageDiv, pageRule){
+PagePresenter.createRuleStatement = function (parentMasterPageDiv, pageRule) {
     var ruleId = pageRule ? pageRule.ruleID : "";
     var mamFileID = pageRule ? pageRule.additionalInformation.mamFileID : " ";
     var wbdURL = pageRule ? pageRule.additionalInformation.editUrl : " ";
@@ -117,8 +117,8 @@ PagePresenter.createRuleStatement = function(parentMasterPageDiv, pageRule){
     var masterTemplateFileNames = EngineDataStore.getMasterTemplateList();
     var masterTemplateDropDown = document.createElement("select");
     $(masterTemplateDropDown).addClass('rulesText  template selectpicker span2');
-    $(masterTemplateDropDown).attr('onchange','PagePresenter.makeRuleDirty(this.parentNode,true)');
-    $(masterTemplateDropDown).attr('data-width','45%');
+    $(masterTemplateDropDown).attr('onchange', 'PagePresenter.makeRuleDirty(this.parentNode,true)');
+    $(masterTemplateDropDown).attr('data-width', '45%');
     var dropDownOptions;
     dropDownOptions = PagePresenter.createDefaultDisabledDropDownOption();
     $(dropDownOptions).html('Select Master Template');
@@ -137,8 +137,8 @@ PagePresenter.createRuleStatement = function(parentMasterPageDiv, pageRule){
     var assortmentList = GraphicDataStore.getAssortmentsByPageID(parentMasterPageDiv.id);
     var assortmentsDropDown = document.createElement("select");
     $(assortmentsDropDown).addClass('rulesText assortment selectpicker span3');
-    $(assortmentsDropDown).attr('onchange','PagePresenter.makeRuleDirty(this.parentNode,true)');
-    $(assortmentsDropDown).attr('data-width','45%');
+    $(assortmentsDropDown).attr('onchange', 'PagePresenter.makeRuleDirty(this.parentNode,true)');
+    $(assortmentsDropDown).attr('data-width', '45%');
     dropDownOptions = PagePresenter.createDefaultDisabledDropDownOption();
     $(dropDownOptions).html('Select Assortment');
     $(assortmentsDropDown).append(dropDownOptions);
@@ -164,17 +164,17 @@ PagePresenter.createRuleStatement = function(parentMasterPageDiv, pageRule){
  *
  * @param groupType : selected group filter
  * @returns rule condition div
- * @Description create the rule condition div and its drop downs (group type, operator and value)
+ * @description create the rule condition div and its drop downs (group type, operator and value)
  */
-PagePresenter.createRuleConditionDiv = function(groupType) {
+PagePresenter.createRuleConditionDiv = function (groupType) {
     var newRuleConditionDiv = document.createElement("div");
     $(newRuleConditionDiv).addClass("whenChild");
 
     var variablesList = groupTypes;
     var groupTypeDropDown = document.createElement("select");
     $(groupTypeDropDown).addClass('rulesText groupType selectpicker span2');
-    $(groupTypeDropDown).attr('onchange','PagePresenter.modifyValueDropDown(this)');
-    $(groupTypeDropDown).attr('data-width','auto');
+    $(groupTypeDropDown).attr('onchange', 'PagePresenter.modifyValueDropDown(this)');
+    $(groupTypeDropDown).attr('data-width', 'auto');
     var dropDownOptions;
     dropDownOptions = PagePresenter.createDefaultDisabledDropDownOption();
     $(groupTypeDropDown).append(dropDownOptions);
@@ -187,19 +187,19 @@ PagePresenter.createRuleConditionDiv = function(groupType) {
 
     var operatorDropDown = document.createElement("select");
     $(operatorDropDown).addClass('rulesText operation selectpicker span2');
-    $(operatorDropDown).attr('onchange','PagePresenter.makeDirty(this)');
-    $(operatorDropDown).attr('data-width','auto');
+    $(operatorDropDown).attr('onchange', 'PagePresenter.makeDirty(this)');
+    $(operatorDropDown).attr('data-width', 'auto');
     dropDownOptions = PagePresenter.createDropDownOption("=");
     $(operatorDropDown).append(dropDownOptions);
     $(newRuleConditionDiv).append(operatorDropDown);
 
     var valuesDropDown = document.createElement("select");
     $(valuesDropDown).addClass('input rulesText value selectpicker span2');
-    $(valuesDropDown).attr('onchange','PagePresenter.makeDirty(this.parentNode)');
-    $(valuesDropDown).attr('data-width','auto');
+    $(valuesDropDown).attr('onchange', 'PagePresenter.makeDirty(this.parentNode)');
+    $(valuesDropDown).attr('data-width', 'auto');
     dropDownOptions = PagePresenter.createDefaultDisabledDropDownOption();
     $(valuesDropDown).append(dropDownOptions);
-    if(groupType){
+    if (groupType) {
         if (groupType == 'Region') {
             var regionsList = regions;
             for (var i = 0; i < regionsList.length; i++) {
@@ -220,8 +220,8 @@ PagePresenter.createRuleConditionDiv = function(groupType) {
     $(newRuleConditionDiv).append(valuesDropDown);
 
     var ruleConditionsConfigurationButton = "&nbsp;&nbsp;<span title='Remove the rule condition' " +
-                                            "class='buttons remove' " +
-                                            "onclick='PagePresenter.removeNew(this.parentNode)'>-</span>";
+        "class='buttons remove' " +
+        "onclick='PagePresenter.removeNew(this.parentNode)'>-</span>";
     $(newRuleConditionDiv).append(ruleConditionsConfigurationButton);
 
     var ruleConditionsData = "<p class='hidden dataDirty'>0</p>"
@@ -233,7 +233,7 @@ PagePresenter.createRuleConditionDiv = function(groupType) {
 /**
  *
  * @param groupTypeDropDown : reference to the group type drop down(target group/region select drop-down)
- * @Description : According to value selected in the group type drop-down modify the values in the value drop-down
+ * @description : According to value selected in the group type drop-down modify the values in the value drop-down
  */
 PagePresenter.modifyValueDropDown = function (groupTypeDropDown) {
     $(groupTypeDropDown.parentNode).children('.dataDirty').html('1');
@@ -244,8 +244,8 @@ PagePresenter.modifyValueDropDown = function (groupTypeDropDown) {
 
     var valuesDropDown = document.createElement("select");
     $(valuesDropDown).addClass('input rulesText value selectpicker span2');
-    $(valuesDropDown).attr('onchange','PagePresenter.makeDirty(this.parentNode)');
-    $(valuesDropDown).attr('data-width','auto');
+    $(valuesDropDown).attr('onchange', 'PagePresenter.makeDirty(this.parentNode)');
+    $(valuesDropDown).attr('data-width', 'auto');
     var dropDownOptions = PagePresenter.createDefaultDisabledDropDownOption();
     $(valuesDropDown).append(dropDownOptions);
 
@@ -269,15 +269,17 @@ PagePresenter.modifyValueDropDown = function (groupTypeDropDown) {
     $(groupTypeDropDown).siblings('.value').remove();               //remove the existing drop-down
     //Get the last operator drop-down component and add the values drop-down after it
     var $operationDropdown = $(groupTypeDropDown).siblings('.selectboxit-container');
-    $($operationDropdown[$operationDropdown.length-1]).after(valuesDropDown);
-    $('.selectpicker').selectBoxIt();   //initialize the selectBoxIt component on the drop-downs
+    $($operationDropdown[$operationDropdown.length - 1]).after(valuesDropDown);
+    $('.selectpicker').selectBoxIt({
+        autoWidth: false
+    });   //initialize the selectBoxIt component on the drop-downs
 }
 
 
 /**
  *
  * @param parentThenChildDiv : reference to the parent rule for the condition to be added
- * @Description : Create a new condition for the rule(Called on the '+' next to the rule)
+ * @description : Create a new condition for the rule(Called on the '+' next to the rule)
  */
 PagePresenter.addNewRuleCondition = function (parentThenChildDiv) {
     //Set dirty flag to the paren thenChild
@@ -286,13 +288,15 @@ PagePresenter.addNewRuleCondition = function (parentThenChildDiv) {
     var newRuleConditionDiv = PagePresenter.createRuleConditionDiv();
     parentThenChildDiv.appendChild(newRuleConditionDiv);
 
-    $(".selectpicker").selectBoxIt({autoWidth:true});
+    $(".selectpicker").selectBoxIt({
+        autoWidth: false
+    });
 }
 
 /**
  *
  * @param parentRuleStatementsListDiv : reference to the parent then div which contains all the rule statements
- * @Description : Create a new rule(Called on click on top '+')
+ * @description : Create a new rule(Called on click on top '+')
  */
 PagePresenter.addNewRuleStatement = function (parentRuleStatementsListDiv) {
     //Set the main dirty flag when new rule is added
@@ -302,20 +306,22 @@ PagePresenter.addNewRuleStatement = function (parentRuleStatementsListDiv) {
     var newRuleStatement = PagePresenter.createRuleStatement(parentMasterPageDiv);
     $(parentRuleStatementsListDiv).append(newRuleStatement);      //Add the new rule div to the parent div
 
-    $(".selectpicker").selectBoxIt({autoWidth: false});
+    $(".selectpicker").selectBoxIt({
+        autoWidth: false
+    });
 }
 
 /**
  *
  * @param childPageInnerDiv : the respective child page inner div of the popout icon
- * @Description : Open the WBD URL in a popout window
+ * @description : Open the WBD URL in a popout window
  */
 PagePresenter.openURL = function (childPageInnerDiv) {
     //Get the wbd url from the hidden data in the div
     var urlToOpen = $(childPageInnerDiv).children('.wbdURL').html();
     urlToOpen = urlToOpen.replace(/&amp;/g, '&');
     var config = EngineDataStore.getPublicationDetailsArray()["Config"];
-    urlToOpen = urlToOpen.replace("../admin", config.host+config.context+"/admin");
+    urlToOpen = urlToOpen.replace("../admin", config.host + config.context + "/admin");
     var screenParams = [
         'height=' + (screen.height - 100),
         'width=' + (screen.width - 100),
@@ -328,8 +334,8 @@ PagePresenter.openURL = function (childPageInnerDiv) {
  *
  * @param url : the url that has been received from CS and need to be embedded into the child page
  * @param childPageInnerDiv : the respective child page inner div of the popout icon
- * @Description : display the popup icon and add a click event to it once the WBD url has been received
-                        (called once the wbd has been created and the url is received)
+ * @description : display the popup icon and add a click event to it once the WBD url has been received
+ (called once the wbd has been created and the url is received)
  */
 PagePresenter.addClickEventForWBDPopup = function (url, childPageInnerDiv) {
 
@@ -346,7 +352,7 @@ PagePresenter.addClickEventForWBDPopup = function (url, childPageInnerDiv) {
 /**
  *
  * @param childPageInnerDiv : the respective child page inner div of the popout icon
- * @Description : Make server call to create WBD according to the data from the page rules and get the url to open it
+ * @description : Make server call to create WBD according to the data from the page rules and get the url to open it
  */
 PagePresenter.openWhiteBoard = function (childPageInnerDiv) {
 
@@ -359,15 +365,15 @@ PagePresenter.openWhiteBoard = function (childPageInnerDiv) {
         function (data) {
             if (data == 'error') {
                 alert("Error creating WBD!!");
-                $('.childPages').trigger("loadingError",[ruleID]);  //trigger the loading error event
+                $('.childPages').trigger("loadingError", [ruleID]);  //trigger the loading error event
             }
             else {
-                var $parentMasterPageRuleReference = $("[id = '"+logicalPageID+"']").children('.rule').children('.then');
+                var $parentMasterPageRuleReference = $("[id = '" + logicalPageID + "']").children('.rule').children('.then');
                 //Set the parent master page data as dirty so that it gets reset later with the new wbd url and mamfileid
                 $parentMasterPageRuleReference.children('.dataDirty').html('1');
-                GraphicDataStore.addAdditionalInformationToPageRules(data,ruleID,
+                GraphicDataStore.addAdditionalInformationToPageRules(data, ruleID,
                     GraphicDataStore.getCurrentView() + "." + logicalPageID);
-                $('.childPages').trigger("loadingDone",[ruleID,data.editorURL]);    //trigger the loading done event
+                $('.childPages').trigger("loadingDone", [ruleID, data.editorURL]);    //trigger the loading done event
             }
             GraphicDataStore.stopLoadingStatus(ruleID)
         });
@@ -379,9 +385,9 @@ PagePresenter.openWhiteBoard = function (childPageInnerDiv) {
  *
  * @param childPageDiv : reference to the main child page div
  * @param $dimensionValues
- * @Description according to the rule conditions set, add values to the classname for the filtering
+ * @description according to the rule conditions set, add values to the classname for the filtering
  */
-PagePresenter.setClassNamesToChildPagesForFilterByCondition = function(childPageDiv, $dimensionValues) {
+PagePresenter.setClassNamesToChildPagesForFilterByCondition = function (childPageDiv, $dimensionValues) {
     for (var j = 0; j < $dimensionValues.length; j++) {
         var currentDimensionValue = $dimensionValues[j];
         var filterType = $(currentDimensionValue).children('.groupType')[0].value;                                                                //logic written
@@ -406,9 +412,9 @@ PagePresenter.setClassNamesToChildPagesForFilterByCondition = function(childPage
  * @param rule
  * @param masterPageDiv
  * @returns tags with hidden data for child pages
- * @Description create hidden data for the child pages
+ * @description create hidden data for the child pages
  */
-PagePresenter.createChildPageData = function(rule, masterPageDiv) {
+PagePresenter.createChildPageData = function (rule, masterPageDiv) {
     var $masterTemplate = $(rule).children('.template')[0].value;   //
     var $assortment = $(rule).children('.assortment')[0].value;     //Get all data
     var ruleID = $(rule).children('.ruleID').html();                //to be used in
@@ -431,9 +437,9 @@ PagePresenter.createChildPageData = function(rule, masterPageDiv) {
  *
  * @param rule
  * @returns the overlay div and the image tag
- * @Description create the overlay div and the image placeholder for the loading screen
+ * @description create the overlay div and the image placeholder for the loading screen
  */
-PagePresenter.createChildPageLoadingScreen = function(rule) {
+PagePresenter.createChildPageLoadingScreen = function (rule) {
     var ruleID = $(rule).children('.ruleID').html();
     var loadingOverlayDiv = document.createElement("div");
     $(loadingOverlayDiv).addClass('loading-overlay');
@@ -455,9 +461,9 @@ PagePresenter.createChildPageLoadingScreen = function(rule) {
  * @param rule
  * @param masterPageDiv
  * @returns inner div for the child page
- * @Description create the inner div for the child page
+ * @description create the inner div for the child page
  */
-PagePresenter.createChildPageInnerDiv = function(rule, masterPageDiv) {
+PagePresenter.createChildPageInnerDiv = function (rule, masterPageDiv) {
 
 
     var childPageInnerDiv = document.createElement("div");
@@ -497,9 +503,9 @@ PagePresenter.createChildPageInnerDiv = function(rule, masterPageDiv) {
 }
 
 /**
- * @Description function that binds the childpages to the loadingDone and loadingError events
+ * @description function that binds the childpages to the loadingDone and loadingError events
  */
-PagePresenter.bindChildPagesToCustomLoadingWBDEvent = function() {
+PagePresenter.bindChildPagesToCustomLoadingWBDEvent = function () {
     $('.childPages').bind("loadingDone", function (event, ruleIDFinishLoading, wbdURL) {
         var $innerDiv = $(this).children('.inner');
         var ruleIDnew = $innerDiv.children('.ruleID').html();
@@ -524,7 +530,7 @@ PagePresenter.bindChildPagesToCustomLoadingWBDEvent = function() {
 /**
  *
  * @param masterPageDiv : the respective child page inner div of the popout icon
- * @Description : Open up the child pages if they exist
+ * @description : Open up the child pages if they exist
  */
 PagePresenter.expandCollapseChildPages = function (masterPageDiv) {
 
@@ -532,7 +538,7 @@ PagePresenter.expandCollapseChildPages = function (masterPageDiv) {
     //Check if master page has been expanded into the child pages
     if (!$(masterPageDiv).hasClass('opened')) {
         //Expand the master page into its child pages
-        $(masterPageDiv).children('.expand').css('background-image',COLLAPSE_ICON_URL);
+        $(masterPageDiv).children('.expand').css('background-image', COLLAPSE_ICON_URL);
         var $itemsToInsert = new Array();
         var $rules = $(masterPageDiv).children('.rule').children('.then').children('.thenChild');
         var rulesCount = $rules.length;
@@ -557,7 +563,7 @@ PagePresenter.expandCollapseChildPages = function (masterPageDiv) {
             var $dimensionValues = $(currentRule).children('.whenChild');
 
             if ($dimensionValues.length > 0) {
-                PagePresenter.setClassNamesToChildPagesForFilterByCondition(childPageDiv,$dimensionValues);
+                PagePresenter.setClassNamesToChildPagesForFilterByCondition(childPageDiv, $dimensionValues);
             }
             var childPageInnerDiv = PagePresenter.createChildPageInnerDiv(currentRule, masterPageDiv);
 
@@ -574,7 +580,7 @@ PagePresenter.expandCollapseChildPages = function (masterPageDiv) {
         var $childPages = $('.childPages').has($logicalPageIDOfParentOfChild);
         $childPages.unbind("loadingError");
         $childPages.unbind("loadingDone");
-        $container.isotope('remove',$childPages);
+        $container.isotope('remove', $childPages);
         $(masterPageDiv).toggleClass('opened');
         var $dirtyFields = $(masterPageDiv).find('.dataDirty');
         var isDirty = getDataDirtyFlag($dirtyFields);
@@ -587,7 +593,7 @@ PagePresenter.expandCollapseChildPages = function (masterPageDiv) {
 }
 
 /**
- * @Description : dialog to indicate incorrect rules configured
+ * @description : dialog to indicate incorrect rules configured
  */
 PagePresenter.openIncorrectRulesDialog = function() {
     alertify.error("Incorrect Rules");
@@ -609,7 +615,7 @@ PagePresenter.openIncorrectRulesDialog = function() {
  *
  * @param masterPageDiv : reference to the parent master page div
  * @returns success or faliure of save operation
- * @Description : save the configured rules to the server
+ * @description : save the configured rules to the server
  */
 PagePresenter.saveRulesData = function (masterPageDiv) {
     var $dirtyFields = $(masterPageDiv).find('.dataDirty');
@@ -653,8 +659,7 @@ PagePresenter.saveRulesData = function (masterPageDiv) {
                         condition[columnName] = value;
                         condArray.push(condition)
                     }
-                    else
-                    {
+                    else {
                         PagePresenter.openIncorrectRulesDialog();
                         return false;
                     }
@@ -680,8 +685,7 @@ PagePresenter.saveRulesData = function (masterPageDiv) {
                 var columnName = "additionalInformation";
                 pageRule[columnName] = additional;
             }
-            else
-            {
+            else {
                 PagePresenter.openIncorrectRulesDialog();
                 return false;
             }
@@ -732,8 +736,8 @@ PagePresenter.onSaveSuccess = function (data) {
 /**
  *
  * @param parentMasterPageDiv : the respective master page div reference
- * @Description : toggle each of the elements that need to be removed or added according to
-                    whether the rules menu is opened or closed
+ * @description : toggle each of the elements that need to be removed or added according to
+ whether the rules menu is opened or closed
  */
 PagePresenter.toggleRulesView = function (parentMasterPageDiv) {
     $(parentMasterPageDiv).toggleClass('rules-opened');         //enlarge the master page size to fir the rules menu
@@ -749,7 +753,7 @@ PagePresenter.toggleRulesView = function (parentMasterPageDiv) {
  *
  * @param $dirtyFields : jquery reference of all the data dirty flags
  * @returns boolean indicating whether overall data is dirty or not
- * @Description : check if any of the rules are dirty
+ * @description : check if any of the rules are dirty
  */
 function getDataDirtyFlag($dirtyFields) {
     var isDirty = false;
@@ -763,9 +767,9 @@ function getDataDirtyFlag($dirtyFields) {
 /**
  *
  * @param parentMasterPageDiv : the respective master page div reference
- * @Description : check if rules exist and display the expand rules button
+ * @description : check if rules exist and display the expand rules button
  */
-PagePresenter.displayExpandRulesButton = function(parentMasterPageDiv) {
+PagePresenter.displayExpandRulesButton = function (parentMasterPageDiv) {
     var $rules = $(parentMasterPageDiv).children('.rule').children('.then').children('.thenChild');
     if ($rules.length > 0) {
         $(parentMasterPageDiv).children(".expand").toggle();
@@ -775,18 +779,18 @@ PagePresenter.displayExpandRulesButton = function(parentMasterPageDiv) {
 /**
  *
  * @param parentMasterPageDiv : the respective master page div reference
- * @Description : Open the rules configuration menu
+ * @description : Open the rules configuration menu
  */
-PagePresenter.openRulesConfigurationMenu = function(parentMasterPageDiv) {
+PagePresenter.openRulesConfigurationMenu = function (parentMasterPageDiv) {
     //When opening the rules configuration menu the expand button(if visible) needs to be hidden
-    $(parentMasterPageDiv).children(".expand").css('display',"none");
+    $(parentMasterPageDiv).children(".expand").css('display', "none");
     PagePresenter.toggleRulesView(parentMasterPageDiv);
 }
 
 /**
  *
  * @param parentMasterPageDiv : reference to the master page div
- * @Description : Open or close the rules configuration menu according to situation
+ * @description : Open or close the rules configuration menu according to situation
  */
 PagePresenter.toggleOpenCloseRules = function (parentMasterPageDiv) {
 
@@ -812,7 +816,7 @@ PagePresenter.toggleOpenCloseRules = function (parentMasterPageDiv) {
 
                                 //Save the rules
                                 var isSaveSuccess = PagePresenter.saveRulesData(parentMasterPageDiv);
-                                if(isSaveSuccess){ //Check if successfully saved
+                                if (isSaveSuccess) { //Check if successfully saved
 
                                     //show the expand rules button on the master page if rules exist
                                     PagePresenter.displayExpandRulesButton(parentMasterPageDiv);
@@ -865,7 +869,7 @@ PagePresenter.toggleOpenCloseRules = function (parentMasterPageDiv) {
 
     }
 
-    else{
+    else {
         //When child pages have been expanded and rules configuration menu button clicked
         //collapse all the child pages and open the rules configuration menu
         PagePresenter.expandCollapseChildPages(parentMasterPageDiv);
@@ -878,11 +882,11 @@ PagePresenter.toggleOpenCloseRules = function (parentMasterPageDiv) {
  *
  * @param parentDiv reference to the parent rule for the condition to be marked dirty
  * @param ifResetWBD  boolean indicating if the wbd url and mamFileID need to be reset
- * @Description : indicate data as dirty due to changes and also reset wbdurl and mam file id accordingly
+ * @description : indicate data as dirty due to changes and also reset wbdurl and mam file id accordingly
  */
-PagePresenter.makeRuleDirty = function (parentDiv,ifResetWBD) {
+PagePresenter.makeRuleDirty = function (parentDiv, ifResetWBD) {
     PagePresenter.makeDirty(parentDiv);
-    if(ifResetWBD){
+    if (ifResetWBD) {
         $(parentDiv).children('.wbdURL').html(" ");
         $(parentDiv).children('.mamFileID').html(" ");
     }
@@ -897,7 +901,7 @@ PagePresenter.makeDirty = function (text, event) {
  *
  * @param reference
  * @Desciption : Removes the rule condition or statement
-                (called on click of the minus buttons in the rules)
+ (called on click of the minus buttons in the rules)
  */
 PagePresenter.removeNew = function (reference) {
     $(reference).children('.dataDirty').html('1');
@@ -906,11 +910,11 @@ PagePresenter.removeNew = function (reference) {
 }
 
 /**
- * @Description : Called by the splitter when the drag has ended or started
-                    in order to re-layout(position) the isotope elements properly
+ * @description : Called by the splitter when the drag has ended or started
+ in order to re-layout(position) the isotope elements properly
  */
-PagePresenter.setContainerRelayout = function(){
-    if($isotopeContainer){
+PagePresenter.setContainerRelayout = function () {
+    if ($isotopeContainer) {
         $isotopeContainer.isotope('reLayout');
     }
 }
@@ -918,10 +922,10 @@ PagePresenter.setContainerRelayout = function(){
 /**
  *
  * @param data
- * @Description : Creates a new view with all the pages under the publication.
-                (Callback from GetAllPagesInPublication.get)
+ * @description : Creates a new view with all the pages under the publication.
+ (Callback from GetAllPagesInPublication.get)
  */
-PagePresenter.changeViewToShowAllPages = function(data){
+PagePresenter.changeViewToShowAllPages = function (data) {
     $(document).trigger({
         type: "TREE_ITEM_CLICKED",
         uiData: data,
@@ -930,11 +934,11 @@ PagePresenter.changeViewToShowAllPages = function(data){
 }
 
 /**
- * @Description : Function called when the show all pages button is called.
-                Brings up all the pages under the current publication
+ * @description : Function called when the show all pages button is called.
+ Brings up all the pages under the current publication
  */
-PagePresenter.showAllPages = function(){
+PagePresenter.showAllPages = function () {
     var publicationName = GraphicDataStore.getCurrentView(); //Since the button shows up only when publication
     //is clicked the current view is the publication
-    GetAllPagesInPublication.get(publicationName,PagePresenter.changeViewToShowAllPages);
+    GetAllPagesInPublication.get(publicationName, PagePresenter.changeViewToShowAllPages);
 }
