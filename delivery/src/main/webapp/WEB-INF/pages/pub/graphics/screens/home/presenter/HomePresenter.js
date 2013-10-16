@@ -194,8 +194,6 @@ HomePresenter.loadViewItems = function (evt, currentTemplateView) {
 
         HomePresenter.bindClickEventToFilterButtons();
 
-
-
     });
 }
 

@@ -9,14 +9,14 @@
     <h2 title='Expand/Collapse the child pages' class='expand {{hiddenCSS}}'
         onclick='PagePresenter.expandCollapseChildPages(this.parentNode)'></h2>
 
-    <div class="rule">
+    <div class="rule nano">
         <img title='Save the configured rules'
              src='../../../graphics/screens/home/images/save.png' class='save'
              onclick='PagePresenter.saveRulesData(this.parentNode.parentNode)'/>
         <h2 title='Close the rules configuration menu' class='close'
             onclick='PagePresenter.toggleOpenCloseRules(this.parentNode.parentNode)'>X</h2>
 
-        <div class="then">
+        <div class="then content">
             <div title='Create new rule statement' class="buttons addNewThen"
                  onclick="PagePresenter.addNewRuleStatement(this.parentNode)">+</div>
             <p class="hidden dataDirty">1</p>

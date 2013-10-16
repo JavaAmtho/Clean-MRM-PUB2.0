@@ -291,6 +291,7 @@ PagePresenter.addNewRuleCondition = function (parentThenChildDiv) {
     $(".selectpicker").selectBoxIt({
         autoWidth: false
     });
+    $('.nano').nanoScroller();
 }
 
 /**
@@ -309,6 +310,7 @@ PagePresenter.addNewRuleStatement = function (parentRuleStatementsListDiv) {
     $(".selectpicker").selectBoxIt({
         autoWidth: false
     });
+    $('.nano').nanoScroller();
 }
 
 /**
@@ -730,6 +732,7 @@ PagePresenter.saveRulesData = function (masterPageDiv) {
         //alert("No changes detected. No save operation performed.");
         return true;
     }
+    $('.nano').nanoScroller();
 }
 
 PagePresenter.onSaveSuccess = function (data) {
@@ -881,6 +884,7 @@ PagePresenter.toggleOpenCloseRules = function (parentMasterPageDiv) {
         PagePresenter.openRulesConfigurationMenu(parentMasterPageDiv);
 
     }
+    $('.nano').nanoScroller();
 }
 
 /**
@@ -912,6 +916,7 @@ PagePresenter.removeNew = function (reference) {
     $(reference).children('.dataDirty').html('1');
     $(reference.parentNode).children('.dataDirty').html('1');
     reference.parentNode.removeChild(reference);
+    $('.nano').nanoScroller();
 }
 
 /**
