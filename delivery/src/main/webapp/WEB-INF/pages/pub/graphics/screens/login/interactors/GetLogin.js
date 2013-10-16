@@ -8,6 +8,7 @@ function GetLogin(){
 
 /**
  * function login
+ * @description loads the home screen on click of login
  */
 GetLogin.login = function(){
     Router.loadTemplate("homeScreen");

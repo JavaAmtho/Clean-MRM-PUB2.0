@@ -9,6 +9,7 @@ function GetViewStructure(){
 /**
  *
  * @param schemaId
+ * @description calls REST api to get viewStructure as per id
  */
 GetViewStructure.get = function(schemaId){
     Router.loadRequest("getSchema",true,GetViewStructure.onViewStructureSuccess,schemaId);
@@ -35,6 +36,7 @@ GetViewStructure.onViewStructureSuccess = function(data){
 
 /**
  * function getAll
+ * @description calls REST api to get all viewStructures
  */
 GetViewStructure.getAll = function(){
     Router.loadRequest("getAllSchema",true,GetViewStructure.onViewStructuresLoaded);

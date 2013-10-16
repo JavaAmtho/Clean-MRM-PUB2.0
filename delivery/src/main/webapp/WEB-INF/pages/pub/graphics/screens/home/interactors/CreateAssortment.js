@@ -14,6 +14,7 @@ function CreateAssortment(){
  * @param currentPath
  * @param flag
  * @param callBack
+ * @description calls REST api for creating a assortment object and returns the same object on success else returns empty object
  */
 CreateAssortment.create = function(prefix,action,name,currentPath,flag,callBack){
     var datas={"products":[]};

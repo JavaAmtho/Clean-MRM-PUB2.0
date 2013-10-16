@@ -8,7 +8,7 @@
 
 /**
  *
- * @constructor
+ * @constructor  GraphicDataStore
  */
 var GraphicDataStore = function(){
     var schemaArray=[];
@@ -228,6 +228,7 @@ GraphicDataStore.addAdditionalInformationToPageRules = function(additionalInfo, 
 /**
  *
  * @param obj
+ * @description sets the currentAssortment which is opened by clicking in the tree
  */
 GraphicDataStore.setCurrentAssortment = function(obj){
     this.currentAssortment = obj;
@@ -236,6 +237,7 @@ GraphicDataStore.setCurrentAssortment = function(obj){
 /**
  *
  * @returns currentAssortment Object
+ * @description gets the currentAssortment which is opened by clicking in the tree
  */
 GraphicDataStore.getCurrentAssortment = function(){
     return this.currentAssortment;
@@ -252,6 +254,7 @@ GraphicDataStore.setProdcutsArr = function(arr){
 /**
  *
  * @param item
+ * @description adds the product to the currentAssortment which is opened by clicking in the tree
  */
 GraphicDataStore.addProdcut = function(item){
     this.prodcutsArr.push(item);
@@ -260,6 +263,7 @@ GraphicDataStore.addProdcut = function(item){
 /**
  *
  * @returns prodcutsArr
+ * @description gets all products which are dragged inside the currentAssortment which is opened by clicking in the tree
  */
 GraphicDataStore.getProdcutsArr = function(){
     return this.prodcutsArr;
@@ -268,6 +272,7 @@ GraphicDataStore.getProdcutsArr = function(){
 /**
  *
  * @param schemaData
+ * @description sets all viewStructures
  */
 GraphicDataStore.setSchemaArray = function(schemaData){
     this.schemaArray = schemaData;
@@ -275,7 +280,8 @@ GraphicDataStore.setSchemaArray = function(schemaData){
 
 /**
  *
- * @returns schemaData
+ * @returns GraphicDataStore.schemaArray
+ * @description gets all viewStructures
  */
 GraphicDataStore.getSchemaArray = function(){
     return this.schemaArray;
@@ -283,6 +289,7 @@ GraphicDataStore.getSchemaArray = function(){
 
 /**
  * setDefaultSchema function
+ * @description sets default schema from all viewStructures
  */
 GraphicDataStore.setDefaultSchema = function(){
     for(var i=0; i< this.schemaArray.length; i++){
@@ -295,6 +302,7 @@ GraphicDataStore.setDefaultSchema = function(){
 /**
  *
  * @param schema
+ * @description sets default viewStructure as currentViewStucture
  */
 GraphicDataStore.setCurrentSchema = function(schema){
     this.currentSchema = schema;
@@ -325,8 +333,6 @@ GraphicDataStore.getCurrentSchema = function(schema){
  * @returns {string}
  */
 GraphicDataStore.getFirstDimension = function(){
-
-
     return this.currentSchema.structure[0].name+"s";
 }
 
