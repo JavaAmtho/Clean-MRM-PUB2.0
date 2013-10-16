@@ -590,7 +590,8 @@ PagePresenter.expandCollapseChildPages = function (masterPageDiv) {
  * @Description : dialog to indicate incorrect rules configured
  */
 PagePresenter.openIncorrectRulesDialog = function() {
-    $(function () {
+    alertify.error("Incorrect Rules");
+    /*$(function () {
         $("#dialog-incorrect-rules").dialog({
             resizable: false,
             height: 140,
@@ -601,7 +602,7 @@ PagePresenter.openIncorrectRulesDialog = function() {
                 }
             }
         });
-    });
+    });*/
 }
 
 /**
@@ -698,7 +699,7 @@ PagePresenter.saveRulesData = function (masterPageDiv) {
         //Sending Save call
         SavePageRules.save("saveRules", finalJson, PagePresenter.onSaveSuccess);
         GraphicDataStore.addToPageRules(finalJson);
-        $(function () {
+        /*$(function () {
             $("#dialog-rules-save-successfull").dialog({
                 resizable: false,
                 height: 140,
@@ -709,7 +710,9 @@ PagePresenter.saveRulesData = function (masterPageDiv) {
                     }
                 }
             });
-        });
+        });*/
+
+        alertify.success("Rules Saved Successfully");
 
         for (var i = 0; i < $dirtyFields.length; i++) {
             $dirtyFields[i].innerHTML = '0';
