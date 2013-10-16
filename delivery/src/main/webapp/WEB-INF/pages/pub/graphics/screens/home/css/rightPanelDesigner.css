@@ -117,8 +117,8 @@
 
 .masterPage {
     z-index: 100;
-    width: 120px;
-    height: 160px;
+    width: 125px;
+    height: 177px;
     margin-left: 20px;
     margin-top: 20px;
     float: left;
@@ -136,8 +136,8 @@
 }
 
 .childPages {
-    width: 120px;
-    height: 160px;
+    width: 125px;
+    height: 177px;
     padding: 0;
     margin-left: 20px;
     margin-top: 20px;
@@ -151,8 +151,8 @@
 }
 
 .childPages > .inner {
-    width: 105px;
-    height: 130px;
+    width: 110px;
+    height: 155px;
     border-top-right-radius:10px ;
     left: 7px;
     bottom: 2px;
@@ -237,8 +237,8 @@
     z-index: 100;
     background: #7894C4;
     box-shadow: 0px 0px 600px 10px #000 inset;
-    height: 340px;
-    width: 400px;
+    height: 374px;
+    width: 415px;
     background-repeat:no-repeat;
     background-size: cover;
 }
