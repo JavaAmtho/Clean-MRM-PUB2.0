@@ -2,7 +2,7 @@ var myData;
 
 /**
  *
- * @constructor
+ * @constructor   GanttChartPresenter
  */
 var GanttChartPresenter = function(){
 
@@ -13,11 +13,10 @@ var GanttChartPresenter = function(){
         ganttElements[i].style.visibility = "visible";
     }
 
-    //console.log(ganttElements);
-
     /**
      *
      * @param id
+     * @description creates a ganttChart instance  but this is a wrapper method
      */
     this.design = function(id){
         var treeData;
@@ -35,8 +34,6 @@ var GanttChartPresenter = function(){
             myData = {
                 Body: [treeData]
             };
-
-
 
             $(document).bind("treeDataLoaded", function onSchemaLoadedHandler(e){
 
@@ -60,9 +57,7 @@ var GanttChartPresenter = function(){
             autoOpen: false
 
         });
-
     }
-
 }
 
 /**
@@ -74,7 +69,7 @@ GanttChartPresenter.getInstance = function(){
 }
 
 /**
- *
+ * @description calls getTree interactor
  */
 GanttChartPresenter.getTree = function(){
     GetTree.get();
@@ -88,6 +83,7 @@ GanttChartPresenter.getTree = function(){
  * @param currentPath
  * @param flag
  * @param callBack
+ * @description calls createDimension interactor
  */
 GanttChartPresenter.createDimension = function(prefix,type,input,currentPath,flag,callBack){
     CreateDimensions.createDim(prefix,type,input,currentPath,flag,callBack);
@@ -99,6 +95,7 @@ GanttChartPresenter.createDimension = function(prefix,type,input,currentPath,fla
  * @param type
  * @param input
  * @param callback
+ * @description calls DeleteDimension interactor
  */
 GanttChartPresenter.deleteDimension = function(prefix,type,input,callback){
     DeleteDimension.deleteDim(prefix,type,input,callback);
@@ -112,6 +109,7 @@ GanttChartPresenter.deleteDimension = function(prefix,type,input,callback){
  * @param flag
  * @param newPath
  * @param callBack
+ * @description calls DragDimension interactor
  */
 GanttChartPresenter.dragAndDropDimensions = function(prefix,row,oldPath,flag,newPath,callBack){
     DragDimension.dragAndDropDimensions(prefix,row,oldPath,flag,newPath,callBack);
@@ -122,6 +120,7 @@ GanttChartPresenter.dragAndDropDimensions = function(prefix,row,oldPath,flag,new
  * @param prefix
  * @param row
  * @param callback
+ * @description calls updateDimension interactor
  */
 GanttChartPresenter.updateDimension = function(prefix,row,callback){
     UpdateDimension.updateDim(prefix,row,callback);
@@ -131,9 +130,29 @@ GanttChartPresenter.updateDimension = function(prefix,row,callback){
  *
  * @param comChannelObj
  * @param callback
+ * @description calls GetPublications interactor
  */
 GanttChartPresenter.getPublications = function(comChannelObj,callback){
-   /* var url = "http://192.168.135.104/CS13.0Trunk/admin/forward.php?forward=../CSLive/playCSVideoPlayerUsingMamFile.php&mamFileNo=7547";
-    window.open(url,"_blank");*/
     GetPublications.get(comChannelObj,callback);
+}
+
+/**
+ * @param data
+ * @description callBack for the getPublications to get the imageurl for coverflow for respective publication
+ */
+GanttChartPresenter.onPublicationHandler = function(data){
+    var pubImageList = EngineDataStore.getPublicationDetailsArray();
+    $.each(data, function(key, value){
+        var pubObj = value;
+        var pubName = pubObj.name;
+        var imageObjForPub = pubImageList[pubName];
+        if(imageObjForPub)
+        {
+            var config = pubImageList["Config"];
+            pubObj.previewImage = config.host+config.context+imageObjForPub.previewImage;
+            pubObj.actualImage = config.host+config.context+imageObjForPub.actualImage;
+            pubObj.previewType = imageObjForPub.previewType;
+        }
+    });
+    HomePresenter.createFlow(data);
 }

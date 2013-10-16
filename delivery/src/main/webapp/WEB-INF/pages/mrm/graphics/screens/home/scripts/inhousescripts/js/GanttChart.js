@@ -1,82 +1,34 @@
 var GanttChart = function(){
-
     var currentPath;
     var parentNode;
     var newNode
     var currentRow;
     var dropTargetType
-
     var input;
     var cellOldValue;
 
-
     /**
      * @param id
+     * @description creates new instance of actual Gantt chart
      */
     this.createGanttChart = function(id){
         TreeGrid({Layout:{Url:EngineDataStore.getBaseURL()+"graphics/screens/home/scripts/inHouseScripts/js/Def_temp.xml"},
         Data:{Script:"myData"},Debug:""},id);
     }
 
-
     /**
      * @param G
      * @constructor
+     * @description eventListner when gantt chart instance is created
      */
     Grids.OnGanttStart = function(G){
-
         setTimeout(function() {
             $( "#mrmGanttChart" ).resizable({
                 maxHeight: 400,
                 minHeight: 150
             });
-
             HomePresenter.viewTreeAndGantt();
-
         }, 1000);
-
-
-    }
-
-   /* Grids.OnDisplayRow = function(grid, row){
-        console.log('displaying'+ row.type)
-
-        switch(row.type){
-            case "MarketingInitiative":
-                Grids[0].SetValue(row,"nameIcon","cal1.png",1);
-                Grids[0].RefreshRow(row);
-            case "Campaign":
-                Grids[0].SetValue(row,"nameIcon","cal2.png",1);
-                Grids[0].RefreshRow(row);
-
-
-            case "SubCampaign":
-                Grids[0].SetValue(row,"nameIcon","cal1.png",1);
-                Grids[0].RefreshRow(row);
-
-            case "CommunicationPlan":
-                Grids[0].SetValue(row,"nameIcon","cal2.png",1);
-                Grids[0].RefreshRow(row);
-
-            case "CommunicationChannel":
-                Grids[0].SetValue(row,"nameIcon","cal2.png",1);
-                Grids[0].RefreshRow(row);
-
-            default:
-                return null;
-        }
-
-    }*/
-
-    /**
-     * @param grid
-     * @param row
-     * @param col
-     * @constructor
-     */
-    Grids.OnRenderRow = function(grid, row, col){
-
-        //console.log('rendering'+ row.type)
     }
 
     /**
@@ -87,6 +39,7 @@ var GanttChart = function(){
      * @param col
      * @returns {{Items: Array}}
      * @constructor
+     * @description eventListner when user right clicks on any row and displays it  Shows contextmenu as per the type of row
      */
     Grids.OnGetMenu = function(G,row,col){
         Grids[0].Focus(row,0,0);
@@ -127,7 +80,7 @@ var GanttChart = function(){
      * @param Menu
      * @param GanttXY
      * @returns true
-     * @constructor
+     * @description eventListner when user right clicks on gantt bars row
      */
     Grids.OnGanttMenu = function(grid,row,col,Menu,GanttXY) {
         return true;
@@ -145,7 +98,7 @@ var GanttChart = function(){
      * @param row
      * @param col
      * @param name
-     * @constructor
+     * @description eventListner when user clicks on any of the entries of generated contextmenu
      */
     Grids.OnContextMenu = function(G,row,col,name){
 
@@ -173,7 +126,7 @@ var GanttChart = function(){
      * @param row
      * @param type
      * @returns {number}
-     * @constructor
+     * @description eventListner when user deletes any row called before it actually calls delete api
      */
     Grids.OnCanRowDelete = function(grid,row,type){
         if(type==1){
@@ -199,7 +152,7 @@ var GanttChart = function(){
      * @param row
      * @param col
      * @returns true if row is root otherwise false
-     * @constructor
+     * @description eventListner when user starts dragging any row
      */
     Grids.OnStartDrag = function(grid,row,col){
         //To suppress the dragging as per the dimension type
@@ -217,7 +170,7 @@ var GanttChart = function(){
      * @param type
      * @param copy
      * @returns {number}
-     * @constructor
+     * @description eventListner when user drps any row called before the row is dropped
      */
     Grids.OnCanDrop = function(grid,row,togrid,torow,type,copy){
         dropTargetType = GraphicDataStore.getPossibleDropParent(row.type);
@@ -234,7 +187,7 @@ var GanttChart = function(){
      * @param row
      * @param col
      * @param val
-     * @constructor
+     * @description eventListner when user updates ant entry in the row
      */
     Grids.OnAfterValueChanged = function(grid,row,col,val){
         //cellOldValue = row[col];
@@ -249,38 +202,11 @@ var GanttChart = function(){
     }
 
     /**
-     * @param grid
-     * @param row
-     * @constructor
-     */
-     Grids.OnExpand = function(grid,row){
-
-        /* if(row.Level === 5){
-             var arr = [];
-             var length =  row.childNodes.length;
-             if(length>0){
-                 arr.push(row.firstChild);
-                 var currentRow = row.firstChild;
-                 for(var i=1; i< length-1; i++){
-                     var nextRow = Grids[0].GetNext(currentRow);
-                     arr.push(nextRow);
-                     currentRow = nextRow;
-                 }
-                 if(length!=1){
-                     arr.push(row.lastChild);
-                 }
-             }
-             HomePresenter.createFlow(arr);
-             return true;
-         }*/
-     }
-
-    /**
      * Restrict delete of root node
      * @param grid
      * @param row
      * @param col
-     * @constructor
+     * @description eventListner when rows are rendered
      */
     Grids.OnRenderRow = function(grid,row,col){
        if(row.type == 'root'){
@@ -288,6 +214,7 @@ var GanttChart = function(){
            Grids[0].SetValue(row,"CanSelect","0");
 
        }
+
     }
 
     /**
@@ -298,7 +225,7 @@ var GanttChart = function(){
      * @param comp
      * @param crit
      * @returns string containing HTML to display Gantt Bar w.r.t. type
-     * @constructor
+     * @description eventListner when gantt bars are rendered
      */
     Grids.OnGetGanttHtml = function(G,row,col,width,comp,crit){
         switch(row.type){
@@ -326,26 +253,13 @@ var GanttChart = function(){
     /**
      * @param grid
      * @param row
-     * @param col
-     * @param Menu
-     * @param GanttXY
-     * @returns true
-     * @constructor
-     */
-    Grids.OnGanttMenu = function(grid,row,col,Menu,GanttXY) {
-        return true;
-    }
-
-    /**
-     * @param grid
-     * @param row
      * @param togrid
      * @param torow
      * @param type
      * @param X
      * @param Y
      * @param copy
-     * @constructor
+     * @description eventListner when row is dropped
      */
     Grids.OnEndDrag = function(grid,row,togrid,torow,type,X,Y,copy){
        if(type === 2){
@@ -363,11 +277,8 @@ var GanttChart = function(){
            prefix =getUrlPrefix(row.type,"move");
            prefix = prefix+row.type;
            GanttChartPresenter.dragAndDropDimensions(prefix,row,oldPathForChild,flag,newPathForChild,onDropSuccess);
-
        }
     }
-
-    //SetEvent("OnClick","g1",function(){ alert("G1 clicked");} );
 
     /**
      * @param grid
@@ -375,15 +286,14 @@ var GanttChart = function(){
      * @param col
      * @param x
      * @param y
-     * @constructor
+     * @description eventListner when any row is clicked
      */
     Grids.OnClick = function(grid,row,col,x,y){
-
         if(row.id != "Header"){
             if(col === "name"){
                 if(row.type === "CommunicationPlan"){
                     //Call to server to get the publications of this Communication Channel
-                    GanttChartPresenter.getPublications(row,Grids.onPublicationHandler);
+                    GanttChartPresenter.getPublications(row,GanttChartPresenter.onPublicationHandler);
                 }
                 else{
                     HomePresenter.hideCoverflow();
@@ -396,25 +306,7 @@ var GanttChart = function(){
     }
 
 
-    /**
-     * @param data
-     */
-    Grids.onPublicationHandler = function(data){
-    	var pubImageList = EngineDataStore.getPublicationDetailsArray();
-    	$.each(data, function(key, value){
-    		var pubObj = value;
-    		var pubName = pubObj.name;
-    		var imageObjForPub = pubImageList[pubName];
-    		if(imageObjForPub)
-			{
-    			var config = pubImageList["Config"];
-    			pubObj.previewImage = config.host+config.context+imageObjForPub.previewImage;
-    			pubObj.actualImage = config.host+config.context+imageObjForPub.actualImage;
-    			pubObj.previewType = imageObjForPub.previewType;
-			}
-    	});
-        HomePresenter.createFlow(data);
-    }
+
 
     /**
      * @param grid
@@ -431,11 +323,10 @@ var GanttChart = function(){
      * @param clientX
      * @param clientY
      * @param ToRow
-     * @constructor
+     * @description eventListner when dragging of gantt bars is ended
      */
     Grids.OnEndDragGantt = function(grid, row, col, name, start, end,
         oldstart, oldend, dir, XY, keyprefix, clientX, clientY, ToRow){
-
             row.startDate = start;
             row.endDate = end;
             var prefix;
@@ -563,12 +454,12 @@ var GanttChart = function(){
     function checkAlpha(obj){
         //console.log(obj.val());
         if (!ck_alpha.test(obj.val())) {
-            obj.addClass( "ui-state-error") ;
+            //obj.addClass( "ui-state-error") ;
            //console.log('false')
            return false;
         }
         else{
-            obj.removeClass("ui-state-error")   ;
+            //obj.removeClass("ui-state-error")   ;
             return true;
             //console.log('true')
         }
@@ -629,13 +520,6 @@ var GanttChart = function(){
                     budgetowner = $( "#budgetOwner" ),
                     budgetamount = $( "#budget"),
                     currency = $( "#currency" );
-
-
-
-              /*  if((dimensionName.val()=="") || (manager.val()=="") || (startdate.val()=="") || (enddate.val()=="") || (budgetowner.val()=="") || (budgetamount.val()=="")) {
-                    errorMsg += "Fields should not be EMPTY!";
-                    popupValid =  false;
-                }*/
 
                 popupValid = checkNull(dimensionName);
                 popupValid = popupValid && checkNull(manager);
