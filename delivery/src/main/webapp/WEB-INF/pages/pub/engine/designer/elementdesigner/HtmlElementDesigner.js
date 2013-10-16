@@ -8,7 +8,7 @@
 
 /**
  *
- * @constructor
+ * @constructor     HtmlElementDesigner
  */
 function HtmlElementDesigner(){
 
@@ -19,6 +19,7 @@ function HtmlElementDesigner(){
  * @param id
  * @param scriptName
  * @param screenName
+ * @description loads the script mentioned for particular elements and then calls the design method of it
  */
 HtmlElementDesigner.design = function(id,scriptName,screenName){
     var htmlElement = this.getElementBy(id);
@@ -34,6 +35,7 @@ HtmlElementDesigner.design = function(id,scriptName,screenName){
  *
  * @param id
  * @returns element by ID
+ * @description gets the particular dom element
  */
 HtmlElementDesigner.getElementBy = function(id){
     return  document.getElementById(id);
@@ -43,7 +45,8 @@ HtmlElementDesigner.getElementBy = function(id){
  *
  * @param scriptName
  * @param screenName
- * @returns complete URL of particular js script
+ * @returns path of particular script as a string
+ * @description gets the particular script
  */
 HtmlElementDesigner.getScriptName = function(scriptName,screenName){
     var name = EngineDataStore.getBaseURL()+"graphics/screens/"+screenName+"/presenter/"+scriptName+".js";

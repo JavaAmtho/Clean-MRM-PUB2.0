@@ -2,6 +2,7 @@ var pubIdToOpen;
 
 /**
  * document.ready function
+ * @description Entry point of the application
  */
 $(document).ready(function() {
 
@@ -20,6 +21,7 @@ $(document).ready(function() {
 
 /**
  * getPublicationDetailsObject function
+ * @description Loads PublicationDetails.json file which has information about which image to show for Publication in coverflow
  */
 function getPublicationDetailsObject(){
     Router.forward(EngineDataStore.getBaseURL()+"graphics/tacks/PublicationDetails.json",true,function(json){
@@ -28,8 +30,8 @@ function getPublicationDetailsObject(){
 }
 
 /**
- *
  * @param json
+ * @description Stores PublicationDetails.json file information to the cloud
  */
 function parsePublicationDetailsObject(json){
     EngineDataStore.setPublicationDetailsArray(json);
@@ -49,7 +51,8 @@ function getParameterByName(name) {
 }
 
 /**
- * getScreenMappingObject function
+ * getScreenMappingObject
+ * @description Loads ScreenMapping.json file which has information about which screen needs to be loaded as per the requested URL
  */
 function getScreenMappingObject(){
     Router.forward(EngineDataStore.getBaseURL()+"graphics/tacks/screenMapping.json",true,function(json){
@@ -60,6 +63,7 @@ function getScreenMappingObject(){
 /**
  *
  * @param json
+ * @description Stores ScreenMapping.json file information to the cloud
  */
 function parseScreenMappingObject(json){
     EngineDataStore.setScreenMappingObject(json);
@@ -72,7 +76,8 @@ function parseScreenMappingObject(json){
 }
 
 /**
- * getApiMappingObject function
+ * getApiMappingObject
+ * @description Loads RequestMapping.json file which has information about which REST API needs to be called as per the requested URL
  */
 function getApiMappingObject(){
     Router.forward(EngineDataStore.getBaseURL()+"graphics/tacks/RequestMapping.json",true,function(json){
@@ -81,8 +86,8 @@ function getApiMappingObject(){
 }
 
 /**
- *
  * @param json
+ * @description Stores RequestMapping.json file information to the cloud
  */
 function parseApiMappingObject(json){
     EngineDataStore.setApiMappingObject(json);

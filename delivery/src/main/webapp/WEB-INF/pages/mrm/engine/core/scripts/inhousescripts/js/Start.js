@@ -49,7 +49,7 @@ function parsePublicationDetailsObject(json){
 
 
 /**
- * getApiMappingObject
+ * getScreenMappingObject
  * @description Loads ScreenMapping.json file which has information about which screen needs to be loaded as per the requested URL
  */
 function getScreenMappingObject(){

@@ -1,6 +1,6 @@
 /**
  *
- * @constructor
+ * @constructor  TemplateLoader
  */
 var TemplateLoader = function(){
 
@@ -11,6 +11,7 @@ var TemplateLoader = function(){
  * @param url
  * @param async
  * @param callback
+ * @description AJAX request to a server with GET method to load templates
  */
 TemplateLoader.forward = function(url,async,callback){
     $.ajax({
@@ -30,12 +31,13 @@ TemplateLoader.forward = function(url,async,callback){
  * @param key
  * @param callBack
  * @param containerID
+ * @description common gateway for all template loading requests from the application
  */
 TemplateLoader.loadTemplate = function(key,callBack,containerID){
     //This sets the default value for the containerElementID
     containerID = typeof containerID !== ('undefined'||"") ? containerID : "mainContainer";
 
-	if(EngineDataStore.getScreenMappingObject()[key].needStyle == "true"){
+    if(EngineDataStore.getScreenMappingObject()[key].needStyle == "true"){
         var styleName = EngineDataStore.getScreenMappingObject()[key].className;
     }
 
@@ -53,11 +55,14 @@ TemplateLoader.loadTemplate = function(key,callBack,containerID){
  *
  * @param data
  * @param containerID
+ * @param styleName
+ * @description places the response html inside respective container
  */
 TemplateLoader.designScreen = function(data,containerID,styleName){
     var placeHolderElement = document.getElementById(containerID);
     placeHolderElement.innerHTML = data.html;
-	$("#"+containerID).addClass(styleName);
+
+    TemplateLoader.addStyleToContainer(containerID,styleName);
 
     if(data.events){
         TemplateLoader.attachEvents(data.events);
@@ -70,7 +75,18 @@ TemplateLoader.designScreen = function(data,containerID,styleName){
 
 /**
  *
+ * @param containerID
+ * @param styleName
+ * @description adds style to the respective container
+ */
+TemplateLoader.addStyleToContainer = function(containerID,styleName){
+    $("#"+containerID).addClass(styleName);
+}
+
+/**
+ *
  * @param events
+ * @description attaches the events by calling HtmlEventDesigner.addEvents method for all entries in events.json for respective template
  */
 TemplateLoader.attachEvents = function(events){
     events=eval('(' + events + ')');
@@ -82,6 +98,7 @@ TemplateLoader.attachEvents = function(events){
 /**
  *
  * @param elements
+ * @description creates the elements by calling HtmlElementDesigner.design method for all entries in elements.json for respective template
  */
 TemplateLoader.createElements = function(elements){
     elements=eval('(' + elements + ')');
