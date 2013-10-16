@@ -596,8 +596,8 @@ PagePresenter.expandCollapseChildPages = function (masterPageDiv) {
  * @description : dialog to indicate incorrect rules configured
  */
 PagePresenter.openIncorrectRulesDialog = function() {
-    alertify.error("Incorrect Rules");
-    /*$(function () {
+
+    $(function () {
         $("#dialog-incorrect-rules").dialog({
             resizable: false,
             height: 140,
@@ -608,7 +608,7 @@ PagePresenter.openIncorrectRulesDialog = function() {
                 }
             }
         });
-    });*/
+    });
 }
 
 /**
@@ -660,7 +660,8 @@ PagePresenter.saveRulesData = function (masterPageDiv) {
                         condArray.push(condition)
                     }
                     else {
-                        PagePresenter.openIncorrectRulesDialog();
+                        alertify.error("Incorrect Rules Configured! Please check the rules and save again.");
+//                        PagePresenter.openIncorrectRulesDialog();
                         return false;
                     }
                 }
@@ -686,7 +687,8 @@ PagePresenter.saveRulesData = function (masterPageDiv) {
                 pageRule[columnName] = additional;
             }
             else {
-                PagePresenter.openIncorrectRulesDialog();
+                alertify.error("Incorrect Rules Configured! Please check the rules and save again.");
+//                PagePresenter.openIncorrectRulesDialog();
                 return false;
             }
             pageRuleArr.push(pageRule);
@@ -716,7 +718,7 @@ PagePresenter.saveRulesData = function (masterPageDiv) {
             });
         });*/
 
-        alertify.success("Rules Saved Successfully");
+        alertify.success("Rules Saved Successfully!");
 
         for (var i = 0; i < $dirtyFields.length; i++) {
             $dirtyFields[i].innerHTML = '0';
@@ -724,7 +726,8 @@ PagePresenter.saveRulesData = function (masterPageDiv) {
         return true;
     }
     else {
-        alert("No changes detected. No save operation performed.");
+        alertify.log("No changes detected. No save operation performed.");
+        //alert("No changes detected. No save operation performed.");
         return true;
     }
 }
@@ -839,6 +842,8 @@ PagePresenter.toggleOpenCloseRules = function (parentMasterPageDiv) {
 
                                 //close the rules configuration menu
                                 PagePresenter.toggleRulesView(parentMasterPageDiv);
+
+                                alertify.log("Changes Discarded");
                             },
 
                             //Actions to perform if user chooses the 'Cancel' option
