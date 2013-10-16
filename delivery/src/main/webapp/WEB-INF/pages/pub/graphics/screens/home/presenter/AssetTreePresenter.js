@@ -1,6 +1,6 @@
 /**
  *
- * @constructor
+ * @constructor  AssetTreePresenter
  */
 var AssetTreePresenter = function(){
     var treeObj;

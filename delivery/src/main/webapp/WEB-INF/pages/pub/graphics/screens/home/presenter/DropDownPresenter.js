@@ -1,6 +1,6 @@
 /**
  *
- * @constructor
+ * @constructor    DropDownPresenter
  */
 var DropDownPresenter = function(){
 
@@ -30,6 +30,7 @@ DropDownPresenter.getInstance = function(){
 /**
  *
  * @param structId
+ * @description calls GetViewStructure interactor to get all viewStructures
  */
 DropDownPresenter.getAllViewStructure = function(structId){
     GetViewStructure.getAll();
@@ -38,6 +39,7 @@ DropDownPresenter.getAllViewStructure = function(structId){
 /**
  *
  * @param structId
+ * @description calls GetViewStructure interactor to get viewStructure by Id
  */
 DropDownPresenter.getViewStructureById = function(structId){
     GetViewStructure.get(structId);

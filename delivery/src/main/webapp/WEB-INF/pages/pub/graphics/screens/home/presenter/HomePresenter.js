@@ -1,3 +1,7 @@
+/**
+ *
+ * @constructor HomePresenter
+ */
 function HomePresenter() {
 }
 
@@ -13,6 +17,7 @@ var pages = {};
 /**
  *
  * @param evt
+ * @description changes the view as per tile list and detail buttons clicked
  */
 HomePresenter.handleViewChange = function (evt) {
     switch (evt.currentTarget.id) {
@@ -199,6 +204,7 @@ var currentPanelId;
 /**
  *
  * @param evt
+ * @description slides the panel and displays PIM/MAM tree as per the PIM/MAM button pressed
  */
 HomePresenter.slidePanel = function (evt) {
     currentPanelId = evt.currentTarget.id;
@@ -229,7 +235,7 @@ HomePresenter.slidePanel = function (evt) {
 }
 
 /**
- *
+ * @description clears the contextmenu created on the fly for all types of dimensions in tree
  */
 HomePresenter.clearList = function () {
     var contextMenusHolder = document.getElementById('menus');
@@ -239,6 +245,7 @@ HomePresenter.clearList = function () {
 /**
  *
  * @param btn
+ * @description changes the focus of selected button in between tile/list/detail
  */
 HomePresenter.btnFocus = function (btn) {
     $('.tileBtnCSS').css("border", "0px");
@@ -250,6 +257,7 @@ HomePresenter.btnFocus = function (btn) {
 /**
  *
  * @param btnId
+ * @description creates a tree object instance
  */
 HomePresenter.createTree = function (btnId) {
     var urls;
@@ -261,7 +269,7 @@ HomePresenter.createTree = function (btnId) {
 }
 
 /**
- *
+ *   @description resets the css for all PIM/MAM buttons as unclicked
  */
 HomePresenter.reset = function () {
     $("#btnMIM").css("background-image", "url(/delivery/pages/pub/graphics/screens/home/images/icons/MIM.png)");
@@ -272,6 +280,7 @@ HomePresenter.reset = function () {
 /**
  *
  * @param btnId
+ * @description changes css of pressed or selected button PIM/MAM
  */
 HomePresenter.changeSelectedBtn = function (btnId) {
     HomePresenter.reset();
@@ -288,6 +297,7 @@ HomePresenter.changeSelectedBtn = function (btnId) {
     $('#' + btnId).css("background-image", 'url("' + urls + '")');
 }
 
+
 $(document).bind("TREE_ITEM_CLICKED", function itemClickedHandler(e) {
     if (e.nodeType == "Assortment") {
         HomePresenter.showAssortmentPanel(e.uiData);
@@ -303,7 +313,7 @@ $(document).bind("TREE_ITEM_CLICKED", function itemClickedHandler(e) {
 /**
  *
  * @param node
- * @returns {Array}
+ * @returns {Array} of all children of the current node
  */
 HomePresenter.getChildrenForSelectedNode = function (node) {
 
@@ -323,7 +333,7 @@ HomePresenter.getChildrenForSelectedNode = function (node) {
 /**
  *
  * @param node
- * @returns {Array}
+ * @returns {Array}    all products under the selected node
  */
 HomePresenter.getProductsForSelectedNode = function (node) {
 
@@ -342,11 +352,9 @@ HomePresenter.getProductsForSelectedNode = function (node) {
 /**
  *
  * @param rendererData
+ * @description shows the assortment panel and hides the mustache div
  */
 HomePresenter.showAssortmentPanel = function (rendererData) {
-
-
-    console.log(rendererData)
     HomePresenter.unHideAssortPanel();
     GraphicDataStore.setProdcutsArr(rendererData);
 
@@ -367,12 +375,12 @@ HomePresenter.showAssortmentPanel = function (rendererData) {
 
     });
     $('#subtab1').jqxListBox('refresh');
-
 }
 
 /**
  *
  * @param data
+ * @description shows list of assets under the node clicked in PIM/MAM tree
  */
 HomePresenter.populateAssetsList = function (data) {
     //Converting the div into the jqwidget list with the renderer for that list
@@ -397,7 +405,7 @@ HomePresenter.populateAssetsList = function (data) {
 }
 
 /**
- *
+ *  @description adds all listeners for list in assortment panel like dragAccept onDrop etc
  */
 HomePresenter.addEventListeners = function () {
 
@@ -448,6 +456,7 @@ HomePresenter.addEventListeners = function () {
 /**
  *
  * @param e
+ * @description calls interactor to search the assets with the entered key in input
  */
 HomePresenter.searchList = function (e) {
     console.log(e.currentTarget)
@@ -465,7 +474,7 @@ HomePresenter.searchList = function (e) {
  *
  * @param existingItems
  * @param newLabel
- * @returns {boolean}
+ * @returns {boolean}   checks if the same product already exists for the same assortment
  */
 HomePresenter.productAlreadyExists = function (existingItems, newLabel) {
     if (existingItems) {
@@ -479,7 +488,7 @@ HomePresenter.productAlreadyExists = function (existingItems, newLabel) {
 }
 
 /**
- *
+ *  @description hides assortment panel and shows mustache div
  */
 HomePresenter.hideAssortPanel = function () {
     $('#assortPanel').hide();
@@ -487,7 +496,7 @@ HomePresenter.hideAssortPanel = function () {
 }
 
 /**
- *
+ * @description creates the products json object and calls interactor to update the assortment
  */
 HomePresenter.createProductsJSON = function () {
     var jsonData = {};
@@ -503,7 +512,7 @@ HomePresenter.createProductsJSON = function () {
 }
 
 /**
- *
+ * @description unHides assortment panel
  */
 HomePresenter.unHideAssortPanel = function () {
     $("#dim").hide();

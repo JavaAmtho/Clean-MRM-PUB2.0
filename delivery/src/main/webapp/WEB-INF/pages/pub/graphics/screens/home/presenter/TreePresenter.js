@@ -42,6 +42,7 @@ TreePresenter.getInstance = function(){
 
 /**
  * function getTree
+ * @description calls GetTree interactor to get tree as per selected viewStructure id
  */
 TreePresenter.getTree = function(){
     GetTree.get();
@@ -55,6 +56,7 @@ TreePresenter.getTree = function(){
  * @param currentPath
  * @param flag
  * @param callBack
+ * @description calls CreateDimensions to create new Dimension
  */
 TreePresenter.createDimension = function(prefix,action,name,currentPath,flag,callBack){
     CreateDimensions.createDim(prefix,action,name,currentPath,flag,callBack);
@@ -68,6 +70,7 @@ TreePresenter.createDimension = function(prefix,action,name,currentPath,flag,cal
  * @param flag
  * @param newPath
  * @param callBack
+ * @description calls DragDimension interactor dragAndDropDimensions
  */
 TreePresenter.dragAndDropDimensions = function(prefix,name,oldPath,flag,newPath,callBack){
     DragDimension.dragAndDropDimensions(prefix,name,oldPath,flag,newPath,callBack);
@@ -81,6 +84,7 @@ TreePresenter.dragAndDropDimensions = function(prefix,name,oldPath,flag,newPath,
  * @param currentPath
  * @param flag
  * @param callBack
+ * @description calls CreateAssortment interactor to create new Assortment
  */
 TreePresenter.createAssortment = function(prefix,action,name,currentPath,flag,callBack){
     CreateAssortment.create(prefix,action,name,currentPath,flag,callBack);
@@ -92,6 +96,7 @@ TreePresenter.createAssortment = function(prefix,action,name,currentPath,flag,ca
  * @param name
  * @param newPath
  * @param callBack
+ * @description calls CopyAssortment interactor to dragAndDropAssortment
  */
 TreePresenter.dragAndDropAssortment = function(prefix,name,newPath,callBack){
     var jsonData = {};
