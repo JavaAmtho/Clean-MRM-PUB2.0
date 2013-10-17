@@ -91,6 +91,7 @@ var GanttChart = function(){
      */
     GanttChart.onDeleteSuccess=function(){
         Grids[0].DeleteRow(currentRow,2);
+        alertify.success("Deleted successfully");
     }
 
     /**
@@ -395,9 +396,10 @@ var GanttChart = function(){
 
             Grids[0].ScrollToDate(data.startDate,"Left");
             //Grids[0].Recalculate(currentRow,"startDate",1);
+            alertify.success(""+data.type+" added successfully");
         }
         else{
-            alert("Duplicate names are not allowed");
+            alertify.error("Duplicate names are not allowed");
         }
     }
 
