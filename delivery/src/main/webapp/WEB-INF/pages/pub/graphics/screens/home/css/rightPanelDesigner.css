@@ -258,12 +258,8 @@
     top:85%;
     width:100%;
     height:15%;
-    -webkit-transition: opacity 0.3s ease-out;
-    -moz-transition: opacity 0.3s ease-out;
-    -ms-transition: opacity 0.3s ease-out;
-    -o-transition: opacity 0.3s ease-out;
-    transition: opacity 0.3s ease-out;
 }
+
 
 h2.expand {
     cursor:pointer;
@@ -371,10 +367,7 @@ h2.expand {
     text-shadow: 0px 0px 1px white;
 }
 
-.addNewThen {
-    font-size: 22px;
-    width: 3%;
-}
+
 
 .thenChild {
     position: relative;
@@ -384,8 +377,8 @@ h2.expand {
 }
 
 .then {
-    width: 100%;
-    z-index: 25;
+    /*width: 100%;*/
+    /*z-index: 25;*/
 }
 
 .whenChild {
@@ -408,9 +401,9 @@ h2.close:hover {
 
 h2.close {
     position: absolute;
-    top: 0%;
+    top: -2px;
     right: 3%;
-    z-index: 50;
+    z-index: 30;
     line-height: 0px;
     opacity: 1;
     color: #de0000;
@@ -423,6 +416,19 @@ h2.close {
     transition: text-shadow 0.2s ease-in;
 }
 
+img.addNewThen {
+    /*font-size: 22px;*/
+    margin: 1px 0 0 1px;
+    line-height: 0px;
+    top: 2%;
+    left: 2%;
+    position: absolute;
+    cursor: pointer;
+    float: left;
+    width: 5%;
+    z-index:31;
+}
+
 img.save:hover {
     box-shadow: 0 0 4px white;
 }
@@ -432,15 +438,11 @@ img.save {
     line-height: 0px;
     top: 2.1%;
     left: 9%;
-    font-size: 15px;
     position: absolute;
-    text-decoration: none;
     cursor: pointer;
     float: left;
-    font-weight: bold;
-    text-shadow: 0 1px 0 lightgreen;
     height: 17px;
-    z-index:26;
+    z-index:31;
     -webkit-transition: box-shadow 0.2s ease-in;
     -moz-transition: box-shadow 0.2s ease-in;
     -ms-transition: box-shadow 0.2s ease-in;
@@ -448,13 +450,20 @@ img.save {
     transition: box-shadow 0.2s ease-in;
 }
 
-.buttons.remove{
+.rulesButtonsHolder{
+    background-color: black;
+    opacity: 0.6;
+    position:absolute;
+    top:0%;
+    width:100%;
+    height:10%;
+    z-index: 30;
+}
+
+.buttons.remove,.buttons.addCondition{
     top:10px;
 }
 
-.buttons.addCondition{
-    top:10px;
-}
 
 /********* CSS FOR RULE STUFF ENDS **********/
 

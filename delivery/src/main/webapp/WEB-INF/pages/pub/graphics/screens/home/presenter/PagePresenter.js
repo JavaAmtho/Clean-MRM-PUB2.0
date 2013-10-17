@@ -296,10 +296,11 @@ PagePresenter.addNewRuleCondition = function (parentThenChildDiv) {
 
 /**
  *
- * @param parentRuleStatementsListDiv : reference to the parent then div which contains all the rule statements
+ * @param addNewRuleStatementButton : reference to the parent then div which contains all the rule statements
  * @description : Create a new rule(Called on click on top '+')
  */
-PagePresenter.addNewRuleStatement = function (parentRuleStatementsListDiv) {
+PagePresenter.addNewRuleStatement = function (addNewRuleStatementButton) {
+    var parentRuleStatementsListDiv = $(addNewRuleStatementButton).siblings('.then')
     //Set the main dirty flag when new rule is added
     $(parentRuleStatementsListDiv).children('.dataDirty').html('1');
 

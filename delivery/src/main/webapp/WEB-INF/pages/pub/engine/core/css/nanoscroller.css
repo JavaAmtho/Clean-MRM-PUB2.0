@@ -39,6 +39,7 @@
   -moz-border-radius    : 5px;
   -webkit-border-radius : 5px;  
   border-radius         : 5px;
+  z-index               : 31;  /*Added by Rohith to bring out the nanoscroll on the rule div*/
 }
 .nano > .pane > .slider {
   background: #90929e;
