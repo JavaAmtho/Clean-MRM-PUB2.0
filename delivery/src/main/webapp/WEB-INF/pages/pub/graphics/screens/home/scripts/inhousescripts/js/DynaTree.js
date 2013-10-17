@@ -67,30 +67,35 @@ var DynaTree = function(){
                 createList(type,possibleDim);
             }
             $(span).contextMenu({menu: type}, function(action, el, pos) {
-                var name=prompt("Please enter "+action+" name","");
-                if(name != null){
-                    if(name != ""){
-                        parentNode = $.ui.dynatree.getNode(el);
-                        if(parentNode.data.type == "root"){
-                            currentPath = "-1";
+                alertify.prompt("Please enter "+action+" name", function (e, name) {
+                    if (e) {
+                        name = name.replace(/^\s+|\s+$/g,'')
+                        if(name.length >0){
+                            parentNode = $.ui.dynatree.getNode(el);
+                            if(parentNode.data.type == "root"){
+                                currentPath = "-1";
+                            }
+                            else{
+                                currentPath = parentNode.data.path+","+ parentNode.data.title;
+                                if(currentPath.indexOf("-1")==0)
+                                    currentPath = currentPath.match(/([^,]*),(.*)/)[2];   //To remove -1 root folder
+                            }
+
+                            var flag = isFolder(action);
+                            var prefix=getUrlPrefix(action,"create");
+                            if(action == "Assortment"){
+                                newNode = createAssortmentNode(name,action,currentPath,flag);
+                                TreePresenter.createAssortment(prefix,action,name,currentPath,flag,addNode);
+                            }else{
+                                newNode = createNode(name,action,currentPath,flag);
+                                TreePresenter.createDimension(prefix,action,name,currentPath,flag,addNode);
+                            }
                         }
                         else{
-                            currentPath = parentNode.data.path+","+ parentNode.data.title;
-                            if(currentPath.indexOf("-1")==0)
-                                currentPath = currentPath.match(/([^,]*),(.*)/)[2];   //To remove -1 root folder
-                        }
-
-                        var flag = isFolder(action);
-                        var prefix=getUrlPrefix(action,"create");
-                        if(action == "Assortment"){
-                            newNode = createAssortmentNode(name,action,currentPath,flag);
-                            TreePresenter.createAssortment(prefix,action,name,currentPath,flag,addNode);
-                        }else{
-                            newNode = createNode(name,action,currentPath,flag);
-                            TreePresenter.createDimension(prefix,action,name,currentPath,flag,addNode);
+                            alertify.error("Please enter a valid name");
                         }
                     }
-                }
+                },""); //This is the default name if we want to give in prompt
             });
 
         }
@@ -112,6 +117,7 @@ var DynaTree = function(){
              parentNode.data.children=[];
              }
              parentNode.data.children.push(newNode);
+            alertify.success(""+newNode.type+" added successfully");
         }
         else{
             alertify.error("Duplicate names are not allowed");
