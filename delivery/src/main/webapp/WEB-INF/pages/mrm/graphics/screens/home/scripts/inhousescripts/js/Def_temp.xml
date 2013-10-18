@@ -130,7 +130,7 @@
         <C Name = "Panel"
         Type= "Panel"
         WidthPad= "17"
-        Buttons= "Select,Delete,Move"/>
+        Buttons= "Delete,Move"/>
 
         <C Name = "name"
         ResultMask="^[A-Za-z0-9]+[ A-Za-z0-9]*$"
