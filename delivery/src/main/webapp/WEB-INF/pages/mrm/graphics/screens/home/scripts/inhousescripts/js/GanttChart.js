@@ -307,6 +307,33 @@ var GanttChart = function(){
     }
 
 
+    Grids.OnExpand = function(grid,row){
+        var currentChild = row.firstChild;
+        while(currentChild){
+            switch(currentChild.type){
+                case "MarketingInitiative":
+                    Grids[0].SetValue(currentChild,"nameIcon","../../../graphics/screens/home/images/cal1.png",1);
+                    break;
+                case "Campaign":
+                    Grids[0].SetValue(currentChild,"nameIcon","../../../graphics/screens/home/images/cal1.png",1);
+                    break;
+                case "SubCampaign":
+                    Grids[0].SetValue(currentChild,"nameIcon","../../../graphics/screens/home/images/cal1.png",1);
+                    break;
+                case "CommunicationPlan":
+                    Grids[0].SetValue(currentChild,"nameIcon","../../../graphics/screens/home/images/cal2.png",1);
+                    break;
+                case "CommunicationChannel":
+                    Grids[0].SetValue(currentChild,"nameIcon","../../../graphics/screens/home/images/cal2.png",1);
+                    break;
+                default:
+                    Grids[0].SetValue(currentChild,"nameIcon","../../../graphics/screens/home/images/cal2.png",1);
+                    break;
+            }
+            currentChild = currentChild.nextSibling;
+        }
+    }
+
 
 
     /**
