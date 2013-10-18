@@ -297,10 +297,14 @@ var DynaTree = function(){
 
                         GraphicDataStore.setCurrentView(node.data.title);
                         data = HomePresenter.getChildrenForSelectedNode(node)
-
-                       if(node.data.type == "Publication"){
+                        if(node.data.type == "Publication"){
+                            $('#showAllPagesBtn').css('opacity','1');
+                            $('.option-combo').css('opacity','1');
+                        }
+                       else if( node.data.type == "Chapter"){
+                            $('#showAllPagesBtn').css('opacity','0');
                           $('.option-combo').css('opacity','1');
-                          $('#showAllPagesBtn').css('opacity','1');
+
                           /* if(data.length>0){
                                var me = findPagesForPub(data);
                                alert(JSON.stringify(me.length));

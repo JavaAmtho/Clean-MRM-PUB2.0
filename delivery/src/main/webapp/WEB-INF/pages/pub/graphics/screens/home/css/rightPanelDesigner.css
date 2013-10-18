@@ -235,7 +235,6 @@
 
 .masterPage.rules-opened {
     z-index: 100;
-    background: #7894C4;
     box-shadow: 0px 0px 600px 10px #000 inset;
     height: 374px;
     width: 415px;
