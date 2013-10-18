@@ -576,6 +576,12 @@ img.save {
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    opacity:0;
+    -webkit-transition: opacity 0.3s ease-out;
+    -moz-transition: opacity 0.3s ease-out;
+    -ms-transition: opacity 0.3s ease-out;
+    -o-transition: opacity 0.3s ease-out;
+    transition: opacity 0.3s ease-out;
 }
 
 
@@ -726,7 +732,7 @@ img.save {
 
 /******** CSS FOR DROPDOWN BOXIT (RULES) *********/
 
-.selectboxit-container .selectboxit {
+.selectboxit-container .selectboxit, .selectboxit-container .selectboxit-options{
     margin: 5px 5px 0 5px !important;
     min-width:150px;
     max-width: 150px;

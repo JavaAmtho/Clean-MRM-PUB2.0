@@ -299,16 +299,16 @@ var DynaTree = function(){
                         data = HomePresenter.getChildrenForSelectedNode(node)
 
                        if(node.data.type == "Publication"){
-
-                          $('#showAllPagesBtn').removeClass('hidden');
+                          $('.option-combo').css('opacity','1');
+                          $('#showAllPagesBtn').css('opacity','1');
                           /* if(data.length>0){
                                var me = findPagesForPub(data);
                                alert(JSON.stringify(me.length));
                            }*/
                        }
                         else{
-                           $('#showAllPagesBtn').addClass('hidden');
-
+                           $('#showAllPagesBtn').css('opacity','0');
+                           $('.option-combo').css('opacity','0');
                        }
 
 

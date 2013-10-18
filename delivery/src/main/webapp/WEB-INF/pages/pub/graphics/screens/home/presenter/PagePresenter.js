@@ -88,8 +88,14 @@ PagePresenter.setRules = function (parentMasterPageDiv) {
         }
     }
     $(".selectpicker").selectBoxIt({
-        autoWidth: false
+        autoWidth: false,
+        showEffect: "fadeIn",
+        hideEffect: "fadeOut"
     });
+}
+
+PagePresenter.refreshScroll = function(){
+    $('.nano').nanoScroller();
 }
 
 /**
@@ -119,6 +125,7 @@ PagePresenter.createRuleStatement = function (parentMasterPageDiv, pageRule) {
     $(masterTemplateDropDown).addClass('rulesText  template selectpicker span2');
     $(masterTemplateDropDown).attr('onchange', 'PagePresenter.makeRuleDirty(this.parentNode,true)');
     $(masterTemplateDropDown).attr('data-width', '45%');
+    $(masterTemplateDropDown).attr('onclick','PagePresenter.refreshScroll()');
     var dropDownOptions;
     dropDownOptions = PagePresenter.createDefaultDisabledDropDownOption();
     $(dropDownOptions).html('Select Master Template');
@@ -139,6 +146,7 @@ PagePresenter.createRuleStatement = function (parentMasterPageDiv, pageRule) {
     $(assortmentsDropDown).addClass('rulesText assortment selectpicker span3');
     $(assortmentsDropDown).attr('onchange', 'PagePresenter.makeRuleDirty(this.parentNode,true)');
     $(assortmentsDropDown).attr('data-width', '45%');
+    $(assortmentsDropDown).attr('onclick','PagePresenter.refreshScroll()');
     dropDownOptions = PagePresenter.createDefaultDisabledDropDownOption();
     $(dropDownOptions).html('Select Assortment');
     $(assortmentsDropDown).append(dropDownOptions);
@@ -175,6 +183,7 @@ PagePresenter.createRuleConditionDiv = function (groupType) {
     $(groupTypeDropDown).addClass('rulesText groupType selectpicker span2');
     $(groupTypeDropDown).attr('onchange', 'PagePresenter.modifyValueDropDown(this)');
     $(groupTypeDropDown).attr('data-width', 'auto');
+    $(groupTypeDropDown).attr('onclick','PagePresenter.refreshScroll()');
     var dropDownOptions;
     dropDownOptions = PagePresenter.createDefaultDisabledDropDownOption();
     $(groupTypeDropDown).append(dropDownOptions);
@@ -189,6 +198,7 @@ PagePresenter.createRuleConditionDiv = function (groupType) {
     $(operatorDropDown).addClass('rulesText operation selectpicker span2');
     $(operatorDropDown).attr('onchange', 'PagePresenter.makeDirty(this)');
     $(operatorDropDown).attr('data-width', 'auto');
+    $(operatorDropDown).attr('onclick','PagePresenter.refreshScroll()');
     dropDownOptions = PagePresenter.createDropDownOption("=");
     $(operatorDropDown).append(dropDownOptions);
     $(newRuleConditionDiv).append(operatorDropDown);
@@ -197,6 +207,7 @@ PagePresenter.createRuleConditionDiv = function (groupType) {
     $(valuesDropDown).addClass('input rulesText value selectpicker span2');
     $(valuesDropDown).attr('onchange', 'PagePresenter.makeDirty(this.parentNode)');
     $(valuesDropDown).attr('data-width', 'auto');
+    $(valuesDropDown).attr('onclick','PagePresenter.refreshScroll()');
     dropDownOptions = PagePresenter.createDefaultDisabledDropDownOption();
     $(valuesDropDown).append(dropDownOptions);
     if (groupType) {
@@ -246,6 +257,7 @@ PagePresenter.modifyValueDropDown = function (groupTypeDropDown) {
     $(valuesDropDown).addClass('input rulesText value selectpicker span2');
     $(valuesDropDown).attr('onchange', 'PagePresenter.makeDirty(this.parentNode)');
     $(valuesDropDown).attr('data-width', 'auto');
+    $(valuesDropDown).attr('onclick','PagePresenter.refreshScroll()');
     var dropDownOptions = PagePresenter.createDefaultDisabledDropDownOption();
     $(valuesDropDown).append(dropDownOptions);
 
@@ -271,7 +283,9 @@ PagePresenter.modifyValueDropDown = function (groupTypeDropDown) {
     var $operationDropdown = $(groupTypeDropDown).siblings('.selectboxit-container');
     $($operationDropdown[$operationDropdown.length - 1]).after(valuesDropDown);
     $('.selectpicker').selectBoxIt({
-        autoWidth: false
+        autoWidth: false,
+        showEffect: "fadeIn",
+        hideEffect: "fadeOut"
     });   //initialize the selectBoxIt component on the drop-downs
 }
 
@@ -289,7 +303,9 @@ PagePresenter.addNewRuleCondition = function (parentThenChildDiv) {
     parentThenChildDiv.appendChild(newRuleConditionDiv);
 
     $(".selectpicker").selectBoxIt({
-        autoWidth: false
+        autoWidth: false,
+        showEffect: "fadeIn",
+        hideEffect: "fadeOut"
     });
     $('.nano').nanoScroller();
 }
@@ -309,7 +325,9 @@ PagePresenter.addNewRuleStatement = function (addNewRuleStatementButton) {
     $(parentRuleStatementsListDiv).append(newRuleStatement);      //Add the new rule div to the parent div
 
     $(".selectpicker").selectBoxIt({
-        autoWidth: false
+        autoWidth: false,
+        showEffect: "fadeIn",
+        hideEffect: "fadeOut"
     });
     $('.nano').nanoScroller();
 }
