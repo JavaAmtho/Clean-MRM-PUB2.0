@@ -55,7 +55,7 @@
             color: white;
             max-height: 30%;
             bottom: 10%;
-            background: url(img/1x1_0.5_black.png);
+            background: url(../images/contentFlow/1x1_0.5_black.png);
             width: 100%;
         }
         * html .ContentFlowAddOn_CSFlow .flow .item .caption {
@@ -84,14 +84,14 @@
         width: 50%;
         margin: 0px auto;
         height: 16px;
-        background: url(img/scrollbar_white.png) left center repeat-x;
+        background: url(../images/contentFlow/scrollbar_white.png) left center repeat-x;
         position: relative;
     }
 
         .ContentFlowAddOn_CSFlow .scrollbar .slider {
             width: 16px;
             height: 16px;
-            background: url(img/Circle_black.png) center center no-repeat;
+            background: url(../images/contentFlow/Circle_black.png) center center no-repeat;
         }
         
         /* only for IE <= 6 and a alphatransparent slider image */
@@ -139,14 +139,14 @@
         height: 100%;
         top: 0px;
         left: 0px;
-        background: url(img/1x1_0.5_black.png);
+        background: url(../images/contentFlow/1x1_0.5_black.png);
     }
     * html .ContentFlowAddOn_CSFlow .loadIndicator {
         background-image: none;
         filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src='img/1x1_0.5_black.png');
     }
         .ContentFlowAddOn_CSFlow .loadIndicator .indicator {
-            background: url(img/loader.gif) center center no-repeat;
+            background: url(../images/contentFlow/loader.gif) center center no-repeat;
             width: 100%;
             height: 100%;
         }

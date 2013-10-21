@@ -67,10 +67,10 @@ var ContentFlowGlobal = {Flows: new Array, AddOns: {}, scriptName: "contentflow.
     }
     this.BaseDir = this.getScriptPath(this.scriptElement, this.scriptName);
     if (!this.AddOnBaseDir) {
-        this.AddOnBaseDir = this.BaseDir
+        this.AddOnBaseDir = this.BaseDir+"../../../inhousescripts/js/"
     }
     if (!this.CSSBaseDir) {
-        this.CSSBaseDir = this.BaseDir
+        this.CSSBaseDir = this.BaseDir+"../../../../css/"
     }
 }, init: function () {
 
@@ -84,7 +84,7 @@ var ContentFlowGlobal = {Flows: new Array, AddOns: {}, scriptName: "contentflow.
             if (A[C] == "") {
                 continue
             }
-            //console.log('adding load script');
+            console.log(A[C]);
             this.addScript(this.AddOnBaseDir + "ContentFlowAddOn_" + A[C] + ".js")
         }
     }
@@ -191,7 +191,7 @@ var ContentFlowAddOn = function (B, A, C) {
 };
 ContentFlowAddOn.prototype = {Browser: ContentFlowGlobal.Browser, addScript: ContentFlowGlobal.addScript, addScripts: ContentFlowGlobal.addScripts, addStylesheet: function (A) {
     if (!A) {
-        A = this.scriptpath + "ContentFlowAddOn_" + this.name + ".css"
+        A = this.scriptpath+"../../../css/" + "ContentFlowAddOn_" + this.name + ".css"
     }
 
     ContentFlowGlobal.addStylesheet(A)

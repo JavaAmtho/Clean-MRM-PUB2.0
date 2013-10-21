@@ -81,7 +81,7 @@
 .GEToolbarRow,.GEToolbar1Row,.GEToolbar2Row { padding-left:3px; margin-bottom: 0px; border-bottom:1px solid #C5C5C5; border-top:none; }
 .GEToolbar2Row,.GETopbar1Row { padding-left:3px; }
 .GETopbarRow,.GETopbar2Row {  padding-left:3px; }
-.GEFillRow { background:url(Backgrounds.gif) repeat-x 0px -500px;  margin-left:2px; border-left:1px solid #C5C5C5;
+.GEFillRow { background:url(../../../../../images/ExtJs/Backgrounds.gif) repeat-x 0px -500px;  margin-left:2px; border-left:1px solid #C5C5C5;
     margin-right:2px; border-right:1px solid #C5C5C5; border-bottom:1px solid #C5C5C5;  }
 .GETabberRow { }
 .GERowAbove,.GERowBelow { border-left:1px solid #9cb6c8; border-right:1px solid #9cb6c8; }
@@ -91,7 +91,7 @@
     margin-left: 5px; margin-right: 5px;
     background-color: #ffffff;
 }
-.GERowBelow { background:url(Backgrounds.gif) repeat-x 0px 0px; margin-bottom:0px; overflow:hidden;
+.GERowBelow { background:url(../../../../../images/ExtJs/Backgrounds.gif) repeat-x 0px 0px; margin-bottom:0px; overflow:hidden;
     margin-left: 5px; margin-right: 5px; }
 .GENoDataRow { border-top:1px solid black; padding-left:5px; padding-top:5px; padding-bottom:5px; color:gray; font-style:italic; }
 
@@ -126,11 +126,11 @@
 .GECellSpaceRadio { padding-top:3px!important;}
 .GECellSpaceEdit,.GECellSpaceEditIcon  {
     vertical-align:top; padding-top:5px!important;
-    background:#ffffff url(BackgroundsRight.gif) right 0px; border-bottom:1px solid #c3c3c3; border-left:1px solid #c3c3c3; border-top:none;
+    background:#ffffff url(../../../../../images/ExtJs/BackgroundsRight.gif) right 0px; border-bottom:1px solid #c3c3c3; border-left:1px solid #c3c3c3; border-top:none;
 }
 .GECellSpaceEditIcon  { padding-left:0px!important; }
 .GECellSpaceSelect  {
-   vertical-align:top; background:url(BackgroundsRight.gif) right -250px!important; 
+   vertical-align:top; background:url(../../../../../images/ExtJs/BackgroundsRight.gif) right -250px!important;
    border-bottom:1px solid transparent; border-bottom:1px none!IE; border-top:none;
    }
 .GESpaceSelectInner { border-left:1px solid #c3c3c3; padding-top:5px!important; padding-bottom:3px!important; white-space:nowrap!important; max-height:13px; } 
@@ -139,9 +139,9 @@
 .GECellSpaceButton { vertical-align:top; padding-top:4px!important; white-space:nowrap; }
 .GECellSpaceAbove { border-top:1px solid grey; }
 .GECellSpaceBelow { border-bottom:1px solid grey; }
-.GECellPanel { background:#EAEFF2 url(Backgrounds.gif) no-repeat 0px -1000px; }
+.GECellPanel { background:#EAEFF2 url(../../../../../images/ExtJs/Backgrounds.gif) no-repeat 0px -1000px; }
 .GECellPanel,.GECellHeaderPanel { white-space:nowrap; direction:ltr; }
-.GECellFilterPanel { background:url(Backgrounds.gif) repeat-x 0px -505px; text-align:center; padding:0px; border-bottom:0px none; border-right:0px none; direction:ltr; }
+.GECellFilterPanel { background:url(../../../../../images/ExtJs/Backgrounds.gif) repeat-x 0px -505px; text-align:center; padding:0px; border-bottom:0px none; border-right:0px none; direction:ltr; }
 .GECellUser { background-color:#F0F0E0; }
 .GECellEmpty { background: #ffffff; border-right:1px solid #e0e0ff; }
 .GECellHeaderEmpty { }
@@ -299,7 +299,7 @@
 .GEGanttGray0In,.GEGanttGray10In { background:#ffffff; } .GEGanttGray90In,.GEGanttGray100In,.GEGanttGrayNullIn { background:gray; }
 .GEGantt#ffffff0In,.GEGantt#ffffff10In,.GEGantt#ffffff90In,.GEGantt#ffffff100In,.GEGantt#ffffffNullIn { background:#ffffff; }
 .GEGantt#ffffff90In { border-right:1px solid black; margin-right:1px; } .GEGantt#ffffff10In { border-left:1px solid black; }
-.GEGanttOutLeft,.GEGanttOutRight,.GEGanttHtmlOutLeft,.GEGanttHtmlOutRight { background:url(Gantt.gif) no-repeat -293px 0px; width:20px; height:16px; overflow:hidden; }
+.GEGanttOutLeft,.GEGanttOutRight,.GEGanttHtmlOutLeft,.GEGanttHtmlOutRight { background:url(../../../../../images/ExtJs/Gantt.gif) no-repeat -293px 0px; width:20px; height:16px; overflow:hidden; }
 .GEGanttOutRight { background-position: -353px 0px; }
 .GEGanttHtmlOutLeft { background-position: -292px 0px; }
 .GEGanttHtmlOutRight { background-position: -354px 0px; }
@@ -323,13 +323,13 @@
 .GEFGanttRunHover { border:2px solid red!important; padding:0px!important; padding-left:1px!important;padding-right:1px!important; overflow:hidden; }
 .GEFGanttRunEmpty { border:none; padding:2px; padding-left:3px; padding-right:3px; }
 .GEFGanttRunNbsp { border:none; border-top:1px solid #EAEAEA; border-bottom:1px solid #EAEAEA; padding-left:3px; padding-right:3px; }
-.GEFGanttRunBox { background:url(Backgrounds.gif) left -1500px; }
-.GEFGanttRunSolid { background:url(Backgrounds.gif) left -1539px; }
+.GEFGanttRunBox { background:url(../../../../../images/ExtJs/Backgrounds.gif) left -1500px; }
+.GEFGanttRunSolid { background:url(../../../../../images/ExtJs/Backgrounds.gif) left -1539px; }
 .GEFGanttRunFixed,.GEFGanttRunLeft,.GEFGanttRunBound,.GEFGanttRunBoundStart { border-left-style:solid!important; border-left-width:3px!important; padding-left:0px!important;}
 .GEFGanttRunFixed,.GEFGanttRunRight,.GEFGanttRunBound,.GEFGanttRunBoundStart { border-right-style:solid!important; border-right-width:3px!important; padding-right:0px!important; }
-.GEFGanttRunFixed,.GEFGanttRunLeft,.GEFGanttRunRight { background:url(Backgrounds.gif) left -1526px; }
-.GEFGanttRunBound,.GEFGanttRunBoundStart,.GEFGanttRunEnd,.GEFGanttRunEndStart { background:url(Backgrounds.gif) left -1747px; }
-.GEFGanttRunComplete { background:url(Backgrounds.gif) left -1513px; }
+.GEFGanttRunFixed,.GEFGanttRunLeft,.GEFGanttRunRight { background:url(../../../../../images/ExtJs/Backgrounds.gif) left -1526px; }
+.GEFGanttRunBound,.GEFGanttRunBoundStart,.GEFGanttRunEnd,.GEFGanttRunEndStart { background:url(../../../../../images/ExtJs/Backgrounds.gif) left -1747px; }
+.GEFGanttRunComplete { background:url(../../../../../images/ExtJs/Backgrounds.gif) left -1513px; }
 
 .GEGanttRunGroupHover { margin:0px!important; border:2px solid #fa4!important; padding:1px!important; overflow:hidden; }
 .GEGanttRunHover { margin:0px!important; border:2px solid red!important; padding:1px!important; overflow:hidden; }
@@ -346,16 +346,16 @@
 .GEGanttRunNbspOut { border:none; border-top:1px solid #EAEAEA; border-bottom:1px solid #EAEAEA; margin-left:0px; margin-right:0px; }
 .GEGanttRunNbspIn { }
 .GEGanttRunBoxOut { }
-.GEGanttRunBoxIn { background:url(Backgrounds.gif) left -1500px; }
+.GEGanttRunBoxIn { background:url(../../../../../images/ExtJs/Backgrounds.gif) left -1500px; }
 .GEGanttRunSolidOut { }
-.GEGanttRunSolidIn { background:url(Backgrounds.gif) left -1539px; }
+.GEGanttRunSolidIn { background:url(../../../../../images/ExtJs/Backgrounds.gif) left -1539px; }
 .GEGanttRunFixedOut,.GEGanttRunLeftOut,.GEGanttRunBoundOut,.GEGanttRunBoundStartOut { border-left-style:solid!important; border-left-width:3px!important; margin-left:0px;}
 .GEGanttRunFixedOut,.GEGanttRunRightOut,.GEGanttRunBoundOut,.GEGanttRunBoundStartOut { border-right-style:solid!important; border-right-width:3px!important; }
-.GEGanttRunFixedIn,.GEGanttRunLeftIn,.GEGanttRunRightIn { background:url(Backgrounds.gif) left -1526px; }
+.GEGanttRunFixedIn,.GEGanttRunLeftIn,.GEGanttRunRightIn { background:url(../../../../../images/ExtJs/Backgrounds.gif) left -1526px; }
 .GEGanttRunBoundOut,.GEGanttRunBoundStartOut,.GEGanttRunEndOut,.GEGanttRunEndStartOut { }
-.GEGanttRunBoundIn,.GEGanttRunBoundStartIn,.GEGanttRunEndIn,.GEGanttRunEndStartIn { background:url(Backgrounds.gif) left -1747px; }
+.GEGanttRunBoundIn,.GEGanttRunBoundStartIn,.GEGanttRunEndIn,.GEGanttRunEndStartIn { background:url(../../../../../images/ExtJs/Backgrounds.gif) left -1747px; }
 .GEGanttRunCompleteOut { }
-.GEGanttRunCompleteIn { background:url(Backgrounds.gif) left -1513px; }
+.GEGanttRunCompleteIn { background:url(../../../../../images/ExtJs/Backgrounds.gif) left -1513px; }
 .GEGanttRunRedIn,.GEGanttRunBlueIn,.GEGanttRunGreenIn,.GEGanttRunFuchsiaIn,.GEGanttRunAquaIn,.GEGanttRunLimeIn,.GEGanttRunMaroonIn,
 .GEGanttRunNavyIn,.GEGanttRunOliveIn,.GEGanttRunOrangeIn,.GEGanttRunPurpleIn,.GEGanttRunSilverIn,.GEGanttRunTealIn,.GEGanttRunYellowIn,
 .GEGanttRunBlackIn,.GEGanttRunGrayIn,.GEGanttRunWhiteIn { }
@@ -376,10 +376,10 @@
 .GEGanttRunBlackIn,.GEFGanttRunBlack { background:black; color:#ffffff; }
 .GEGanttRunGrayIn,.GEFGanttRunGray { background:gray; color:#ffffff; }
 .GEGanttRun#ffffffIn,.GEFGanttRun#ffffff { background:#ffffff; }
-.GEGanttRunErrorIn,.GEFGanttRunError { background:url(Backgrounds.gif) left -1552px; opacity:0.7; filter:alpha(opacity=70); }
-.GEFGanttRunErrorIE { background:url(Backgrounds.gif) left -1552px; filter:alpha(opacity=70); }
-.GEGanttRunCritIn,.GEFGanttRunCrit { background:url(Backgrounds.gif) left -1760px;  }
-.GEGanttRunErrIn,.GEFGanttRunErr { background:url(Backgrounds.gif) left -1773px;  }
+.GEGanttRunErrorIn,.GEFGanttRunError { background:url(../../../../../images/ExtJs/Backgrounds.gif) left -1552px; opacity:0.7; filter:alpha(opacity=70); }
+.GEFGanttRunErrorIE { background:url(../../../../../images/ExtJs/Backgrounds.gif) left -1552px; filter:alpha(opacity=70); }
+.GEGanttRunCritIn,.GEFGanttRunCrit { background:url(../../../../../images/ExtJs/Backgrounds.gif) left -1760px;  }
+.GEGanttRunErrIn,.GEFGanttRunErr { background:url(../../../../../images/ExtJs/Backgrounds.gif) left -1773px;  }
 .GEGanttRunJoinLeft,.GEFGanttRunJoinLeft { border-left-style:dotted; border-left-color:red; }
 .GEGanttRunJoinRight,.GEFGanttRunJoinRight { border-right-style:dotted; border-right-color:red; }
 .GEGanttRunMoveOut { border:2px solid #DDD; margin:0px; padding:0px; }
@@ -400,7 +400,7 @@
 .GEGanttMilestone,.GEGanttMilestone0,.GEGanttMilestone100,
 .GEGanttMilestoneCrit,.GEGanttMilestone0Crit,.GEGanttMilestone100Crit,
 .GEGanttMilestoneErr,.GEGanttMilestone0Err,.GEGanttMilestone100Err {
-    background:url(Gantt.gif) no-repeat; width:17px; height:17px; overflow:hidden;
+    background:url(../../../../../images/ExtJs/Gantt.gif) no-repeat; width:17px; height:17px; overflow:hidden;
 }
 .GEGanttMilestone { background-position: -900px 0px; }
 .GEGanttMilestoneHover { background-position: -950px 0px; }
@@ -421,7 +421,7 @@
 .GEGanttGMilestoneErr,.GEGanttGMilestone0Err { background-position:-1300px 0px; }
 .GEGanttGMilestoneErrHover,.GEGanttGMilestoneErr0Hover { background-position: -1350px 0px; }
 
-.GEGanttFlag { background:url(Gantt.gif) no-repeat -100px 0px; width:16px; height:15px; overflow:hidden; }
+.GEGanttFlag { background:url(../../../../../images/ExtJs/Gantt.gif) no-repeat -100px 0px; width:16px; height:15px; overflow:hidden; }
 .GEGanttFlagHover { background-position:-150px 0px; }
 .GEGanttFlagCustom { background-repeat:no-repeat; width:16px; height:15px; overflow:hidden; }
 .GEGanttFlagCustomHover { background-color:red; }
@@ -451,7 +451,7 @@
 .GEGanttMark15 { background:#FF00FF; }
 
 .GEGanttPoint1,.GEGanttPoint2,.GEGanttPoint3,.GEGanttPoint4,.GEGanttPoint5,.GEGanttPoint6,.GEGanttPoint7,.GEGanttPoint8 {
-    background:url(Gantt.gif) no-repeat; width:17px; height:17px; overflow:hidden;
+    background:url(../../../../../images/ExtJs/Gantt.gif) no-repeat; width:17px; height:17px; overflow:hidden;
 }
 .GEGanttPointCustom { background-position:0px 0px!important; background-repeat:no-repeat; width:17px; height:17px; overflow:hidden; }
 .GEGanttPointCustomHover { background-color:red; }
@@ -521,7 +521,7 @@
 .GEGanttDepIcon { margin-top:-500px; height:500px; overflow:hidden; }
 .GEGanttDepArrowLeft,.GEGanttDepArrowRight,.GEGanttDepArrowErrLeft,.GEGanttDepArrowErrRight,
 .GEGanttDepArrowLeftRtl,.GEGanttDepArrowRightRtl,.GEGanttDepArrowErrLeftRtl,.GEGanttDepArrowErrRightRtl {
-    height:500px; background:url(Gantt.gif) no-repeat; overflow:hidden;
+    height:500px; background:url(../../../../../images/ExtJs/Gantt.gif) no-repeat; overflow:hidden;
 }
 .GEGanttDepArrowLeft { background-position:-200px 0px; width:12px; }
 .GEGanttDepArrowRight { background-position:-250px 0px; width:12px; }
@@ -535,7 +535,7 @@
 .GEGanttDepStart { width:4px; overflow:hidden; }
 .GEGanttDepEnd { width:10px; overflow:hidden; }
 
-.GEGanttMinStart,.GEGanttMaxStart,.GEGanttMinEnd,.GEGanttMaxEnd { background:url(Gantt.gif) no-repeat; width:7px; height:17px; overflow:hidden; }
+.GEGanttMinStart,.GEGanttMaxStart,.GEGanttMinEnd,.GEGanttMaxEnd { background:url(../../../../../images/ExtJs/Gantt.gif) no-repeat; width:7px; height:17px; overflow:hidden; }
 .GEGanttMinStart { background-position:-500px 0px; }
 .GEGanttMaxStart { background-position:-550px 0px; }
 .GEGanttMinEnd { background-position:-600px 0px; }
@@ -578,7 +578,7 @@
 .GE0T,.GE1T,.GE0TL,.GE1TL,.GE0C,.GE1C,.GE0CL,.GE1CL,.GE0E,.GE1E,.GE0EL,.GE1EL,
 .GE0,.GE1,
 .GET,.GETL,.GEC,.GECL,.GEE,.GEEL,.GED0,.GED1,.GED2,.GED3,.GED4,.GED0L,.GED1L,.GED2L,.GED3L,.GED4L {
-    font-size:10px; background-image:url(Tree.gif); vertical-align:top;
+    font-size:10px; background-image:url(../../../../../images/ExtJs/Tree.gif); vertical-align:top;
 }
 
 u.GE000,u.GE010,u.GE001,u.GE011,u.GE100,u.GE110,u.GE101,u.GE111 { padding-left:63px; }
@@ -638,7 +638,7 @@ u.GET,u.GETL,u.GEC,u.GECL,u.GEE,u.GEEL,u.GED0,u.GED1,u.GED2,u.GED3,u.GED4,u.GED0
 
 /* ------------- Tree Img without lines ------------- */
 
-.GEND0,.GEND1,.GEND2,.GEND3,.GEND4,.GENC,.GENE,.GENCR,.GENER { font-size:10px; background-image:url(TreeN.gif); background-repeat:no-repeat; vertical-align:top; }
+.GEND0,.GEND1,.GEND2,.GEND3,.GEND4,.GENC,.GENE,.GENCR,.GENER { font-size:10px; background-image:url(../../../../../images/ExtJs/TreeN.gif); background-repeat:no-repeat; vertical-align:top; }
 u.GEND0,u.GEND1,u.GEND2,u.GEND3,u.GEND4,u.GENC,u.GENE,u.GENCR,u.GENER { padding-left:20px; }
 .GEND0 { background-position: -6px 0px; }
 .GEND1 { background-position: -56px 0px; }
@@ -654,14 +654,14 @@ u.GENL { padding-left:21px; }
 /* ------------- Panel img ------------- */
 
 .GEPanelImage,.GEPanelMove,.GEPanelMoveOff,.GEPanelSelect,.GEPanelSelectOn,.GEPanelSelectOff,.GEPanelDelete,.GEPanelDeleteOff,.GEPanelCopy,.GEPanelCopyOff,.GEPanelEmpty {
-    font-size:10px; padding-left:17px; background-image:url(Panel.gif); background-repeat:no-repeat;
+    font-size:10px; padding-left:17px; background-image:url(../../../../../images/ExtJs/Panel.gif); background-repeat:no-repeat;
 }
 .GEPanelEmpty { background:none; }
 .GEPanelMove { background-position: 0px 0px; }
 .GEPanelMoveOff { background-position: -50px 0px; }
-.GEPanelSelect { background-image:url(unchecked1.jpg);background-position: 3px 3px; }
-.GEPanelSelectOn { background-image:url(checked1.jpg);background-position: 3px 3px; }
-.GEPanelSelectOff { background-image:url(unchecked1.jpg);background-position: 3px 3px; }
+.GEPanelSelect { background-image:url(../../../../../images/ExtJs/unchecked1.jpg);background-position: 3px 3px; }
+.GEPanelSelectOn { background-image:url(../../../../../images/ExtJs/checked1.jpg);background-position: 3px 3px; }
+.GEPanelSelectOff { background-image:url(../../../../../images/ExtJs/unchecked1.jpg);background-position: 3px 3px; }
 .GEPanelDelete { background-position: -250px 0px; }
 .GEPanelDeleteOff { background-position: -300px 0px; }
 .GEPanelCopy { background-position: -350px 0px; }
@@ -678,7 +678,7 @@ u.GENL { padding-left:21px; }
 .GEPx11x,.GEPx21x,.GEPx01x,.GEPx10x,.GEPx20x,.GEPx00x,
 .GEPxx11,.GEPxx10,.GEPxx01,.GEPxx00,
 .GEPxxx1,.GEPxxx0,.GEPxx1x,.GEPxx0x,.GEPx2xx,.GEPx1xx,.GEPx0xx,.GEP1xxx,.GEP0xxx {
-    font-size:10px; background-image:url(FastPanel1.gif); background-repeat:no-repeat;
+    font-size:10px; background-image:url(../../../../../images/ExtJs/FastPanel1.gif); background-repeat:no-repeat;
 }
 .GEP1111,.GEP111x,.GEP11xx,.GEP1xxx { background-position:0px 0px; }
 .GEP1211,.GEP121x,.GEP12xx { background-position:-80px 0px; }
@@ -731,7 +731,7 @@ u.GENL { padding-left:21px; }
 .GEP1x11,.GEP1x01,.GEP1x10,.GEP1x00,.GEP0x11,.GEP0x01,.GEP0x10,.GEP0x00,
 .GEP1x1x,.GEP1x0x,.GEP0x1x,.GEP0x0x,
 .GEP1xx1,.GEP1xx0,.GEP0xx1,.GEP0xx0 {
-    font-size:11px; background-image:url(FastPanel2.gif); background-repeat:no-repeat;
+    font-size:11px; background-image:url(../../../../../images/ExtJs/FastPanel2.gif); background-repeat:no-repeat;
 }
 .GEP11x1 { background-position:0px 0px; }
 .GEP12x1 { background-position:-80px 0px; }
@@ -824,7 +824,7 @@ u.GEPSpace4 { padding-left:62px; }
 .GEToolExpandAll,.GEToolCollapseAll,.GEToolColumns,.GEToolCfg,.GEToolHelp,.GEToolPrint,.GEToolExport,.GEToolExportPDF,.GEToolDebug,.GEToolOutdent,.GEToolIndent,
 .GEToolUndo,.GEToolUndo1,.GEToolRedo,.GEToolRedo1,.GEToolCorrect,.GEToolCorrect1,.GEToolZoomIn,.GEToolZoomIn1,.GEToolZoomOut,.GEToolZoomOut1,.GEToolZoomFit,
 .GEToolPagerFirst,.GEToolPagerFirst1,.GEToolPagerPrev,.GEToolPagerPrev1,.GEToolPagerNext,.GEToolPagerNext1,.GEToolPagerLast,.GEToolPagerLast1 {
-    font-size:11px; background-image:url(Toolbar.png); -background-image:url(Toolbar.gif); background-repeat:no-repeat;
+    font-size:11px; background-image:url(../../../../../images/ExtJs/Toolbar.png); -background-image:url(../../../../../images/ExtJs/Toolbar.gif); background-repeat:no-repeat;
     padding-right:3px; padding-left:21px;
 }
 .GEToolPagerFirst,.GEToolPagerFirst1,.GEToolPagerPrev,.GEToolPagerPrev1,.GEToolPagerNext,.GEToolPagerNext1,.GEToolPagerLast,.GEToolPagerLast1 {
@@ -897,10 +897,10 @@ u.GEPSpace4 { padding-left:62px; }
 .GECollapseRight,.GEExpandRight,.GECollapseLeft,.GEExpandLeft,.GECollapseHeaderRight,.GEExpandHeaderRight,.GECollapseHeaderLeft,.GEExpandHeaderLeft,
 .GERadio0Left,.GERadio0Right,.GERadio1Left,.GERadio1Right,.GERadio2Left,.GERadio2Right,.GERadio3Left,.GERadio3Right,
 .GEBoolX,.GEBoolXRO,.GEBool0,.GEBool1,.GEBool0RO,.GEBool1RO,.GEBool2,.GEBool3,.GEBool2RO,.GEBool3RO {
-    background-image:url(Button.gif); background-repeat:no-repeat; }
+    background-image:url(../../../../../images/ExtJs/Button.gif); background-repeat:no-repeat; }
 .GEDefaultsSpaceLeft,.GEDefaultsSpaceRight,.GEFilter0,.GEFilter1,.GEGroup0,.GEGroup1,.GESearch0,.GESearch1,
 .GECheck2Left,.GECheck2Right,.GEBoolXSpace,.GEBoolXSpaceRO,.GEBool0Space,.GEBool1Space,.GEBool0SpaceRO,.GEBool1SpaceRO {
-    background-image:url(ButtonSpace.gif); background-repeat:no-repeat; }
+    background-image:url(../../../../../images/ExtJs/ButtonSpace.gif); background-repeat:no-repeat; }
 .GERadio0Left,.GERadio0Right,.GERadio1Left,.GERadio1Right,.GERadio2Left,.GERadio2Right,.GERadio3Left,.GERadio3Right { font-size:11px; font-family:"Microsoft Sans Serif",Verdana,Arial; }
 .GEDateLeft,.GEDatesLeft,.GEDefaultsLeft,.GEDefaultsSpaceLeft,.GECheck0Left,.GECheck1Left,.GECheck2Left,
 .GEExpandLeft,.GECollapseLeft,.GEExpandHeaderLeft,.GECollapseHeaderLeft { padding-left:20px!important; }
@@ -959,7 +959,7 @@ u.GEFilter0,u.GEFilter1 { padding-left:16px; }
 .GEBool1Space { background-position:center -1000px; padding-left:18px; }
 .GEBool0SpaceRO { background-position:center -1250px; padding-left:18px; }
 .GEBool1SpaceRO { background-position:center -1500px; padding-left:18px; }
-.GEBoolX { background-position:center -1750px; background-image:url(ButtonSpace.gif); }
+.GEBoolX { background-position:center -1750px; background-image:url(../../../../../images/ExtJs/ButtonSpace.gif); }
 .GEBoolXRO { background-image:none; }
 .GEBool0 { background-position:center -750px; }
 .GEBool1 { background-position:center -1000px; }
@@ -984,7 +984,7 @@ u.GEFilter0,u.GEFilter1 { padding-left:16px; }
 .GEBoolChar0RO,.GEBoolChar1RO,.GEBoolChar2RO { color:gray; }
 .GEBoolCharIE { height:14px; width:12px; }
 
-.GEPopupLeft,.GEPopupRight { font-size:11px; background-image:url(Menu.gif); background-repeat:no-repeat; }
+.GEPopupLeft,.GEPopupRight { font-size:11px; background-image:url(../../../../../images/ExtJs/Menu.gif); background-repeat:no-repeat; }
 .GEPopupLeft { background-position:-6px -250px; padding-left:14px;}
 .GEPopupRight { background-position:right -250px; padding-right:14px;}
 .GEPopupNone { padding-right:14px; }
@@ -997,7 +997,7 @@ u.GEFilter0,u.GEFilter1 { padding-left:16px; }
 /* ------------- Filter images ------------- */
 .GEFilter0Left,.GEFilter1Left,.GEFilter2Left,.GEFilter3Left,.GEFilter4Left,.GEFilter5Left,.GEFilter6Left,.GEFilter7Left,.GEFilter8Left,.GEFilter9Left,.GEFilter10Left,.GEFilter11Left,.GEFilter12Left,
 .GEFilter0Right,.GEFilter1Right,.GEFilter2Right,.GEFilter3Right,.GEFilter4Right,.GEFilter5Right,.GEFilter6Right,.GEFilter7Right,.GEFilter8Right,.GEFilter9Right,.GEFilter10Right,.GEFilter11Right,.GEFilter12Right {
-    font-size:11px; background-image:url(Filter.gif); background-repeat:no-repeat;
+    font-size:11px; background-image:url(../../../../../images/ExtJs/Filter.gif); background-repeat:no-repeat;
 }
 .GEFilter0Left,.GEFilter1Left,.GEFilter2Left,.GEFilter3Left,.GEFilter4Left,.GEFilter5Left,.GEFilter6Left,.GEFilter7Left,.GEFilter8Left,.GEFilter9Left,.GEFilter10Left,.GEFilter11Left,.GEFilter12Left {
     padding-left:17px;
@@ -1036,14 +1036,14 @@ u.GEFilter0Right,u.GEFilter1Right,u.GEFilter2Right,u.GEFilter3Right,u.GEFilter4R
 .GEFilter12Right { background-position:right -1800px; }
 
 .GEFilter0Menu,.GEFilter1Menu,.GEFilter2Menu,.GEFilter3Menu,.GEFilter4Menu,.GEFilter5Menu,.GEFilter6Menu,.GEFilter7Menu,.GEFilter8Menu,.GEFilter9Menu,.GEFilter10Menu,.GEFilter11Menu,.GEFilter12Menu {
-    width:17px; height:17px; overflow:hidden; background-image:url(Filter.gif); background-repeat:no-repeat; margin-left:-1px;
+    width:17px; height:17px; overflow:hidden; background-image:url(../../../../../images/ExtJs/Filter.gif); background-repeat:no-repeat; margin-left:-1px;
 }
 .GEFilterMenuHeader { padding-left:2px; border-bottom:0px none!important; }
 
 /* ------------- Sort images ------------- */
 .GESort0Left,.GESort1Left,.GESort2Left,.GESort3Left,.GESort4Left,.GESort5Left,.GESort6Left,
 .GESort0Right,.GESort1Right,.GESort2Right,.GESort3Right,.GESort4Right,.GESort5Right,.GESort6Right {
-    font-size:11px; background-image:url(Sort.gif); background-repeat:no-repeat;
+    font-size:11px; background-image:url(../../../../../images/ExtJs/Sort.gif); background-repeat:no-repeat;
 }
 .GESort0Left,.GESort1Left,.GESort2Left,.GESort3Left,.GESort4Left,.GESort5Left,.GESort6Left { padding-left:17px; }
 .GESort0Right,.GESort1Right,.GESort2Right,.GESort3Right,.GESort4Right,.GESort5Right,.GESort6Right{ padding-right:17px; }
@@ -1067,7 +1067,7 @@ u.GESort0Right,u.GESort1Right,u.GESort2Right,u.GESort3Right,u.GESort4Right,u.GES
 .GEPagerMain { border-top:1px solid grey; border-right:1px solid grey; border-left:1px solid grey; border-bottom:1px solid grey; margin-left:2px; margin-right:2px;}
 .GEPagerBody { background: #E8F4FF; }
 .GEPagerHeader {
-   background:url(Backgrounds.gif) repeat-x; padding-bottom:2px; padding-top:2px;
+   background:url(../../../../../images/ExtJs/Backgrounds.gif) repeat-x; padding-bottom:2px; padding-top:2px;
    border-bottom:1px solid grey; cursor:default;
    }
 .GEPagerCaption {   
@@ -1189,10 +1189,10 @@ u.GESort0Right,u.GESort1Right,u.GESort2Right,u.GESort3Right,u.GESort4Right,u.GES
 .GEDragObject {
     z-index:300; margin-left:10px; margin-top:10px;
     font:12px Arial; padding-left:3px; padding-right:3px;
-    background:#E4E5F0 url(Backgrounds.gif) repeat-x 0px -750px; border:1px solid #777;
+    background:#E4E5F0 url(../../../../../images/ExtJs/Backgrounds.gif) repeat-x 0px -750px; border:1px solid #777;
 }
 .GEDragColInsideTop,.GEDragColInsideBottom,.GEDragColOutsideTop,.GEDragColOutsideBottom,.GEDragGanttRunTop,.GEDragGanttRunBottom {
-    position:absolute; background-image:url(Sort.gif); width:10px; height:11px; overflow:hidden; z-index:258;
+    position:absolute; background-image:url(../../../../../images/ExtJs/Sort.gif); width:10px; height:11px; overflow:hidden; z-index:258;
 }
 .GEDragColInsideTop  { background-position:0px -1750px;  }
 .GEDragColInsideBottom  { background-position:0px -1770px;  }
@@ -1268,13 +1268,13 @@ u.GESort0Right,u.GESort1Right,u.GESort2Right,u.GESort3Right,u.GESort4Right,u.GES
     border:1px solid #b0b0c0; background:#ffffff; cursor:pointer; _cursor:hand;
 }
 .GEMenuHead {
-    background:#183873 url(Backgrounds.gif) repeat-x 0px -2px;
+    background:#183873 url(../../../../../images/ExtJs/Backgrounds.gif) repeat-x 0px -2px;
     font:10px Verdana,Arial; color:#ffffff; cursor:default;
     text-align:center; padding-top:5px; padding-bottom:4px;
 }
 .GEMenuClose {
     float:right; width:14px; cursor:pointer; _cursor:hand; display:none;
-    background:url(Menu.gif) no-repeat right -354px;
+    background:url(../../../../../images/ExtJs/Menu.gif) no-repeat right -354px;
 }
 .GEMenuBody { cursor:default; background:#ffffff; padding-top:1px; padding-bottom:1px; }
 .GEMenuShadow {
@@ -1282,22 +1282,22 @@ u.GESort0Right,u.GESort1Right,u.GESort2Right,u.GESort3Right,u.GESort4Right,u.GES
     background:#888; opacity:0.5; filter:alpha(opacity=50);
 }
 
-.GEMenuCheckedIconLeft { background:url(Menu.gif) no-repeat -2px -51px; padding-left:17px; }
-.GEMenuCheckedIconRight { background:url(Menu.gif) no-repeat right -51px; padding-right:17px; }
-.GEMenuUncheckedIconLeft { background:url(Menu.gif) no-repeat -2px -1px; padding-left:17px; }
-.GEMenuUncheckedIconRight { background:url(Menu.gif) no-repeat right -1px; padding-right:17px; }
-.GEMenuCheckedRadioLeft { background:url(Menu.gif) no-repeat -2px -751px; padding-left:17px; }
-.GEMenuCheckedRadioRight { background:url(Menu.gif) no-repeat right -751px; padding-right:17px; }
-.GEMenuUncheckedRadioLeft { background:url(Menu.gif) no-repeat -2px -701px; padding-left:17px; }
-.GEMenuUncheckedRadioRight { background:url(Menu.gif) no-repeat right -701px; padding-right:17px; }
-.GEMenuCursorIcon { background:url(Menu.gif) no-repeat -6px -150px; }
-.GEMenuHoverIcon { background:url(Menu.gif) no-repeat -6px -100px; }
-.GEMenuCursorIconRtl { background:url(Menu.gif) no-repeat right -1000px; }
-.GEMenuHoverIconRtl { background:url(Menu.gif) no-repeat right -950px; }
-.GEMenuExpandedIcon { background:url(Menu.gif) no-repeat -6px -200px; }
-.GEMenuCollapsedIcon { background:url(Menu.gif) no-repeat -6px -250px; }
-.GEMenuNextIcon { background:url(Menu.gif) no-repeat right -300px; padding-right:10px; }
-.GEMenuNextIconRtl { background:url(Menu.gif) no-repeat left -900px; padding-left:10px; }
+.GEMenuCheckedIconLeft { background:url(../../../../../images/ExtJs/Menu.gif) no-repeat -2px -51px; padding-left:17px; }
+.GEMenuCheckedIconRight { background:url(../../../../../images/ExtJs/Menu.gif) no-repeat right -51px; padding-right:17px; }
+.GEMenuUncheckedIconLeft { background:url(../../../../../images/ExtJs/Menu.gif) no-repeat -2px -1px; padding-left:17px; }
+.GEMenuUncheckedIconRight { background:url(../../../../../images/ExtJs/Menu.gif) no-repeat right -1px; padding-right:17px; }
+.GEMenuCheckedRadioLeft { background:url(../../../../../images/ExtJs/Menu.gif) no-repeat -2px -751px; padding-left:17px; }
+.GEMenuCheckedRadioRight { background:url(../../../../../images/ExtJs/Menu.gif) no-repeat right -751px; padding-right:17px; }
+.GEMenuUncheckedRadioLeft { background:url(../../../../../images/ExtJs/Menu.gif) no-repeat -2px -701px; padding-left:17px; }
+.GEMenuUncheckedRadioRight { background:url(../../../../../images/ExtJs/Menu.gif) no-repeat right -701px; padding-right:17px; }
+.GEMenuCursorIcon { background:url(../../../../../images/ExtJs/Menu.gif) no-repeat -6px -150px; }
+.GEMenuHoverIcon { background:url(../../../../../images/ExtJs/Menu.gif) no-repeat -6px -100px; }
+.GEMenuCursorIconRtl { background:url(../../../../../images/ExtJs/Menu.gif) no-repeat right -1000px; }
+.GEMenuHoverIconRtl { background:url(../../../../../images/ExtJs/Menu.gif) no-repeat right -950px; }
+.GEMenuExpandedIcon { background:url(../../../../../images/ExtJs/Menu.gif) no-repeat -6px -200px; }
+.GEMenuCollapsedIcon { background:url(../../../../../images/ExtJs/Menu.gif) no-repeat -6px -250px; }
+.GEMenuNextIcon { background:url(../../../../../images/ExtJs/Menu.gif) no-repeat right -300px; padding-right:10px; }
+.GEMenuNextIconRtl { background:url(../../../../../images/ExtJs/Menu.gif) no-repeat left -900px; padding-left:10px; }
 
 .GEMenuItemText,.GEMenuItemIcon,.GEMenuEnum,.GEMenuEnumHeader,.GEMenuEdit { font:12px "Microsoft Sans Serif",Arial; white-space:nowrap; overflow:hidden; }
 .GEMenuItemDisabled { opacity:0.50; filter:alpha(opacity=30); overflow:hidden; }
@@ -1306,11 +1306,11 @@ u.GESort0Right,u.GESort1Right,u.GESort2Right,u.GESort3Right,u.GESort4Right,u.GES
 .GEMenuItemIcon { background-repeat:no-repeat; }
 .GEMenuEnum {
     border:1px solid #DDD; border-top:1px solid #666; border-left:1px solid #666;
-    background:url(Menu.gif) no-repeat left -800px; padding-left:15px; overflow:hidden;
+    background:url(../../../../../images/ExtJs/Menu.gif) no-repeat left -800px; padding-left:15px; overflow:hidden;
 }
 .GEMenuEnumHeader  {
     padding-left:16px; padding-top:1px; cursor:default; padding-bottom:2px;
-    background:url(Menu.gif) no-repeat 1px -799px;
+    background:url(../../../../../images/ExtJs/Menu.gif) no-repeat 1px -799px;
 }
 .GEMenuEdit {
    border:1px solid #DDD; border-top:1px solid #666; border-left:1px solid #666;
@@ -1331,7 +1331,7 @@ u.GESort0Right,u.GESort1Right,u.GESort2Right,u.GESort3Right,u.GESort4Right,u.GES
 .GEMenuFocus {
     margin-left:1px; margin-right:1px; padding-top:1px; padding-bottom:1px;
     border:1px solid #aaaadd;
-    background:#CAE1F3 url(Backgrounds.gif) repeat-x 0px -1250px;
+    background:#CAE1F3 url(../../../../../images/ExtJs/Backgrounds.gif) repeat-x 0px -1250px;
 }
 .GEMenuFocusHover {
     margin-left:1px; margin-right:1px; padding-top:1px; padding-bottom:1px;
@@ -1395,7 +1395,7 @@ u.GESort0Right,u.GESort1Right,u.GESort2Right,u.GESort3Right,u.GESort4Right,u.GES
 }
 .GEPickClose {
     float:right; width:14px; cursor:pointer; _cursor:hand; display:none;
-    background:url(Menu.gif) no-repeat right -354px;
+    background:url(../../../../../images/ExtJs/Menu.gif) no-repeat right -354px;
 }
 .GEPickBody { cursor:default; padding:0px; }
 .GEPickShadow {
@@ -1409,20 +1409,20 @@ u.GESort0Right,u.GESort1Right,u.GESort2Right,u.GESort3Right,u.GESort4Right,u.GES
     border-top:1px solid grey;
 }
 .GEPickMY {
-    background:#183873 url(Backgrounds.gif) repeat-x 0px -2px;
+    background:#183873 url(../../../../../images/ExtJs/Backgrounds.gif) repeat-x 0px -2px;
     font:10px Verdana,Arial; color:#455FA4; cursor:default;
     text-align:center; padding-top:2px; padding-bottom:4px;
 }
-.GEPickMYDown { padding-right:13px; background:url(Menu.gif) no-repeat right -400px; cursor:pointer; _cursor:hand; }
-.GEPickMYUp { padding-right:13px; background:url(Menu.gif) no-repeat right -450px; cursor:pointer; _cursor:hand; }
+.GEPickMYDown { padding-right:13px; background:url(../../../../../images/ExtJs/Menu.gif) no-repeat right -400px; cursor:pointer; _cursor:hand; }
+.GEPickMYUp { padding-right:13px; background:url(../../../../../images/ExtJs/Menu.gif) no-repeat right -450px; cursor:pointer; _cursor:hand; }
 .GEPickMYRtl { padding-right:0px; padding-left:13px; }
 .GEPickBL,.GEPickBR { padding-top:3px; cursor:pointer; _cursor:hand; width:16px; height:14px; overflow:hidden; }
-.GEPickBL { float:left; background:url(Menu.gif) no-repeat left -500px; display:none; }
-.GEPickBR { float:right; background:url(Menu.gif) no-repeat right -550px; display:none; }
+.GEPickBL { float:left; background:url(../../../../../images/ExtJs/Menu.gif) no-repeat left -500px; display:none; }
+.GEPickBR { float:right; background:url(../../../../../images/ExtJs/Menu.gif) no-repeat right -550px; display:none; }
 
 .GEPickTable { table-layout:fixed; width:0px; }
 .GEPickRow { background:#ffffff; }
-.GEPickRowW { background:url(Backgrounds.gif) repeat-x 0px -1350px; }
+.GEPickRowW { background:url(../../../../../images/ExtJs/Backgrounds.gif) repeat-x 0px -1350px; }
 .GEPickCell { width:22px; }
 .GEPickWDN {
     background:transparent; color:#333333;
@@ -1437,7 +1437,7 @@ u.GESort0Right,u.GESort1Right,u.GESort2Right,u.GESort3Right,u.GESort4Right,u.GES
 .GEPickWN,.GEPickWNE {
     text-align:center; font:10px "Microsoft Sans Serif",Arial; cursor:pointer; _cursor:hand;
     padding-left:4px; padding-right:4px; padding-top:3px; padding-bottom:3px;
-    border-right:1px solid #8CA9E1; background:url(Backgrounds.gif) no-repeat -25px -1000px;
+    border-right:1px solid #8CA9E1; background:url(../../../../../images/ExtJs/Backgrounds.gif) no-repeat -25px -1000px;
 }
 .GEPickWDNE,.GEPickSaNE,.GEPickSuNE,.GEPickSelNE,.GEPickNowNE,.GEPickWNE { cursor:default; }
 .GEPickWD { background-color:#ffffff;   }
@@ -1454,7 +1454,7 @@ u.GESort0Right,u.GESort1Right,u.GESort2Right,u.GESort3Right,u.GESort4Right,u.GES
 .GEPickSelHover { background-color:#eeeeaa; border:1px solid #ddd;}
 .GEPickOM { background-color:#ffffff; color:#aaaaaa; }
 .GEPickOMNE { color:#aaaaaa; }
-.GEPickEmpty { background:url(Menu.gif) no-repeat center -1050px; cursor:pointer; _cursor:hand; }
+.GEPickEmpty { background:url(../../../../../images/ExtJs/Menu.gif) no-repeat center -1050px; cursor:pointer; _cursor:hand; }
 
 .GEPickTimeCell {
     text-align:right; padding-bottom:4px; padding-top:6px; padding-right:5px;
@@ -1485,8 +1485,8 @@ u.GESort0Right,u.GESort1Right,u.GESort2Right,u.GESort3Right,u.GESort4Right,u.GES
 .GEPick2Sep { width:1px; background:#777; overflow:hidden; margin-left:2px; margin-right:2px; height:22px; }
 
 .GEPick2BL,.GEPick2BR { width:30px; cursor:pointer; _cursor:hand; }
-.GEPick2BL { background:url(Menu.gif) no-repeat center -598px; }
-.GEPick2BR { background:url(Menu.gif) no-repeat center -648px; }
+.GEPick2BL { background:url(../../../../../images/ExtJs/Menu.gif) no-repeat center -598px; }
+.GEPick2BR { background:url(../../../../../images/ExtJs/Menu.gif) no-repeat center -648px; }
 
 /* ------------------- Edit controls, TGLib ------------------- */
 .GEEdit,.GEEditInline {
@@ -1514,19 +1514,19 @@ u.GESort0Right,u.GESort1Right,u.GESort2Right,u.GESort3Right,u.GESort4Right,u.GES
    background:white; font:11px "Microsoft Sans Serif",Arial; cursor:pointer; _cursor:hand;
    padding-left:2px; padding-right:4px; padding-top:2px; padding-bottom:2px; white-space:nowrap;
    }
-.GEEnumHeaderLeft { background:white url(Menu.gif) no-repeat 1px -798px; padding-left:17px; }
-.GEEnumHeaderRight { background:white url(Menu.gif) no-repeat right -798px; padding-right:17px;}
+.GEEnumHeaderLeft { background:white url(../../../../../images/ExtJs/Menu.gif) no-repeat 1px -798px; padding-left:17px; }
+.GEEnumHeaderRight { background:white url(../../../../../images/ExtJs/Menu.gif) no-repeat right -798px; padding-right:17px;}
 .GEEnumMenuHeader { background:white; }
 
 .GEEnumControl,.GEEnumInline {
     font:11px "Microsoft Sans Serif",Arial; cursor:pointer; _cursor:hand;
     padding-left:15px; padding-right:4px; padding-top:2px; padding-bottom:2px;
     border:1px solid #DDD; border-top:1px solid #666; border-left:1px solid #666;
-    background:#ffffff url(Menu.gif) no-repeat left -797px; overflow:hidden;
+    background:#ffffff url(../../../../../images/ExtJs/Menu.gif) no-repeat left -797px; overflow:hidden;
 }
 .GEEnumInline { display:inline-block; vertical-align:bottom; }
 .GEEnumHeader {
-    background:#ffffff url(Menu.gif) no-repeat left -798px;
+    background:#ffffff url(../../../../../images/ExtJs/Menu.gif) no-repeat left -798px;
     font:11px "Microsoft Sans Serif",Arial; cursor:pointer; _cursor:hand;
     padding-left:15px; padding-right:4px; padding-top:2px; padding-bottom:2px;
 }
@@ -1544,7 +1544,7 @@ u.GESort0Right,u.GESort1Right,u.GESort2Right,u.GESort3Right,u.GESort4Right,u.GES
 .GEChartCaption { text-align:center; font:12px Arial; margin-top:3px; }
 
 .GEChartPoint1,.GEChartPoint2,.GEChartPoint3,.GEChartPoint4,.GEChartPoint5,.GEChartPoint6,.GEChartPoint7,.GEChartPoint8 {
-    background:url(Gantt.gif) no-repeat; width:32px; height:32px; overflow:hidden;
+    background:url(../../../../../images/ExtJs/Gantt.gif) no-repeat; width:32px; height:32px; overflow:hidden;
 }
 .GEChartPoint1 { background-position:-892px 7px; }
 .GEChartPoint1Hover { background-position: -942px 7px; }
@@ -1565,35 +1565,35 @@ u.GESort0Right,u.GESort1Right,u.GESort2Right,u.GESort3Right,u.GESort4Right,u.GES
 
 /* -------------- Custom scrollbars ------------------ */
 
-.GECustScroll1RightHidden { background:url(VScroll.gif) left -108px; height:18px; overflow:hidden; }
-.GECustScroll1Right { padding-right:18px; background:url(VScroll.gif) right 0px; }
-.GECustScroll1RightHover { padding-right:18px; background:url(VScroll.gif) right -18px; }
-.GECustScroll1Left { padding-left:18px;  background:url(VScroll.gif) left 0px; }
-.GECustScroll1LeftHover { padding-left:18px;  background:url(VScroll.gif) left -18px; }
-.GECustScroll1SliderRight { padding-right:3px; background:url(VScroll.gif) right -36px; }
-.GECustScroll1SliderLeft { padding-left:3px; background:url(VScroll.gif) left -36px; }
-.GECustScroll1SliderHIn { height:18px; overflow:hidden; background:url(VScroll.gif) center -54px; }
-.GECustScroll1SliderRightHover { padding-right:3px; background:url(VScroll.gif) right -72px; }
-.GECustScroll1SliderLeftHover { padding-left:3px; background:url(VScroll.gif) left -72px; }
-.GECustScroll1SliderHInHover { height:18px; overflow:hidden; background:url(VScroll.gif) center -90px; }
+.GECustScroll1RightHidden { background:url(../../../../../images/ExtJs/VScroll.gif) left -108px; height:18px; overflow:hidden; }
+.GECustScroll1Right { padding-right:18px; background:url(../../../../../images/ExtJs/VScroll.gif) right 0px; }
+.GECustScroll1RightHover { padding-right:18px; background:url(../../../../../images/ExtJs/VScroll.gif) right -18px; }
+.GECustScroll1Left { padding-left:18px;  background:url(../../../../../images/ExtJs/VScroll.gif) left 0px; }
+.GECustScroll1LeftHover { padding-left:18px;  background:url(../../../../../images/ExtJs/VScroll.gif) left -18px; }
+.GECustScroll1SliderRight { padding-right:3px; background:url(../../../../../images/ExtJs/VScroll.gif) right -36px; }
+.GECustScroll1SliderLeft { padding-left:3px; background:url(../../../../../images/ExtJs/VScroll.gif) left -36px; }
+.GECustScroll1SliderHIn { height:18px; overflow:hidden; background:url(../../../../../images/ExtJs/VScroll.gif) center -54px; }
+.GECustScroll1SliderRightHover { padding-right:3px; background:url(../../../../../images/ExtJs/VScroll.gif) right -72px; }
+.GECustScroll1SliderLeftHover { padding-left:3px; background:url(../../../../../images/ExtJs/VScroll.gif) left -72px; }
+.GECustScroll1SliderHInHover { height:18px; overflow:hidden; background:url(../../../../../images/ExtJs/VScroll.gif) center -90px; }
 .GECustScroll1X { background:#ffffff; }
 
-.GECustScroll2RightHidden { background:url(VScroll.gif) left -364px; height:36px; overflow:hidden; }
-.GECustScroll2Right { padding-right:36px; background:url(VScroll.gif) right -148px; }
-.GECustScroll2RightHover { padding-right:36px; background:url(VScroll.gif) right -184px; }
-.GECustScroll2Left { padding-left:36px;  background:url(VScroll.gif) left -148px; }
-.GECustScroll2LeftHover { padding-left:36px;  background:url(VScroll.gif) left -184px; }
-.GECustScroll2SliderRight { padding-right:6px; background:url(VScroll.gif) right -220px; }
-.GECustScroll2SliderLeft { padding-left:6px; background:url(VScroll.gif) left -220px; }
-.GECustScroll2SliderHIn { height:36px; overflow:hidden; background:url(VScroll.gif) center -256px; }
-.GECustScroll2SliderRightHover { padding-right:6px; background:url(VScroll.gif) right -292px; }
-.GECustScroll2SliderLeftHover { padding-left:6px; background:url(VScroll.gif) left -292px; }
-.GECustScroll2SliderHInHover { height:36px; overflow:hidden; background:url(VScroll.gif) center -328px; }
+.GECustScroll2RightHidden { background:url(../../../../../images/ExtJs/VScroll.gif) left -364px; height:36px; overflow:hidden; }
+.GECustScroll2Right { padding-right:36px; background:url(../../../../../images/ExtJs/VScroll.gif) right -148px; }
+.GECustScroll2RightHover { padding-right:36px; background:url(../../../../../images/ExtJs/VScroll.gif) right -184px; }
+.GECustScroll2Left { padding-left:36px;  background:url(../../../../../images/ExtJs/VScroll.gif) left -148px; }
+.GECustScroll2LeftHover { padding-left:36px;  background:url(../../../../../images/ExtJs/VScroll.gif) left -184px; }
+.GECustScroll2SliderRight { padding-right:6px; background:url(../../../../../images/ExtJs/VScroll.gif) right -220px; }
+.GECustScroll2SliderLeft { padding-left:6px; background:url(../../../../../images/ExtJs/VScroll.gif) left -220px; }
+.GECustScroll2SliderHIn { height:36px; overflow:hidden; background:url(../../../../../images/ExtJs/VScroll.gif) center -256px; }
+.GECustScroll2SliderRightHover { padding-right:6px; background:url(../../../../../images/ExtJs/VScroll.gif) right -292px; }
+.GECustScroll2SliderLeftHover { padding-left:6px; background:url(../../../../../images/ExtJs/VScroll.gif) left -292px; }
+.GECustScroll2SliderHInHover { height:36px; overflow:hidden; background:url(../../../../../images/ExtJs/VScroll.gif) center -328px; }
 .GECustScroll2X { background:#ffffff; }
 
 .GECustScroll3Right,.GECustScroll3RightHidden { background:#ffffff; height:9px; overflow:hidden; }
-.GECustScroll3SliderRight,.GECustScroll3SliderRightHover { padding-right:3px; height:9px; background:url(VScroll.gif) right -126px; }
-.GECustScroll3SliderLeft,.GECustScroll3SliderLeftHover { height:9px; background:url(VScroll.gif) left -126px; }
+.GECustScroll3SliderRight,.GECustScroll3SliderRightHover { padding-right:3px; height:9px; background:url(../../../../../images/ExtJs/VScroll.gif) right -126px; }
+.GECustScroll3SliderLeft,.GECustScroll3SliderLeftHover { height:9px; background:url(../../../../../images/ExtJs/VScroll.gif) left -126px; }
 .GECustScroll3SliderRightHover { background-position:right -135px; }
 .GECustScroll3SliderLeftHover { background-position:left -135px; }
 .GECustScroll3X { background:#ffffff; }
@@ -1601,33 +1601,33 @@ u.GESort0Right,u.GESort1Right,u.GESort2Right,u.GESort3Right,u.GESort4Right,u.GES
 .GECustScroll4Right,.GECustScroll4RightHidden,.GECustScroll4SliderRight,.GECustScroll4SliderRightHover { height:1px; overflow:hidden; }
 .GECustScroll4X { }
 
-.GECustScroll1DownHidden { background:url(HScroll.png) -108px top; width:18px; overflow:hidden; }
-.GECustScroll1Down { padding-bottom:18px; background:url(HScroll.png) 0px bottom; cursor:default; width:18px; overflow:hidden; }
-.GECustScroll1DownHover { padding-bottom:18px; background:url(HScroll.png) -18px bottom; width:18px; overflow:hidden; }
-.GECustScroll1Up { padding-top:18px; background:url(HScroll.png) 0px top; width:18px; overflow:hidden; }
-.GECustScroll1UpHover { padding-top:18px;  background:url(HScroll.png) -18px top; width:18px; overflow:hidden; }
-.GECustScroll1SliderDown { padding-bottom:3px; background:url(HScroll.png) -36px bottom; width:18px; overflow:hidden; }
-.GECustScroll1SliderUp { padding-top:3px; background:url(HScroll.png) -36px top; width:18px; overflow:hidden; }
-.GECustScroll1SliderVIn { background:url(HScroll.png) -54px center; width:18px; overflow:hidden; }
-.GECustScroll1SliderDownHover { padding-bottom:3px; background:url(HScroll.png) -72px bottom; width:18px; overflow:hidden; }
-.GECustScroll1SliderUpHover { padding-top:3px; background:url(HScroll.png) -72px top; width:18px; overflow:hidden; }
-.GECustScroll1SliderVInHover { background:url(HScroll.png) -90px center; width:18px; overflow:hidden; }
+.GECustScroll1DownHidden { background:url(../../../../../images/ExtJs/HScroll.png) -108px top; width:18px; overflow:hidden; }
+.GECustScroll1Down { padding-bottom:18px; background:url(../../../../../images/ExtJs/HScroll.png) 0px bottom; cursor:default; width:18px; overflow:hidden; }
+.GECustScroll1DownHover { padding-bottom:18px; background:url(../../../../../images/ExtJs/HScroll.png) -18px bottom; width:18px; overflow:hidden; }
+.GECustScroll1Up { padding-top:18px; background:url(../../../../../images/ExtJs/HScroll.png) 0px top; width:18px; overflow:hidden; }
+.GECustScroll1UpHover { padding-top:18px;  background:url(../../../../../images/ExtJs/HScroll.png) -18px top; width:18px; overflow:hidden; }
+.GECustScroll1SliderDown { padding-bottom:3px; background:url(../../../../../images/ExtJs/HScroll.png) -36px bottom; width:18px; overflow:hidden; }
+.GECustScroll1SliderUp { padding-top:3px; background:url(../../../../../images/ExtJs/HScroll.png) -36px top; width:18px; overflow:hidden; }
+.GECustScroll1SliderVIn { background:url(../../../../../images/ExtJs/HScroll.png) -54px center; width:18px; overflow:hidden; }
+.GECustScroll1SliderDownHover { padding-bottom:3px; background:url(../../../../../images/ExtJs/HScroll.png) -72px bottom; width:18px; overflow:hidden; }
+.GECustScroll1SliderUpHover { padding-top:3px; background:url(../../../../../images/ExtJs/HScroll.png) -72px top; width:18px; overflow:hidden; }
+.GECustScroll1SliderVInHover { background:url(../../../../../images/ExtJs/HScroll.png) -90px center; width:18px; overflow:hidden; }
 
-.GECustScroll2DownHidden { background:url(HScroll.png) -364px top; width:36px; overflow:hidden; }
-.GECustScroll2Down { padding-bottom:36px; background:url(HScroll.png) -148px bottom; cursor:default; width:36px; overflow:hidden; }
-.GECustScroll2DownHover { padding-bottom:36px; background:url(HScroll.png) -184px bottom; width:36px; overflow:hidden; }
-.GECustScroll2Up { padding-top:36px; background:url(HScroll.png) -148px top; width:36px; overflow:hidden; }
-.GECustScroll2UpHover { padding-top:36px;  background:url(HScroll.png) -184px top; width:36px; overflow:hidden; }
-.GECustScroll2SliderDown { padding-bottom:6px; background:url(HScroll.png) -220px bottom; width:36px; overflow:hidden; }
-.GECustScroll2SliderUp { padding-top:6px; background:url(HScroll.png) -220px top; width:36px; overflow:hidden; }
-.GECustScroll2SliderVIn { background:url(HScroll.png) -256px center; width:36px; overflow:hidden; }
-.GECustScroll2SliderDownHover { padding-bottom:6px; background:url(HScroll.png) -292px bottom; width:36px; overflow:hidden; }
-.GECustScroll2SliderUpHover { padding-top:6px; background:url(HScroll.png) -292px top; width:36px; overflow:hidden; }
-.GECustScroll2SliderVInHover { background:url(HScroll.png) -328px center; width:36px; overflow:hidden; }
+.GECustScroll2DownHidden { background:url(../../../../../images/ExtJs/HScroll.png) -364px top; width:36px; overflow:hidden; }
+.GECustScroll2Down { padding-bottom:36px; background:url(../../../../../images/ExtJs/HScroll.png) -148px bottom; cursor:default; width:36px; overflow:hidden; }
+.GECustScroll2DownHover { padding-bottom:36px; background:url(../../../../../images/ExtJs/HScroll.png) -184px bottom; width:36px; overflow:hidden; }
+.GECustScroll2Up { padding-top:36px; background:url(../../../../../images/ExtJs/HScroll.png) -148px top; width:36px; overflow:hidden; }
+.GECustScroll2UpHover { padding-top:36px;  background:url(../../../../../images/ExtJs/HScroll.png) -184px top; width:36px; overflow:hidden; }
+.GECustScroll2SliderDown { padding-bottom:6px; background:url(../../../../../images/ExtJs/HScroll.png) -220px bottom; width:36px; overflow:hidden; }
+.GECustScroll2SliderUp { padding-top:6px; background:url(../../../../../images/ExtJs/HScroll.png) -220px top; width:36px; overflow:hidden; }
+.GECustScroll2SliderVIn { background:url(../../../../../images/ExtJs/HScroll.png) -256px center; width:36px; overflow:hidden; }
+.GECustScroll2SliderDownHover { padding-bottom:6px; background:url(../../../../../images/ExtJs/HScroll.png) -292px bottom; width:36px; overflow:hidden; }
+.GECustScroll2SliderUpHover { padding-top:6px; background:url(../../../../../images/ExtJs/HScroll.png) -292px top; width:36px; overflow:hidden; }
+.GECustScroll2SliderVInHover { background:url(../../../../../images/ExtJs/HScroll.png) -328px center; width:36px; overflow:hidden; }
 
 .GECustScroll3Down,.GECustScroll3DownHidden { background:#ffffff; width:9px; overflow:hidden; cursor:default; }
-.GECustScroll3SliderDown,.GECustScroll3SliderDownHover { padding-bottom:3px; width:9px; background:url(HScroll.png) -126px bottom; }
-.GECustScroll3SliderUp,.GECustScroll3SliderUpHover { width:9px; background:url(HScroll.png) -126px top; cursor:default; }
+.GECustScroll3SliderDown,.GECustScroll3SliderDownHover { padding-bottom:3px; width:9px; background:url(../../../../../images/ExtJs/HScroll.png) -126px bottom; }
+.GECustScroll3SliderUp,.GECustScroll3SliderUpHover { width:9px; background:url(../../../../../images/ExtJs/HScroll.png) -126px top; cursor:default; }
 .GECustScroll3SliderDownHover { background-position:-135px bottom; }
 .GECustScroll3SliderUpHover { background-position:-135px top; cursor:default; }
 
@@ -1642,7 +1642,7 @@ u.GESort0Right,u.GESort1Right,u.GESort2Right,u.GESort3Right,u.GESort4Right,u.GES
 .GEHintSpaceMain { margin:0px; padding:0px; overflow:hidden; }
 .GEHintOuter { overflow:hidden; background:#ffffff; color:black; text-align:left; border-color:#ffffff; }
 .GEHintSpaceOuter { background:#ffffff!important; margin-left:-1px; margin-top:-1px; margin-bottom:-1px; }
-.GEHintHeaderOuter { background:url(Backgrounds.gif) repeat-x 0px 0px!important; color:#ffffff; border: 1px solid #ffffff; }
+.GEHintHeaderOuter { background:url(../../../../../images/ExtJs/Backgrounds.gif) repeat-x 0px 0px!important; color:#ffffff; border: 1px solid #ffffff; }
 .GEHintShadow {
     position:absolute; margin-left:2px; margin-top:2px; z-index:259;
     background:#888; opacity:0.3; filter:alpha(opacity=30);
@@ -1652,9 +1652,9 @@ u.GESort0Right,u.GESort1Right,u.GESort2Right,u.GESort3Right,u.GESort4Right,u.GES
 .GETipMain { position:absolute; left:0px; top:0px; z-index:262; visibility:hidden; }
 .GETipOuter  {
    overflow:hidden; cursor:default; font:12px Arial; padding-left:3px; padding-right:3px;
-   background:#E4E5F0 url(Backgrounds.gif) repeat-x 0px -750px; border:1px solid #777; 
+   background:#E4E5F0 url(../../../../../images/ExtJs/Backgrounds.gif) repeat-x 0px -750px; border:1px solid #777;
    }
-.GETipBody { background:#E4E5F0 url(Backgrounds.gif) repeat-x 0px -750px; white-space:nowrap; }   
+.GETipBody { background:#E4E5F0 url(../../../../../images/ExtJs/Backgrounds.gif) repeat-x 0px -750px; white-space:nowrap; }
 .GETipShadow {
     position:absolute; margin-left:3px; margin-top:3px; z-index:261;
     background:#888; opacity:0.3; filter:alpha(opacity=30);
