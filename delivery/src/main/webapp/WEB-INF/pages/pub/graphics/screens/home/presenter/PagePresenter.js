@@ -8,9 +8,9 @@ function PagePresenter() {
 var regions = ['Germany', 'India', 'USA'];          //
 var targetGroups = ['Men', 'Women', 'Kids'];        //static data for the dropdowns
 var groupTypes = ['Region', 'Target Group'];        //
-const COLLAPSE_ICON_URL = 'url("../../../graphics/screens/home/images/collapse.png")';
-const EXPAND_ICON_URL = 'url("../../../graphics/screens/home/images/expand.png")';
-const LOADING_IMAGE_URL = '../../../graphics/screens/home/images/load.gif';
+var COLLAPSE_ICON_URL = 'url("../../../graphics/screens/home/images/collapse.png")';
+var EXPAND_ICON_URL = 'url("../../../graphics/screens/home/images/expand.png")';
+var LOADING_IMAGE_URL = '../../../graphics/screens/home/images/load.gif';
 
 /**
  *

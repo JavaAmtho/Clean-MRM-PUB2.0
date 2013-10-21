@@ -40,6 +40,7 @@ var GanttChartPresenter = function(){
                 if(e.treeData != "error"){
                   treeData[0].Items = e.treeData;
                 }
+
                 myData = {
                     Body: [treeData]
                 };
