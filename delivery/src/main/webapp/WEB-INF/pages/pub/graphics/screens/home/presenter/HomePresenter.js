@@ -358,14 +358,14 @@ HomePresenter.showAssortmentPanel = function (rendererData) {
 
     $('#subtab1').jqxListBox({ selectedIndex: 0, allowDrag: false, source: GraphicDataStore.getProdcutsArr(), itemHeight: 70, height: 500, width: '100%',
         renderer: function (index, label, value) {
-            console.log(rendererData)
+            //console.log(rendererData)
             var datarecord = rendererData[index];
 
             if (datarecord) {
                 console.log("Inside IF==>" + index);
                 var imgurl = datarecord.image;
                 var img = '<img height="50" width="40" src="' + imgurl + '"/>';
-                var table = '<table style="min-width: 130px; height: 70px"><tr><td style="width: 40px;" rowspan="1">' + img + '</td><td>' + datarecord.title + " " + '</td></tr></table>';
+                var table = '<table style="min-width: 130px; height: 70px"><tr><td style="width: 40px;" rowspan="1">' + img + '</td><td>' + datarecord.title + " " + '</td><td style="cursor: pointer"><img src="../../../graphics/screens/home/images/_close.png" onclick="removeProduct('+index+')"/></td></tr></table>';
                 return table;
             }
 
@@ -375,6 +375,15 @@ HomePresenter.showAssortmentPanel = function (rendererData) {
     $('#subtab1').jqxListBox('refresh');
 }
 
+function removeProduct(indx){
+    var removed = $("#subtab1").jqxListBox('removeAt', indx );
+
+    if(removed){
+        GraphicDataStore.getProdcutsArr().splice(indx,1);
+        alertify.success("Product removed successfully");
+        //alert(JSON.stringify(GraphicDataStore.getProdcutsArr()));
+    }
+}
 /**
  *
  * @param data
