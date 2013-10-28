@@ -7,6 +7,7 @@ var temp;
 var DynaTree = function(){
     var currentPath;
     var parentNode;
+    var nodeToBeDeleted;
     var newNode
 
     /**
@@ -47,6 +48,15 @@ var DynaTree = function(){
             elem.appendChild(anchor);
             list.appendChild(elem);
         }
+
+        if(type != "root"){
+            var deleteAnchor = document.createElement("a");
+            deleteAnchor.href = "#delete";
+            deleteAnchor.textContent = "Delete";
+            var delElem = document.createElement("li");
+            delElem.appendChild(deleteAnchor);
+            list.appendChild(delElem);
+        }
         contextMenusHolder.appendChild(list);
     }
 
@@ -67,38 +77,69 @@ var DynaTree = function(){
                 createList(type,possibleDim);
             }
             $(span).contextMenu({menu: type}, function(action, el, pos) {
-                alertify.prompt("Please enter "+action+" name", function (e, name) {
-                    if (e) {
-                        name = name.replace(/^\s+|\s+$/g,'')
-                        if(name.length >0){
-                            parentNode = $.ui.dynatree.getNode(el);
-                            if(parentNode.data.type == "root"){
-                                currentPath = "-1";
+                if(action != "delete"){
+                    alertify.prompt("Please enter "+action+" name", function (e, name) {
+                        if (e) {
+                            name = name.replace(/^\s+|\s+$/g,'')
+                            if(name.length >0){
+                                parentNode = $.ui.dynatree.getNode(el);
+                                if(parentNode.data.type == "root"){
+                                    currentPath = "-1";
+                                }
+                                else{
+                                    currentPath = parentNode.data.path+","+ parentNode.data.title;
+                                    if(currentPath.indexOf("-1")==0)
+                                        currentPath = currentPath.match(/([^,]*),(.*)/)[2];   //To remove -1 root folder
+                                }
+
+                                var flag = isFolder(action);
+                                var prefix=getUrlPrefix(action,"create");
+                                if(action == "Assortment"){
+                                    newNode = createAssortmentNode(name,action,currentPath,flag);
+                                    TreePresenter.createAssortment(prefix,action,name,currentPath,flag,addNode);
+                                }else{
+                                    newNode = createNode(name,action,currentPath,flag);
+                                    TreePresenter.createDimension(prefix,action,name,currentPath,flag,addNode);
+                                }
                             }
                             else{
-                                currentPath = parentNode.data.path+","+ parentNode.data.title;
-                                if(currentPath.indexOf("-1")==0)
-                                    currentPath = currentPath.match(/([^,]*),(.*)/)[2];   //To remove -1 root folder
+                                alertify.error("Please enter a valid name");
                             }
+                        }
+                    },""); //This is the default name if we want to give in prompt
+                }else{
+                    nodeToBeDeleted = $.ui.dynatree.getNode(el);
+                    alertify.confirm("Are you sure you want to delete "+ nodeToBeDeleted.data.title, function (e) {
+                        if (e) {
+                            //Send API call to delete the node
+                            var input=new Object();
+                            input.id=nodeToBeDeleted.data.id;
+                            input.name=nodeToBeDeleted.data.title;
+                            input.type=nodeToBeDeleted.data.type;
+                            input.groupId=nodeToBeDeleted.data.groupId;
+                            var prefix=getUrlPrefix(nodeToBeDeleted.data.type,"delete");
+                            TreePresenter.deleteDimension(prefix,nodeToBeDeleted.data.type,input,onDeleteSuccess);
 
-                            var flag = isFolder(action);
-                            var prefix=getUrlPrefix(action,"create");
-                            if(action == "Assortment"){
-                                newNode = createAssortmentNode(name,action,currentPath,flag);
-                                TreePresenter.createAssortment(prefix,action,name,currentPath,flag,addNode);
-                            }else{
-                                newNode = createNode(name,action,currentPath,flag);
-                                TreePresenter.createDimension(prefix,action,name,currentPath,flag,addNode);
-                            }
+                        } else {
                         }
-                        else{
-                            alertify.error("Please enter a valid name");
-                        }
-                    }
-                },""); //This is the default name if we want to give in prompt
+                    });
+                }
+
             });
 
         }
+    }
+
+    function  onDeleteSuccess(){
+        nodeToBeDeleted.remove();
+        var parNode = nodeToBeDeleted.parent;
+        for(var i=0; i< parNode.data.children.length; i++){
+            if(nodeToBeDeleted.data.title == parNode.data.children[i].title){
+                parNode.data.children.splice(i,1);
+            }
+        }
+        alertify.success("Deleted successfully");
+        parNode.activate();
     }
 
     /**
@@ -108,6 +149,12 @@ var DynaTree = function(){
      */
     function addNode(data){
         if(data){
+            if((newNode.type !="Chapter"))
+                if(newNode.type !="Page")
+                if(newNode.type !="Assortment")
+                    newNode = data;
+
+
             parentNode.addChild(newNode).activate();
              var node_expand = parentNode.isExpanded();
              if(node_expand == false)
@@ -136,7 +183,7 @@ var DynaTree = function(){
     function createAssortmentNode(name,type,path,flag){
         var flag = isFolder(type);
         var newNode = {
-            "id": "",
+            "id": name,
             "title": name,
             "type": type,
             "path": path,
@@ -157,7 +204,7 @@ var DynaTree = function(){
     function createNode(name,type,path,flag){
         var flag = isFolder(type);
         var newNode = {
-                        "id": "",
+                        "id": name,
                         "title": name,
                         "type": type,
                         "path": path,
@@ -204,10 +251,10 @@ var DynaTree = function(){
      *              dropping an element in the dyna tree
      */
     function onDropSuccess(){
-        console.log(draggedNode + "draggedNode")
+        /*console.log(draggedNode + "draggedNode")
         console.log(droppedSrcNode + "droppedSrcNode NEW")
         console.log(oldParentNode + "oldParentNode OLD")
-
+*/
         if(draggedNode.data.type == "Assortment"){
             var cb = draggedNode.toDict(true, function(dict){
                 //dict.title = "Copy of " + dict.title;
