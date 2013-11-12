@@ -17,8 +17,8 @@ import com.cs.data.api.core.nosql.neo4j.NoSqlNeo4jRepository;
 @Repository
 public class Neo4jRepository implements NoSqlNeo4jRepository {
 	
-	Neo4jOperations neo4jTemplate;
-
+	private Neo4jOperations neo4jTemplate;
+	
 	@Autowired
 	public Neo4jRepository(Neo4jOperations neo4jTemplate) {
 		this.neo4jTemplate = neo4jTemplate;
@@ -43,6 +43,10 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 	public String save(GenericDomain objectToInsert) {
 		neo4jTemplate.save(objectToInsert);
 		return "inserted";
+	}
+	
+	public GenericDomain saveData(GenericDomain objectToInsert) {
+		return neo4jTemplate.save(objectToInsert);
 	}
 
 	@Override
