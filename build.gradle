@@ -57,6 +57,7 @@ project(':cs-persistence') {
 		maven { url "http://repo.springframework.org/milestone" }
 	}
 	dependencies {
+		compile fileTree(dir: 'resources/neo4j/', include: '*.jar')		//add spring-neo4j dependencies
 	}
 	task csApiJar(type: Jar) {
 		baseName = 'persistence-api'
