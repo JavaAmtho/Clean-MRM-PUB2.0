@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.RelationshipType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.neo4j.mapping.Neo4jEntityConverter;
-import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.data.neo4j.template.Neo4jOperations;
 import org.springframework.stereotype.Repository;
@@ -14,12 +14,12 @@ import org.springframework.stereotype.Repository;
 import com.cs.data.api.core.GenericDomain;
 import com.cs.data.api.core.nosql.neo4j.NoSqlNeo4jRepository;
 
-@Repository
+//@Repository
 public class Neo4jRepository implements NoSqlNeo4jRepository {
 	
 	private Neo4jOperations neo4jTemplate;
 	
-	@Autowired
+//	@Autowired
 	public Neo4jRepository(Neo4jOperations neo4jTemplate) {
 		this.neo4jTemplate = neo4jTemplate;
 	}
@@ -45,9 +45,15 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 		return "inserted";
 	}
 	
+	@Override
 	public GenericDomain saveData(GenericDomain objectToInsert) {
 		return neo4jTemplate.save(objectToInsert);
 	}
+	
+	/*@Override
+	public GenericDomain saveData(GenericDomain objectToInsert,RelationshipType relationship) {
+		return ((Neo4jTemplate)neo4jTemplate).save(objectToInsert, relationship);
+	}*/
 
 	@Override
 	public <T> T update(T query) {

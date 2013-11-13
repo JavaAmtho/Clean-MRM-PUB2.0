@@ -1,6 +1,8 @@
 package com.cs.data.core.jpa.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -13,6 +15,14 @@ import com.cs.data.api.core.GenericDomain;
 @NodeEntity
 @Entity
 public class GraphSampleData implements GenericDomain,Serializable {
+
+	public List<SampleDataRelationship> getRelationships() {
+		return relationships;
+	}
+
+	public void setRelationships(List<SampleDataRelationship> relationships) {
+		this.relationships = relationships;
+	}
 
 	/**
 	 * 
@@ -27,6 +37,8 @@ public class GraphSampleData implements GenericDomain,Serializable {
 	private String name;
 	
 	private Long id;
+	
+	private List<SampleDataRelationship> relationships = new ArrayList<SampleDataRelationship>(); 
 	
 	public GraphSampleData() {
 		// TODO Auto-generated constructor stub
@@ -60,6 +72,12 @@ public class GraphSampleData implements GenericDomain,Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public GenericDomain isChildOf(GenericDomain parent,String typeOfChild){
+		SampleDataRelationship relationship = new SampleDataRelationship(parent, this, typeOfChild);
+		this.relationships.add(relationship);
+		return relationship;
+	}
 
 	@Override
 	public String getObjectKey() {
@@ -77,7 +95,7 @@ public class GraphSampleData implements GenericDomain,Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((nodeID == null) ? 0 : nodeID.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -91,10 +109,10 @@ public class GraphSampleData implements GenericDomain,Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		GraphSampleData other = (GraphSampleData) obj;
-		if (nodeID == null) {
-			if (other.nodeID != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!nodeID.equals(other.nodeID))
+		} else if (!id.equals(other.id))
 			return false;
 		if (name == null) {
 			if (other.name != null)
