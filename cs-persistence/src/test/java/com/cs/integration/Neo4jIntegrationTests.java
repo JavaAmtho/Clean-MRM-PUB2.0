@@ -1,11 +1,12 @@
 package com.cs.integration;
 
+import java.util.Iterator;
+
 import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.neo4j.graphdb.RelationshipType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.test.context.ContextConfiguration;
@@ -13,7 +14,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.cs.data.api.core.GenericDomain;
 import com.cs.data.core.jpa.entities.GraphSampleData;
-import com.cs.data.core.jpa.entities.SampleDataRelationship;
 import com.cs.data.core.nosql.neo4j.Neo4jRepository;
 
 
@@ -35,7 +35,6 @@ public class Neo4jIntegrationTests {
 	
 	@Test
 	public void shouldSaveIntoNeo4jRepository() {
-		
 		GraphSampleData given = new GraphSampleData(new Long(100), "HELLO!");
 		
 		GenericDomain created = neo4jRepo.saveData(given);
@@ -57,7 +56,25 @@ public class Neo4jIntegrationTests {
 		Assert.assertEquals(createdParent, parent);
 		Assert.assertEquals(createdChild1, child1);
 		Assert.assertEquals(createdRelation, sampleDataRelationship);
-		
+	
+	
+	}
+	
+	@Test
+	public void shouldRetrieveAllFromNeo4jRepository(){
+		 //System.out.println(neo4jRepo.findAll(GraphSampleData.class));
+		 Iterator<GraphSampleData> resultsIterator = neo4jTemplate.findAll(GraphSampleData.class).iterator();
+		    while (resultsIterator.hasNext()){
+		    	GraphSampleData graphSampleData = resultsIterator.next();
+		    	//System.out.println(graphSampleData.getNodeID()+"--"+graphSampleData.getId()+"--"+graphSampleData.getName());
+		    }
+	}
+	
+	@Test
+	public void shouldRetrieveFromNeo4jRepository(){
+		GraphSampleData graphSampleData = neo4jRepo.findOne(new Long(22),GraphSampleData.class);
+		System.out.println(graphSampleData.getNodeID()+"--"+graphSampleData.getId()+"--"+graphSampleData.getName());
+		 
 	}
 	
 }
