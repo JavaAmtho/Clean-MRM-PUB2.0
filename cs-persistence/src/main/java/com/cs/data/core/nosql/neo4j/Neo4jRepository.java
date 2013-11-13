@@ -11,12 +11,12 @@ import org.springframework.stereotype.Repository;
 import com.cs.data.api.core.GenericDomain;
 import com.cs.data.api.core.nosql.neo4j.NoSqlNeo4jRepository;
 
-@Repository
+//@Repository
 public class Neo4jRepository implements NoSqlNeo4jRepository {
 	
 	private Neo4jOperations neo4jTemplate;
 	
-	@Autowired
+//	@Autowired
 	public Neo4jRepository(Neo4jOperations neo4jTemplate) {
 		this.neo4jTemplate = neo4jTemplate;
 	}
