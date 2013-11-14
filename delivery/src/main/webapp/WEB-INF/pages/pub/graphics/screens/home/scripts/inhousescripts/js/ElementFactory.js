@@ -29,3 +29,11 @@ ElementFactory.getLazyTree = function(){
 ElementFactory.getDropDown = function(){
     return new DropDownJS();
 }
+
+/**
+ *
+ * @returns new NewPageBreadCrumbWidget object
+ */
+ElementFactory.getNewPageBreadCrumbWidget = function(){
+    return new NewPageBreadCrumbWidget();
+}

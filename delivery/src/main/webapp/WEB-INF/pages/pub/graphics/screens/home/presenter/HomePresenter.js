@@ -295,16 +295,38 @@ HomePresenter.changeSelectedBtn = function (btnId) {
     $('#' + btnId).css("background-image", 'url("' + urls + '")');
 }
 
+HomePresenter.designUI = function(){
+
+}
 
 $(document).bind("TREE_ITEM_CLICKED", function itemClickedHandler(e) {
-    if (e.nodeType == "Assortment") {
-        HomePresenter.showAssortmentPanel(e.uiData);
-    } else {
-        HomePresenter.hideAssortPanel();
-        rendererData = {"mydata": e.uiData};
-        HomePresenter.loadViewItems(rendererData, EngineDataStore.getBaseURL() + "graphics/screens/home/htmls/renderers/TileViewRenderer.html");
-        HomePresenter.btnFocus(".tileBtnCSS");
+    if(productArrMadeDirty){
+        alertify.confirm("Do you want to discard your changes", function (e) {
+            if (e) {
+                if (e.nodeType == "Assortment") {
+                    HomePresenter.showAssortmentPanel(e.uiData);
+                } else {
+                    HomePresenter.hideAssortPanel();
+                    rendererData = {"mydata": e.uiData};
+                    HomePresenter.loadViewItems(rendererData, EngineDataStore.getBaseURL() + "graphics/screens/home/htmls/renderers/TileViewRenderer.html");
+                    HomePresenter.btnFocus(".tileBtnCSS");
+                }
+
+            } else {
+                HomePresenter.createProductsJSON();
+            }
+        });
+    }else{
+        if (e.nodeType == "Assortment") {
+            HomePresenter.showAssortmentPanel(e.uiData);
+        } else {
+            HomePresenter.hideAssortPanel();
+            rendererData = {"mydata": e.uiData};
+            HomePresenter.loadViewItems(rendererData, EngineDataStore.getBaseURL() + "graphics/screens/home/htmls/renderers/TileViewRenderer.html");
+            HomePresenter.btnFocus(".tileBtnCSS");
+        }
     }
+
 
 });
 
@@ -365,7 +387,7 @@ HomePresenter.showAssortmentPanel = function (rendererData) {
                 console.log("Inside IF==>" + index);
                 var imgurl = datarecord.image;
                 var img = '<img height="50" width="40" src="' + imgurl + '"/>';
-                var table = '<table style="min-width: 130px; height: 70px"><tr><td style="width: 40px;" rowspan="1">' + img + '</td><td>' + datarecord.title + " " + '</td><td style="cursor: pointer"><img src="../../../graphics/screens/home/images/_close.png" onclick="removeProduct('+index+')"/></td></tr></table>';
+                var table = '<table style="min-width: 130px; height: 70px"><tr><td style="width: 40px;" rowspan="1">' + img + '</td><td>' + datarecord.title + " " + '</td><td class="removeProductBtn"><img src="../../../graphics/screens/home/images/_close.png" onclick="removeProduct('+index+')"/></td></tr></table>';
                 return table;
             }
 
@@ -375,12 +397,16 @@ HomePresenter.showAssortmentPanel = function (rendererData) {
     $('#subtab1').jqxListBox('refresh');
 }
 
+var productArrMadeDirty=false;
+
 function removeProduct(indx){
+    event.stopImmediatePropagation();
     var removed = $("#subtab1").jqxListBox('removeAt', indx );
 
     if(removed){
         GraphicDataStore.getProdcutsArr().splice(indx,1);
         alertify.success("Product removed successfully");
+        productArrMadeDirty = true;
         //alert(JSON.stringify(GraphicDataStore.getProdcutsArr()));
     }
 }
@@ -446,6 +472,7 @@ HomePresenter.addEventListeners = function () {
             $('#subtab1').css('border', '2px dashed #aaa');
 
             onTarget = false;
+            productArrMadeDirty = true;
             /*}*/
         }
 

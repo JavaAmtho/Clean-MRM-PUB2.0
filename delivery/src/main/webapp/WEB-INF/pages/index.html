@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+
+<script>
+
+     var myValue;
+     var myWin
+
+    function callMe(){
+       myWin = window.showModalDialog("http://192.168.135.112/CS13.0Trunk/admin/forward.php?forward=dialogs|FileInputDialog|FileInputDialog.php&CS_FILEINPUT_FILTER=indd,pdf&id=7859&hideOptionFrame=1&singleUpload=1&&singleUpload=true&hideOptionFrame=true&objectFolderId=7859&localeLang=en");
+
+        document.getElementById('foo').textContent = myWin;
+        alert(JSON.stringify(myWin.getFileID))
+        //alert(JSON.stringify(myWin.RecordModule))
+      /*  myWin.onbeforeunload=function(e){
+            alert(123)
+            myValue="Any return string here forces a dialog to appear when user leaves this page" ;
+        }*/
+    }
+
+
+
+</script>
+<body>
+    <button onclick="callMe()" >Click Me</button>
+    <p id="foo">
+</body>
+
+
+</html>
