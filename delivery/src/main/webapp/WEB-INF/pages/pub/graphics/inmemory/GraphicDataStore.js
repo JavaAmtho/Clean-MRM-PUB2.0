@@ -22,7 +22,30 @@ var GraphicDataStore = function(){
     var loadingRulesList;
     var publicationPosition;
     var currentPublication;
+    var newPageObject = {};
 }
+
+/**
+ *
+ * @param obj
+ * @description set the new page object
+ */
+GraphicDataStore.setNewPageObject = function(obj){
+    this.newPageObject = obj;
+
+}
+
+
+/**
+ *
+ * @returns {newPageObject}
+ * @description returns the new page object
+ */
+GraphicDataStore.getNewPageObject = function(){
+    return this.newPageObject;
+}
+
+
 
 /**
  *

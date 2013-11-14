@@ -81,6 +81,7 @@ var DynaTree = function(){
                 if(action != "delete"){
                     if(action == "Page"){
                         WidgetPresenter.createWidgetForNewPage("BreadCrumb");
+
                     }else{
                         alertify.prompt("Please enter "+action+" name", function (e, name) {
                             if (e) {

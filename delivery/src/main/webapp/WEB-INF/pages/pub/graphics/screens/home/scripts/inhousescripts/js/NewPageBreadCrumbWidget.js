@@ -28,8 +28,8 @@ var NewPageBreadCrumbWidget = function(){
         $(".rhino-next").hide();
 
 
-        var info = ["Enter Page Name","Select Page Type","Select Indd","Select Rendering Engine"];
-        var images = ["personal-details-icon.png","account-details.png","contact-details.png","contact-details.png"];
+        var info = ["Enter Page Name","Select Page Type"];
+        var images = ["personal-details-icon.png","account-details.png"];
         $('.rhino-bullet').each(function(index){
             $(this).html('<p style="margin: 0pt; font-size: 13px; font-weight: bold;"><img src="../img/'+
                 images[index]+'"></p><p class="bullet-desc">'+info[index]+'</p></a>');
@@ -38,18 +38,31 @@ var NewPageBreadCrumbWidget = function(){
         $('.form-submit').live("click",function(){
             $('.form-error').html("");
             var current_tab = $('#slider').find('.rhino-active').attr("id");
+
+            var newPageObj = new Object();
             switch(current_tab){
                 case 'rhino-item0':
-                    validatePageName();
+                    var ifValidPageName =validatePageName();
+                    if(ifValidPageName !== false){
+                        newPageObj.name =  ifValidPageName;
+                        GraphicDataStore.setNewPageObject(newPageObj)
+                    }
+                    var isTypeValid = validatePageType();
+                    if(isTypeValid !== false){
+                        newPageObj.pageType =  isTypeValid;
+                        GraphicDataStore.setNewPageObject(newPageObj)
+                    }
+                    var isRendererValid = validateRenderEngineType();
+                    if(isRendererValid !== false){
+                        newPageObj.renderEngineType =  isRendererValid;
+                        GraphicDataStore.setNewPageObject(newPageObj)
+                    }
                     break;
                 case 'rhino-item1':
-                    validatePageType();
-                    break;
-                case 'rhino-item2':
-                    step3_validation();
-                    break;
-                case 'rhino-item3':
-                    validateRenderEngineType();
+                    valid = step2_validation();
+                    if(valid){
+                                                             alert(JSON.stringify(GraphicDataStore.getNewPageObject()));
+                    }
                     break;
             }
         });

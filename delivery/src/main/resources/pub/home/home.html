@@ -151,12 +151,17 @@
                                 <div class="form-right"><input type="text" id="pageName" name="pageName" class="form-input" /></div>
                                 <div class="form-error"></div>
                             </div>
-                        </div>
-
-                        <!--Select Page Type-->
-                        <div class="form-step" >
+							<div class="row">
+								<div class="form-left">Choose Rendering Engine: </div>
+                                
+                            </div>
                             <div class="row">
-								<div class="form-left">Choose Page Type *</div>
+                                <input type="radio" name="renderType" value="smart">Smart<br>
+                                <input type="radio" name="renderType" value="comet">Comet
+								<div id="engineTypeErrorText" class="form-error"></div>
+                            </div>
+							<div class="row">
+								<div class="form-left">Choose Page Type: </div>
                             </div>
 							<div class="row">
 								<input type="radio" name="pageType" value="manual">Manual<br>
@@ -165,22 +170,20 @@
 								<div id="pageTypeErrorText" class="form-error"></div>
 							 </div>
                         </div>
+
+                        <!--Select Page Type-->
+                         <!--<div class="form-step" >
+                            
+                        </div>-->
                         <div class="form-step">
-						<div class="row">
-                            <a id="btnChooseIndd">Choose Indd File</a>
-							<div class="form-error"></div>
-                        </div>
+							<div class="row">
+								<a id="btnChooseIndd">Choose Indd File</a>
+								<div class="form-error"></div>
+							</div>
 						</div>
-                        <div class="form-step">
-                            <div class="row">
-                                Choose Rendering Engine:
-                            </div>
-                            <div class="row">
-                                <input type="radio" name="renderType" value="smart">Smart<br>
-                                <input type="radio" name="renderType" value="comet">Comet
-								<div id="engineTypeErrorText" class="form-error"></div>
-                            </div>
-                        </div>
+                        <!--<div class="form-step">
+                            
+                        </div>-->
                     </div>
                 </form>
             </div>
