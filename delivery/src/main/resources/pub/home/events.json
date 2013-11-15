@@ -7,5 +7,6 @@
     {"id":"btnMAM","event":"click","func":HomePresenter.slidePanel},
     {"id":"btnMIM","event":"click","func":HomePresenter.slidePanel},
     {"id":"showAllPagesBtn","event":"click","func":PagePresenter.showAllPages},
+	{"id":"btnCreatePage","event":"click","func":NewPageBreadCrumbWidget.createPage},
 	{"id":"btnChooseIndd","event":"click","func":NewPageBreadCrumbWidget.chooseIndd}
 ]

@@ -7,70 +7,10 @@
  */
 var NewPageBreadCrumbWidget = function(){
 
+
     this.design = function(){
-        $('#slider').rhinoslider({
-            /*callBackInit: function(){
-              alert(123)
-            },*/
-            controlsPlayPause: false,
-            showControls: 'always',
-            showBullets: 'always',
-            controlsMousewheel: false,
-            prevText: 'Back',
-            nextText:'Proceed',
-            slidePrevDirection: 'toRight',
-            slideNextDirection: 'toLeft'
-        });
-
-
-        $(".rhino-prev").hide();
-        $('.rhino-next').after('<a class="form-submit" href="javascript:void(0);" >Proceed</a>');
-        $(".rhino-next").hide();
-
-
-        var info = ["Enter Page Name","Select Page Type"];
-        var images = ["personal-details-icon.png","account-details.png"];
-        $('.rhino-bullet').each(function(index){
-            $(this).html('<p style="margin: 0pt; font-size: 13px; font-weight: bold;"><img src="../img/'+
-                images[index]+'"></p><p class="bullet-desc">'+info[index]+'</p></a>');
-        });
-
-        $('.form-submit').live("click",function(){
-            $('.form-error').html("");
-            var current_tab = $('#slider').find('.rhino-active').attr("id");
-
-            var newPageObj = new Object();
-            switch(current_tab){
-                case 'rhino-item0':
-                    var ifValidPageName =validatePageName();
-                    if(ifValidPageName !== false){
-                        newPageObj.name =  ifValidPageName;
-                        GraphicDataStore.setNewPageObject(newPageObj)
-                    }
-                    var isTypeValid = validatePageType();
-                    if(isTypeValid !== false){
-                        newPageObj.pageType =  isTypeValid;
-                        GraphicDataStore.setNewPageObject(newPageObj)
-                    }
-                    var isRendererValid = validateRenderEngineType();
-                    if(isRendererValid !== false){
-                        newPageObj.renderEngineType =  isRendererValid;
-                        GraphicDataStore.setNewPageObject(newPageObj)
-                    }
-
-                    break;
-                case 'rhino-item1':
-                    valid = step2_validation();
-                    if(valid){
-                        $(document).trigger({
-                            type: "createPageEvent",
-                            pageObj: GraphicDataStore.getNewPageObject()
-                        });
-                        $("#dialog-form").dialog( "close" );
-                    }
-                    break;
-            }
-        });
+        var newPageObj = new Object();
+        GraphicDataStore.setNewPageObject(newPageObj);
 
         $( "#dialog-form" ).dialog({
             height: 450,
@@ -85,10 +25,10 @@ var NewPageBreadCrumbWidget = function(){
                 effect: "clip",
                 duration: 500
             },
-
-
-
-            autoOpen :true
+            autoOpen :true,
+            close: function() {
+                $(document).unbind('createPageEvent');
+            }
 
         });
     }
@@ -99,8 +39,39 @@ NewPageBreadCrumbWidget.chooseIndd = function(){
     //document.getElementById('foo').textContent = myWin;
     if(data){
         data = eval('(' + data + ')');
-        var obj = GraphicDataStore.getNewPageObject();
-        obj.mamFileID = data.FileID;
+        //alert(JSON.stringify(newPageObj))
+        var newPageObj = GraphicDataStore.getNewPageObject();
+        newPageObj.FileID = data.FileID;
+        GraphicDataStore.setNewPageObject(newPageObj);
     }
+
     //alert(JSON.stringify(GraphicDataStore.getNewPageObject()));
+}
+
+NewPageBreadCrumbWidget.createPage = function(){
+
+    var ifValidPageName =validatePageName();
+    if(ifValidPageName !== false){
+        newPageObj = GraphicDataStore.getNewPageObject();
+        newPageObj.name =  ifValidPageName;
+        GraphicDataStore.setNewPageObject(newPageObj)
+        var isTypeValid = validatePageType();
+        if(isTypeValid !== false){
+            newPageObj.pageType =  isTypeValid;
+            GraphicDataStore.setNewPageObject(newPageObj)
+            var isRendererValid = validateRenderEngineType();
+            if(isRendererValid !== false){
+                newPageObj.renderEngineType =  isRendererValid;
+                GraphicDataStore.setNewPageObject(newPageObj)
+                var valid = step2_validation();
+                if(valid){
+                    $(document).trigger({
+                        type: "createPageEvent",
+                        pageObj: GraphicDataStore.getNewPageObject()
+                    });
+                    $("#dialog-form").dialog( "close" );
+                }
+            }
+        }
+    }
 }

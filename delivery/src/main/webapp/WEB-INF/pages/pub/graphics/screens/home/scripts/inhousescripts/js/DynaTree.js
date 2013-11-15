@@ -89,6 +89,7 @@ var DynaTree = function(){
                             var prefix=getUrlPrefix(action,"create");
                             newNode = createNode(e.pageObj.name,action,currentPath,flag);
                             TreePresenter.createDimension(prefix,action,e.pageObj.name,currentPath,flag,addNode);
+                            $(document).unbind("createPageEvent");
                         });
                         WidgetPresenter.createWidgetForNewPage("BreadCrumb");
 

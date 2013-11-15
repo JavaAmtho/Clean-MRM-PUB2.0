@@ -32,7 +32,6 @@ var GraphicDataStore = function(){
  */
 GraphicDataStore.setNewPageObject = function(obj){
     this.newPageObject = obj;
-
 }
 
 

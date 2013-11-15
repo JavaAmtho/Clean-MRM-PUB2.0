@@ -7,8 +7,13 @@ var validatePageName = function(){
         err++;
     }
     if(err == 0){
+        $(".rhino-active-bullet").removeClass("step-error").addClass("step-success");
+        $(".rhino-next").show();
+        $('.form-submit').hide();
+        $('.rhino-next').trigger('click');
         return name;
     }else{
+        $(".rhino-active-bullet").removeClass("step-success").addClass("step-error");
         return false;
     }
 };
@@ -28,6 +33,10 @@ var validatePageType = function(){
     }*/
 
     if(err == 0){
+       /* $(".rhino-active-bullet").removeClass("step-error").addClass("step-success");
+        $(".rhino-next").show();
+        $('.form-submit').hide();
+        $('.rhino-next').trigger('click');*/
         if(i==group.length)
             return "";
         return group[i].value;
@@ -53,6 +62,10 @@ var validateRenderEngineType = function(){
     }*/
 
     if(err == 0){
+        /*$(".rhino-active-bullet").removeClass("step-error").addClass("step-success");
+        $(".rhino-next").show();
+        $('.form-submit').hide();
+        $('.rhino-next').trigger('click');*/
         if(i==group.length)
             return "";
         return group[i].value;
@@ -69,8 +82,13 @@ var step2_validation = function(){
     var err = 0;
 
     if(err == 0){
+        $(".rhino-active-bullet").removeClass("step-error").addClass("step-success");
+        $(".rhino-next").show();
+        $('.form-submit').hide();
+        $('.rhino-next').trigger('click');
         return true;
     }else{
+        $(".rhino-active-bullet").removeClass("step-success").addClass("step-error");
         return false;
     }
 
