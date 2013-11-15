@@ -57,11 +57,16 @@ var NewPageBreadCrumbWidget = function(){
                         newPageObj.renderEngineType =  isRendererValid;
                         GraphicDataStore.setNewPageObject(newPageObj)
                     }
+
                     break;
                 case 'rhino-item1':
                     valid = step2_validation();
                     if(valid){
-                                                             alert(JSON.stringify(GraphicDataStore.getNewPageObject()));
+                        $(document).trigger({
+                            type: "createPageEvent",
+                            pageObj: GraphicDataStore.getNewPageObject()
+                        });
+                        $("#dialog-form").dialog( "close" );
                     }
                     break;
             }

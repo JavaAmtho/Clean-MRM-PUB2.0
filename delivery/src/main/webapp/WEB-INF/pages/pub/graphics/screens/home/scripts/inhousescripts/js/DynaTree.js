@@ -80,6 +80,16 @@ var DynaTree = function(){
             $(span).contextMenu({menu: type}, function(action, el, pos) {
                 if(action != "delete"){
                     if(action == "Page"){
+                        $(document).bind("createPageEvent", function createPageHandler(e) {
+                            parentNode = $.ui.dynatree.getNode(el);
+                            currentPath = parentNode.data.path+","+ parentNode.data.title;
+                            if(currentPath.indexOf("-1")==0)
+                                currentPath = currentPath.match(/([^,]*),(.*)/)[2];   //To remove -1 root folder
+                            var flag = isFolder(action);
+                            var prefix=getUrlPrefix(action,"create");
+                            newNode = createNode(e.pageObj.name,action,currentPath,flag);
+                            TreePresenter.createDimension(prefix,action,e.pageObj.name,currentPath,flag,addNode);
+                        });
                         WidgetPresenter.createWidgetForNewPage("BreadCrumb");
 
                     }else{
@@ -157,9 +167,8 @@ var DynaTree = function(){
         if(data){
             if((newNode.type !="Chapter"))
                 if(newNode.type !="Page")
-                if(newNode.type !="Assortment")
-                    newNode = data;
-
+                    if(newNode.type !="Assortment")
+                        newNode = data;
 
             parentNode.addChild(newNode).activate();
              var node_expand = parentNode.isExpanded();
@@ -169,6 +178,7 @@ var DynaTree = function(){
              if(parentNode.data.children==null){
                 parentNode.data.children=[];
              }
+
              parentNode.data.children.push(newNode);
             alertify.success(""+newNode.type+" added successfully");
         }

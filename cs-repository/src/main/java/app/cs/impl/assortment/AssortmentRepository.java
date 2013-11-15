@@ -68,7 +68,6 @@ public class AssortmentRepository implements IAssortmentRepository {
 		MultiDimensionalObject parent;
 		parent = finder.find(publication,
 				finder.getParentId(assortment.getPath()));
-		System.out.println(parent.getTitle());
 		parent.addchild(assortment);
 		return saveToRepository(publication);
 
