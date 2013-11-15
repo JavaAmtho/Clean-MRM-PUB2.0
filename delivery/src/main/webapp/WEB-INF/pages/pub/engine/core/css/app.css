@@ -25,10 +25,11 @@ body { background-color:#fff; }
 
     background: #fff;
     /*IE bugfix*/
-    padding:0;
+    padding-top:15px;
     margin:0;
     width:700px;
     height:400px;
+    overflow: hidden;
 
 }
 
@@ -54,7 +55,7 @@ body { background-color:#fff; }
 .form-btn{
     cursor: pointer;
     display: block;
-    float: right;
+    float: left;
 
     -moz-user-select: none;
     background: none repeat scroll 0 0 #6F95DC;
@@ -62,9 +63,9 @@ body { background-color:#fff; }
     color: #FFFFFF;
     display: block;
     margin: 0 20px 20px;
-    padding: 10px;
+    padding: 5px;
     text-align: center;
-    width: 125px;
+
     z-index: 10;
     font-weight: bold;
     text-decoration: none;
@@ -75,6 +76,19 @@ body { background-color:#fff; }
     filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#94b9e9, endColorstr=#4870d2)";
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#94b9e9, endColorstr=#4870d2)";
     font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+#btnCreatePage{
+    margin-left: 150px;
+    color: white;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#bab4b1), to(#45454b));
+    background-image: -moz-linear-gradient(#bab4b1, #45454b);
+    background-image: -webkit-linear-gradient(#bab4b1, #45454b);
+    background-image: -o-linear-gradient(#bab4b1, #45454b);
+}
+
+#btnChooseIndd{
+    margin-right: 250px;
 }
 
 .form-submit{
@@ -116,15 +130,17 @@ body { background-color:#fff; }
     font-weight: bold;
     padding: 5px;
     width: 200px;
+    text-align:right;
 }
 .form-right{
     float: left;
     width: 214px;
 }
-.row{
+.form_row{
     float: left;
     margin: 5px 0;
     width: 100%;
+    height:48px;
 }
 .form-step input[type='text']{
     border: 1px solid #CFCFCF;
@@ -158,7 +174,7 @@ select option{
 .form-error{
     color: red;
     font-size: 12px;
-    padding: 8px;
+    margin-top: 0;
 }
 
 .step-error{
@@ -178,4 +194,22 @@ select option{
 .bullet-desc{
     font-size: 14px;
     font-weight: bold;
+}
+
+#manual_creative_dynamic{
+    font-size: 12px;
+    font-weight: bold;
+    color: #444;
+    text-align: left;
+    padding-left: 210px;
+
+}
+
+#smart_comet{
+    font-size: 12px;
+    font-weight: bold;
+    color: #444;
+    text-align: left;
+    padding-left: 210px;
+
 }

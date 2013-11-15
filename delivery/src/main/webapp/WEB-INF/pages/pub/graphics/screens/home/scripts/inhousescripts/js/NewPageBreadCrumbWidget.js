@@ -13,8 +13,8 @@ var NewPageBreadCrumbWidget = function(){
         GraphicDataStore.setNewPageObject(newPageObj);
 
         $( "#dialog-form" ).dialog({
-            height: 450,
-            width: 750,
+            height: 330,
+            width: 470,
             modal: true,
             resizable: false,
             show: {
