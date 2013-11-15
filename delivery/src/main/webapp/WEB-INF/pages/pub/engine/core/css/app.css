@@ -34,10 +34,11 @@ body { background-color:#fff; }
 
 #slider li { list-style:none; }
 
-/*#dialog-form {
-    width:600px;
-    margin:50px auto;
-}*/
+#dialog-form {
+   /* width:600px;
+    margin:50px auto;*/
+    display: none;
+}
 
 #slider{
     color: #000;
