@@ -50,6 +50,7 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 	public PublicationAssetObject save(PublicationAssetObject chapter) {
 //		if(chapter.getType() != CommonConstants.Dimension.DIMENSION_TYPE_PUBLICATION){
 			String parentID = finder.getParentId(chapter.getPath());
+			System.out.println("PubAssetRepo");
 			PublicationAssetObject parent = neo4jRepository.getObjectByKeyValue("id", parentID, PublicationAssetObject.class);
 			GenericDomain publicationAssetObjectRelationship = chapter.isChildOf(parent, chapter.getType());
 			chapter = (PublicationAssetObject)neo4jRepository.saveData(chapter);

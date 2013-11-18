@@ -1,5 +1,6 @@
 package app.cs.impl.slicingdicing;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,18 +142,25 @@ public class TreeBuilder implements ITreeBuilder {
 	@Override
 	public List<MultiDimensionalObject> getLazyLoadLevelForDimensions(MultiDimensionalObject parentLevel, String structure) {
 		
+		List<MultiDimensionalObject> childrenOfCurrentLevel = new ArrayList<MultiDimensionalObject>();
 		String currentLevel = parentLevel.getType();
 		String[] orderedTypes = getTypes(structure);
+		if(!currentLevel.isEmpty()){
 		String nextLevel = getCurrentTreeLevel(currentLevel, orderedTypes);
 				
 		MultiDimensionalObject currentRoot = parentLevel;
 		List<String>groupIds = currentRoot.getGroupId();
-		List<MultiDimensionalObject> childrenOfCurrentLevel = 
-				getAllChildrenOfCurrentRoot(groupIds, nextLevel);
+		childrenOfCurrentLevel = getAllChildrenOfCurrentRoot(groupIds, nextLevel);
 		for (MultiDimensionalObject child : childrenOfCurrentLevel) {
 
 			child.setPath(removeMinusOne(currentRoot.getPath()) + "," + currentRoot.getName());
 
+		}
+		}else{
+			childrenOfCurrentLevel = getAllSeparatedTrees(orderedTypes[0]);
+			for (MultiDimensionalObject dimension : childrenOfCurrentLevel) {
+				dimension.setPath("-1");
+			}
 		}
 		
 		return childrenOfCurrentLevel;
