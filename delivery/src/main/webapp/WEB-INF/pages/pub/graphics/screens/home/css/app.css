@@ -91,6 +91,17 @@ body { background-color:#fff; }
     margin-right: 250px;
 }
 
+
+#pageName{
+    position: absolute;
+    margin-top: 24px;
+    left: 220px;
+}
+
+#pageNameText{
+    margin-top: 30px;
+}
+
 .form-submit{
     cursor: pointer;
     display: block;
