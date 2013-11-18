@@ -19,6 +19,7 @@ import app.cs.impl.model.MultiDimensionalObject;
 import app.cs.utils.FileUtils;
 
 import com.cs.data.core.nosql.mongodb.MongoRepository;
+import com.cs.data.core.nosql.neo4j.Neo4jRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DimensionRepositoryUnitTests {
@@ -35,6 +36,9 @@ public class DimensionRepositoryUnitTests {
 
 	@Mock
 	private MongoRepository repository;
+	
+	@Mock
+	private Neo4jRepository neo4jRepository;
 
 	@Mock
 	private DomainFactory factory;
@@ -49,7 +53,7 @@ public class DimensionRepositoryUnitTests {
 	public void setUp() {
 
 		dimensionRepository = new DimensionRepository(fileUtils, cache,
-				repository, factory, viewStructure, imageLookup);
+				repository, factory, viewStructure, imageLookup,neo4jRepository);
 
 	}
 

@@ -28,13 +28,13 @@
 	
 	<!-- Spring Data NEO4j Configuration -->
 	
-	<!-- <bean id="restGraphDatabase" class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase">
+	<bean id="restGraphDatabase" class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase">
 	  <constructor-arg value="http://localhost:7474/db/data/" />
 	</bean>
 
 	<bean id="neo4jTemplate" class="org.springframework.data.neo4j.support.Neo4jTemplate">
 		<constructor-arg name="graphDatabase" ref="restGraphDatabase" />
-	</bean> -->
+	</bean>
 	 
 
 

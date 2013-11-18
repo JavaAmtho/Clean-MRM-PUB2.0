@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import app.cs.impl.model.MultiDimensionalObject;
+import app.cs.impl.model.PublicationAssetObject;
+import app.cs.impl.publicationasset.PublicationAssetRepository;
 import app.cs.interfaces.dimension.IDimensionRepository;
 import app.cs.interfaces.slicingdicing.ITreeBuilder;
 import app.cs.utils.ArrayUtils;
@@ -20,6 +22,8 @@ public class TreeBuilder implements ITreeBuilder {
 
 	/** The repository. */
 	private IDimensionRepository repository;
+	
+	private PublicationAssetRepository publicationAssetRepository; 
 
 	/** The utils. */
 	private ArrayUtils utils;
@@ -36,8 +40,10 @@ public class TreeBuilder implements ITreeBuilder {
 	 *            the repository
 	 */
 	@Autowired
-	public TreeBuilder(IDimensionRepository repository) {
+	public TreeBuilder(IDimensionRepository repository,
+			PublicationAssetRepository publicationAssetRepository) {
 		this.repository = repository;
+		this.publicationAssetRepository = publicationAssetRepository;
 	}
 
 	/*
@@ -57,6 +63,12 @@ public class TreeBuilder implements ITreeBuilder {
 		}
 
 		return rootNodes;
+	}
+	
+	public List<PublicationAssetObject> getPublicationAssets(PublicationAssetObject publication){
+		
+		return publicationAssetRepository.getPublicationAssetsUnderPublication(publication);
+		
 	}
 
 	/**
@@ -108,11 +120,13 @@ public class TreeBuilder implements ITreeBuilder {
 		String[] typesOfDimensions = skipFirstOrderType(orderTypes);
 		if (typesOfDimensions.length <= 0)
 			return;
-		List<MultiDimensionalObject> childrenOfCurrentLevel = getAllChildrenOfCurrentRoot(
-				groupIds, typesOfDimensions[0]);
-
+		
+		List<MultiDimensionalObject> childrenOfCurrentLevel;
+			childrenOfCurrentLevel = getAllChildrenOfCurrentRoot(
+					groupIds, typesOfDimensions[0]);
+		
 		currentRoot.setChildren(childrenOfCurrentLevel);
-
+		
 		for (MultiDimensionalObject child : childrenOfCurrentLevel) {
 
 			child.setPath(removeMinusOne(currentRoot.getPath()) + ","
@@ -123,6 +137,55 @@ public class TreeBuilder implements ITreeBuilder {
 		}
 
 	}
+	
+	@Override
+	public List<MultiDimensionalObject> getLazyLoadLevelForDimensions(MultiDimensionalObject parentLevel, String structure) {
+		
+		String currentLevel = parentLevel.getType();
+		String[] orderedTypes = getTypes(structure);
+		String nextLevel = getCurrentTreeLevel(currentLevel, orderedTypes);
+				
+		MultiDimensionalObject currentRoot = parentLevel;
+		List<String>groupIds = currentRoot.getGroupId();
+		List<MultiDimensionalObject> childrenOfCurrentLevel = 
+				getAllChildrenOfCurrentRoot(groupIds, nextLevel);
+		for (MultiDimensionalObject child : childrenOfCurrentLevel) {
+
+			child.setPath(removeMinusOne(currentRoot.getPath()) + "," + currentRoot.getName());
+
+		}
+		
+		return childrenOfCurrentLevel;
+
+	}
+	
+	@Override
+	public List<PublicationAssetObject> getLazyLoadObjectForPublicationAssets(PublicationAssetObject parentLevel){
+		PublicationAssetObject currentRoot = parentLevel;
+		List<PublicationAssetObject> childrenOfCurrentLevel = getPublicationAssets(currentRoot);
+		for (PublicationAssetObject child : childrenOfCurrentLevel) {
+
+			child.setPath(removeMinusOne(currentRoot.getPath()) + "," + currentRoot.getName());
+
+		}
+		return childrenOfCurrentLevel;
+	}
+	
+
+	private String getCurrentTreeLevel(String currentLevel, String[] orderedTypes) {
+		String nextLevel = "";
+		for (int i = 0 ; i < orderedTypes.length ; i++) {
+			if(orderedTypes[i].equals(currentLevel)){
+				nextLevel = orderedTypes[i+1]; 
+			}
+		}
+		return nextLevel;
+	}
+	
+
+	
+	
+	 
 
 	protected String removeMinusOne(String path) {
 		path = path.startsWith("-1") && path.length() > 2 ? path.substring(3)

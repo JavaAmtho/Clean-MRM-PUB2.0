@@ -11,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import app.cs.actions.publicationplanning.perspective.SwitchPerspective;
 import app.cs.model.request.StringRequest;
+import app.cs.model.request.SwitchPerspectiveRequest;
 import app.cs.model.response.TreeResponse;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -24,9 +25,12 @@ public class SwitchPerspectiveControllerUnitTests{
     @Mock
 	private StringRequest request;
     
+    @Mock
+    private SwitchPerspectiveRequest lazyLoadRequest;
+    
     @Before
     public void setUp(){
-    	switchPerspectiveController = new SwitchPerspectiveController(switchPerspective, request);
+    	switchPerspectiveController = new SwitchPerspectiveController(switchPerspective, request, lazyLoadRequest);
     }
 	
     

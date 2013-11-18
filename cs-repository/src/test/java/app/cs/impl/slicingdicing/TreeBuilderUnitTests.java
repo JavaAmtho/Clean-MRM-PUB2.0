@@ -16,6 +16,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import app.cs.impl.dimension.DimensionRepository;
 import app.cs.impl.model.MultiDimensionalObject;
+import app.cs.impl.publicationasset.PublicationAssetRepository;
 import app.cs.interfaces.dimension.IInMemoryDimensionGroup;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -28,10 +29,12 @@ public class TreeBuilderUnitTests {
 
 	@Mock
 	private DimensionRepository dimensionRepository;
+	
+	@Mock PublicationAssetRepository publicationAssetRepository;
 
 	@Before
 	public void setUp() {
-		treeBuilder = new TreeBuilder(dimensionRepository);
+		treeBuilder = new TreeBuilder(dimensionRepository,publicationAssetRepository);
 	}
 
 	public void itShouldParseGivenStringWithDelimeter() {

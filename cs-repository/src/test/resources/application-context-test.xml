@@ -5,6 +5,7 @@
 	xmlns:hdp="http://www.springframework.org/schema/hadoop" xmlns:mongo="http://www.springframework.org/schema/data/mongo"
 	xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:neo4j="http://www.springframework.org/schema/data/neo4j"
 	xsi:schemaLocation="
          http://www.springframework.org/schema/beans
          http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -15,13 +16,26 @@
          http://www.springframework.org/schema/data/mongo
          http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
          http://www.springframework.org/schema/aop
-         http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+         http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+         http://www.springframework.org/schema/data/neo4j
+         http://www.springframework.org/schema/data/neo4j/spring-neo4j-2.0.xsd">
 
 
 	<context:annotation-config />
 
 	<context:component-scan base-package="app.cs" />
 	<context:component-scan base-package="com.cs.data" />
+	
+	<!-- Spring Data NEO4j Configuration -->
+	
+<!-- 	<bean id="restGraphDatabase" class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase">
+	  <constructor-arg value="http://localhost:7474/db/data/" />
+	</bean>
+
+	<bean id="neo4jTemplate" class="org.springframework.data.neo4j.support.Neo4jTemplate">
+		<constructor-arg name="graphDatabase" ref="restGraphDatabase" />
+	</bean> -->
+	 
 
 	<!-- Spring Data MongoDB Configuration -->
 
@@ -50,6 +64,10 @@
 	<bean id="noSqlRepository" class="com.cs.data.core.nosql.mongodb.MongoRepository">
 
 	</bean>
+	
+	<bean id="noSqlNeo4jRepository" class="com.cs.data.core.nosql.neo4j.Neo4jRepository">
+
+	</bean>
 
 
 	<bean id="inMemoryNoSqlRepository" class="com.cs.data.core.nosql.redis.RedisRepository">
@@ -57,6 +75,7 @@
 	</bean>
 
 	<bean id="update" class="org.springframework.data.mongodb.core.query.Update"></bean>
+
 
 	<bean id="mamRepository" class="app.cs.impl.mam.MAMRepository">
 

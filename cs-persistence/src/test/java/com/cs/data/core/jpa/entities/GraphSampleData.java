@@ -1,28 +1,22 @@
 package com.cs.data.core.jpa.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
+import org.neo4j.graphdb.Direction;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.GraphId;
+import org.springframework.data.neo4j.annotation.GraphProperty;
 import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedToVia;
 
 import com.cs.data.api.core.GenericDomain;
-@Table(name = "SampleDATA")
+
 @NodeEntity
-@Entity
 public class GraphSampleData implements GenericDomain,Serializable {
 
-	public List<SampleDataRelationship> getRelationships() {
-		return relationships;
-	}
-
-	public void setRelationships(List<SampleDataRelationship> relationships) {
-		this.relationships = relationships;
-	}
+	
 
 	/**
 	 * 
@@ -33,15 +27,23 @@ public class GraphSampleData implements GenericDomain,Serializable {
 	private Long nodeID;
 	
 	private static final String objectKey = "SampleDATA";
-	
 	private String name;
 	
 	private Long id;
 	
-	private List<SampleDataRelationship> relationships = new ArrayList<SampleDataRelationship>(); 
+	@Fetch @RelatedToVia(type = "CHILD_OF" , direction = Direction.OUTGOING)
+	private Set<SampleDataRelationship> relationships = new HashSet<SampleDataRelationship>(); 
 	
 	public GraphSampleData() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public Set<SampleDataRelationship> getRelationships() {
+		return relationships;
+	}
+
+	public void setRelationships(Set<SampleDataRelationship> relationships) {
+		this.relationships = relationships;
 	}
 	
 	public GraphSampleData(Long id, String name){

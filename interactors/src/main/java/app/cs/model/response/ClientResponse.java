@@ -1,5 +1,7 @@
 package app.cs.model.response;
 
+import com.cs.data.api.core.GenericDomain;
+
 /**
  * The Class CustomResponse.
  */
@@ -92,6 +94,12 @@ public class ClientResponse implements ResponseModel {
 	 */
 	public void setElements(String elemnts) {
 		this.elements = elemnts;
+	}
+
+	@Override
+	public GenericDomain getResponse() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

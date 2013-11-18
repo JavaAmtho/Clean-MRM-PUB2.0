@@ -39,7 +39,6 @@ public class MamRepository implements AssetsRepository {
 	@Autowired
 	public MamRepository(IRestClient client) {
 		this.client = client;
-
 	}
 
 	@Override

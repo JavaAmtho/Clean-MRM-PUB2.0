@@ -2,6 +2,8 @@ package app.cs.model.response;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import com.cs.data.api.core.GenericDomain;
+
 public class PIMOrMAMNode implements ResponseModel {
 
 	@Override
@@ -91,6 +93,12 @@ public class PIMOrMAMNode implements ResponseModel {
 
 	public void setService(String service) {
 		this.service = service;
+	}
+
+	@Override
+	public GenericDomain getResponse() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

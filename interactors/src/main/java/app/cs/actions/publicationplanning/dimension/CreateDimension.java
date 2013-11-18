@@ -8,11 +8,15 @@ import org.springframework.stereotype.Component;
 import app.cs.boundary.delivery.Interactor;
 import app.cs.impl.model.DimensionInfo;
 import app.cs.impl.model.MultiDimensionalObject;
+import app.cs.impl.model.PublicationAssetObject;
 import app.cs.interfaces.dimension.IDimensionRepository;
+import app.cs.interfaces.publicationasset.IPublicationAssetRepository;
 import app.cs.model.request.CreateDimensionRequest;
 import app.cs.model.request.RequestModel;
 import app.cs.model.response.MultiDimensionalObjectResponse;
+import app.cs.model.response.PublicationAssetObjectResponse;
 import app.cs.model.response.ResponseModel;
+import app.cs.utils.CommonConstants;
 
 /**
  * The Class DimensionService. TODO remove out all annotation from class
@@ -22,6 +26,8 @@ public class CreateDimension implements Interactor {
 
 	/** The dimension repository. */
 	private IDimensionRepository dimensionRepository;
+	
+	private IPublicationAssetRepository publicationAssetRepository;
 
 	/** The contentobject. */
 	private final String CONTENTOBJECT = "MultiDimensionalObject";
@@ -35,24 +41,43 @@ public class CreateDimension implements Interactor {
 	 *            the tree builder
 	 */
 	@Autowired
-	public CreateDimension(IDimensionRepository dimensionRepository) {
+	public CreateDimension(IDimensionRepository dimensionRepository,
+			IPublicationAssetRepository publicationAssetRepository) {
 
 		this.dimensionRepository = dimensionRepository;
+		this.publicationAssetRepository = publicationAssetRepository;
 
 	}
 
 	public ResponseModel execute(RequestModel model) {
 
 		CreateDimensionRequest request = (CreateDimensionRequest) model;
+		if(CommonConstants.DIMENSIONS_TYPE_ARRAY.contains(request.getType())){
+			
+			MultiDimensionalObject dimension = (MultiDimensionalObject) dimensionRepository
+					.getDomain(CONTENTOBJECT);
+	
+			setDimensionAttributes(dimension, request.getType(), request.getName(),
+					request.getPath(), request.isFolder(),
+					request.getDimensionInfo());
+			return new MultiDimensionalObjectResponse(
+					dimensionRepository.createDimension(dimension));
+		}
+		else if(CommonConstants.PUBLICATION_ASSETS_TYPE_ARRAY.contains(request.getType())){
+			PublicationAssetObject publicationAsset = new PublicationAssetObject();
+			setPublicationAssetAttributes(request, publicationAsset);
+			return new PublicationAssetObjectResponse(
+					publicationAssetRepository.save(publicationAsset));
+		}
+		return null;
+	}
 
-		MultiDimensionalObject dimension = (MultiDimensionalObject) dimensionRepository
-				.getDomain(CONTENTOBJECT);
-
-		setDimensionAttributes(dimension, request.getType(), request.getName(),
-				request.getPath(), request.isFolder(),
-				request.getDimensionInfo());
-		return new MultiDimensionalObjectResponse(
-				dimensionRepository.createDimension(dimension));
+	protected void setPublicationAssetAttributes(CreateDimensionRequest request,
+			PublicationAssetObject publicationAsset) {
+		publicationAsset.setName(request.getName());
+		publicationAsset.setPath(request.getPath());
+		publicationAsset.setType(request.getType());
+		publicationAsset.setFolder(request.isFolder());
 	}
 
 	/**

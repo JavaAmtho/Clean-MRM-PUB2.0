@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.cs.data.api.core.GenericDomain;
+
 import app.cs.impl.model.PageRule;
 
 @Component
@@ -26,6 +28,12 @@ public class PageRulesResponse implements ResponseModel {
 
 	public void setLogicalPageID(String logicalPageID) {
 		this.logicalPageID = logicalPageID;
+	}
+
+	@Override
+	public GenericDomain getResponse() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

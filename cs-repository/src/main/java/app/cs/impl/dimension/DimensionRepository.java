@@ -13,11 +13,14 @@ import org.springframework.stereotype.Component;
 import app.cs.impl.delegate.factory.DomainFactory;
 import app.cs.impl.inmemory.InMemoryViewStructure;
 import app.cs.impl.model.MultiDimensionalObject;
+import app.cs.impl.model.PublicationAssetObject;
 import app.cs.interfaces.dimension.IDimensionRepository;
 import app.cs.interfaces.dimension.IInMemoryDimensionGroup;
+import app.cs.utils.CommonConstants;
 import app.cs.utils.FileUtils;
 
 import com.cs.data.api.core.nosql.mongodb.NoSqlRepository;
+import com.cs.data.api.core.nosql.neo4j.NoSqlNeo4jRepository;
 
 /**
  * The Class DimensionRepository
@@ -34,6 +37,8 @@ public class DimensionRepository implements IDimensionRepository {
 	private InMemoryViewStructure viewStructure;
 
 	private NoSqlRepository mongoRepository;
+	
+	private NoSqlNeo4jRepository neo4jRepository;
 
 	private DomainFactory factory;
 
@@ -57,10 +62,12 @@ public class DimensionRepository implements IDimensionRepository {
 	public DimensionRepository(FileUtils fileUtils,
 			IInMemoryDimensionGroup groupCache,
 			NoSqlRepository noSqlRepository, DomainFactory factory,
-			InMemoryViewStructure viewStructure, ImageLookup imageLookup) {
+			InMemoryViewStructure viewStructure, ImageLookup imageLookup,
+			NoSqlNeo4jRepository noSqlNeo4jRepository) {
 		this.fileUtils = fileUtils;
 		this.groupCache = groupCache;
 		this.mongoRepository = noSqlRepository;
+		this.neo4jRepository = noSqlNeo4jRepository;
 		this.factory = factory;
 		this.viewStructure = viewStructure;
 		this.imageLookup = imageLookup;
@@ -100,6 +107,11 @@ public class DimensionRepository implements IDimensionRepository {
 
 	public void save(MultiDimensionalObject dimension) {
 		mongoRepository.save(dimension);
+		if(dimension.getType().equalsIgnoreCase(CommonConstants.Dimension.DIMENSION_TYPE_PUBLICATION)){
+			PublicationAssetObject partialDataForNeo4j = new PublicationAssetObject();
+			partialDataForNeo4j.setId(dimension.getId());
+			neo4jRepository.saveData(partialDataForNeo4j);
+		}
 	}
 
 	private void createDimensionWithExistingGroupId(

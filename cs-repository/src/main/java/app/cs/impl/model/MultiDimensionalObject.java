@@ -2,14 +2,22 @@ package app.cs.impl.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.neo4j.graphdb.Direction;
+import org.springframework.data.neo4j.annotation.Fetch;
+import org.springframework.data.neo4j.annotation.GraphId;
+import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.springframework.data.neo4j.annotation.RelatedToVia;
 import org.springframework.stereotype.Component;
 
 import com.cs.data.api.core.GenericDomain;
 
 @Component
+@NodeEntity
 public class MultiDimensionalObject implements Serializable, GenericDomain {
 
 	private static final long serialVersionUID = 1L;
@@ -21,6 +29,9 @@ public class MultiDimensionalObject implements Serializable, GenericDomain {
 	private String budgetOwner;
 
 	private List<MultiDimensionalObject> children;
+	
+//	@GraphId
+	private Long graphID;
 
 	private String currency;
 	private DimensionInfo dimensionInfo;
@@ -39,6 +50,15 @@ public class MultiDimensionalObject implements Serializable, GenericDomain {
 	private String title;
 
 	private String type;
+
+
+	public Long getGraphID() {
+		return graphID;
+	}
+
+	public void setGraphID(Long graphID) {
+		this.graphID = graphID;
+	}
 
 	public MultiDimensionalObject() {
 	}
@@ -73,6 +93,16 @@ public class MultiDimensionalObject implements Serializable, GenericDomain {
 		this.title = title;
 		this.path = path;
 	}
+	
+	public MultiDimensionalObject(String id, String type, 
+			String path,List<String> groupID) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.path = path;
+		this.groupIds = groupID;
+	}
+
 
 	public void addAssortment(Assortment assortment) {
 		List<Assortment> newChildren;
@@ -109,7 +139,7 @@ public class MultiDimensionalObject implements Serializable, GenericDomain {
 
 	}
 
-	@Override
+	/*@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -122,7 +152,7 @@ public class MultiDimensionalObject implements Serializable, GenericDomain {
 		else
 			return false;
 
-	}
+	}*/
 
 	@JsonProperty("previewImage")
 	public String getPreviewImage() {
@@ -323,6 +353,7 @@ public class MultiDimensionalObject implements Serializable, GenericDomain {
 	public void setType(String type) {
 		this.type = type;
 	}
+
 
 	@Override
 	public String toString() {

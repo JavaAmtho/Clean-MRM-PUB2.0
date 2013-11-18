@@ -7,11 +7,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cs.data.api.core.GenericDomain;
+
 import app.cs.boundary.delivery.Interactor;
 import app.cs.impl.model.DimensionInfo;
 import app.cs.impl.model.MultiDimensionalObject;
 import app.cs.model.request.CreateDimensionRequest;
 import app.cs.model.response.MultiDimensionalObjectResponse;
+import app.cs.model.response.ResponseModel;
 
 /**
  * The Class NodeController.
@@ -60,19 +63,19 @@ public class CreateDimensionController {
 	 */
 	@RequestMapping(value = { CREATE })
 	public @ResponseBody
-	MultiDimensionalObject create(@PathVariable("type") String type,
+	GenericDomain create(@PathVariable("type") String type,
 			@PathVariable("name") String name,
 			@PathVariable("path") String path,
 			@PathVariable("folder") boolean isFolder,
 			@RequestBody DimensionInfo dimensionInfo) {
-		System.out.println("Path==>" + path);
+		System.out.println("Controller");
 		createDimensionRequest.setFolder(isFolder);
 		createDimensionRequest.setName(name);
 		createDimensionRequest.setPath(path);
 		createDimensionRequest.setType(type);
 		createDimensionRequest.setDimensionInfo(dimensionInfo);
 
-		return ((MultiDimensionalObjectResponse) createDimension
+		return ((ResponseModel) createDimension
 				.execute(createDimensionRequest)).getResponse();
 
 	}
