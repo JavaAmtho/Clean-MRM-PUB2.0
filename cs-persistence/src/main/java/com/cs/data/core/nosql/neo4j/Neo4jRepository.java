@@ -1,7 +1,5 @@
 package com.cs.data.core.nosql.neo4j;
 
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,18 +9,17 @@ import java.util.Map;
 import org.neo4j.graphdb.traversal.Evaluators;
 import org.neo4j.graphdb.traversal.TraversalDescription;
 import org.neo4j.kernel.Traversal;
+import org.neo4j.rest.graphdb.entity.RestNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.neo4j.conversion.Result;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
+import org.springframework.data.neo4j.support.mapping.Neo4jPersistentEntityImpl;
 import org.springframework.data.neo4j.template.Neo4jOperations;
 import org.springframework.stereotype.Repository;
 
 import com.cs.data.api.core.GenericDomain;
 import com.cs.data.api.core.nosql.neo4j.NoSqlNeo4jRepository;
-import com.github.mustachejava.DefaultMustacheFactory;
-import com.github.mustachejava.Mustache;
-import com.github.mustachejava.MustacheFactory;
 
 @Repository
 public class Neo4jRepository implements NoSqlNeo4jRepository {
@@ -40,20 +37,24 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 	@Override
 	public <T> T getObjectByKeyValue(String key, String value, Class<T> class1) {
 
-		MustacheFactory mustacheFactory = new DefaultMustacheFactory();
-		Mustache queryGetByKeyMustache = mustacheFactory.compile("resources/Mustache/neo4jQueryTemplate.mustache");
+		/*MustacheFactory mustacheFactory = new DefaultMustacheFactory();
+		Mustache queryGetByKeyMustache = mustacheFactory.compile("neo4jQueryTemplate.mustache");
 		Map<String,Object> mustacheVariables = new HashMap<>();
+		System.out.println("ObjectBYKEYVALUE");
 		mustacheVariables.put(MUSTACHE_TEMPLATE_VARIABLE_QUERY_GET_BY_KEY, new Boolean(true));
 		mustacheVariables.put(MUSTACHE_TEMPLATE_VARIABLE_KEY, key);
 		mustacheVariables.put(MUSTACHE_TEMPLATE_VARIABLE_VALUE, value);
-		Writer writer = new StringWriter();
+		System.out.println("ObjectBYKEYVALUE");
+		Writer writer = new StringWriter();*/
 		//"START n = node(*) WHERE (n." + key + " = \"" + value + "\") RETURN n"
-		String query = queryGetByKeyMustache.execute(writer, mustacheVariables).toString();
+		String query = /*queryGetByKeyMustache.execute(writer, mustacheVariables).toString()*/"START n = node(*) WHERE (n." + key + " = \"" + value + "\") RETURN n";
+		System.out.println(query);
 		Result<Map<String, Object>> queryResult = neo4jTemplate.query(query, new HashMap<String,Object>());
+		System.out.println(queryResult);
 		EndResult<T> endResult = queryResult.to(class1);
-		/*Neo4jPersistentEntityImpl persistentEntity = ((Neo4jTemplate)neo4jTemplate).getInfrastructure().getMappingContext().getPersistentEntity(class1);
+/*		Neo4jPersistentEntityImpl persistentEntity = ((Neo4jTemplate)neo4jTemplate).getInfrastructure().getMappingContext().getPersistentEntity(class1);
 		List<T> ret = new ArrayList<>();
-		Iterator iterator = result.iterator();
+		Iterator iterator = endResult.iterator();
 		while(iterator.hasNext()){
 			Map resultMap = (Map)iterator.next();
 			RestNode a = (RestNode)resultMap.get("n");

@@ -33,12 +33,14 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 	}
 	
 	@Override
-	public List<PublicationAssetObject> getPublicationAssetsUnderPublication(PublicationAssetObject publication){
+	public List<PublicationAssetObject> getPublicationAssetsUnderParent(PublicationAssetObject publication){
 		
-		Iterable<PublicationAssetObject> iterable = neo4jRepository.traverseOneLevelFromNodeExcludeStart(publication,PublicationAssetObject.class);
+		PublicationAssetObject parentNode = neo4jRepository.getObjectByKeyValue("id", publication.getId(), PublicationAssetObject.class);
+		Iterable<PublicationAssetObject> iterable = neo4jRepository.traverseOneLevelFromNodeExcludeStart(parentNode,PublicationAssetObject.class);
 		Iterator<PublicationAssetObject> iterator = iterable.iterator();
 		List<PublicationAssetObject> listOfPublicationAssets = new ArrayList<PublicationAssetObject>();
 		while(iterator.hasNext()){
+			System.out.println("HELLO");
 			PublicationAssetObject publicationAsset = iterator.next();
 			listOfPublicationAssets.add(publicationAsset);
 		}
@@ -51,8 +53,12 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 //		if(chapter.getType() != CommonConstants.Dimension.DIMENSION_TYPE_PUBLICATION){
 			String parentID = finder.getParentId(chapter.getPath());
 			System.out.println("PubAssetRepo");
+			System.out.println("parentID =>" + parentID);
 			PublicationAssetObject parent = neo4jRepository.getObjectByKeyValue("id", parentID, PublicationAssetObject.class);
+			System.out.println("HERE");
+			System.out.println("ParentGraphID => " + parent.getGraphID());
 			GenericDomain publicationAssetObjectRelationship = chapter.isChildOf(parent, chapter.getType());
+			chapter.setId(chapter.getName());
 			chapter = (PublicationAssetObject)neo4jRepository.saveData(chapter);
 			neo4jRepository.saveData(publicationAssetObjectRelationship);
 /*		}

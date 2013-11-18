@@ -21,7 +21,11 @@ public class PublicationAssetObjectRelationShip implements GenericDomain {
 	private GenericDomain childObject;
 	
 	private String typeOfChild;
-
+	
+	public PublicationAssetObjectRelationShip() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public PublicationAssetObjectRelationShip(GenericDomain parent,
 			GenericDomain child, String typeOfChild){
 		

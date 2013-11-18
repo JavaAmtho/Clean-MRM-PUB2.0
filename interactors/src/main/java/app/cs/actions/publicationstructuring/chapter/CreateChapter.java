@@ -8,11 +8,16 @@ import org.springframework.stereotype.Component;
 import app.cs.boundary.delivery.Interactor;
 import app.cs.impl.model.DimensionInfo;
 import app.cs.impl.model.MultiDimensionalObject;
+import app.cs.impl.model.PublicationAssetObject;
 import app.cs.interfaces.chapter.IChapterRepository;
+import app.cs.interfaces.publicationasset.IPublicationAssetRepository;
 import app.cs.model.request.CreateChapterRequest;
+import app.cs.model.request.CreateDimensionRequest;
 import app.cs.model.request.RequestModel;
+import app.cs.model.response.PublicationAssetObjectResponse;
 import app.cs.model.response.ResponseModel;
 import app.cs.model.response.StringResponse;
+import app.cs.utils.CommonConstants;
 
 /**
  * The Class ChapterService.
@@ -23,6 +28,8 @@ public class CreateChapter implements Interactor {
 	/** The contentobject. */
 	private final String CONTENTOBJECT = "MultiDimensionalObject";
 
+	private IPublicationAssetRepository publicationAssetRepository;
+	
 	/** The chapter repository. */
 	private IChapterRepository chapterRepository;
 
@@ -34,19 +41,25 @@ public class CreateChapter implements Interactor {
 	 * @param factory
 	 */
 	@Autowired
-	public CreateChapter(IChapterRepository chapterRepository) {
+	public CreateChapter(/*IChapterRepository chapterRepository*/IPublicationAssetRepository publicationAssetRepository) {
 		// TODO Auto-generated constructor stub
-		this.chapterRepository = chapterRepository;
+//		this.chapterRepository = chapterRepository;
+		this.publicationAssetRepository = publicationAssetRepository;
 	}
 
 	public ResponseModel execute(RequestModel model) {
 
 		CreateChapterRequest request = (CreateChapterRequest) model;
-		MultiDimensionalObject chapter = (MultiDimensionalObject) chapterRepository
-				.getDomain(CONTENTOBJECT);
-		setChapterAtrributes(chapter, request.getType(), request.getName(),
-				request.getPath(), request.isFolder());
-		return new StringResponse(chapterRepository.save(chapter));
+		/*MultiDimensionalObject chapter = (MultiDimensionalObject) chapterRepository
+				.getDomain(CONTENTOBJECT);*/
+		/*setChapterAtrributes(chapter, request.getType(), request.getName(),
+				request.getPath(), request.isFolder());*/
+//		return new StringResponse(chapterRepository.save(chapter));
+			System.out.println("pub assets create dim");
+			PublicationAssetObject publicationAsset = new PublicationAssetObject();
+			setPublicationAssetAttributes(request, publicationAsset);
+			return new PublicationAssetObjectResponse(
+					publicationAssetRepository.save(publicationAsset));
 	}
 
 	/**
@@ -74,6 +87,14 @@ public class CreateChapter implements Interactor {
 		chapter.setDimensionInfo(new DimensionInfo());
 		chapter.setChildren(new ArrayList<MultiDimensionalObject>());
 
+	}
+	
+	protected void setPublicationAssetAttributes(CreateChapterRequest request,
+			PublicationAssetObject publicationAsset) {
+		publicationAsset.setName(request.getName());
+		publicationAsset.setPath(request.getPath());
+		publicationAsset.setType(request.getType());
+		publicationAsset.setFolder(request.isFolder());
 	}
 
 }

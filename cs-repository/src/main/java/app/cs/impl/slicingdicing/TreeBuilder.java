@@ -68,7 +68,7 @@ public class TreeBuilder implements ITreeBuilder {
 	
 	public List<PublicationAssetObject> getPublicationAssets(PublicationAssetObject publication){
 		
-		return publicationAssetRepository.getPublicationAssetsUnderPublication(publication);
+		return publicationAssetRepository.getPublicationAssetsUnderParent(publication);
 		
 	}
 
@@ -173,7 +173,7 @@ public class TreeBuilder implements ITreeBuilder {
 		List<PublicationAssetObject> childrenOfCurrentLevel = getPublicationAssets(currentRoot);
 		for (PublicationAssetObject child : childrenOfCurrentLevel) {
 
-			child.setPath(removeMinusOne(currentRoot.getPath()) + "," + currentRoot.getName());
+			child.setPath(removeMinusOne(currentRoot.getPath()) + "," + currentRoot.getId());
 
 		}
 		return childrenOfCurrentLevel;

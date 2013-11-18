@@ -52,8 +52,6 @@ public class CreateDimension implements Interactor {
 	public ResponseModel execute(RequestModel model) {
 
 		CreateDimensionRequest request = (CreateDimensionRequest) model;
-		System.out.println("Create Dimension");
-		if(CommonConstants.DIMENSIONS_TYPE_ARRAY.contains(request.getType())){
 			
 			MultiDimensionalObject dimension = (MultiDimensionalObject) dimensionRepository
 					.getDomain(CONTENTOBJECT);
@@ -63,24 +61,8 @@ public class CreateDimension implements Interactor {
 					request.getDimensionInfo());
 			return new MultiDimensionalObjectResponse(
 					dimensionRepository.createDimension(dimension));
-		}
-		else if(CommonConstants.PUBLICATION_ASSETS_TYPE_ARRAY.contains(request.getType())){
-			System.out.println("pub assets create dim");
-			PublicationAssetObject publicationAsset = new PublicationAssetObject();
-			setPublicationAssetAttributes(request, publicationAsset);
-			return new PublicationAssetObjectResponse(
-					publicationAssetRepository.save(publicationAsset));
-		}
-		return null;
 	}
 
-	protected void setPublicationAssetAttributes(CreateDimensionRequest request,
-			PublicationAssetObject publicationAsset) {
-		publicationAsset.setName(request.getName());
-		publicationAsset.setPath(request.getPath());
-		publicationAsset.setType(request.getType());
-		publicationAsset.setFolder(request.isFolder());
-	}
 
 	/**
 	 * Sets the dimension attributes.

@@ -58,8 +58,11 @@ public class SwitchPerspective implements Interactor{
 		}
 		else if(model instanceof SwitchPerspectiveRequest){
 			SwitchPerspectiveRequest request = (SwitchPerspectiveRequest)model;
-			if(CommonConstants.DIMENSIONS_TYPE_ARRAY.
-					contains(request.getType())){
+			System.out.println(request.getType());
+			System.out.println(CommonConstants.PUBLICATION_ASSETS_TYPE_ARRAY);
+			if(CommonConstants.PUBLICATION_ASSETS_TYPE_ARRAY.contains(request.getType()) || 
+					CommonConstants.Dimension.DIMENSION_TYPE_PUBLICATION.equals(request.getType())){
+				
 				PublicationAssetObject parentLevel = new PublicationAssetObject(request.getId(), request.getType(), request.getPath());
 				return new LazyTreePublicationAssetResponse(treeBuilder.getLazyLoadObjectForPublicationAssets(parentLevel));
 			}

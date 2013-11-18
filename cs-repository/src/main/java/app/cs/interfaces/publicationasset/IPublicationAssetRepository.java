@@ -6,7 +6,7 @@ import app.cs.impl.model.PublicationAssetObject;
 
 public interface IPublicationAssetRepository {
 
-	public abstract List<PublicationAssetObject> getPublicationAssetsUnderPublication(
+	public abstract List<PublicationAssetObject> getPublicationAssetsUnderParent(
 			PublicationAssetObject publication);
 
 	public abstract PublicationAssetObject save(PublicationAssetObject chapter);
