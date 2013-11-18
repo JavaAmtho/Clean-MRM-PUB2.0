@@ -3,7 +3,7 @@ var validatePageName = function(){
     var name = $('#pageName').val();
     name = name.replace(/^\s+|\s+$/g,'')
     if(name == ''){
-        $('#pageName').parent().parent().find('.form-error').html("Page Name Can Not Be Empty");
+        $('#pageNameText').html("Page Name Can Not Be Empty");
         err++;
     }
     if(err == 0){
