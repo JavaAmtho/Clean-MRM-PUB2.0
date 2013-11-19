@@ -87,8 +87,8 @@ var DynaTree = function(){
                                 currentPath = currentPath.match(/([^,]*),(.*)/)[2];   //To remove -1 root folder
                             var flag = isFolder(action);
                             var prefix=getUrlPrefix(action,"create");
-                            newNode = createNode(e.pageObj.name,action,currentPath,flag);
-                            TreePresenter.createDimension(prefix,action,e.pageObj.name,currentPath,flag,addNode);
+                            newNode = createNode(e.pageObj.name,action,currentPath,flag,e.pageObj);
+                            TreePresenter.createPage(prefix,action,e.pageObj.name,currentPath,flag, e.pageObj,addNode);
                             $(document).unbind("createPageEvent");
                         });
                         WidgetPresenter.createWidgetForNewPage("BreadCrumb");
@@ -218,7 +218,8 @@ var DynaTree = function(){
      * @param flag
      * @returns {{id: Empty String, title: name, type: type, path: path, isFolder: 'true' if folder, children: Empty Array}}
      */
-    function createNode(name,type,path,flag){
+    function createNode(name,type,path,flag,pageInfo){
+
         var flag = isFolder(type);
         var newNode = {
                         "id": name,
@@ -226,7 +227,8 @@ var DynaTree = function(){
                         "type": type,
                         "path": path,
                         "isFolder": flag,
-                        "children": []
+                        "children": [],
+                        "pageInfo": pageInfo ? pageInfo : {}
                      }
         return newNode;
     }

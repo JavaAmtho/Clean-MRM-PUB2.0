@@ -51,7 +51,8 @@ public class MultiDimensionalObject implements Serializable, GenericDomain {
 
 	private String type;
 
-
+	private PageInfo pageInfo;
+	
 	public Long getGraphID() {
 		return graphID;
 	}
@@ -157,6 +158,14 @@ public class MultiDimensionalObject implements Serializable, GenericDomain {
 	@JsonProperty("previewImage")
 	public String getPreviewImage() {
 		return dimensionInfo.getPreviewImage();
+	}
+
+	public PageInfo getPageInfo() {
+		return pageInfo;
+	}
+
+	public void setPageInfo(PageInfo pageInfo) {
+		this.pageInfo = pageInfo;
 	}
 
 	@JsonProperty("previewType")

@@ -16,6 +16,7 @@ TreeObjectVO.prototype = {
     "type": "",
     "path": "",
     "children": [],
+    "pageInfo":{},
 
     /**
      *

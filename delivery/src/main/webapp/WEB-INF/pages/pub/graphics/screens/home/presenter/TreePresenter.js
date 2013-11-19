@@ -65,6 +65,21 @@ TreePresenter.createDimension = function(prefix,action,name,currentPath,flag,cal
 /**
  *
  * @param prefix
+ * @param action
+ * @param name
+ * @param currentPath
+ * @param flag
+ * @param callBack
+ * @description calls CreateDimensions to create new Page
+ */
+TreePresenter.createPage = function(prefix,action,name,currentPath,flag,pageObj,callBack){
+    CreateDimensions.createPage(prefix,action,name,currentPath,flag,pageObj,callBack);
+}
+
+
+/**
+ *
+ * @param prefix
  * @param name
  * @param oldPath
  * @param flag

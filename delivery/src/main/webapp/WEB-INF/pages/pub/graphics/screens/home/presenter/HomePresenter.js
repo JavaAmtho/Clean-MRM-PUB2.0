@@ -135,6 +135,9 @@ HomePresenter.loadViewItems = function (evt, currentTemplateView) {
                 pageIDs.push(GraphicDataStore.getCurrentView() + "." + ref.title);
                 css = "masterPage anyRegion anyTargetGroup";
                 console.log("CSS : " + css);
+              /*  ref.pageType = pageInfo.pageType;
+                ref.fileID = pageInfo.fileID;
+                ref.renderEngineType = pageInfo.renderEngineType;*/
                 ref.typeCSS = css;
                 ref.hiddenCSS = "";
                 var splitPath = ref.path.split(",");
@@ -345,6 +348,7 @@ HomePresenter.getChildrenForSelectedNode = function (node) {
         obj.type = node.data.children[i].type;
         obj.path = node.data.children[i].path;
         obj.children = node.data.children[i].children;
+        obj.pageInfo = node.data.children[i].pageInfo;
         nodeDetails.push(obj);
     }
     return nodeDetails;

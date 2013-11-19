@@ -27,6 +27,7 @@ var NewPageBreadCrumbWidget = function(){
             },
             autoOpen :true,
             close: function() {
+                NewPageBreadCrumbWidget.uncheckRadio();
                 $(document).unbind('createPageEvent');
             }
 
@@ -39,9 +40,8 @@ NewPageBreadCrumbWidget.chooseIndd = function(){
     //document.getElementById('foo').textContent = myWin;
     if(data){
         data = eval('(' + data + ')');
-        //alert(JSON.stringify(newPageObj))
         var newPageObj = GraphicDataStore.getNewPageObject();
-        newPageObj.FileID = data.FileID;
+        newPageObj.fileID = data.FileID;
         GraphicDataStore.setNewPageObject(newPageObj);
     }
 
@@ -73,5 +73,20 @@ NewPageBreadCrumbWidget.createPage = function(){
                 }
             }
         }
+    }
+}
+
+
+NewPageBreadCrumbWidget.uncheckRadio =function(){
+    $('input:text').val('');
+
+    var choice = document.getElementsByName("pageType");
+    for (i = 0; i < choice.length; i++) {
+        choice[i].checked = false;
+    }
+
+    var choice2 = document.getElementsByName("renderType");
+    for (i = 0; i < choice2.length; i++) {
+        choice2[i].checked = false;
     }
 }

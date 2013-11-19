@@ -2,6 +2,8 @@ package app.cs.model.request;
 
 import org.springframework.stereotype.Component;
 
+import app.cs.impl.model.PageInfo;
+
 @Component
 public class CreatePageRequest implements RequestModel {
 
@@ -9,6 +11,7 @@ public class CreatePageRequest implements RequestModel {
 	private String name;
 	private String path;
 	private boolean isFolder;
+	private PageInfo pageInfo;
 
 	public CreatePageRequest() {
 
@@ -58,5 +61,15 @@ public class CreatePageRequest implements RequestModel {
 	public void setFolder(boolean isFolder) {
 		this.isFolder = isFolder;
 	}
+
+	public PageInfo getPageInfo() {
+		return pageInfo;
+	}
+
+	public void setPageInfo(PageInfo pageInfo) {
+		this.pageInfo = pageInfo;
+	}
+	
+	
 
 }

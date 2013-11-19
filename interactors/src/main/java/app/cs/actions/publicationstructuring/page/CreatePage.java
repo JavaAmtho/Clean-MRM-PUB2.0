@@ -2,11 +2,13 @@ package app.cs.actions.publicationstructuring.page;
 
 import java.util.ArrayList;
 
+import org.h2.index.PageIndex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import app.cs.boundary.delivery.Interactor;
 import app.cs.impl.model.MultiDimensionalObject;
+import app.cs.impl.model.PageInfo;
 import app.cs.interfaces.chapter.IChapterRepository;
 import app.cs.model.request.CreatePageRequest;
 import app.cs.model.request.RequestModel;
@@ -45,7 +47,7 @@ public class CreatePage implements Interactor {
 		MultiDimensionalObject chapter = chapterRepository
 				.getDomain(CONTENTOBJECT);
 		setChapterAtrributes(chapter, request.getType(), request.getName(),
-				request.getPath(), request.isFolder());
+				request.getPath(), request.isFolder(),request.getPageInfo());
 		return new StringResponse(chapterRepository.save(chapter));
 	}
 
@@ -64,7 +66,7 @@ public class CreatePage implements Interactor {
 	 *            the is folder
 	 */
 	private void setChapterAtrributes(MultiDimensionalObject chapter,
-			String type, String name, String path, boolean isFolder) {
+			String type, String name, String path, boolean isFolder, PageInfo pageInfo) {
 		chapter.setId(name);
 		chapter.setTitle(name);
 		chapter.setIsFolder(isFolder);
@@ -73,6 +75,7 @@ public class CreatePage implements Interactor {
 		chapter.setType(type);
 		chapter.setDimensionInfo(new DimensionInfo());
 		chapter.setChildren(new ArrayList<MultiDimensionalObject>());
+		chapter.setPageInfo(pageInfo);
 
 	}
 

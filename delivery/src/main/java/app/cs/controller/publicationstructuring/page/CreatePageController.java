@@ -3,10 +3,12 @@ package app.cs.controller.publicationstructuring.page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import app.cs.boundary.delivery.Interactor;
+import app.cs.impl.model.PageInfo;
 import app.cs.model.request.CreatePageRequest;
 
 /**
@@ -59,8 +61,10 @@ public class CreatePageController {
 	String execute(@PathVariable("type") String type,
 			@PathVariable("name") String name,
 			@PathVariable("path") String path,
-			@PathVariable("folder") boolean isFolder) {
+			@PathVariable("folder") boolean isFolder,
+			@RequestBody PageInfo pageInfo) {
 
+		createPageRequestModel.setPageInfo(pageInfo);
 		createPageRequestModel.setFolder(isFolder);
 		createPageRequestModel.setName(name);
 		createPageRequestModel.setPath(path);
