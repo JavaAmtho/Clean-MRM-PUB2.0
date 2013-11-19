@@ -14,5 +14,4 @@
     {"id":"enddate", "event":"change", "func":HomePresenter.checkDate1},
     {"id":"budget", "event":"change", "func":HomePresenter.checkNum1},
     {"id":"budgetOwner", "event":"change", "func":HomePresenter.checkAlpha1}
-
 ]

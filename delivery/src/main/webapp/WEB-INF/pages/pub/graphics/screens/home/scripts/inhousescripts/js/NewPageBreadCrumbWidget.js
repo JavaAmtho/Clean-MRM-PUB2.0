@@ -77,7 +77,7 @@ NewPageBreadCrumbWidget.createPage = function(){
 }
 
 
-function enableRenderingEngine(){
+NewPageBreadCrumbWidget.enableRenderingEngine = function(){
     var radioElementsPfPage = document.getElementsByName("pageType");
     var checkedIndex;
     for(var i = 0; i < radioElementsPfPage.length; i++){
