@@ -77,6 +77,34 @@ NewPageBreadCrumbWidget.createPage = function(){
 }
 
 
+function enableRenderingEngine(){
+    var radioElementsPfPage = document.getElementsByName("pageType");
+    var checkedIndex;
+    for(var i = 0; i < radioElementsPfPage.length; i++){
+        if(radioElementsPfPage[i].checked == true){
+            checkedIndex = i;
+            break;
+        }
+        else{
+            //do something
+        }
+    }
+
+    //This will enable the renderer engine options if page type is not manual
+    var radioElementsOfRenderer = document.getElementsByName("renderType");
+    if(radioElementsPfPage[checkedIndex].value != "manual"){
+        for(var i = 0; i < radioElementsOfRenderer.length; i++){
+            radioElementsOfRenderer[i].disabled = false;
+        }
+    }
+    else{
+        for(var i = 0; i < radioElementsOfRenderer.length; i++){
+            radioElementsOfRenderer[i].disabled = true;
+            radioElementsOfRenderer[i].checked = false;
+        }
+    }
+}
+
 NewPageBreadCrumbWidget.uncheckRadio =function(){
     $('input:text').val('');
 

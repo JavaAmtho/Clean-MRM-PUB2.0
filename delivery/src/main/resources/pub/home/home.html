@@ -152,22 +152,22 @@
                                
 						</div>
 						<div class="form_row">
-								<div class="form-left">Choose Rendering Engine: </div>
-								<div id = "smart_comet">
-									<input type="radio" name="renderType" value="smart">Smart
-									<input type="radio" name="renderType" value="comet">Comet
-								</div>
-								<div id="engineTypeErrorText" class="form-error"></div>
-						</div>
-						<div class="form_row">
 								<div class="form-left">Choose Page Type: </div>
 								<div id = "manual_creative_dynamic">
-									<input type="radio" name="pageType" value="manual">Manual
-									<input type="radio" name="pageType" value="creative">Creative
-									<input type="radio" name="pageType" value="dynamic">Dynamic
+									<input type="radio" name="pageType" value="manual" onChange="enableRenderingEngine()">Manual
+									<input type="radio" name="pageType" value="creative" onChange="enableRenderingEngine()">Creative
+									<input type="radio" name="pageType" value="dynamic" onChange="enableRenderingEngine()">Dynamic
 								</div>
 								<div id="pageTypeErrorText" class="form-error"></div>
 						 </div>
+						 <div class="form_row">
+								<div class="form-left">Choose Rendering Engine: </div>
+								<div id = "smart_comet">
+									<input type="radio" name="renderType" disabled="true" value="smart">Smart
+									<input type="radio" name="renderType" disabled="true" value="comet">Comet
+								</div>
+								<div id="engineTypeErrorText" class="form-error"></div>
+						</div>
 						 <div class="form_row">
 								<div class="form-left">Choose Master Template: </div>
 								<a id="btnChooseIndd" class="form-btn">Choose Indd File</a>
