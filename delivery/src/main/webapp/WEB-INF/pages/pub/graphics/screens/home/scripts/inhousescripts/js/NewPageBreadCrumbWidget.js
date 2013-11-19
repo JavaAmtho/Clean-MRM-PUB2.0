@@ -36,7 +36,7 @@ var NewPageBreadCrumbWidget = function(){
 }
 
 NewPageBreadCrumbWidget.chooseIndd = function(){
-    var data = window.showModalDialog("http://192.168.135.112/CS13.0Trunk/admin/forward.php?forward=dialogs|FileInputDialog|FileInputDialog.php&CS_FILEINPUT_FILTER=indd,pdf&id=7859&hideOptionFrame=1&singleUpload=1&&singleUpload=true&hideOptionFrame=true&objectFolderId=7859&localeLang=en");
+    var data = window.showModalDialog("http://192.168.135.112/CS13.0Trunk/admin/forward.php?forward=dialogs|FileInputDialog|FileInputDialog.php&CS_FILEINPUT_FILTER=indd&id=7859&hideOptionFrame=1&singleUpload=1&&singleUpload=true&hideOptionFrame=true&objectFolderId=7859&localeLang=en");
     //document.getElementById('foo').textContent = myWin;
     if(data){
         data = eval('(' + data + ')');
