@@ -2,27 +2,29 @@ package app.cs.model.response;
 
 import java.util.List;
 
+import app.cs.impl.model.PublicationAssetObject;
+
 import com.cs.data.api.core.GenericDomain;
 
-import app.cs.impl.model.PublicationAssetObject;
+
 
 public class LazyTreePublicationAssetResponse implements ResponseModel,TreeModel{
 	
 
+	private List<PublicationAssetObject> tree;
 	
-	public LazyTreePublicationAssetResponse(List<PublicationAssetObject> tree) {
+	public <E> LazyTreePublicationAssetResponse(List<PublicationAssetObject> tree) {
 		super();
 		this.tree = tree;
 	}
 
-	List<PublicationAssetObject> tree;
 
 	@Override
 	public <E> List<E> getTree() {
 		return (List<E>) tree;
 	}
 
-	public void setTree(List<PublicationAssetObject> tree) {
+	public <E> void setTree(List<PublicationAssetObject> tree) {
 		this.tree = tree;
 	}
 

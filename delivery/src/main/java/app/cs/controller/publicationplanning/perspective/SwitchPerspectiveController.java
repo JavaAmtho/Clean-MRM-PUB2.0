@@ -1,14 +1,12 @@
 package app.cs.controller.publicationplanning.perspective;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import app.cs.boundary.delivery.Interactor;
@@ -61,11 +59,13 @@ public class SwitchPerspectiveController {
 	@RequestMapping(value = "/dimension/getLazy")
 //{id}/{type}/{path}/{structure}/{groupID}")
 	public @ResponseBody
-	<E> List<E> getDimensionsBy(@RequestBody SwitchPerspectiveRequest switchPerspectiveRequest) {
-		System.out.println("ID => " + switchPerspectiveRequest.getId());
+	<E> List<E> getDimensionsBy(/*@PathVariable String id,*/
+			@RequestBody SwitchPerspectiveRequest switchPerspectiveRequest) {
+//		switchPerspectiveRequest.setId(id);
+//		System.out.println("ID => " + switchPerspectiveRequest.getId());
 		lazyLoadRequest = switchPerspectiveRequest;
-		System.out.println("ID => " + lazyLoadRequest.getId());
+//		System.out.println("ID => " + lazyLoadRequest.getId());
 		TreeModel output =  ((TreeModel) switchPerspective.execute(lazyLoadRequest));
-		return output.getTree();
+		return (output.getTree());
 	}
 }

@@ -33,17 +33,21 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 	}
 	
 	@Override
-	public List<PublicationAssetObject> getPublicationAssetsUnderParent(PublicationAssetObject publication){
+	public List<PublicationAssetObject> getPublicationAssetsUnderParent(PublicationAssetObject parent){
 		
-		PublicationAssetObject parentNode = neo4jRepository.getObjectByKeyValue("id", publication.getId(), PublicationAssetObject.class);
+		PublicationAssetObject parentNode = neo4jRepository.getObjectByKeyValue("id", parent.getId(), PublicationAssetObject.class);
+		System.out.println("ParentGraphID = >" + parentNode.getGraphID());
+		System.out.println("Parent Name => " + parentNode.getId());
 		Iterable<PublicationAssetObject> iterable = neo4jRepository.traverseOneLevelFromNodeExcludeStart(parentNode,PublicationAssetObject.class);
 		Iterator<PublicationAssetObject> iterator = iterable.iterator();
 		List<PublicationAssetObject> listOfPublicationAssets = new ArrayList<PublicationAssetObject>();
+//		System.out.println((iterator.next()).getName());
 		while(iterator.hasNext()){
-			System.out.println("HELLO");
 			PublicationAssetObject publicationAsset = iterator.next();
 			listOfPublicationAssets.add(publicationAsset);
+			System.out.println(publicationAsset.getId());
 		}
+		
 		return listOfPublicationAssets;
 		
 	}
@@ -52,13 +56,9 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 	public PublicationAssetObject save(PublicationAssetObject chapter) {
 //		if(chapter.getType() != CommonConstants.Dimension.DIMENSION_TYPE_PUBLICATION){
 			String parentID = finder.getParentId(chapter.getPath());
-			System.out.println("PubAssetRepo");
-			System.out.println("parentID =>" + parentID);
 			PublicationAssetObject parent = neo4jRepository.getObjectByKeyValue("id", parentID, PublicationAssetObject.class);
-			System.out.println("HERE");
-			System.out.println("ParentGraphID => " + parent.getGraphID());
-			GenericDomain publicationAssetObjectRelationship = chapter.isChildOf(parent, chapter.getType());
 			chapter.setId(chapter.getName());
+			GenericDomain publicationAssetObjectRelationship = chapter.isChildOf(parent, chapter.getType());
 			chapter = (PublicationAssetObject)neo4jRepository.saveData(chapter);
 			neo4jRepository.saveData(publicationAssetObjectRelationship);
 /*		}
@@ -82,7 +82,7 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 		String parentID = finder.getPublicationId(newPath);
 		PublicationAssetObject parentFromDB = neo4jRepository.getObjectByKeyValue("id", parentID, PublicationAssetObject.class);
 		PublicationAssetObject publicationAssetFromDB = neo4jRepository.getObjectByKeyValue("id", chapter.getId(), PublicationAssetObject.class);
-		Set<PublicationAssetObjectRelationShip> relationshipsList = publicationAssetFromDB.getRelationships();
+		Set<PublicationAssetObjectRelationShip> relationshipsList = null/*publicationAssetFromDB.getRelationships()*/;
 		if(!relationshipsList.isEmpty()){	
 			//Since Outgoing relationships are requested for each node will have only single relationship
 			PublicationAssetObjectRelationShip publicationAssetRelationship = relationshipsList.iterator().next();

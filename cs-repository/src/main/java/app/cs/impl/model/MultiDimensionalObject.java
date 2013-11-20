@@ -53,6 +53,18 @@ public class MultiDimensionalObject implements Serializable, GenericDomain {
 
 	private PageInfo pageInfo;
 	
+	private boolean isLazy = true;
+	
+	
+	
+	public boolean getIsLazy() {
+		return isLazy;
+	}
+
+	public void setIsLazy(boolean isLazy) {
+		this.isLazy = isLazy;
+	}
+
 	public Long getGraphID() {
 		return graphID;
 	}

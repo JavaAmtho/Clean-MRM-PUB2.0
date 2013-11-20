@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cs.data.api.core.GenericDomain;
+
 import app.cs.boundary.delivery.Interactor;
 import app.cs.impl.model.PageInfo;
 import app.cs.model.request.CreatePageRequest;
+import app.cs.model.response.ResponseModel;
 
 /**
  * The Class ChapterController. TODO. com.cs.business.ifacadeservices controller
@@ -54,11 +57,12 @@ public class CreatePageController {
 	 *            the path
 	 * @param isFolder
 	 *            the is folder
+	 * @return 
 	 * @return the string
 	 */
 	@RequestMapping(value = { CREATEPAGE })
 	public @ResponseBody
-	String execute(@PathVariable("type") String type,
+	GenericDomain execute(@PathVariable("type") String type,
 			@PathVariable("name") String name,
 			@PathVariable("path") String path,
 			@PathVariable("folder") boolean isFolder,
@@ -69,8 +73,8 @@ public class CreatePageController {
 		createPageRequestModel.setName(name);
 		createPageRequestModel.setPath(path);
 		createPageRequestModel.setType(type);
-		createPage.execute(createPageRequestModel);
-		return name;
+		return createPage.execute(createPageRequestModel).getResponse();
+//		return name;
 
 	}
 

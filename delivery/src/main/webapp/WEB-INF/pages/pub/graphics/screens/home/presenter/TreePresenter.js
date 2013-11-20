@@ -26,9 +26,21 @@ var TreePresenter = function(){
                 darkTree.createTree(treeObj,treeData);
                 $(document).unbind("treeDataLoaded");
             });
-            TreePresenter.getTree();
+            var requestBody = {"id":"","type":"","groupID":[],"isLazy":true,"structure":"MarketingInitiative-Campaign-SubCampaign-" +
+                "CommunicationPlan-CommunicationChannel-Publication","path":"","groupID":[]};
+            TreePresenter.getLazyTree(requestBody);
         });
-
+/*        $(document).bind("viewStructureLoaded", function onSchemaLoadedHandler(e){
+        var urls;
+        urls = *//*EngineDataStore.getBaseURL() + *//*EngineDataStore.getApiMappingObject()["getLazyTree"];
+        var treeObj = document.getElementById(id);
+        var darkTree = ElementFactory.getTree();
+        darkTree.createTree(treeObj,urls);*/
+/*
+        var treeObj = document.getElementById("assetsTree");
+        var darkTree = ElementFactory.getLazyTree();
+        darkTree.createTree(treeObj, urls);*/
+//        });
     }
 }
 
@@ -46,6 +58,14 @@ TreePresenter.getInstance = function(){
  */
 TreePresenter.getTree = function(){
     GetTree.get();
+}
+
+/**
+ * function getTree
+ * @description calls GetTree interactor to get tree as per selected viewStructure id
+ */
+TreePresenter.getLazyTree = function(requestBody,callback){
+    GetLazyTree.get(requestBody,callback);
 }
 
 /**

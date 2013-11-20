@@ -328,7 +328,9 @@ HomePresenter.getChildrenForSelectedNode = function (node) {
         obj.type = node.data.children[i].type;
         obj.path = node.data.children[i].path;
         obj.children = node.data.children[i].children;
-        obj.pageInfo = node.data.children[i].pageInfo;
+        obj.pageType = node.data.children[i].pageType;
+        obj.renderEngineType = node.data.children[i].renderEngineType;
+        obj.fileID = node.data.children[i].fileID;
         nodeDetails.push(obj);
     }
     return nodeDetails;

@@ -32,7 +32,7 @@
         "image": "http://14.141.2.211/CS130Trunk/admin/ImageServer.php?ID=6198aa63@CSLive&class=Pdmarticle&rand=8ec636c4d5f14e6b6fa73eb0952bbc6f&width=32&height=48",
         "description": null,
         "service": "pim",
-        "isLazy": false,
+        "isLazy": true,
         "isFolder": true
     }
 ]

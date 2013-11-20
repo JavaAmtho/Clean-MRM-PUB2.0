@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.GraphId;
@@ -15,7 +16,7 @@ import com.cs.data.api.core.GenericDomain;
 @NodeEntity
 public class PublicationAssetObject implements GenericDomain{
 
-	private List<PublicationAssetObject> children;
+	private Set<PublicationAssetObject> children = new HashSet<>();
 	
 	@GraphId
 	private Long graphID;
@@ -34,7 +35,16 @@ public class PublicationAssetObject implements GenericDomain{
 	
 	private String type;
 	
-	@Fetch @RelatedToVia(type = "CHILD_OF" , direction = Direction.INCOMING)
+	private boolean isLazy;
+	
+	private String fileID;
+	
+	private String pageType;
+	
+	private String renderEngineType;
+	
+	
+	@JsonIgnore @Fetch @RelatedToVia(type = "CHILD_OF" , direction = Direction.INCOMING)
 	private Set<PublicationAssetObjectRelationShip> relationships = new HashSet<PublicationAssetObjectRelationShip>();
 	
 	public PublicationAssetObject() {
@@ -88,12 +98,16 @@ public class PublicationAssetObject implements GenericDomain{
 	}
 
 	
-	public List<PublicationAssetObject> getChildren() {
+	public Set<PublicationAssetObject> getChildren() {
 		return children;
 	}
 
-	public void setChildren(List<PublicationAssetObject> children) {
+	public void setChildren(Set<PublicationAssetObject> children) {
 		this.children = children;
+	}
+	
+	public void addToChildren(PublicationAssetObject child){
+		this.children.add(child);
 	}
 
 	public Long getGraphID() {
@@ -112,11 +126,11 @@ public class PublicationAssetObject implements GenericDomain{
 		this.id = id;
 	}
 
-	public boolean isFolder() {
+	public boolean getIsFolder() {
 		return isFolder;
 	}
 
-	public void setFolder(boolean isFolder) {
+	public void setIsFolder(boolean isFolder) {
 		this.isFolder = isFolder;
 	}
 
@@ -145,7 +159,7 @@ public class PublicationAssetObject implements GenericDomain{
 	}
 
 	public String getTitle() {
-		return title;
+		return id;
 	}
 
 	public void setTitle(String title) {
@@ -158,6 +172,42 @@ public class PublicationAssetObject implements GenericDomain{
 
 	public void setType(String type) {
 		this.type = type;
+	}
+	
+	
+
+	public boolean getIsLazy() {
+		return isFolder;
+	}
+
+	public void setIsLazy(boolean isLazy) {
+		this.isLazy = isLazy;
+	}
+	
+	
+
+	public String getFileID() {
+		return fileID;
+	}
+
+	public void setFileID(String fileID) {
+		this.fileID = fileID;
+	}
+
+	public String getPageType() {
+		return pageType;
+	}
+
+	public void setPageType(String pageType) {
+		this.pageType = pageType;
+	}
+
+	public String getRenderEngineType() {
+		return renderEngineType;
+	}
+
+	public void setRenderEngineType(String renderEngineType) {
+		this.renderEngineType = renderEngineType;
 	}
 
 	@Override

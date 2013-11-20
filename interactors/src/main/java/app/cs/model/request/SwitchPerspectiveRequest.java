@@ -11,6 +11,7 @@ public class SwitchPerspectiveRequest implements RequestModel{
 	String type;
 	String path;
 	String structure;
+	boolean isLazy;
 	List<String> groupID;
 	
 	public SwitchPerspectiveRequest() {
@@ -26,6 +27,14 @@ public class SwitchPerspectiveRequest implements RequestModel{
 		this.groupID = groupID;
 	}
 	
+	public boolean getIsLazy() {
+		return isLazy;
+	}
+
+	public void setIsLazy(boolean isLazy) {
+		this.isLazy = isLazy;
+	}
+
 	public String getId() {
 		return id;
 	}

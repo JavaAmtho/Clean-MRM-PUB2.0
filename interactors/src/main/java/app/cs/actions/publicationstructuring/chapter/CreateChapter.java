@@ -94,7 +94,7 @@ public class CreateChapter implements Interactor {
 		publicationAsset.setName(request.getName());
 		publicationAsset.setPath(request.getPath());
 		publicationAsset.setType(request.getType());
-		publicationAsset.setFolder(request.isFolder());
+		publicationAsset.setIsFolder(request.isFolder());
 	}
 
 }

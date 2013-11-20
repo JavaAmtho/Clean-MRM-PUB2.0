@@ -2,6 +2,7 @@
     "getAllSchema":"/delivery/pub/all",
     "getSchema":"/delivery/treeviewstructure/",
     "getTree":"/delivery/dimension/get/",
+    "getLazyTree":"/delivery/dimension/getLazy/",
     "dragNDrop":"/delivery/",
     "getDefaultSchema":"/delivery/default",
     "getAssetsTree":"/delivery/testdrive/mocks/tree/AssetTree.json",

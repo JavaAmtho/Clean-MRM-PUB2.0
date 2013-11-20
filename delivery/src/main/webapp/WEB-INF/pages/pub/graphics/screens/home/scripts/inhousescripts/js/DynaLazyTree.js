@@ -13,6 +13,7 @@ var DynaLazyTree = function(){
                 HomePresenter.populateAssetsList(node.data.children[0])
             },
             onLazyRead: function(node){
+                alert("CLICKED!");
                 node.appendAjax({
                     url: urls+"/"+node.data.id,//getChildURL(node.data.id),
                     success: function(node, data) {

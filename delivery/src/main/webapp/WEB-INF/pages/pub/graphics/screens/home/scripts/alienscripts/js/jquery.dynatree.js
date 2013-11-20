@@ -1757,7 +1757,7 @@ DynaTreeNode.prototype = {
 		if(typeof(obj) == "string"){
 			throw "Invalid data type for " + obj;
 		}else if( !obj || obj.length === 0 ){ // Passed null or undefined or empty array
-			return;
+            return;
 		}else if( obj instanceof DynaTreeNode ){
 			return this._addChildNode(obj, beforeNode);
 		}

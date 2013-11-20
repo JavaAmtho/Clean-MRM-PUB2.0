@@ -110,6 +110,8 @@ public class PageGenerationRepositoryImpl implements IPageGenerationRepository {
 		// create string to POST
 		input = "{\"templateID\":\"" + masterPageID + "\",\"products\":["
 				+ productIds + "]}";
+		
+		System.out.println(input);
 
 		Map<String, String> headerParameters = new HashMap<String, String>();
 		prepareHeaderParameters(headerParameters);

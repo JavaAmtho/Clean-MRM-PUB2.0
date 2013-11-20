@@ -72,3 +72,25 @@ Router.loadRequest = function(key,async,callBack,params){
         });
     }
 }
+
+
+/**
+ *
+ * @param key
+ * @param async
+ * @param callBack
+ * @param params   This gets append to the url
+ * @description common gateway for all POST methods with or without params
+ */
+Router.loadPOSTRequest = function(key,async,params,requestBody,callBack){
+    if(params){
+        Router.forwardWithPost(EngineDataStore.getApiMappingObject()[key]+params,async,requestBody,function(data){
+            callBack(data);
+        });
+    }
+    else{
+        Router.forwardWithPost(EngineDataStore.getApiMappingObject()[key],async,requestBody,function(data){
+            callBack(data);
+        });
+    }
+}

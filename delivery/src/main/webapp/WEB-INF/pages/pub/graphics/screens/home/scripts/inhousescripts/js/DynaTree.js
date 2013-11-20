@@ -107,7 +107,6 @@ var DynaTree = function(){
                                         if(currentPath.indexOf("-1")==0)
                                             currentPath = currentPath.match(/([^,]*),(.*)/)[2];   //To remove -1 root folder
                                     }
-
                                     var flag = isFolder(action);
                                     var prefix=getUrlPrefix(action,"create");
                                     if(action == "Assortment"){
@@ -167,7 +166,6 @@ var DynaTree = function(){
     function addNode(data){
         if(data){
             if((newNode.type !="Chapter"))
-                if(newNode.type !="Page")
                     if(newNode.type !="Assortment")
                         newNode = data;
 
@@ -306,7 +304,6 @@ var DynaTree = function(){
      * @param data
      */
     this.createTree = function(treeObj,data){
-
         $(document).bind("expandParentNode", function onExpandParentNode(e){
             var pNode = searchFolderNodeWithName(e.currentId,null)
             pNode.parent.activate();
@@ -318,7 +315,21 @@ var DynaTree = function(){
             temp.addChild(data);
         }else{
             $(treeObj).dynatree({
-                children: data,
+                    children : data
+                /*initAjax:  JSON.stringify(DynaTree.testData(urls))*//*{
+                    type: "POST",
+                    url:  urls,
+                    contentType: "application/json",
+                    data: JSON.stringify({"id": "",
+                       "type": "",
+                       "path": "",
+                       "structure": "MarketingInitiative-Campaign-SubCampaign-CommunicationPlan-CommunicationChannel-Publication",
+                       "groupID": []
+                         }               )
+                }*/
+                ,
+
+//                children: data,
                 
                 /**
                  *
@@ -462,7 +473,42 @@ var DynaTree = function(){
                          }
 
                     }
+                },
+                onLazyRead: function(node){
+                   /*alert(JSON.stringify(node.data));*/
+                    var requestBody = {"id":node.data.id,"type":node.data.type,"groupID":node.data.groupId,"isLazy":true,"structure":"MarketingInitiative-Campaign-SubCampaign-" +
+                        "CommunicationPlan-CommunicationChannel-Publication","path": node.data.path};
+                    TreePresenter.getLazyTree(requestBody, function(data){
+                        if(data.length != 0){
+                            node.addChild(data);
+                            node.data.children.push(data);
+                        }
+                        else{
+                            node.childList = [];
+                            node.render();
+                        }
+
+                    });
+
+//                    GetLazyTree.get()
+//                    node.addChild({});
+
+                    /*node.appendAjax({
+                        url: urls+"/"+node.data.id,//getChildURL(node.data.id),
+                        success: function(node, data) {
+                            //node.addChild(data);
+                            HomePresenter.populateAssetsList(data);
+                            if(node.data.children == null){
+                                node.data.children = [];
+                                node.data.children.push(data);
+                            }
+                        },
+                        error: function(node, XMLHttpRequest, textStatus, errorThrown){
+                            // Called on error, after error icon was created.
+                        }
+                    });*/
                 }
+
             });
 
             /**
@@ -507,6 +553,11 @@ var DynaTree = function(){
         }
     }
 
+    DynaTree.testData = function(url){
+        alert("hello!")
+//        return [{"id":"MI","type":"MarketingInitiative","children":[],"groupID":[],"isFolder":true,"title":"HELLO!"}];
+        return [{"title":"MI1","isLazy":true,"isFolder":true}];
+    }
 }
 
 

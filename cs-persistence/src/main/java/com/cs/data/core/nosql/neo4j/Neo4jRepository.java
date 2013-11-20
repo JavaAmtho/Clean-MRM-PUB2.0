@@ -48,9 +48,7 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 		Writer writer = new StringWriter();*/
 		//"START n = node(*) WHERE (n." + key + " = \"" + value + "\") RETURN n"
 		String query = /*queryGetByKeyMustache.execute(writer, mustacheVariables).toString()*/"START n = node(*) WHERE (n." + key + " = \"" + value + "\") RETURN n";
-		System.out.println(query);
 		Result<Map<String, Object>> queryResult = neo4jTemplate.query(query, new HashMap<String,Object>());
-		System.out.println(queryResult);
 		EndResult<T> endResult = queryResult.to(class1);
 /*		Neo4jPersistentEntityImpl persistentEntity = ((Neo4jTemplate)neo4jTemplate).getInfrastructure().getMappingContext().getPersistentEntity(class1);
 		List<T> ret = new ArrayList<>();
@@ -89,7 +87,6 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 	
 	@Override
 	public GenericDomain saveData(GenericDomain objectToInsert) {
-		System.out.println("NEO4j SaveDATA()");
 		return neo4jTemplate.save(objectToInsert);
 	}
 	
