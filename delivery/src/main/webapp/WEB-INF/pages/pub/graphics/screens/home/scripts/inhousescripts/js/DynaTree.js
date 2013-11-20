@@ -50,14 +50,14 @@ var DynaTree = function(){
             list.appendChild(elem);
         }
 
-        if(type === "Page"){
+        /*if(type === "Page"){
             var editAnchor = document.createElement("a");
             editAnchor.href = "#edit";
             editAnchor.textContent = "Edit Page";
             var editElem = document.createElement("li");
             editElem.appendChild(editAnchor);
             list.appendChild(editElem);
-        }
+        }*/
 
         if(type != "root"){
             var deleteAnchor = document.createElement("a");

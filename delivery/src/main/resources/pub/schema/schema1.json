@@ -31,12 +31,12 @@
             {
                 "name": "Publication",
                 "icon": "something",
-                "possibleChild": ["Chapter","Page","Assortment"]
+                "possibleChild": ["Chapter","Page"]
             },
             {
                 "name": "Chapter",
                 "icon": "something",
-                "possibleChild": ["Chapter","Page","Assortment"]
+                "possibleChild": ["Chapter","Page"]
             }
         ]
 }
