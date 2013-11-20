@@ -47,7 +47,7 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 		System.out.println("ObjectBYKEYVALUE");
 		Writer writer = new StringWriter();*/
 		//"START n = node(*) WHERE (n." + key + " = \"" + value + "\") RETURN n"
-		String query = /*queryGetByKeyMustache.execute(writer, mustacheVariables).toString()*/"START n = node(*) WHERE (n." + key + " = \"" + value + "\") RETURN n";
+		String query = /*queryGetByKeyMustache.execute(writer, mustacheVariables).toString()*/"START n = node(*) WHERE (HAS(n."+key+") and n." + key + " = \"" + value + "\") RETURN n";
 		Result<Map<String, Object>> queryResult = neo4jTemplate.query(query, new HashMap<String,Object>());
 		EndResult<T> endResult = queryResult.to(class1);
 /*		Neo4jPersistentEntityImpl persistentEntity = ((Neo4jTemplate)neo4jTemplate).getInfrastructure().getMappingContext().getPersistentEntity(class1);
