@@ -371,8 +371,6 @@ var DynaTree = function(){
                         data = node.data.products;//HomePresenter.getProductsForSelectedNode(node);
                     }else{
 
-
-
                         GraphicDataStore.setCurrentView(node.data.title);
                         data = HomePresenter.getChildrenForSelectedNode(node)
                         if(node.data.type == "Publication"){
@@ -481,7 +479,7 @@ var DynaTree = function(){
                     TreePresenter.getLazyTree(requestBody, function(data){
                         if(data.length != 0){
                             node.addChild(data);
-                            node.data.children.push(data);
+                            node.data.children = data;
                         }
                         else{
                             node.childList = [];
