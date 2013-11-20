@@ -38,11 +38,6 @@
                 "name": "Chapter",
                 "icon": "something",
                 "possibleChild": ["Chapter","Page","Assortment"]
-            },
-            {
-                "name": "Page",
-                "icon": "something",
-                "possibleChild": ["Assortment"]
             }
         ]
     },
@@ -85,11 +80,6 @@
                 "name": "Chapter",
                 "icon": "something",
                 "possibleChild": ["Chapter","Page","Assortment"]
-            },
-            {
-                "name": "Page",
-                "icon": "something",
-                "possibleChild": ["Assortment"]
             }
         ]
     }
