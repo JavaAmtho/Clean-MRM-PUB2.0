@@ -2,12 +2,18 @@ package app.cs.impl.model;
 
 import java.io.Serializable;
 
+import org.springframework.data.neo4j.annotation.GraphId;
+import org.springframework.data.neo4j.annotation.NodeEntity;
+
+@NodeEntity
 public class Product implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@GraphId
+	private Long graphID;
 	private String id;
 	private String label;
 	private String title;
@@ -20,6 +26,13 @@ public class Product implements Serializable {
 	private String isFolder;
 	private String key;
 
+	@Override
+	public String toString() {
+		return "{id:\"" + this.id + "\",label:\"" + this.label + "\",title:\"" + this.title + "\""
+				 + ",type:\"" + this.type + "\",image:\"" + this.image + "\""
+						+ ",description:\"" + this.description + "\",service:\"" + this.service + "\",isFolder:" + this.isFolder+ ",__type__:\"Product\"}";
+	}
+	
 	public Product() {
 
 	}
@@ -28,6 +41,14 @@ public class Product implements Serializable {
 		this.id = productId;
 		this.title = productName;
 		this.service = service;
+	}
+	
+	public Long getGraphID() {
+		return graphID;
+	}
+
+	public void setGraphID(Long graphID) {
+		this.graphID = graphID;
 	}
 
 	public String getId() {

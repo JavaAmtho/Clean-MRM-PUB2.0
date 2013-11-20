@@ -110,6 +110,7 @@ public class DimensionRepository implements IDimensionRepository {
 		if(dimension.getType().equalsIgnoreCase(CommonConstants.Dimension.DIMENSION_TYPE_PUBLICATION)){
 			PublicationAssetObject partialDataForNeo4j = new PublicationAssetObject();
 			partialDataForNeo4j.setId(dimension.getId());
+			partialDataForNeo4j.setType(dimension.getType());
 			neo4jRepository.saveData(partialDataForNeo4j);
 		}
 	}

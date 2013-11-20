@@ -1,12 +1,16 @@
 package app.cs.actions.publicationstructuring.page;
 
+import java.util.HashSet;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import app.cs.actions.contentplanning.assortment.CreateAssortment;
 import app.cs.boundary.delivery.Interactor;
+import app.cs.impl.model.Assortment;
 import app.cs.impl.model.PublicationAssetObject;
-import app.cs.interfaces.chapter.IChapterRepository;
 import app.cs.interfaces.publicationasset.IPublicationAssetRepository;
+import app.cs.model.request.CreateAssortmentRequest;
 import app.cs.model.request.CreatePageRequest;
 import app.cs.model.request.RequestModel;
 import app.cs.model.response.PublicationAssetObjectResponse;
@@ -22,8 +26,10 @@ public class CreatePage implements Interactor {
 	private final String CONTENTOBJECT = "MultiDimensionalObject";
 
 	/** The chapter repository. */
-	private IChapterRepository chapterRepository;
+//	private IChapterRepository chapterRepository;
 	private IPublicationAssetRepository publicationAssetRepository;
+	
+	private CreateAssortment createAssortment;
 
 	/**
 	 * Instantiates a new chapter service.
@@ -33,10 +39,12 @@ public class CreatePage implements Interactor {
 	 * @param factory
 	 */
 	@Autowired
-	public CreatePage(/*IChapterRepository chapterRepository*/IPublicationAssetRepository publicationAssetRepository) {
+	public CreatePage(/*IChapterRepository chapterRepository*/IPublicationAssetRepository publicationAssetRepository,
+			CreateAssortment createAssortment) {
 		// TODO Auto-generated constructor stub
 //		this.chapterRepository = chapterRepository;
 		this.publicationAssetRepository = publicationAssetRepository;
+		this.createAssortment = createAssortment;
 	}
 
 	public ResponseModel execute(RequestModel model) {
@@ -50,8 +58,6 @@ public class CreatePage implements Interactor {
 		//		has been added in the page object for the newly created assortment
 		PublicationAssetObject createdAssortment = createDefaultAssortmentForPage(page);
 		page.addToChildren(createdAssortment);
-		System.out.println("Page Name => " + page.getName());
-		System.out.println("Page Type => " + page.getPageType());
 		return new PublicationAssetObjectResponse(page);
 	}
 
@@ -59,14 +65,17 @@ public class CreatePage implements Interactor {
 			PublicationAssetObject page) {
 		PublicationAssetObject assortmentObject = new PublicationAssetObject();
 		
-		assortmentObject.setId(page.getName() + "_Assortment");
-		assortmentObject.setPath(page.getPath() + "," + page.getId());
-		assortmentObject.setName(page.getId() + "_Assortment");
-		assortmentObject.setTitle(page.getId() + "_Assortment");
-		assortmentObject.setIsFolder(false);
-		assortmentObject.setType("Assortment");
-		PublicationAssetObject createdAssortment = publicationAssetRepository.save(assortmentObject);
-		return createdAssortment;
+		CreateAssortmentRequest assortmentRequest = new CreateAssortmentRequest();
+		assortmentRequest.setPath(page.getPath() + "," + page.getId());
+		assortmentRequest.setName(page.getId() + "_Assortment");
+		Assortment assortment = new Assortment();
+		assortmentRequest.setAssortment(assortment);
+		
+		PublicationAssetObjectResponse assortmentResponse = (PublicationAssetObjectResponse)createAssortment.execute(assortmentRequest);
+		
+//		assortmentObject.setProducts(productsList);
+//		PublicationAssetObject createdAssortment = publicationAssetRepository.save(assortmentObject);
+		return assortmentResponse.getResponse();
 	}
 
 	/**

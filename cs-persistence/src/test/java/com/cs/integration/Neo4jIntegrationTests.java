@@ -1,8 +1,6 @@
 package com.cs.integration;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import junit.framework.Assert;
 
@@ -11,7 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataRetrievalFailureException;
-import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -72,6 +69,8 @@ public class Neo4jIntegrationTests {
 			System.out.println(node);
 		}
 	}
+	
+
 	
 	@Test
 	public void shouldFindByName(){

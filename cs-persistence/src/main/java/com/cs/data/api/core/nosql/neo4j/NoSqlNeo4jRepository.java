@@ -1,5 +1,8 @@
 package com.cs.data.api.core.nosql.neo4j;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.neo4j.graphdb.Path;
 import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.neo4j.conversion.Result;
@@ -19,10 +22,13 @@ public interface NoSqlNeo4jRepository extends NoSqlOperations{
 	public <T> Iterable<T> traverseFromNode(GenericDomain startElement,
 			Class<T> elementClass);
 
-	public <T> Iterable<T> traverseFromNodeExcludeStart(GenericDomain startElement,
-			Class<T> elementClass);
-
 	public <T> Iterable<T> traverseOneLevelFromNodeExcludeStart(
 			GenericDomain startElement, Class<T> elementClass);
+
+	public <E, T> String createMultipleRelationships(String parentKey, String parentValue,
+			List<E> childNodes, String relationship);
+
+	public <T> Iterator traverseFromNodeExcludeStart(String key, String value,
+			String realtionship, Class<T> elementClass);
 
 }

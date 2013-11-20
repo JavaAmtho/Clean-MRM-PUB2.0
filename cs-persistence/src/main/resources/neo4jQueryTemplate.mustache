@@ -1,0 +1,8 @@
+{{#queryGetByKey}}
+START nodeSearch = node(*) 
+WHERE (
+	HAS(nodeSearch.{{key}}) 
+	AND 
+	(nodeSearch.{{key}} = "{{value}}")) 
+RETURN nodeSearch
+{{/queryGetByKey}}

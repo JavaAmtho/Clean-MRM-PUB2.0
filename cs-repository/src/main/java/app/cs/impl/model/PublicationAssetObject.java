@@ -4,18 +4,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.neo4j.graphdb.Direction;
-import org.springframework.data.neo4j.annotation.Fetch;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.annotation.RelatedToVia;
+
+import app.cs.utils.CommonConstants;
 
 import com.cs.data.api.core.GenericDomain;
 
 @NodeEntity
 public class PublicationAssetObject implements GenericDomain{
 
+	@Transient
 	private Set<PublicationAssetObject> children = new HashSet<>();
 	
 	@GraphId
@@ -44,8 +44,8 @@ public class PublicationAssetObject implements GenericDomain{
 	private String renderEngineType;
 	
 	
-	@JsonIgnore @Fetch @RelatedToVia(type = "CHILD_OF" , direction = Direction.INCOMING)
-	private Set<PublicationAssetObjectRelationShip> relationships = new HashSet<PublicationAssetObjectRelationShip>();
+/*	@JsonIgnore @Fetch @RelatedToVia(type = "CHILD_OF" , direction = Direction.INCOMING)
+	private Set<PublicationAssetObjectRelationShip> relationships = new HashSet<PublicationAssetObjectRelationShip>();*/
 	
 	public PublicationAssetObject() {
 		// TODO Auto-generated constructor stub
@@ -78,12 +78,12 @@ public class PublicationAssetObject implements GenericDomain{
 	
 	public PublicationAssetObjectRelationShip isChildOf(PublicationAssetObject parent,String typeOfChild){
 		PublicationAssetObjectRelationShip relationship = new PublicationAssetObjectRelationShip(parent, this, typeOfChild);
-		this.relationships.add(relationship);
+//		this.relationships.add(relationship);
 		return relationship;
 	}
 	
 
-	
+/*	
 	public Set<PublicationAssetObjectRelationShip> getRelationships() {
 		return relationships;
 	}
@@ -95,7 +95,7 @@ public class PublicationAssetObject implements GenericDomain{
 	
 	public void addRelationship(PublicationAssetObjectRelationShip relationship){
 		this.relationships.add(relationship);
-	}
+	}*/
 
 	
 	public Set<PublicationAssetObject> getChildren() {
@@ -177,7 +177,7 @@ public class PublicationAssetObject implements GenericDomain{
 	
 
 	public boolean getIsLazy() {
-		return isFolder;
+		return !this.type.equals(CommonConstants.PublicationAsset.PUBLICATION_ASSET_TYPE_ASSORTMENT);
 	}
 
 	public void setIsLazy(boolean isLazy) {

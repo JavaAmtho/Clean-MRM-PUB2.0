@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.neo4j.graphdb.Direction;
+import org.neo4j.graphdb.RelationshipType;
 import org.neo4j.graphdb.traversal.Evaluators;
 import org.neo4j.graphdb.traversal.TraversalDescription;
 import org.neo4j.kernel.Traversal;
@@ -23,6 +25,11 @@ import com.cs.data.api.core.nosql.neo4j.NoSqlNeo4jRepository;
 
 @Repository
 public class Neo4jRepository implements NoSqlNeo4jRepository {
+	
+	private enum Rels implements RelationshipType
+	{
+	    CHILD_OF
+	}
 	
 	private static final String MUSTACHE_TEMPLATE_VARIABLE_VALUE = "value";
 	private static final String MUSTACHE_TEMPLATE_VARIABLE_KEY = "key";
@@ -50,6 +57,8 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 		String query = /*queryGetByKeyMustache.execute(writer, mustacheVariables).toString()*/"START n = node(*) WHERE (HAS(n."+key+") and n." + key + " = \"" + value + "\") RETURN n";
 		Result<Map<String, Object>> queryResult = neo4jTemplate.query(query, new HashMap<String,Object>());
 		EndResult<T> endResult = queryResult.to(class1);
+		return endResult.singleOrNull();
+
 /*		Neo4jPersistentEntityImpl persistentEntity = ((Neo4jTemplate)neo4jTemplate).getInfrastructure().getMappingContext().getPersistentEntity(class1);
 		List<T> ret = new ArrayList<>();
 		Iterator iterator = endResult.iterator();
@@ -59,7 +68,7 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 			ret.add(((Neo4jTemplate)neo4jTemplate).getInfrastructure().getEntityPersister().
 			createEntityFromState(a, class1,persistentEntity.getMappingPolicy(), (Neo4jTemplate)neo4jTemplate));
 		}*/
-		return endResult.singleOrNull();
+		
 	}
 
 	@Override
@@ -135,22 +144,80 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 	
 	//Evaluators.excludeStartPosition()
 	@Override
-	public <T> Iterable<T> traverseFromNodeExcludeStart(GenericDomain startElement,Class<T> elementClass) {
-		TraversalDescription traversalDescription = Traversal.description().
+	public <T> Iterator traverseFromNodeExcludeStart(String key, String value,String relationship,Class<T> elementClass) {
+		/*TraversalDescription traversalDescription = Traversal.description().
 				breadthFirst().evaluator(Evaluators.toDepth(10)).
 				evaluator(Evaluators.excludeStartPosition());
-		Iterable<T> returnIterable = ((Neo4jTemplate)neo4jTemplate).traverse(startElement, elementClass,traversalDescription);
-		return returnIterable;
-	}
+		Iterable<T> returnIterable = ((Neo4jTemplate)neo4jTemplate).traverse(startElement, elementClass,traversalDescription);*/
+		String query = "START parentNode = node(*) "
+						+ "MATCH parentNode<-[:" + relationship + "]-child "
+						+ "WHERE ("
+						+ "HAS(parentNode." + key + ") "
+						+ "AND parentNode." + key + " = \"" + value + "\""
+						+ ") "
+						+ "RETURN child";
+		
+		System.out.println(query);
+		EndResult<T> endResult = null;
+		try{
+			Result<Map<String, Object>> queryResult = neo4jTemplate.query(query, new HashMap<String,Object>());
+			endResult = queryResult.to(elementClass);
+		}
+		catch(Exception e){
+			System.out.println("Failed" + e.getMessage());
+			return null;
+		}
+		System.out.println("return success");
+		return endResult.iterator();
+	}	
 	
 	@Override
 	public <T> Iterable<T> traverseOneLevelFromNodeExcludeStart(GenericDomain startElement,Class<T> elementClass) {
 		TraversalDescription traversalDescription = Traversal.description().
-				breadthFirst().evaluator(Evaluators.toDepth(1)).
+				breadthFirst().evaluator(Evaluators.toDepth(1)).relationships(Rels.CHILD_OF,Direction.INCOMING ).
 				evaluator(Evaluators.excludeStartPosition());
-		Iterable<T> returnIterable = ((Neo4jTemplate)neo4jTemplate).traverse(startElement, elementClass,traversalDescription);
+		Iterable<T> returnIterable = null;
+
+		returnIterable = ((Neo4jTemplate)neo4jTemplate).traverse(startElement, elementClass,traversalDescription);
+
 		return returnIterable;
 	}
+	
+	@Override
+	public <E, T> String createMultipleRelationships(String parentKey,String parentValue,List<E> childNodes,String relationship) {
+		
+		String query = "START parentNode = node(*) "
+				+ "WHERE ("
+					+ "HAS(parentNode." + parentKey + ") "
+					+ "AND parentNode." + parentKey + " = \"" + parentValue + "\""
+				+ ")"
+				+ "CREATE ";
+		for (E node : childNodes) {
+			query += "parentNode<-[:" + relationship.toUpperCase() + "]-(" + node.toString() + "),";
+		}
+		query = query.substring(0, query.length()-1);
+		
+		
+		System.out.println(query);
+		try{
+			neo4jTemplate.query(query, new HashMap<String,Object>());
+		}
+		catch(Exception e){
+			System.out.println("Failed");
+			return "failed";
+		}
+		System.out.println("return success");
+		return "success";
+	}
+	
+/*	public <T> Iterator getAllChildren(String key, String value, Class<T> class1) {
+
+		String query = queryGetByKeyMustache.execute(writer, mustacheVariables).toString()"START n = node(*) WHERE (HAS(n."+key+") and n." + key + " = \"" + value + "\") RETURN n";
+		Result<Map<String, Object>> queryResult = neo4jTemplate.query(query, new HashMap<String,Object>());
+		EndResult<T> endResult = queryResult.to(class1);
+		return endResult.iterator();
+
+	}*/
 
 	@Override
 	public <P> P getObjectByKey(String key, String objectKey, Class<P> class1) {

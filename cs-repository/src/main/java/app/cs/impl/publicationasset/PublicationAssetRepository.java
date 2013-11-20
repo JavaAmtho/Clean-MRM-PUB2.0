@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import app.cs.impl.helper.Finder;
+import app.cs.impl.model.Product;
 import app.cs.impl.model.PublicationAssetObject;
 import app.cs.impl.model.PublicationAssetObjectRelationShip;
 import app.cs.interfaces.publicationasset.IPublicationAssetRepository;
@@ -21,6 +22,8 @@ import com.cs.data.api.core.nosql.neo4j.NoSqlNeo4jRepository;
 public class PublicationAssetRepository implements IPublicationAssetRepository{
 
 	
+	private static final String PRODUCT_ASSORTMENT_RELATIONSHIP = "PRODUCTS_OF";
+
 	private NoSqlNeo4jRepository neo4jRepository;
 	
 	private Finder finder;
@@ -36,16 +39,23 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 	public List<PublicationAssetObject> getPublicationAssetsUnderParent(PublicationAssetObject parent){
 		
 		PublicationAssetObject parentNode = neo4jRepository.getObjectByKeyValue("id", parent.getId(), PublicationAssetObject.class);
-		System.out.println("ParentGraphID = >" + parentNode.getGraphID());
-		System.out.println("Parent Name => " + parentNode.getId());
 		Iterable<PublicationAssetObject> iterable = neo4jRepository.traverseOneLevelFromNodeExcludeStart(parentNode,PublicationAssetObject.class);
 		Iterator<PublicationAssetObject> iterator = iterable.iterator();
 		List<PublicationAssetObject> listOfPublicationAssets = new ArrayList<PublicationAssetObject>();
 //		System.out.println((iterator.next()).getName());
 		while(iterator.hasNext()){
 			PublicationAssetObject publicationAsset = iterator.next();
+			if(publicationAsset.getType().equalsIgnoreCase(CommonConstants.PublicationAsset.PUBLICATION_ASSET_TYPE_ASSORTMENT)){
+				/*Iterable productsIterable = neo4jRepository.traverseOneLevelFromNodeExcludeStart(publicationAsset, Product.class);*/
+				Iterator<Product> productsIterator = /*productsIterable.iterator()*/neo4jRepository.traverseFromNodeExcludeStart("id",publicationAsset.getId(),"PRODUCTS_OF", Product.class);
+				List<Product> products = new ArrayList<Product>();
+				while(productsIterator.hasNext()){
+					Product product = (Product)productsIterator.next();
+					products.add(product);
+				}
+				publicationAsset.setProducts(products);
+			}
 			listOfPublicationAssets.add(publicationAsset);
-			System.out.println(publicationAsset.getId());
 		}
 		
 		return listOfPublicationAssets;
@@ -67,6 +77,11 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 		}*/
 		return chapter/*String.valueOf(chapter.getGraphID())*/;
 
+	}
+	
+	@Override
+	public String updateAssortmentProducts(String assortmentID,List<Product> products){
+		return neo4jRepository.createMultipleRelationships("id", assortmentID, products, PRODUCT_ASSORTMENT_RELATIONSHIP);
 	}
 		
 	
