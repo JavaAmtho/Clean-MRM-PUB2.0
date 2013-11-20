@@ -9,9 +9,9 @@ var WidgetPresenter = function(){
 
 }
 
-WidgetPresenter.createWidgetForNewPage = function(type){
+WidgetPresenter.createWidgetForNewPage = function(type,data){
     if(type == "BreadCrumb"){
         var breadCrumbWidget = ElementFactory.getNewPageBreadCrumbWidget();
-        breadCrumbWidget.design();
+        breadCrumbWidget.design(data);
     }
 }

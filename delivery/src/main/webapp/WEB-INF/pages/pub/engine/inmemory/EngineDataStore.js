@@ -8,22 +8,23 @@ var EngineDataStore = function(){
     var baseURL;
     var publicationDetailsArray;
     var masterTemplateList;
+    var chooseMasterTempUrl;
 }
 
 /**
  *
- * @param list
+ * @param url
  */
-EngineDataStore.setMasterTemplateList = function(list){
-    this.masterTemplateList = list;
+EngineDataStore.setRestBaseUrl = function(url){
+    this.restBaseUrl = url;
 }
 
 /**
  *
- * @returns masterTemplateList
+ * @returns rest base-url
  */
-EngineDataStore.getMasterTemplateList = function(){
-    return this.masterTemplateList;
+EngineDataStore.getRestBaseUrl = function(){
+    return this.restBaseUrl;
 }
 
 /**
@@ -40,6 +41,71 @@ EngineDataStore.setBaseURL = function(url){
  */
 EngineDataStore.getBaseURL = function(){
     return this.baseURL;
+}
+
+/**
+ *
+ * @param url
+ */
+EngineDataStore.setMrmUrl = function(url){
+    this.mrmUrl = url;
+}
+
+/**
+ *
+ * @returns MRM-url
+ */
+EngineDataStore.getMrmUrl = function(){
+    return this.mrmUrl;
+}
+
+/**
+ *
+ * @param url
+ */
+EngineDataStore.setPubUrl = function(url){
+    this.pubUrl = url;
+}
+
+/**
+ *
+ * @returns PUB-url
+ */
+EngineDataStore.getPubUrl = function(){
+    return this.pubUrl;
+}
+
+
+/**
+ *
+ * @param list
+ */
+EngineDataStore.setChooseMasterTempUrl = function(url){
+    this.chooseMasterTempUrl = url;
+}
+
+/**
+ *
+ * @returns masterTemplateList
+ */
+EngineDataStore.getChooseMasterTempUrl = function(){
+    return this.chooseMasterTempUrl;
+}
+
+/**
+ *
+ * @param list
+ */
+EngineDataStore.setMasterTemplateList = function(list){
+    this.masterTemplateList = list;
+}
+
+/**
+ *
+ * @returns masterTemplateList
+ */
+EngineDataStore.getMasterTemplateList = function(){
+    return this.masterTemplateList;
 }
 
 /**

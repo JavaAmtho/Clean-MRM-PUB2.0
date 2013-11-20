@@ -8,6 +8,7 @@ var DynaTree = function(){
     var currentPath;
     var parentNode;
     var nodeToBeDeleted;
+    var nodeToBeEdited;
     var newNode
 
     /**
@@ -49,6 +50,15 @@ var DynaTree = function(){
             list.appendChild(elem);
         }
 
+        if(type === "Page"){
+            var editAnchor = document.createElement("a");
+            editAnchor.href = "#edit";
+            editAnchor.textContent = "Edit Page";
+            var editElem = document.createElement("li");
+            editElem.appendChild(editAnchor);
+            list.appendChild(editElem);
+        }
+
         if(type != "root"){
             var deleteAnchor = document.createElement("a");
             deleteAnchor.href = "#delete";
@@ -68,79 +78,90 @@ var DynaTree = function(){
      * @param type
      */
     function bindContextMenu(span,type) {
-
         var possibleDim=[];
         possibleDim  = GraphicDataStore.getPossibleChild(type);
+
         if(possibleDim != ""){
-            //Check as per type of node if menu exists later
+            //Check if context menu exists for the type of node
             var alreadyExists = menuExists(type)
             if(!alreadyExists){
                 createList(type,possibleDim);
             }
-            $(span).contextMenu({menu: type}, function(action, el, pos) {
-                if(action != "delete"){
-                    if(action == "Page"){
-                        $(document).bind("createPageEvent", function createPageHandler(e) {
-                            parentNode = $.ui.dynatree.getNode(el);
-                            currentPath = parentNode.data.path+","+ parentNode.data.title;
-                            if(currentPath.indexOf("-1")==0)
-                                currentPath = currentPath.match(/([^,]*),(.*)/)[2];   //To remove -1 root folder
-                            var flag = isFolder(action);
-                            var prefix=getUrlPrefix(action,"create");
-                            newNode = createNode(e.pageObj.name,action,currentPath,flag,e.pageObj);
-                            TreePresenter.createPage(prefix,action,e.pageObj.name,currentPath,flag, e.pageObj,addNode);
-                            $(document).unbind("createPageEvent");
-                        });
-                        WidgetPresenter.createWidgetForNewPage("BreadCrumb");
 
-                    }else{
-                        alertify.prompt("Please enter "+action+" name", function (e, name) {
-                            if (e) {
-                                name = name.replace(/^\s+|\s+$/g,'')
-                                if(name.length >0){
-                                    parentNode = $.ui.dynatree.getNode(el);
-                                    if(parentNode.data.type == "root"){
-                                        currentPath = "-1";
+            //On click of contextmenu options
+            $(span).contextMenu({menu: type}, function(action, el, pos) {
+                parentNode = $.ui.dynatree.getNode(el);
+                if(parentNode.data.type == "root"){
+                    currentPath = "-1";
+                }
+                else{
+                    currentPath = parentNode.data.path+","+ parentNode.data.title;
+                    if(currentPath.indexOf("-1")==0)
+                        currentPath = currentPath.match(/([^,]*),(.*)/)[2];   //To remove -1 root folder
+                }
+                var flag = isFolder(action);
+
+
+                if(action === "edit"){     //Edit page with same popup for create new page
+                    nodeToBeEdited = $.ui.dynatree.getNode(el);
+                    /*$(document).bind("createPageEvent", function createPageHandler(e) {
+                        var prefix=getUrlPrefix(action,"edit");
+                        newNode = createNode(e.pageObj.name,action,currentPath,flag,e.pageObj);
+                        TreePresenter.editPage(prefix,action,e.pageObj.name,currentPath,flag, e.pageObj,addNode);
+                        $(document).unbind("createPageEvent");
+                    });*/
+                    WidgetPresenter.createWidgetForNewPage("BreadCrumb",nodeToBeEdited.data);
+                }else{
+                    if(action != "delete"){
+                        if(action == "Page"){ //Create page with all other fields such as masterTemp and type and renderer
+                            $(document).bind("createPageEvent", function createPageHandler(e) {
+                                var prefix=getUrlPrefix(action,"create");
+                                newNode = createNode(e.pageObj.name,action,currentPath,flag,e.pageObj);
+                                TreePresenter.createPage(prefix,action,e.pageObj.name,currentPath,flag, e.pageObj,addNode);
+                                $(document).unbind("createPageEvent");
+                            });
+                            WidgetPresenter.createWidgetForNewPage("BreadCrumb");
+
+                        }else{
+                            //Create dimensions with only name
+                            alertify.prompt("Please enter "+action+" name", function (e, name) {
+                                if (e) {
+                                    name = name.replace(/^\s+|\s+$/g,'')
+                                    if(name.length >0){
+                                        var prefix=getUrlPrefix(action,"create");
+                                        if(action == "Assortment"){
+                                            newNode = createAssortmentNode(name,action,currentPath,flag);
+                                            TreePresenter.createAssortment(prefix,action,name,currentPath,flag,addNode);
+                                        }else{
+                                            newNode = createNode(name,action,currentPath,flag);
+                                            TreePresenter.createDimension(prefix,action,name,currentPath,flag,addNode);
+                                        }
                                     }
                                     else{
-                                        currentPath = parentNode.data.path+","+ parentNode.data.title;
-                                        if(currentPath.indexOf("-1")==0)
-                                            currentPath = currentPath.match(/([^,]*),(.*)/)[2];   //To remove -1 root folder
-                                    }
-                                    var flag = isFolder(action);
-                                    var prefix=getUrlPrefix(action,"create");
-                                    if(action == "Assortment"){
-                                        newNode = createAssortmentNode(name,action,currentPath,flag);
-                                        TreePresenter.createAssortment(prefix,action,name,currentPath,flag,addNode);
-                                    }else{
-                                        newNode = createNode(name,action,currentPath,flag);
-                                        TreePresenter.createDimension(prefix,action,name,currentPath,flag,addNode);
+                                        alertify.error("Please enter a valid name");
                                     }
                                 }
-                                else{
-                                    alertify.error("Please enter a valid name");
-                                }
-                            }
-                        },""); //This is the default name if we want to give in prompt
-                    }
-                }else{
-                    nodeToBeDeleted = $.ui.dynatree.getNode(el);
-                    alertify.confirm("Are you sure you want to delete "+ nodeToBeDeleted.data.title, function (e) {
-                        if (e) {
-                            //Send API call to delete the node
-                            var input=new Object();
-                            input.id=nodeToBeDeleted.data.id;
-                            input.name=nodeToBeDeleted.data.title;
-                            input.type=nodeToBeDeleted.data.type;
-                            input.groupId=nodeToBeDeleted.data.groupId;
-                            var prefix=getUrlPrefix(nodeToBeDeleted.data.type,"delete");
-                            TreePresenter.deleteDimension(prefix,nodeToBeDeleted.data.type,input,onDeleteSuccess);
-
-                        } else {
+                            },""); //This is the default name if we want to give in prompt
                         }
-                    });
-                }
+                    }else{
+                        //Delete dimensions
+                        nodeToBeDeleted = $.ui.dynatree.getNode(el);
+                        alertify.confirm("Are you sure you want to delete "+ nodeToBeDeleted.data.title, function (e) {
+                            if (e) {
+                                //Send API call to delete the node
+                                var input=new Object();
+                                input.id=nodeToBeDeleted.data.id;
+                                input.name=nodeToBeDeleted.data.title;
+                                input.type=nodeToBeDeleted.data.type;
+                                input.groupId=nodeToBeDeleted.data.groupId;
+                                var prefix=getUrlPrefix(nodeToBeDeleted.data.type,"delete");
+                                TreePresenter.deleteDimension(prefix,nodeToBeDeleted.data.type,input,onDeleteSuccess);
 
+                            } else {
+                            }
+                        });
+                    }
+                }
             });
 
         }

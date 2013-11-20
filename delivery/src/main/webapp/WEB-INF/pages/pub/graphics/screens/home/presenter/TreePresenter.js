@@ -26,21 +26,19 @@ var TreePresenter = function(){
                 darkTree.createTree(treeObj,treeData);
                 $(document).unbind("treeDataLoaded");
             });
-            var requestBody = {"id":"","type":"","groupID":[],"isLazy":true,"structure":"MarketingInitiative-Campaign-SubCampaign-" +
-                "CommunicationPlan-CommunicationChannel-Publication","path":"","groupID":[]};
+
+            var requestBody = {
+                                    "id":"",
+                                    "type":"",
+                                    "groupID":[],
+                                    "isLazy":true,
+                                    "structure":GraphicDataStore.getCurrentSchema().name,
+                                    "path":"",
+                                    "groupID":[]
+                              };
+
             TreePresenter.getLazyTree(requestBody);
         });
-/*        $(document).bind("viewStructureLoaded", function onSchemaLoadedHandler(e){
-        var urls;
-        urls = *//*EngineDataStore.getBaseURL() + *//*EngineDataStore.getApiMappingObject()["getLazyTree"];
-        var treeObj = document.getElementById(id);
-        var darkTree = ElementFactory.getTree();
-        darkTree.createTree(treeObj,urls);*/
-/*
-        var treeObj = document.getElementById("assetsTree");
-        var darkTree = ElementFactory.getLazyTree();
-        darkTree.createTree(treeObj, urls);*/
-//        });
     }
 }
 
@@ -94,6 +92,11 @@ TreePresenter.createDimension = function(prefix,action,name,currentPath,flag,cal
  */
 TreePresenter.createPage = function(prefix,action,name,currentPath,flag,pageObj,callBack){
     CreateDimensions.createPage(prefix,action,name,currentPath,flag,pageObj,callBack);
+}
+
+
+TreePresenter.editPage = function(prefix,action,name,currentPath,flag,pageObj,callBack){
+    EditPage.edit(prefix,action,name,currentPath,flag,pageObj,callBack);
 }
 
 

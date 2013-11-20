@@ -6,18 +6,41 @@ var pubIdToOpen;
  */
 $(document).ready(function() {
 
-   /* $("body").queryLoader2({
-        barColor: "#6e6d73",
-        backgroundColor: "#343434",
-        percentage: true,
-        barHeight: 1,
-        completeAnimation: "grow"
-    });*/
-
+    /* $("body").queryLoader2({
+     barColor: "#6e6d73",
+     backgroundColor: "#343434",
+     percentage: true,
+     barHeight: 1,
+     completeAnimation: "grow"
+     });*/
     pubIdToOpen = getParameterByName("pubId");
-    EngineDataStore.setBaseURL("../../../");
-    getPublicationDetailsObject();
+    loadInitialConfigurations();
+    //EngineDataStore.setBaseURL("../../../");
+    //getPublicationDetailsObject();
 });
+
+/**
+ * loadInitialConfigurations
+ * @description Loads InitialConfiguration.json file which has baseURl and other important configuration details
+ */
+function loadInitialConfigurations(){
+    Router.forward("../../../graphics/tacks/InitialConfiguration.json",true,function(json){
+        parseInitialConfiguration(json);
+        getPublicationDetailsObject();
+    });
+}
+
+/**
+ * @param data
+ * @description Parse the InitialConfiguration.json file and stores it to the cloud
+ */
+function parseInitialConfiguration(data){
+    EngineDataStore.setBaseURL(data.baseUrl);
+    EngineDataStore.setMrmUrl(data.MRMUrl);
+    EngineDataStore.setPubUrl(data.PubUrl);
+    EngineDataStore.setRestBaseUrl(data.restBaseUrl);
+    EngineDataStore.setChooseMasterTempUrl(data.chooseMasterTemplateUrl);
+}
 
 /**
  * getPublicationDetailsObject function

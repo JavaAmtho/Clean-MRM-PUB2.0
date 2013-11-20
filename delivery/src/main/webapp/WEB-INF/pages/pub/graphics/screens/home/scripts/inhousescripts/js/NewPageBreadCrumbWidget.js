@@ -8,9 +8,14 @@
 var NewPageBreadCrumbWidget = function(){
 
 
-    this.design = function(){
+    this.design = function(data){
         var newPageObj = new Object();
         GraphicDataStore.setNewPageObject(newPageObj);
+
+        if(data){
+            NewPageBreadCrumbWidget.preInsertFormDetails(data);
+        }
+
 
         $( "#dialog-form" ).dialog({
             height: 330,
@@ -36,7 +41,7 @@ var NewPageBreadCrumbWidget = function(){
 }
 
 NewPageBreadCrumbWidget.chooseIndd = function(){
-    var data = window.showModalDialog("http://192.168.135.112/CS13.0Trunk/admin/forward.php?forward=dialogs|FileInputDialog|FileInputDialog.php&CS_FILEINPUT_FILTER=indd&id=7859&hideOptionFrame=1&singleUpload=1&&singleUpload=true&hideOptionFrame=true&objectFolderId=7859&localeLang=en");
+    var data = window.showModalDialog(EngineDataStore.getChooseMasterTempUrl());
     //document.getElementById('foo').textContent = myWin;
     if(data){
         data = eval('(' + data + ')');
@@ -46,6 +51,28 @@ NewPageBreadCrumbWidget.chooseIndd = function(){
     }
 
     //alert(JSON.stringify(GraphicDataStore.getNewPageObject()));
+}
+
+NewPageBreadCrumbWidget.preInsertFormDetails = function(data){
+    var radioElementsOfPage = document.getElementsByName("pageType");
+    for(var i = 0; i < radioElementsOfPage.length; i++){
+        if(radioElementsOfPage[i].value == data.pageType){
+            radioElementsOfPage[i].checked = true;
+            break;
+        }
+    }
+
+    var radioElementsOfRenderer = document.getElementsByName("renderType");
+    for(var i = 0; i < radioElementsOfRenderer.length; i++){
+        if(radioElementsOfRenderer[i].value == data.renderEngineType){
+            radioElementsOfRenderer[i].checked = true;
+            break;
+        }
+    }
+
+    $('input:text').val(data.title);
+
+    NewPageBreadCrumbWidget.enableRenderingEngine();
 }
 
 NewPageBreadCrumbWidget.createPage = function(){
