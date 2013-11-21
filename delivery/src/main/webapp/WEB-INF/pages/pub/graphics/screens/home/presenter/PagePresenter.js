@@ -769,6 +769,7 @@ PagePresenter.toggleRulesView = function (parentMasterPageDiv) {
     $(parentMasterPageDiv).children(".openRules").toggle();     //toggle view of the open rules menu button
     $(parentMasterPageDiv).children(".rule").toggle();          //toggle the rules menu(all the drop-downs)
     $(parentMasterPageDiv).children(".name").toggle();          //toggle the master page name display
+    $(parentMasterPageDiv).children(".rulesText").toggle();          //toggle the master page name display
     $(parentMasterPageDiv).children(".buttonsHolder").toggle(); //toggle the div behind the buttons
 
     $isotopeContainer.isotope('reLayout');  //re-layout the isotope positioning once the rules menu has been opened

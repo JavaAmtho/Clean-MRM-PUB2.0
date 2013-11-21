@@ -1,58 +1,36 @@
+var assetTreeExists;
+
 /**
  *
  * @constructor
  */
 var DynaLazyTree = function(){
-    this.createTree = function(treeObj,urls){
-        $(treeObj).dynatree({
-            initAjax: {
-                url:  urls
-            },
-            onActivate: function(node) {
-                if(node.data.children)
-                HomePresenter.populateAssetsList(node.data.children[0])
-            },
-            onLazyRead: function(node){
-                node.appendAjax({
-                    url: urls+"/"+node.data.id,//getChildURL(node.data.id),
-                    success: function(node, data) {
-                        //node.addChild(data);
-                        HomePresenter.populateAssetsList(data);
-                        if(node.data.children == null){
-                            node.data.children = [];
-                            node.data.children.push(data);
+    this.createTree = function(treeObj,data){
+        if(assetTreeExists != null){
+            assetTreeExists.removeChildren();
+            assetTreeExists.addChild(data);
+        }else{
+            $(treeObj).dynatree({
+                children : data,
+                onActivate: function(node) {
+                    if(node.data.children)
+                    HomePresenter.populateAssetsList(node.data.children[0])
+                },
+                onLazyRead: function(node){
+                    AssetTreePresenter.getLazyNodes(node.data.id,function(data){
+                        if(data.length != 0){
+                            node.addChild(data);
+                            node.data.children = data;
+                            HomePresenter.populateAssetsList(data);
                         }
-                    },
-                    error: function(node, XMLHttpRequest, textStatus, errorThrown){
-                        // Called on error, after error icon was created.
-                    }
-                });
-            }
-        });
-        var temps = $(treeObj).dynatree("getTree")
-        temps.reload();
-    }
-
-    $("#asSearch").keyup(function(e){
-        HomePresenter.searchList(e);
-    });
-
-    /**
-     *
-     * @param id
-     * @returns complete URL of PIM/MAM mocks
-     */
-    /*function getChildURL(id){
-        var url;
-       if(id==62){
-           url = EngineDataStore.getBaseURL()+"../testdrive/mocks/tree/PimAssets.json"
-       }
-        if(id==63){
-           url = EngineDataStore.getBaseURL()+"../testdrive/mocks/tree/MamAssets.json"
-       }
-        if(id==91){
-            url = EngineDataStore.getBaseURL()+"../testdrive/mocks/tree/PimAssets.json"
+                        else{
+                            node.childList = [];
+                            node.render();
+                        }
+                    });
+                }
+            });
+            assetTreeExists = $(treeObj).dynatree("getRoot");
         }
-       return url;
-    }*/
+    }
 };

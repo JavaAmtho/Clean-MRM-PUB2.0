@@ -6,6 +6,7 @@
     {"id":"btnPIM","event":"click","func":AssetTreePresenter.slidePanel},
     {"id":"btnMAM","event":"click","func":AssetTreePresenter.slidePanel},
     {"id":"btnMIM","event":"click","func":AssetTreePresenter.slidePanel},
+	{"id":"asSearch","event":"keyup","func":AssetTreePresenter.searchList},
     {"id":"showAllPagesBtn","event":"click","func":PagePresenter.showAllPages},
 	{"id":"btnCreatePage","event":"click","func":NewPageBreadCrumbWidget.createPage},
 	{"id":"btnChooseIndd","event":"click","func":NewPageBreadCrumbWidget.chooseIndd}, {"id":"pageType1","event":"change","func":NewPageBreadCrumbWidget.enableRenderingEngine},

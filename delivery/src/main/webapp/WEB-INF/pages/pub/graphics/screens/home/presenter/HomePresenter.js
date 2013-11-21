@@ -133,10 +133,6 @@ HomePresenter.loadViewItems = function (evt, currentTemplateView) {
             if (ref.type == "Page") {
                 pageIDs.push(GraphicDataStore.getCurrentView() + "." + ref.title);
                 css = "masterPage anyRegion anyTargetGroup";
-                console.log("CSS : " + css);
-              /*  ref.pageType = pageInfo.pageType;
-                ref.fileID = pageInfo.fileID;
-                ref.renderEngineType = pageInfo.renderEngineType;*/
                 ref.typeCSS = css;
                 ref.hiddenCSS = "";
                 var splitPath = ref.path.split(",");
@@ -390,23 +386,6 @@ HomePresenter.addEventListeners = function () {
             actualData: items[0].originalItem
         });
     });
-}
-
-/**
- *
- * @param e
- * @description calls interactor to search the assets with the entered key in input
- */
-HomePresenter.searchList = function (e) {
-    //console.log(e.currentTarget)
-    if (e.keyCode == 13) {
-        if (currentPanelId == "btnPIM") {
-            SearchPimAsset.search(e.currentTarget.value, HomePresenter.populateAssetsList);
-        }
-        if (currentPanelId == "btnMAM") {
-            SearchMamAsset.search(e.currentTarget.value, HomePresenter.populateAssetsList);
-        }
-    }
 }
 
 /**

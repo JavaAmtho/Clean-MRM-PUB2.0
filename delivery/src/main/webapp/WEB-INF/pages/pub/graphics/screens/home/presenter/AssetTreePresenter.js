@@ -11,6 +11,22 @@ var btnSelectionFlag = 0;
 
 /**
  *
+ * @param btnId
+ * @description creates a tree object instance
+ */
+AssetTreePresenter.createTree = function (btnId) {
+    GetAssetsTree.get(btnId,function(data){
+        if(data == "error"){
+            data=[];
+        }
+        var treeObj = document.getElementById("assetsTree");
+        var assetsLazyTree = ElementFactory.getLazyTree();
+        assetsLazyTree.createTree(treeObj,data);
+    });
+}
+
+/**
+ *
  * @param evt
  * @description slides the panel and displays PIM/MAM tree as per the PIM/MAM button pressed
  */
@@ -63,25 +79,30 @@ AssetTreePresenter.changeSelectedBtn = function (btnId) {
 }
 
 /**
- *
- * @param btnId
- * @description creates a tree object instance
- */
-AssetTreePresenter.createTree = function (btnId) {
-    var urls;
-    urls = EngineDataStore.getBaseURL() + EngineDataStore.getApiMappingObject()[btnId];
-
-    var treeObj = document.getElementById("assetsTree");
-    var darkTree = ElementFactory.getLazyTree();
-    darkTree.createTree(treeObj, urls);
-}
-
-
-/**
  *   @description resets the css for all PIM/MAM buttons as unclicked
  */
 AssetTreePresenter.reset = function () {
     $("#btnMIM").css("background-image", "url(/delivery/pages/pub/graphics/screens/home/images/icons/MIM.png)");
     $("#btnPIM").css("background-image", "url(/delivery/pages/pub/graphics/screens/home/images/icons/PIM.png)");
     $("#btnMAM").css("background-image", "url(/delivery/pages/pub/graphics/screens/home/images/icons/MAM.png)");
+}
+
+AssetTreePresenter.getLazyNodes = function(id,callBack){
+     GetAssetsTree.getAssetsById(currentPanelId,id,callBack);
+}
+
+/**
+ *
+ * @param e
+ * @description calls interactor to search the assets with the entered key in input
+ */
+AssetTreePresenter.searchList = function (e) {
+    if (e.keyCode == 13) {
+        if (currentPanelId == "btnPIM") {
+            SearchPimAsset.search(e.currentTarget.value, HomePresenter.populateAssetsList);
+        }
+        if (currentPanelId == "btnMAM") {
+            SearchMamAsset.search(e.currentTarget.value, HomePresenter.populateAssetsList);
+        }
+    }
 }

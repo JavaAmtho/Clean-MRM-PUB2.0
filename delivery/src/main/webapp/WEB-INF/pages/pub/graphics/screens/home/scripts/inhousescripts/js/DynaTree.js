@@ -336,22 +336,35 @@ var DynaTree = function(){
             temp.addChild(data);
         }else{
             $(treeObj).dynatree({
-                    children : data
-                /*initAjax:  JSON.stringify(DynaTree.testData(urls))*//*{
-                    type: "POST",
-                    url:  urls,
-                    contentType: "application/json",
-                    data: JSON.stringify({"id": "",
-                       "type": "",
-                       "path": "",
-                       "structure": "MarketingInitiative-Campaign-SubCampaign-CommunicationPlan-CommunicationChannel-Publication",
-                       "groupID": []
-                         }               )
-                }*/
-                ,
+                children : data,
+                /**
+                 * On lazy read of node
+                 * @param node
+                 */
+                onLazyRead: function(node){
+                    /*alert(JSON.stringify(node.data));*/
+                    var requestBody = {
+                        "id":node.data.id,
+                        "type":node.data.type,
+                        "groupID":node.data.groupId,
+                        "isLazy":true,
+                        "structure":GraphicDataStore.getCurrentSchema().name,
+                        "path": node.data.path
+                    };
 
-//                children: data,
-                
+                    TreePresenter.getLazyTree(requestBody, function(data){
+                        if(data.length != 0){
+                            node.addChild(data);
+                            node.data.children = data;
+                        }
+                        else{
+                            node.childList = [];
+                            node.render();
+                        }
+
+                    });
+
+                },
                 /**
                  *
                  * @param node
@@ -420,6 +433,9 @@ var DynaTree = function(){
                         nodeType: nodeType
                     });
                 },
+                /**
+                 * Drag and drop for tree
+                 */
                 dnd: {
                     preventVoidMoves: true, // Prevent dropping nodes 'before self', etc.
                     /**
@@ -492,32 +508,7 @@ var DynaTree = function(){
                          }
 
                     }
-                },
-                onLazyRead: function(node){
-                   /*alert(JSON.stringify(node.data));*/
-                    var requestBody = {
-                                            "id":node.data.id,
-                                            "type":node.data.type,
-                                            "groupID":node.data.groupId,
-                                            "isLazy":true,
-                                            "structure":GraphicDataStore.getCurrentSchema().name,
-                                            "path": node.data.path
-                                       };
-
-                    TreePresenter.getLazyTree(requestBody, function(data){
-                        if(data.length != 0){
-                            node.addChild(data);
-                            node.data.children = data;
-                        }
-                        else{
-                            node.childList = [];
-                            node.render();
-                        }
-
-                    });
-
                 }
-
             });
 
             /**
