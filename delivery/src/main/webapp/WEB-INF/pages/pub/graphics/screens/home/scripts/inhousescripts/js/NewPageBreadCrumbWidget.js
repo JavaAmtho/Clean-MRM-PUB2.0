@@ -119,7 +119,7 @@ NewPageBreadCrumbWidget.enableRenderingEngine = function(){
 
     //This will enable the renderer engine options if page type is not manual
     var radioElementsOfRenderer = document.getElementsByName("renderType");
-    if(radioElementsPfPage[checkedIndex].value != "manual"){
+    if(radioElementsPfPage[checkedIndex].value == "creative"){
         for(var i = 0; i < radioElementsOfRenderer.length; i++){
             radioElementsOfRenderer[i].disabled = false;
         }
