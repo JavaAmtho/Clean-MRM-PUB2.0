@@ -1,5 +1,5 @@
 
-package app.cs.controller.publicationplanning.dimension;
+package app.cs.controller.publicationstructuring.chapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -7,22 +7,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import app.cs.boundary.delivery.Interactor;
-import app.cs.impl.model.MultiDimensionalObject;
+import app.cs.impl.model.PublicationAssetObject;
 import app.cs.model.request.DeleteDimensionRequest;
+import app.cs.model.request.DeletePublicationAssetRequest;
 
 /**
  * The Class NodeController.
  */
 @Controller
-public class DeleteDimensionController {
+public class DeleteChapterController {
 
 	/** The Constant CREATE. */
-	private static final String DELETE = "/dimension/delete/{type}/{name}";
+	private static final String DELETE = "/chapter/delete/Chapter/{name}";
 
 	/** The dimension service. */
-	private Interactor deleteDimension;
+	private Interactor deleteChapter;
 
-	private DeleteDimensionRequest deleteDimensionRequest;
+	private DeletePublicationAssetRequest deleteChapterRequest;
 
 	/**
 	 * Instantiates a new node controller.
@@ -35,10 +36,10 @@ public class DeleteDimensionController {
 	 *            the cache
 	 */
 	@Autowired
-	public DeleteDimensionController(Interactor deleteDimension,
-			DeleteDimensionRequest deleteDimensionRequest) {
-		this.deleteDimension = deleteDimension;
-		this.deleteDimensionRequest = deleteDimensionRequest;
+	public DeleteChapterController(Interactor deleteChapter,
+			DeletePublicationAssetRequest deleteChapterRequest) {
+		this.deleteChapter = deleteChapter;
+		this.deleteChapterRequest = deleteChapterRequest;
 
 	}
 
@@ -57,12 +58,12 @@ public class DeleteDimensionController {
 	 */
 	@RequestMapping(value = { DELETE })
 	public @ResponseBody
-	String delete(@RequestBody MultiDimensionalObject dimensionTobeDeleted) {
+	String delete(@RequestBody PublicationAssetObject chapterToBeDeleted) {
 
 
-		deleteDimensionRequest.setDimension(dimensionTobeDeleted);
-		deleteDimension.execute(deleteDimensionRequest);
-		return dimensionTobeDeleted.getId();
+		deleteChapterRequest.setPublicationAsset(chapterToBeDeleted);
+		deleteChapter.execute(deleteChapterRequest);
+		return chapterToBeDeleted.getId();
 
 	}
 }

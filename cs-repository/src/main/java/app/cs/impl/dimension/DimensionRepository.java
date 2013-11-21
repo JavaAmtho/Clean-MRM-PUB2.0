@@ -173,6 +173,11 @@ public class DimensionRepository implements IDimensionRepository {
 				.getType());
 		mongoRepository.delete("groupIds", "type", dimension.getGroupId(),
 				possibleDeleteTypes, dimension.getClass());
+		System.out.println(possibleDeleteTypes);
+		System.out.println(possibleDeleteTypes.contains(CommonConstants.Dimension.DIMENSION_TYPE_PUBLICATION));
+		if(possibleDeleteTypes.contains(CommonConstants.Dimension.DIMENSION_TYPE_PUBLICATION)){
+			neo4jRepository.deleteSelfAndAllItsChildren("id", dimension.getId());
+		}
 	}
 
 	public List<String> getPossibleTypesWhichAreGoingToAffected(

@@ -11,12 +11,10 @@ import org.neo4j.graphdb.RelationshipType;
 import org.neo4j.graphdb.traversal.Evaluators;
 import org.neo4j.graphdb.traversal.TraversalDescription;
 import org.neo4j.kernel.Traversal;
-import org.neo4j.rest.graphdb.entity.RestNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.conversion.EndResult;
 import org.springframework.data.neo4j.conversion.Result;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
-import org.springframework.data.neo4j.support.mapping.Neo4jPersistentEntityImpl;
 import org.springframework.data.neo4j.template.Neo4jOperations;
 import org.springframework.stereotype.Repository;
 
@@ -106,8 +104,31 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 	}
 
 	@Override
-	public <T> void delete(T objectToDelete) {
-		neo4jTemplate.delete(objectToDelete);
+	public String deleteSelfAndAllItsChildren(String key,String value) {
+//		neo4jTemplate.delete(objectToDelete);
+		String query = "START parentNode = node(*) "
+						+ "MATCH parentNode<-[incomingRelationships*]-child, "
+								+ "parentNode-[outgoingRelationships?]->parent "
+						+ "WHERE ("
+						+ "HAS(parentNode." + key + ") "
+						+ "AND parentNode." + key + " = \"" + value + "\""
+						+ ") "
+						+ "foreach(relation in incomingRelationships:delete relation) "
+						+ "DELETE outgoingRelationships,child,parentNode";
+		
+		System.out.println(query);
+		String response;
+		try{
+			neo4jTemplate.query(query, new HashMap<String,Object>());
+			System.out.println("SUCCESS");
+			response = "success";
+		}
+		catch(Exception e){
+			System.out.println("Failed" + e.getMessage());
+			response = "failed";
+		}
+		return response;
+	
 	}
 
 	@Override
@@ -144,7 +165,7 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 	
 	//Evaluators.excludeStartPosition()
 	@Override
-	public <T> Iterator traverseFromNodeExcludeStart(String key, String value,String relationship,Class<T> elementClass) {
+	public <T> Iterator traverseIncomingRelationships(String key, String value,String relationship,Class<T> elementClass) {
 		/*TraversalDescription traversalDescription = Traversal.description().
 				breadthFirst().evaluator(Evaluators.toDepth(10)).
 				evaluator(Evaluators.excludeStartPosition());
@@ -249,7 +270,8 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 		return null;
 	}
 
-
-	
-	
+	@Override
+	public <T> void delete(T objectToDelete) {
+		// TODO Auto-generated method stub
+	}
 }

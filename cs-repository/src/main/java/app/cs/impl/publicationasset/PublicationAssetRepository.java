@@ -46,7 +46,7 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 			PublicationAssetObject publicationAsset = iterator.next();
 			if(publicationAsset.getType().equalsIgnoreCase(CommonConstants.PublicationAsset.PUBLICATION_ASSET_TYPE_ASSORTMENT)){
 				/*Iterable productsIterable = neo4jRepository.traverseOneLevelFromNodeExcludeStart(publicationAsset, Product.class);*/
-				Iterator<Product> productsIterator = /*productsIterable.iterator()*/neo4jRepository.traverseFromNodeExcludeStart("id",publicationAsset.getId(),"PRODUCTS_OF", Product.class);
+				Iterator<Product> productsIterator = neo4jRepository.traverseIncomingRelationships("id",publicationAsset.getId(),"PRODUCTS_OF", Product.class);
 				List<Product> products = new ArrayList<Product>();
 				while(productsIterator.hasNext()){
 					Product product = (Product)productsIterator.next();
@@ -90,7 +90,7 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 	
 	@Override
 	public String delete(PublicationAssetObject chapter) {
-		neo4jRepository.delete(chapter);
+		neo4jRepository.deleteSelfAndAllItsChildren("id", chapter.getId());
 		return "deleted";
 	}
 	

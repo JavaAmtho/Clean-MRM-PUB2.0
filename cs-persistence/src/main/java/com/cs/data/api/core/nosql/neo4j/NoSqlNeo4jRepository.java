@@ -28,10 +28,13 @@ public interface NoSqlNeo4jRepository extends NoSqlOperations{
 	public <E, T> String createMultipleRelationships(String parentKey, String parentValue,
 			List<E> childNodes, String relationship);
 
-	public <T> Iterator traverseFromNodeExcludeStart(String key, String value,
+	public <T> Iterator traverseIncomingRelationships(String key, String value,
 			String realtionship, Class<T> elementClass);
 
-	String deleteAllNodesByRelationship(String parentKey, String parentValue,
+	public String deleteAllNodesByRelationship(String parentKey, String parentValue,
 			String relationship);
+
+	public String deleteSelfAndAllItsChildren(String key, String value);
+
 
 }

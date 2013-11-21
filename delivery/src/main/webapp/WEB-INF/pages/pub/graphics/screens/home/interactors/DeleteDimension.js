@@ -14,6 +14,6 @@ function DeleteDimension(){
  * @param callback
  */
 DeleteDimension.deleteDim = function(prefix,type,input,callback){
-    Router.forwardWithPost(prefix+type+"/"+input.name,true,input,callback);
+    Router.forwardWithPost(prefix+type+"/"+input.id,true,input,callback);
 }
 

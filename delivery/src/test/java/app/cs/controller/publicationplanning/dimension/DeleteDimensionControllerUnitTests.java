@@ -38,7 +38,7 @@ public class DeleteDimensionControllerUnitTests {
 				deleteDimension, deleteDimensionRequest);
 
 		dimension.setId("testId");
-		deleteDimensionController.create(dimension);
+		deleteDimensionController.delete(dimension);
 
 		// verify
 

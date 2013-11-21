@@ -151,7 +151,7 @@ var DynaTree = function(){
                                 //Send API call to delete the node
                                 var input=new Object();
                                 input.id=nodeToBeDeleted.data.id;
-                                input.name=nodeToBeDeleted.data.title;
+                                input.title=nodeToBeDeleted.data.title;
                                 input.type=nodeToBeDeleted.data.type;
                                 input.groupId=nodeToBeDeleted.data.groupId;
                                 var prefix=getUrlPrefix(nodeToBeDeleted.data.type,"delete");
@@ -186,7 +186,7 @@ var DynaTree = function(){
      */
     function addNode(data){
         if(data){
-            /*if((newNode.type !="Chapter"))
+/*            if((newNode.type !="Chapter"))
                     if(newNode.type !="Assortment")*/
                         newNode = data;
 

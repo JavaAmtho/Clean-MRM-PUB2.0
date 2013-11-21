@@ -134,13 +134,13 @@ public class PublicationAssetObject implements GenericDomain{
 		this.isFolder = isFolder;
 	}
 
-	/*public String getName() {
-		return name;
+	public String getName() {
+		return title;
 	}
 
 	public void setName(String name) {
-		this.name = name;
-	}*/
+		this.title = name;
+	}
 
 	public List<Product> getProducts() {
 		return products;
