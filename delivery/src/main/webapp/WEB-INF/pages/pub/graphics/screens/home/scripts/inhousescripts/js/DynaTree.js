@@ -495,8 +495,15 @@ var DynaTree = function(){
                 },
                 onLazyRead: function(node){
                    /*alert(JSON.stringify(node.data));*/
-                    var requestBody = {"id":node.data.id,"type":node.data.type,"groupID":node.data.groupId,"isLazy":true,"structure":"MarketingInitiative-Campaign-SubCampaign-" +
-                        "CommunicationPlan-CommunicationChannel-Publication","path": node.data.path};
+                    var requestBody = {
+                                            "id":node.data.id,
+                                            "type":node.data.type,
+                                            "groupID":node.data.groupId,
+                                            "isLazy":true,
+                                            "structure":GraphicDataStore.getCurrentSchema().name,
+                                            "path": node.data.path
+                                       };
+
                     TreePresenter.getLazyTree(requestBody, function(data){
                         if(data.length != 0){
                             node.addChild(data);
@@ -509,23 +516,6 @@ var DynaTree = function(){
 
                     });
 
-//                    GetLazyTree.get()
-//                    node.addChild({});
-
-                    /*node.appendAjax({
-                        url: urls+"/"+node.data.id,//getChildURL(node.data.id),
-                        success: function(node, data) {
-                            //node.addChild(data);
-                            HomePresenter.populateAssetsList(data);
-                            if(node.data.children == null){
-                                node.data.children = [];
-                                node.data.children.push(data);
-                            }
-                        },
-                        error: function(node, XMLHttpRequest, textStatus, errorThrown){
-                            // Called on error, after error icon was created.
-                        }
-                    });*/
                 }
 
             });
