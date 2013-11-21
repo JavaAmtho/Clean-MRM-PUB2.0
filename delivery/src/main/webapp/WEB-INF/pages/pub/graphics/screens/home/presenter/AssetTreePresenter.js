@@ -107,8 +107,11 @@ AssetTreePresenter.searchList = function (e) {
     }
 }
 
+var assetsDataSource;
+var productsDataSource;
+
 AssetTreePresenter.createAssetsListWithData = function(assetdata){
-       var assetsDataSource = new kendo.data.DataSource({
+       assetsDataSource = new kendo.data.DataSource({
            data: assetdata
        });
 
@@ -118,4 +121,72 @@ AssetTreePresenter.createAssetsListWithData = function(assetdata){
                ' #:label# </div>'
            /*template: kendo.template($("#template").html())*/
        });
+
+       if(myCount==0){
+         myCount++;
+         AssetTreePresenter.makeAssetsListDraggable();
+       }
+}
+
+/**
+ *
+ * @param rendererData
+ * @description shows the assortment panel and hides the mustache div
+ */
+AssetTreePresenter.showAssortmentPanel = function (rendererData) {
+
+
+    AssetTreePresenter.unHideAssortPanel();
+    GraphicDataStore.setProdcutsArr(rendererData);
+
+    productsDataSource = new kendo.data.DataSource({
+        data: rendererData
+    });
+
+    $("#subtab1").kendoListView({
+        dataSource: productsDataSource,
+        template: '<div class="tags move k-block"> <img src="#:image#"/>' +
+            ' #:label# </div>'
+        /*template: kendo.template($("#template").html())*/
+    });
+
+    AssetTreePresenter.makeProductsListDropable();
+
+
+}
+
+AssetTreePresenter.makeAssetsListDraggable = function(){
+    $("#assetDetails").kendoDraggable({
+        filter: ".move",
+        hint: function (element) {
+            return element.clone();
+        }
+    });
+}
+
+var myCount=0;
+
+AssetTreePresenter.makeProductsListDropable = function(){
+    $("#subtab1").kendoDropTarget({
+        dragenter: function (e) {
+            e.draggable.hint.css("opacity", 0.6);
+        },
+        dragleave: function (e) {
+            e.draggable.hint.css("opacity", 1);
+        },
+        drop: function (e) {
+            var item = assetsDataSource.getByUid(e.draggable.hint.data().uid);
+            productsDataSource.add(item);
+            //alert(JSON.stringify(productsDataSource._data))
+            //unmappedtag_datasource.remove(item);
+        }
+    });
+}
+
+/**
+ * @description unHides assortment panel
+ */
+AssetTreePresenter.unHideAssortPanel = function () {
+    $("#dim").hide();
+    $("#assortPanel").show();
 }

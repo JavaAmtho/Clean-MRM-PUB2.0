@@ -219,7 +219,7 @@ HomePresenter.designUI = function(){
 
 $(document).bind("TREE_ITEM_CLICKED", function itemClickedHandler(e) {
         if (e.nodeType == "Assortment") {
-            HomePresenter.showAssortmentPanel(e.uiData);
+            AssetTreePresenter.showAssortmentPanel(e.uiData);
         } else {
             HomePresenter.hideAssortPanel();
             rendererData = {"mydata": e.uiData};
@@ -275,7 +275,7 @@ HomePresenter.getProductsForSelectedNode = function (node) {
  * @param rendererData
  * @description shows the assortment panel and hides the mustache div
  */
-HomePresenter.showAssortmentPanel = function (rendererData) {
+/*HomePresenter.showAssortmentPanel = function (rendererData) {
     HomePresenter.unHideAssortPanel();
     GraphicDataStore.setProdcutsArr(rendererData);
 
@@ -296,7 +296,7 @@ HomePresenter.showAssortmentPanel = function (rendererData) {
 
     });
     $('#subtab1').jqxListBox('refresh');
-}
+}*/
 
 var productArrMadeDirty=false;
 
@@ -432,9 +432,9 @@ HomePresenter.createProductsJSON = function () {
 /**
  * @description unHides assortment panel
  */
-HomePresenter.unHideAssortPanel = function () {
+/*HomePresenter.unHideAssortPanel = function () {
     $("#dim").hide();
     $("#assortPanel").show();
-}
+}*/
 
 
