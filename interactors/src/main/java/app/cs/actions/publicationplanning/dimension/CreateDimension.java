@@ -79,8 +79,8 @@ public class CreateDimension implements Interactor {
 	protected void setDimensionAttributes(MultiDimensionalObject dimension,
 			String type, String name, String path, boolean isFolder,
 			DimensionInfo dimensionInfo) {
-		dimension.setId(/*inMemoryUniqueId.getUniqueIDForDimensions()*/name);
-		dimension.setTitle(name);
+		dimension.setId(inMemoryUniqueId.getUniqueIDForDimensions()/*name*/);
+		dimension.setTitle(name); 
 		dimension.setIsFolder(isFolder);
 		dimension.setPath(path);
 		dimension.setName(name);

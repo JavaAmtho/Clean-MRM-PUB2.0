@@ -159,7 +159,7 @@ public class PublicationAssetObject implements GenericDomain{
 	}
 
 	public String getTitle() {
-		return id;
+		return title;
 	}
 
 	public void setTitle(String title) {

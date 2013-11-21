@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import app.cs.boundary.delivery.Interactor;
 import app.cs.model.request.CreateChapterRequest;
 
+import com.cs.data.api.core.GenericDomain;
+
 /**
  * The Class ChapterController. TODO. com.cs.business.ifacadeservices controller
  * -> common facade ->>>(|) ->i***interface call ichapter ->Impl idimension
@@ -56,7 +58,7 @@ public class CreateChapterController {
 	 */
 	@RequestMapping(value = { CREATECHAPTER})
 	public @ResponseBody
-	String execute(@PathVariable("type") String type,
+	GenericDomain execute(@PathVariable("type") String type,
 			@PathVariable("name") String name,
 			@PathVariable("path") String path,
 			@PathVariable("folder") boolean isFolder) {
@@ -66,8 +68,7 @@ public class CreateChapterController {
 		createChapterRequestModel.setName(name);
 		createChapterRequestModel.setPath(path);
 		createChapterRequestModel.setType(type);
-		createChapter.execute(createChapterRequestModel);
-		return name;
+		return createChapter.execute(createChapterRequestModel).getResponse();
 
 	}
 

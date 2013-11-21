@@ -95,7 +95,7 @@ var DynaTree = function(){
                     currentPath = "-1";
                 }
                 else{
-                    currentPath = parentNode.data.path+","+ parentNode.data.title;
+                    currentPath = parentNode.data.path+","+ parentNode.data.id;
                     if(currentPath.indexOf("-1")==0)
                         currentPath = currentPath.match(/([^,]*),(.*)/)[2];   //To remove -1 root folder
                 }
@@ -186,8 +186,8 @@ var DynaTree = function(){
      */
     function addNode(data){
         if(data){
-            if((newNode.type !="Chapter"))
-                    if(newNode.type !="Assortment")
+            /*if((newNode.type !="Chapter"))
+                    if(newNode.type !="Assortment")*/
                         newNode = data;
 
             parentNode.addChild(newNode).activate();

@@ -12,6 +12,8 @@ import app.cs.boundary.delivery.Interactor;
 import app.cs.impl.model.Assortment;
 import app.cs.model.request.CreateAssortmentRequest;
 
+import com.cs.data.api.core.GenericDomain;
+
 @Controller
 public class CreateAssortmentController {
 
@@ -29,13 +31,12 @@ public class CreateAssortmentController {
 
 	@RequestMapping(value = "/assortment/create/{name}/{path}", method = RequestMethod.POST)
 	public @ResponseBody
-	String create(@RequestBody Assortment assortment,
+	GenericDomain create(@RequestBody Assortment assortment,
 			@PathVariable String name, @PathVariable String path) {
 		request.setPath(path);
 		request.setAssortment(assortment);
 		request.setName(name);
-		createAssortment.execute(request);
-		return name;
+		return createAssortment.execute(request).getResponse();
 	}
 
 }

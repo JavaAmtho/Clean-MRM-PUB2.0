@@ -42,7 +42,6 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 		Iterable<PublicationAssetObject> iterable = neo4jRepository.traverseOneLevelFromNodeExcludeStart(parentNode,PublicationAssetObject.class);
 		Iterator<PublicationAssetObject> iterator = iterable.iterator();
 		List<PublicationAssetObject> listOfPublicationAssets = new ArrayList<PublicationAssetObject>();
-//		System.out.println((iterator.next()).getName());
 		while(iterator.hasNext()){
 			PublicationAssetObject publicationAsset = iterator.next();
 			if(publicationAsset.getType().equalsIgnoreCase(CommonConstants.PublicationAsset.PUBLICATION_ASSET_TYPE_ASSORTMENT)){

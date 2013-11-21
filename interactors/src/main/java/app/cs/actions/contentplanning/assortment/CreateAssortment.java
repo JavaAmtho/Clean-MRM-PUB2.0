@@ -68,14 +68,11 @@ public class CreateAssortment implements Interactor {
 		
 		assortmentObject = publicationAssetRepository.save(assortmentObject);
 		List<Product> prod = new ArrayList<Product>();
-		if(assortment.getProducts().size() > 0){
+		if(assortment.getProducts() != null && assortment.getProducts().size() > 0){
 			prod = assortment.getProducts();
 			publicationAssetRepository.updateAssortmentProducts(assortmentObject.getId(),prod);
 		}
 		assortmentObject.setProducts(prod);
-		//TODO: Has to be optimized (while creating page add assortment in relationship and save)
-		//TODO: after creation of assortment, publicationAssetObject(page object) is stale since new relationship 
-		//		has been added in the page object for the newly created assortment
 		return new PublicationAssetObjectResponse(assortmentObject);
 
 	}

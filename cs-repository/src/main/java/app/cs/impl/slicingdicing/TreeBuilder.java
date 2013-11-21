@@ -147,15 +147,12 @@ public class TreeBuilder implements ITreeBuilder {
 		String[] orderedTypes = getTypes(structure);
 		if(!currentLevel.isEmpty()){
 			String nextLevel = getNextLevel(currentLevel, orderedTypes);
-			System.out.println(currentLevel + " = > " + nextLevel);
 			MultiDimensionalObject currentRoot = parentLevel;
 			List<String>groupIds = currentRoot.getGroupId();
-			System.out.println(groupIds);
 			childrenOfCurrentLevel = getAllChildrenOfCurrentRoot(groupIds, nextLevel);
-			System.out.println(childrenOfCurrentLevel.size());
 			for (MultiDimensionalObject child : childrenOfCurrentLevel) {
 	
-				child.setPath(removeMinusOne(currentRoot.getPath()) + "," + currentRoot.getTitle());
+				child.setPath(removeMinusOne(currentRoot.getPath()) + "," + currentRoot.getId());
 	
 			}
 		}
@@ -176,7 +173,7 @@ public class TreeBuilder implements ITreeBuilder {
 		List<PublicationAssetObject> childrenOfCurrentLevel = getPublicationAssets(currentRoot);
 		for (PublicationAssetObject child : childrenOfCurrentLevel) {
 
-			child.setPath(removeMinusOne(currentRoot.getPath()) + "," + currentRoot.getTitle());
+			child.setPath(removeMinusOne(currentRoot.getPath()) + "," + currentRoot.getId());
 
 		}
 		return childrenOfCurrentLevel;

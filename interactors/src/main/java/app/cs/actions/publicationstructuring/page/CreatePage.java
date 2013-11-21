@@ -68,7 +68,7 @@ public class CreatePage implements Interactor {
 		
 		CreateAssortmentRequest assortmentRequest = new CreateAssortmentRequest();
 		assortmentRequest.setPath(page.getPath() + "," + page.getId());
-		assortmentRequest.setName(page.getId() + "_Assortment");
+		assortmentRequest.setName(page.getTitle() + "_Assortment");
 		Assortment assortment = new Assortment();
 		assortmentRequest.setAssortment(assortment);
 		
