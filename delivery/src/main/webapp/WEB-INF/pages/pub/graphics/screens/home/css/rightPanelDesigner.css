@@ -690,7 +690,7 @@ img.save {
     display: none;
     background-image: url('../images/drag_and_drop.jpg');
     background-repeat: no-repeat;
-    z-index: 9999;
+    z-index: 99;
     background-position: 30% 30%;
 }
 
@@ -717,7 +717,7 @@ img.save {
     margin-top: 0px;
     background-image: url('../images/drag_and_drop.jpg');
     background-repeat: no-repeat;
-    z-index: 9999;
+    z-index: 5999;
     background-position: 50% 50%;
 
 }
