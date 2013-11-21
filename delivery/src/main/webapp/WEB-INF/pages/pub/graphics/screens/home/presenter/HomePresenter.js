@@ -6,7 +6,6 @@ function HomePresenter() {
 }
 
 var rendererData;
-var btnSelectionFlag = 0;
 var onTarget = false;
 var $isotopeContainer;
 
@@ -173,8 +172,6 @@ HomePresenter.loadViewItems = function (evt, currentTemplateView) {
     }
 
     MustacheWrapper.createUI(currentTemplateView, evt, function (currentViewStr) {
-
-
         $('#viewHolder').html(currentViewStr);
 
         //Set rules for all the master Pages
@@ -200,41 +197,6 @@ HomePresenter.loadViewItems = function (evt, currentTemplateView) {
     });
 }
 
-var currentPanelId;
-
-/**
- *
- * @param evt
- * @description slides the panel and displays PIM/MAM tree as per the PIM/MAM button pressed
- */
-HomePresenter.slidePanel = function (evt) {
-    currentPanelId = evt.currentTarget.id;
-
-    var btnId = evt.currentTarget.id;
-    if (btnSelectionFlag == 0) {
-        $("#panel").css('display','block')
-        $("#typeHolder").html(evt.currentTarget.name);
-        $("#panel").animate({right: '30px'}, "slow", function () {
-            HomePresenter.createTree(btnId);
-        });
-        btnSelectionFlag = 1;
-    }
-    else if (btnSelectionFlag == 1 && ($("#typeHolder").html() == evt.currentTarget.name)) {
-        $("#panel").animate({right: '-200px'}, "slow");
-        setTimeout(function() {
-            $("#panel").css('display','none')
-
-        }, 500);
-        HomePresenter.reset();
-        btnSelectionFlag = 0;
-    }
-    else {
-        $("#typeHolder").html(evt.currentTarget.name);
-        HomePresenter.createTree(btnId);
-    }
-    HomePresenter.changeSelectedBtn(evt.currentTarget.id);
-}
-
 /**
  * @description clears the contextmenu created on the fly for all types of dimensions in tree
  */
@@ -253,49 +215,6 @@ HomePresenter.btnFocus = function (btn) {
     $('.listBtnCSS').css("border", "0px");
     $('.detailBtnCSS').css("border", "0px");
     $(btn).css("border", "1px solid black");
-}
-
-/**
- *
- * @param btnId
- * @description creates a tree object instance
- */
-HomePresenter.createTree = function (btnId) {
-    var urls;
-    urls = EngineDataStore.getBaseURL() + EngineDataStore.getApiMappingObject()[btnId];
-
-    var treeObj = document.getElementById("assetsTree");
-    var darkTree = ElementFactory.getLazyTree();
-    darkTree.createTree(treeObj, urls);
-}
-
-/**
- *   @description resets the css for all PIM/MAM buttons as unclicked
- */
-HomePresenter.reset = function () {
-    $("#btnMIM").css("background-image", "url(/delivery/pages/pub/graphics/screens/home/images/icons/MIM.png)");
-    $("#btnPIM").css("background-image", "url(/delivery/pages/pub/graphics/screens/home/images/icons/PIM.png)");
-    $("#btnMAM").css("background-image", "url(/delivery/pages/pub/graphics/screens/home/images/icons/MAM.png)");
-}
-
-/**
- *
- * @param btnId
- * @description changes css of pressed or selected button PIM/MAM
- */
-HomePresenter.changeSelectedBtn = function (btnId) {
-    HomePresenter.reset();
-    var urls;
-    if (btnId == "btnPIM") {
-        urls = EngineDataStore.getBaseURL() + "graphics/screens/home/images/icons/PIMb.png";
-    }
-    if (btnId == "btnMAM") {
-        urls = EngineDataStore.getBaseURL() + "graphics/screens/home/images/icons/MAMb.png";
-    }
-    if (btnId == "btnMIM") {
-        urls = EngineDataStore.getBaseURL() + "graphics/screens/home/images/icons/MIMb.png";
-    }
-    $('#' + btnId).css("background-image", 'url("' + urls + '")');
 }
 
 HomePresenter.designUI = function(){
@@ -479,7 +398,7 @@ HomePresenter.addEventListeners = function () {
  * @description calls interactor to search the assets with the entered key in input
  */
 HomePresenter.searchList = function (e) {
-    console.log(e.currentTarget)
+    //console.log(e.currentTarget)
     if (e.keyCode == 13) {
         if (currentPanelId == "btnPIM") {
             SearchPimAsset.search(e.currentTarget.value, HomePresenter.populateAssetsList);
