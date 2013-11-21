@@ -2,7 +2,7 @@
     {"id":"tileView","event":"click","func":HomePresenter.handleViewChange},
     {"id":"listView","event":"click","func":HomePresenter.handleViewChange},
     {"id":"detailView","event":"click","func":HomePresenter.handleViewChange},
-    {"id":"btnSaveAssort","event":"click","func":HomePresenter.createProductsJSON},
+    {"id":"btnSaveAssort","event":"click","func":AssetTreePresenter.createProductsJSON},
     {"id":"btnPIM","event":"click","func":AssetTreePresenter.slidePanel},
     {"id":"btnMAM","event":"click","func":AssetTreePresenter.slidePanel},
     {"id":"btnMIM","event":"click","func":AssetTreePresenter.slidePanel},

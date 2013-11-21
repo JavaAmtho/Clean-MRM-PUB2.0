@@ -413,21 +413,6 @@ HomePresenter.hideAssortPanel = function () {
     $('#dim').show();
 }
 
-/**
- * @description creates the products json object and calls interactor to update the assortment
- */
-HomePresenter.createProductsJSON = function () {
-    var jsonData = {};
-    var columnName = "products";
-    jsonData[columnName] = GraphicDataStore.getProdcutsArr();
-    var columnName = "id";
-    jsonData[columnName] = GraphicDataStore.getCurrentAssortment().id;
-    UpdateAssortment.update(GraphicDataStore.getCurrentAssortment(), jsonData, HomePresenter.hideAssortPanel);
-    $(document).trigger({
-        type: "expandParentNode",
-        currentId: GraphicDataStore.getCurrentAssortment().title
-    });
-}
 
 /**
  * @description unHides assortment panel

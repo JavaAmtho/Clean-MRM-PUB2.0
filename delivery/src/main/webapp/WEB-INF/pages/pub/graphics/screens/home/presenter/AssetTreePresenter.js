@@ -145,7 +145,7 @@ AssetTreePresenter.showAssortmentPanel = function (rendererData) {
 
     $("#subtab1").kendoListView({
         dataSource: productsDataSource,
-        template: '<div class="tags move k-block"> <img src="#:image#"/>' +
+        template: '<div class="tags k-block"> <img src="#:image#"/>' +
             ' #:label# </div>'
         /*template: kendo.template($("#template").html())*/
     });
@@ -177,7 +177,6 @@ AssetTreePresenter.makeProductsListDropable = function(){
         drop: function (e) {
             var item = assetsDataSource.getByUid(e.draggable.hint.data().uid);
             productsDataSource.add(item);
-            //alert(JSON.stringify(productsDataSource._data))
             //unmappedtag_datasource.remove(item);
         }
     });
@@ -189,4 +188,22 @@ AssetTreePresenter.makeProductsListDropable = function(){
 AssetTreePresenter.unHideAssortPanel = function () {
     $("#dim").hide();
     $("#assortPanel").show();
+}
+
+/**
+ * @description creates the products json object and calls interactor to update the assortment
+ */
+AssetTreePresenter.createProductsJSON = function () {
+    var jsonData = {};
+    var columnName = "products";
+    //jsonData[columnName] = GraphicDataStore.getProdcutsArr();
+    jsonData[columnName] = productsDataSource._data;
+    var columnName = "id";
+    jsonData[columnName] = GraphicDataStore.getCurrentAssortment().id;
+    UpdateAssortment.update(GraphicDataStore.getCurrentAssortment(), jsonData, HomePresenter.hideAssortPanel);
+    $(document).trigger({
+        type: "expandParentNode",
+        currentId: GraphicDataStore.getCurrentAssortment().title,
+        productsColl:  productsDataSource._data
+    });
 }

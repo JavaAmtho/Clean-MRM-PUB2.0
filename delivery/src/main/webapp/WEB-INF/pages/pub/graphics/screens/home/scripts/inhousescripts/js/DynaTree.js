@@ -327,6 +327,7 @@ var DynaTree = function(){
     this.createTree = function(treeObj,data){
         $(document).bind("expandParentNode", function onExpandParentNode(e){
             var pNode = searchFolderNodeWithName(e.currentId,null)
+            pNode.data.products = e.productsColl;
             pNode.parent.activate();
             pNode.parent.expand()
         });
