@@ -130,5 +130,27 @@ public class RedisRepositoryIntegrationTests {
 		List<String> values = crudRepository.findAllValues("*");
 		System.out.println(values);
 	}
+	
+	@Test
+	public void shouldAddAndRetrieveStringValue(){
+		int i = 0;
+		crudRepository.set("testNumber", Integer.toString(i));
+		String returnValue = crudRepository.get("testNumber");
+		Assert.assertEquals(i, Integer.parseInt(returnValue));
+	}
+	
+	@Test
+	public void shouldGetValueFromRepoAndModify(){
+		
+		String returnValue = crudRepository.get("testNumber");
+		int integerValue = Integer.parseInt(returnValue);
+		integerValue++;
+		crudRepository.set("testNumber", Integer.toString(integerValue));
+		returnValue = crudRepository.get("testNumber");
+		Assert.assertEquals(integerValue, Integer.parseInt(returnValue));
+		
+	}
+	
+	
 
 }

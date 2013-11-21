@@ -1,12 +1,11 @@
 package app.cs.actions.publicationstructuring.page;
 
-import java.util.HashSet;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import app.cs.actions.contentplanning.assortment.CreateAssortment;
 import app.cs.boundary.delivery.Interactor;
+import app.cs.impl.inmemory.InMemoryUniqueId;
 import app.cs.impl.model.Assortment;
 import app.cs.impl.model.PublicationAssetObject;
 import app.cs.interfaces.publicationasset.IPublicationAssetRepository;
@@ -30,6 +29,8 @@ public class CreatePage implements Interactor {
 	private IPublicationAssetRepository publicationAssetRepository;
 	
 	private CreateAssortment createAssortment;
+	
+	private InMemoryUniqueId inMemoryUniqueId;
 
 	/**
 	 * Instantiates a new chapter service.
@@ -40,11 +41,12 @@ public class CreatePage implements Interactor {
 	 */
 	@Autowired
 	public CreatePage(/*IChapterRepository chapterRepository*/IPublicationAssetRepository publicationAssetRepository,
-			CreateAssortment createAssortment) {
+			CreateAssortment createAssortment,InMemoryUniqueId inMemoryUniqueId) {
 		// TODO Auto-generated constructor stub
 //		this.chapterRepository = chapterRepository;
 		this.publicationAssetRepository = publicationAssetRepository;
 		this.createAssortment = createAssortment;
+		this.inMemoryUniqueId = inMemoryUniqueId;
 	}
 
 	public ResponseModel execute(RequestModel model) {
@@ -63,7 +65,6 @@ public class CreatePage implements Interactor {
 
 	private PublicationAssetObject createDefaultAssortmentForPage(
 			PublicationAssetObject page) {
-		PublicationAssetObject assortmentObject = new PublicationAssetObject();
 		
 		CreateAssortmentRequest assortmentRequest = new CreateAssortmentRequest();
 		assortmentRequest.setPath(page.getPath() + "," + page.getId());
@@ -73,8 +74,6 @@ public class CreatePage implements Interactor {
 		
 		PublicationAssetObjectResponse assortmentResponse = (PublicationAssetObjectResponse)createAssortment.execute(assortmentRequest);
 		
-//		assortmentObject.setProducts(productsList);
-//		PublicationAssetObject createdAssortment = publicationAssetRepository.save(assortmentObject);
 		return assortmentResponse.getResponse();
 	}
 
@@ -109,10 +108,10 @@ public class CreatePage implements Interactor {
 	protected void setPublicationAssetAttributes(CreatePageRequest request,
 			PublicationAssetObject publicationAsset) {
 		//TODO : unique id to be set
-		publicationAsset.setId(request.getName());
+		publicationAsset.setId(inMemoryUniqueId.getUniqueIDForDimensions());
 		//TODO : title and name redundant(only title needed)
 		publicationAsset.setTitle(request.getName());
-		publicationAsset.setName(request.getName());
+//		publicationAsset.setName(request.getName());
 		publicationAsset.setPath(request.getPath());
 		publicationAsset.setType(request.getType());
 		publicationAsset.setIsFolder(request.isFolder());

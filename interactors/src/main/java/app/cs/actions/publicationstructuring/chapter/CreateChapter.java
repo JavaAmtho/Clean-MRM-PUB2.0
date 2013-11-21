@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import app.cs.boundary.delivery.Interactor;
+import app.cs.impl.inmemory.InMemoryUniqueId;
 import app.cs.impl.model.DimensionInfo;
 import app.cs.impl.model.MultiDimensionalObject;
 import app.cs.impl.model.PublicationAssetObject;
@@ -30,8 +31,10 @@ public class CreateChapter implements Interactor {
 
 	private IPublicationAssetRepository publicationAssetRepository;
 	
+	private InMemoryUniqueId inMemoryUniqueId;
+	
 	/** The chapter repository. */
-	private IChapterRepository chapterRepository;
+//	private IChapterRepository chapterRepository;
 
 	/**
 	 * Instantiates a new chapter service.
@@ -41,10 +44,12 @@ public class CreateChapter implements Interactor {
 	 * @param factory
 	 */
 	@Autowired
-	public CreateChapter(/*IChapterRepository chapterRepository*/IPublicationAssetRepository publicationAssetRepository) {
+	public CreateChapter(/*IChapterRepository chapterRepository*/IPublicationAssetRepository publicationAssetRepository,
+			InMemoryUniqueId inMemoryUniqueId) {
 		// TODO Auto-generated constructor stub
 //		this.chapterRepository = chapterRepository;
 		this.publicationAssetRepository = publicationAssetRepository;
+		this.inMemoryUniqueId = inMemoryUniqueId;
 	}
 
 	public ResponseModel execute(RequestModel model) {
@@ -55,7 +60,6 @@ public class CreateChapter implements Interactor {
 		/*setChapterAtrributes(chapter, request.getType(), request.getName(),
 				request.getPath(), request.isFolder());*/
 //		return new StringResponse(chapterRepository.save(chapter));
-			System.out.println("pub assets create dim");
 			PublicationAssetObject publicationAsset = new PublicationAssetObject();
 			setPublicationAssetAttributes(request, publicationAsset);
 			return new PublicationAssetObjectResponse(
@@ -76,7 +80,7 @@ public class CreateChapter implements Interactor {
 	 * @param isFolder
 	 *            the is folder
 	 */
-	private void setChapterAtrributes(MultiDimensionalObject chapter,
+/*	private void setChapterAtrributes(MultiDimensionalObject chapter,
 			String type, String name, String path, boolean isFolder) {
 		chapter.setId(name);
 		chapter.setTitle(name);
@@ -87,11 +91,13 @@ public class CreateChapter implements Interactor {
 		chapter.setDimensionInfo(new DimensionInfo());
 		chapter.setChildren(new ArrayList<MultiDimensionalObject>());
 
-	}
+	}*/
 	
 	protected void setPublicationAssetAttributes(CreateChapterRequest request,
 			PublicationAssetObject publicationAsset) {
-		publicationAsset.setName(request.getName());
+		publicationAsset.setId(inMemoryUniqueId.getUniqueIDForDimensions());
+		publicationAsset.setTitle(request.getName());
+//		publicationAsset.setName(request.getName());
 		publicationAsset.setPath(request.getPath());
 		publicationAsset.setType(request.getType());
 		publicationAsset.setIsFolder(request.isFolder());

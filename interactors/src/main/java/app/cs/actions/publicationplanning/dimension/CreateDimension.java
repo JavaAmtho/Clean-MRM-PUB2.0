@@ -6,17 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import app.cs.boundary.delivery.Interactor;
+import app.cs.impl.inmemory.InMemoryUniqueId;
 import app.cs.impl.model.DimensionInfo;
 import app.cs.impl.model.MultiDimensionalObject;
-import app.cs.impl.model.PublicationAssetObject;
 import app.cs.interfaces.dimension.IDimensionRepository;
 import app.cs.interfaces.publicationasset.IPublicationAssetRepository;
 import app.cs.model.request.CreateDimensionRequest;
 import app.cs.model.request.RequestModel;
 import app.cs.model.response.MultiDimensionalObjectResponse;
-import app.cs.model.response.PublicationAssetObjectResponse;
 import app.cs.model.response.ResponseModel;
-import app.cs.utils.CommonConstants;
 
 /**
  * The Class DimensionService. TODO remove out all annotation from class
@@ -27,8 +25,8 @@ public class CreateDimension implements Interactor {
 	/** The dimension repository. */
 	private IDimensionRepository dimensionRepository;
 	
-	private IPublicationAssetRepository publicationAssetRepository;
-
+	private InMemoryUniqueId inMemoryUniqueId;
+	
 	/** The contentobject. */
 	private final String CONTENTOBJECT = "MultiDimensionalObject";
 
@@ -42,11 +40,9 @@ public class CreateDimension implements Interactor {
 	 */
 	@Autowired
 	public CreateDimension(IDimensionRepository dimensionRepository,
-			IPublicationAssetRepository publicationAssetRepository) {
-
+			InMemoryUniqueId inMemoryUniqueId) {
 		this.dimensionRepository = dimensionRepository;
-		this.publicationAssetRepository = publicationAssetRepository;
-
+		this.inMemoryUniqueId = inMemoryUniqueId;
 	}
 
 	public ResponseModel execute(RequestModel model) {
@@ -83,7 +79,7 @@ public class CreateDimension implements Interactor {
 	protected void setDimensionAttributes(MultiDimensionalObject dimension,
 			String type, String name, String path, boolean isFolder,
 			DimensionInfo dimensionInfo) {
-		dimension.setId(name);
+		dimension.setId(/*inMemoryUniqueId.getUniqueIDForDimensions()*/name);
 		dimension.setTitle(name);
 		dimension.setIsFolder(isFolder);
 		dimension.setPath(path);

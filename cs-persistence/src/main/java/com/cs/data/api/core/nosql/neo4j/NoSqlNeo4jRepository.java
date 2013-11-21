@@ -31,4 +31,7 @@ public interface NoSqlNeo4jRepository extends NoSqlOperations{
 	public <T> Iterator traverseFromNodeExcludeStart(String key, String value,
 			String realtionship, Class<T> elementClass);
 
+	String deleteAllNodesByRelationship(String parentKey, String parentValue,
+			String relationship);
+
 }

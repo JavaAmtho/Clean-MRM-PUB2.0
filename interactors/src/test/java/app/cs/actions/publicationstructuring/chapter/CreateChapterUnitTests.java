@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import app.cs.impl.delegate.factory.DomainFactory;
+import app.cs.impl.inmemory.InMemoryUniqueId;
 import app.cs.impl.model.MultiDimensionalObject;
 import app.cs.interfaces.publicationasset.IPublicationAssetRepository;
 import app.cs.model.request.CreateChapterRequest;
@@ -24,13 +25,16 @@ public class CreateChapterUnitTests {
 
 	@Mock
 	private IPublicationAssetRepository chapterRepository;
+	
+	@Mock
+	private InMemoryUniqueId inMemoryUniqueId;
 
 	@Mock
 	private DomainFactory factory;
 
 	@Before
 	public void setUp() {
-		createChapter = new CreateChapter(chapterRepository);
+		createChapter = new CreateChapter(chapterRepository,inMemoryUniqueId);
 
 	}
 

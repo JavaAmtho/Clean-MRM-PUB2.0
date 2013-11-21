@@ -46,8 +46,6 @@ public class AssortmentRepository implements IAssortmentRepository {
 	@Override
 	public String save(MultiDimensionalObject assortment) {
 
-		System.out.println(assortment.getPath());
-		System.out.println(assortment.getId());
 		MultiDimensionalObject publication = getParentPublication(assortment
 				.getPath());
 		return addAssortmentToPublication(publication, assortment);
@@ -110,7 +108,6 @@ public class AssortmentRepository implements IAssortmentRepository {
 	public String updateAssortment(MultiDimensionalObject assortment) {
 		MultiDimensionalObject publication = getParentPublication(assortment
 				.getPath());
-		System.out.println(publication);
 		MultiDimensionalObject oldAssortment = finder.find(publication,
 				assortment.getName());
 		oldAssortment.setProducts(assortment.getProducts());
@@ -158,7 +155,6 @@ public class AssortmentRepository implements IAssortmentRepository {
 			countOfAssortments++;
 		}
 
-		System.out.println(nameOfAssortments);
 		return nameOfAssortments;
 	}
 

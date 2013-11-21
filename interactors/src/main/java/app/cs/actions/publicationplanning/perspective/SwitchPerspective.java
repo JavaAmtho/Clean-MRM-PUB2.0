@@ -58,8 +58,6 @@ public class SwitchPerspective implements Interactor{
 		}
 		else if(model instanceof SwitchPerspectiveRequest){
 			SwitchPerspectiveRequest request = (SwitchPerspectiveRequest)model;
-			System.out.println(request.getType());
-			System.out.println(CommonConstants.PUBLICATION_ASSETS_TYPE_ARRAY);
 			if(CommonConstants.PUBLICATION_ASSETS_TYPE_ARRAY.contains(request.getType()) || 
 					CommonConstants.Dimension.DIMENSION_TYPE_PUBLICATION.equals(request.getType())){
 				

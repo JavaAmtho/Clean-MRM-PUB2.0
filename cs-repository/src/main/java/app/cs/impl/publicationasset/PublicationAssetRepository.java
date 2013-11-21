@@ -67,7 +67,6 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 //		if(chapter.getType() != CommonConstants.Dimension.DIMENSION_TYPE_PUBLICATION){
 			String parentID = finder.getParentId(chapter.getPath());
 			PublicationAssetObject parent = neo4jRepository.getObjectByKeyValue("id", parentID, PublicationAssetObject.class);
-			chapter.setId(chapter.getName());
 			GenericDomain publicationAssetObjectRelationship = chapter.isChildOf(parent, chapter.getType());
 			chapter = (PublicationAssetObject)neo4jRepository.saveData(chapter);
 			neo4jRepository.saveData(publicationAssetObjectRelationship);
@@ -81,7 +80,12 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 	
 	@Override
 	public String updateAssortmentProducts(String assortmentID,List<Product> products){
-		return neo4jRepository.createMultipleRelationships("id", assortmentID, products, PRODUCT_ASSORTMENT_RELATIONSHIP);
+		String responseMessage = CommonConstants.FAIL_RESPONSE;
+		responseMessage = neo4jRepository.deleteAllNodesByRelationship("id", assortmentID, PRODUCT_ASSORTMENT_RELATIONSHIP);
+		if(products.size() > 0 && responseMessage.equals(CommonConstants.SUCCESS_RESPONSE)){
+			responseMessage = neo4jRepository.createMultipleRelationships("id", assortmentID, products, PRODUCT_ASSORTMENT_RELATIONSHIP);
+		}
+		return responseMessage;
 	}
 		
 	

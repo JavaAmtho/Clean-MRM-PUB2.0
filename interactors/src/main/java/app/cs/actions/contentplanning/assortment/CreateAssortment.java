@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import app.cs.boundary.delivery.Interactor;
+import app.cs.impl.inmemory.InMemoryUniqueId;
 import app.cs.impl.model.Assortment;
 import app.cs.impl.model.Product;
 import app.cs.impl.model.PublicationAssetObject;
@@ -23,11 +24,15 @@ public class CreateAssortment implements Interactor {
 //	private IAssortmentRepository assortmentRepository;
 
 	private IPublicationAssetRepository publicationAssetRepository;
+	
+	private InMemoryUniqueId inMemoryUniqueId;
 
 	@Autowired
-	public CreateAssortment(/*IAssortmentRepository assortmentRepository*/IPublicationAssetRepository publicationAssetRepository) {
+	public CreateAssortment(/*IAssortmentRepository assortmentRepository*/IPublicationAssetRepository publicationAssetRepository,
+			InMemoryUniqueId inMemoryUniqueId) {
 //		this.assortmentRepository = assortmentRepository;
 		this.publicationAssetRepository = publicationAssetRepository;
+		this.inMemoryUniqueId = inMemoryUniqueId;
 	}
 
 	public ResponseModel execute(RequestModel model) {
@@ -53,9 +58,9 @@ public class CreateAssortment implements Interactor {
 		
 		Assortment assortment = request.getAssortment();
 		
-		assortmentObject.setId(request.getName());
+		assortmentObject.setId(inMemoryUniqueId.getUniqueIDForDimensions());
 		assortmentObject.setPath(request.getPath());
-		assortmentObject.setName(request.getName());
+//		assortmentObject.setName(request.getName());
 		assortmentObject.setTitle(request.getName());
 		assortmentObject.setIsFolder(false);
 		assortmentObject.setType(CommonConstants.PublicationAsset.PUBLICATION_ASSET_TYPE_ASSORTMENT);
@@ -63,6 +68,10 @@ public class CreateAssortment implements Interactor {
 		
 		assortmentObject = publicationAssetRepository.save(assortmentObject);
 		List<Product> prod = new ArrayList<Product>();
+		if(assortment.getProducts().size() > 0){
+			prod = assortment.getProducts();
+			publicationAssetRepository.updateAssortmentProducts(assortmentObject.getId(),prod);
+		}
 		assortmentObject.setProducts(prod);
 		//TODO: Has to be optimized (while creating page add assortment in relationship and save)
 		//TODO: after creation of assortment, publicationAssetObject(page object) is stale since new relationship 

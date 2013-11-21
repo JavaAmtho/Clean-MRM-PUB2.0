@@ -25,7 +25,7 @@ public class PublicationAssetObject implements GenericDomain{
 	
 	private boolean isFolder;
 	
-	private String name;
+//	private String name;
 	
 	private List<Product> products;
 	
@@ -51,19 +51,19 @@ public class PublicationAssetObject implements GenericDomain{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public PublicationAssetObject(String name, String type, String path,
+	public PublicationAssetObject(String title, String type, String path,
 			boolean isFolder){
-		this.name = name;
+		this.title = title;
 		this.type = type;
 		this.path = path;
 		this.isFolder = isFolder;
 	}
 	
 	public PublicationAssetObject(String id, String type, String title,
-			String name, String path){
+			/*String name,*/ String path){
 		this.id = id;
 		this.type = type;
-		this.name = name;
+//		this.name = name;
 		this.title = title;
 		this.path = path;
 	}
@@ -134,13 +134,13 @@ public class PublicationAssetObject implements GenericDomain{
 		this.isFolder = isFolder;
 	}
 
-	public String getName() {
+	/*public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
-	}
+	}*/
 
 	public List<Product> getProducts() {
 		return products;

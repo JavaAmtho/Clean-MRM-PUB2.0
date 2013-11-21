@@ -184,6 +184,30 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 	}
 	
 	@Override
+	public String deleteAllNodesByRelationship(String parentKey,String parentValue, String relationship) {
+		
+		String query = "START parentNode = node(*) "
+				+ "MATCH parentNode<-[relation:" + relationship + "]-childNode "
+				+ "WHERE ("
+					+ "HAS(parentNode." + parentKey + ") "
+					+ "AND parentNode." + parentKey + " = \"" + parentValue + "\""
+				+ ")"
+				+ "DELETE relation,childNode";
+		
+		
+		System.out.println(query);
+		try{
+			neo4jTemplate.query(query, new HashMap<String,Object>());
+		}
+		catch(Exception e){
+			System.out.println("return Failed");
+			return "failed";
+		}
+		System.out.println("return success");
+		return "success";
+	}
+	
+	@Override
 	public <E, T> String createMultipleRelationships(String parentKey,String parentValue,List<E> childNodes,String relationship) {
 		
 		String query = "START parentNode = node(*) "

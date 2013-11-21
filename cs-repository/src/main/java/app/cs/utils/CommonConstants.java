@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommonConstants {
+	
+	public static final String FAIL_RESPONSE = "failed";
+	public static final String SUCCESS_RESPONSE = "success";
 
 	public class Dimension{
 		public static final String DIMENSION_TYPE_MARKETING_INITIATIVE = "MarketingInitiative";

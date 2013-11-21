@@ -83,6 +83,8 @@ public class DimensionRepository implements IDimensionRepository {
 
 	private MultiDimensionalObject create(MultiDimensionalObject dimension) {
 		String groupId = getDimensionGroupId(dimension.getPath());
+		System.out.println("DimensionID => " + dimension.getId());
+		System.out.println("Path => " + dimension.getPath());
 		if (groupCache.ifGroupIdExistsFor(dimension.getPath())) {
 			createDimensionWithExistingGroupId(dimension, groupId);
 		} else {

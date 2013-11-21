@@ -131,7 +131,7 @@ public class TreeBuilder implements ITreeBuilder {
 		for (MultiDimensionalObject child : childrenOfCurrentLevel) {
 
 			child.setPath(removeMinusOne(currentRoot.getPath()) + ","
-					+ currentRoot.getName());
+					+ currentRoot.getId());
 
 			buildTreeForRootNode(child, typesOfDimensions, groupIds);
 
@@ -146,14 +146,16 @@ public class TreeBuilder implements ITreeBuilder {
 		String currentLevel = parentLevel.getType();
 		String[] orderedTypes = getTypes(structure);
 		if(!currentLevel.isEmpty()){
-			String nextLevel = getCurrentTreeLevel(currentLevel, orderedTypes);
-					
+			String nextLevel = getNextLevel(currentLevel, orderedTypes);
+			System.out.println(currentLevel + " = > " + nextLevel);
 			MultiDimensionalObject currentRoot = parentLevel;
 			List<String>groupIds = currentRoot.getGroupId();
+			System.out.println(groupIds);
 			childrenOfCurrentLevel = getAllChildrenOfCurrentRoot(groupIds, nextLevel);
+			System.out.println(childrenOfCurrentLevel.size());
 			for (MultiDimensionalObject child : childrenOfCurrentLevel) {
 	
-				child.setPath(removeMinusOne(currentRoot.getPath()) + "," + currentRoot.getName());
+				child.setPath(removeMinusOne(currentRoot.getPath()) + "," + currentRoot.getTitle());
 	
 			}
 		}
@@ -174,14 +176,14 @@ public class TreeBuilder implements ITreeBuilder {
 		List<PublicationAssetObject> childrenOfCurrentLevel = getPublicationAssets(currentRoot);
 		for (PublicationAssetObject child : childrenOfCurrentLevel) {
 
-			child.setPath(removeMinusOne(currentRoot.getPath()) + "," + currentRoot.getId());
+			child.setPath(removeMinusOne(currentRoot.getPath()) + "," + currentRoot.getTitle());
 
 		}
 		return childrenOfCurrentLevel;
 	}
 	
 
-	private String getCurrentTreeLevel(String currentLevel, String[] orderedTypes) {
+	private String getNextLevel(String currentLevel, String[] orderedTypes) {
 		String nextLevel = "";
 		for (int i = 0 ; i < orderedTypes.length ; i++) {
 			if(orderedTypes[i].equals(currentLevel)){

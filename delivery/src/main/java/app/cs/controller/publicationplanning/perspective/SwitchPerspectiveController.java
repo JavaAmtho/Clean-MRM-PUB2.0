@@ -64,6 +64,7 @@ public class SwitchPerspectiveController {
 //		switchPerspectiveRequest.setId(id);
 //		System.out.println("ID => " + switchPerspectiveRequest.getId());
 		lazyLoadRequest = switchPerspectiveRequest;
+		System.out.println("SwitchPerspectiveController dimesnionID => " + lazyLoadRequest.getId());
 //		System.out.println("ID => " + lazyLoadRequest.getId());
 		TreeModel output =  ((TreeModel) switchPerspective.execute(lazyLoadRequest));
 		return (output.getTree());

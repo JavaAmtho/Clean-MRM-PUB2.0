@@ -11,9 +11,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import app.cs.actions.contentplanning.assortment.CreateAssortment;
 import app.cs.impl.assortment.AssortmentRepository;
 import app.cs.impl.chapter.ChapterRepository;
 import app.cs.impl.delegate.factory.DomainFactory;
+import app.cs.impl.inmemory.InMemoryUniqueId;
 import app.cs.impl.model.MultiDimensionalObject;
 import app.cs.impl.publicationasset.PublicationAssetRepository;
 import app.cs.interfaces.publicationasset.IPublicationAssetRepository;
@@ -27,6 +29,11 @@ public class CreatePageUnitTests {
 
 	@Mock
 	private IPublicationAssetRepository chapterRepository;
+	@Mock
+	private CreateAssortment createAssortment;
+	
+	@Mock
+	private InMemoryUniqueId inMemoryUniqueId;
 	
 
 	@Mock
@@ -34,7 +41,7 @@ public class CreatePageUnitTests {
 
 	@Before
 	public void setUp() {
-		createPage = new CreatePage(chapterRepository);
+		createPage = new CreatePage(chapterRepository,createAssortment,inMemoryUniqueId);
 
 	}
 
