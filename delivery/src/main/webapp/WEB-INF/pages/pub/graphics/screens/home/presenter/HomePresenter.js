@@ -316,7 +316,7 @@ function removeProduct(indx){
  * @param data
  * @description shows list of assets under the node clicked in PIM/MAM tree
  */
-HomePresenter.populateAssetsList = function (data) {
+/*HomePresenter.populateAssetsList = function (data) {
     //Converting the div into the jqwidget list with the renderer for that list
     $("#assetDetails").jqxListBox('beginUpdate');
     $("#assetDetails").jqxListBox({ source: data, autoItemsHeight: true, scrollBarSize: 15, height: '450px', displayMember: "title", valueMember: "description", width: 200, height: 250,
@@ -336,7 +336,7 @@ HomePresenter.populateAssetsList = function (data) {
     //This will add all the necessary events for d&d operation
     HomePresenter.addEventListeners();
 
-}
+}*/
 
 /**
  *  @description adds all listeners for list in assortment panel like dragAccept onDrop etc

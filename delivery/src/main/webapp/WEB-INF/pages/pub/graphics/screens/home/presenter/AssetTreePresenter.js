@@ -99,10 +99,23 @@ AssetTreePresenter.getLazyNodes = function(id,callBack){
 AssetTreePresenter.searchList = function (e) {
     if (e.keyCode == 13) {
         if (currentPanelId == "btnPIM") {
-            SearchPimAsset.search(e.currentTarget.value, HomePresenter.populateAssetsList);
+            SearchPimAsset.search(e.currentTarget.value, AssetTreePresenter.createAssetsListWithData);
         }
         if (currentPanelId == "btnMAM") {
-            SearchMamAsset.search(e.currentTarget.value, HomePresenter.populateAssetsList);
+            SearchMamAsset.search(e.currentTarget.value, AssetTreePresenter.createAssetsListWithData);
         }
     }
+}
+
+AssetTreePresenter.createAssetsListWithData = function(assetdata){
+       var assetsDataSource = new kendo.data.DataSource({
+           data: assetdata
+       });
+
+       $("#assetDetails").kendoListView({
+           dataSource: assetsDataSource,
+           template: '<div class="tags move k-block"> <img src="#:image#"/>' +
+               ' #:label# </div>'
+           /*template: kendo.template($("#template").html())*/
+       });
 }

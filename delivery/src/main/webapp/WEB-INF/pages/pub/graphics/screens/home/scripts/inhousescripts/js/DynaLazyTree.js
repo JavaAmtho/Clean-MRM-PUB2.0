@@ -14,14 +14,14 @@ var DynaLazyTree = function(){
                 children : data,
                 onActivate: function(node) {
                     if(node.data.children)
-                    HomePresenter.populateAssetsList(node.data.children[0])
+                        AssetTreePresenter.createAssetsListWithData(node.data.children)
                 },
                 onLazyRead: function(node){
                     AssetTreePresenter.getLazyNodes(node.data.id,function(data){
                         if(data.length != 0){
                             node.addChild(data);
                             node.data.children = data;
-                            HomePresenter.populateAssetsList(data);
+                            AssetTreePresenter.createAssetsListWithData(data);
                         }
                         else{
                             node.childList = [];
