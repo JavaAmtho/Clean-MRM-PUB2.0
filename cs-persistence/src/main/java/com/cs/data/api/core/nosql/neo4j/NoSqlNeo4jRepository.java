@@ -2,6 +2,7 @@ package com.cs.data.api.core.nosql.neo4j;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.neo4j.graphdb.Path;
 import org.springframework.data.neo4j.conversion.EndResult;
@@ -35,6 +36,10 @@ public interface NoSqlNeo4jRepository extends NoSqlOperations{
 			String relationship);
 
 	public String deleteSelfAndAllItsChildren(String key, String value);
+
+	public String editProperties(String findKey, String findValue,
+			Map<String, String> properties);
+
 
 
 }

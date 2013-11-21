@@ -18,4 +18,6 @@ public interface IPublicationAssetRepository {
 
 	public String updateAssortmentProducts(String assortmentID, List<Product> products);
 
+	public String editProperty(PublicationAssetObject objectToEdit);
+
 }

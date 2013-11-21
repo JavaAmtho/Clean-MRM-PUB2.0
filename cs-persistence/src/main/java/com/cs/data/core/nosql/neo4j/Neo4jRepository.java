@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.RelationshipType;
@@ -107,7 +108,7 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 	public String deleteSelfAndAllItsChildren(String key,String value) {
 //		neo4jTemplate.delete(objectToDelete);
 		String query = "START parentNode = node(*) "
-						+ "MATCH parentNode<-[incomingRelationships*]-child, "
+						+ "MATCH parentNode<-[incomingRelationships?*]-child, "
 								+ "parentNode-[outgoingRelationships?]->parent "
 						+ "WHERE ("
 						+ "HAS(parentNode." + key + ") "
@@ -130,6 +131,34 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 		return response;
 	
 	}
+	
+/*	@Override
+	public String deleteMultipleNodesAndAllItsChildren(String key,String value) {
+//		neo4jTemplate.delete(objectToDelete);
+		String query = "START parentNode = node(*) "
+						+ "MATCH parentNode<-[incomingRelationships*]-child, "
+								+ "parentNode-[outgoingRelationships?]->parent "
+						+ "WHERE ("
+						+ "HAS(parentNode." + key + ") "
+						+ "AND parentNode." + key + " = \"" + value + "\""
+						+ ") "
+						+ "foreach(relation in incomingRelationships:delete relation) "
+						+ "DELETE outgoingRelationships,child,parentNode";
+		
+		System.out.println(query);
+		String response;
+		try{
+			neo4jTemplate.query(query, new HashMap<String,Object>());
+			System.out.println("SUCCESS");
+			response = "success";
+		}
+		catch(Exception e){
+			System.out.println("Failed" + e.getMessage());
+			response = "failed";
+		}
+		return response;
+	
+	}*/
 
 	@Override
 	public <P> P getObjectByKey(GenericDomain key, Class<P> type) {
@@ -178,7 +207,6 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 						+ ") "
 						+ "RETURN child";
 		
-		System.out.println(query);
 		EndResult<T> endResult = null;
 		try{
 			Result<Map<String, Object>> queryResult = neo4jTemplate.query(query, new HashMap<String,Object>());
@@ -190,6 +218,36 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 		}
 		System.out.println("return success");
 		return endResult.iterator();
+	}	
+	
+	@Override
+	public String editProperties(String findKey, String findValue,Map<String,String> properties) {
+		String query = "START parentNode = node(*) "
+						+ "WHERE ("
+						+ "HAS(parentNode." + findKey + ") "
+						+ "AND parentNode." + findKey + " = \"" + findValue + "\""
+//						+ "AND HAS(parentNode." + propertyName + ")"
+						+ ") "
+						+ "SET ";
+		
+		Set<String> entrySet = properties.keySet();
+		for (String property : entrySet) {
+			query += "parentNode." + property + " = " + properties.get(property) + ",";
+		}
+		query = query.substring(0, query.length()-1);
+		
+		System.out.println(query);
+		String response = "failed";
+		try{
+			neo4jTemplate.query(query, new HashMap<String,Object>());
+			response = "success";
+			System.out.println("return success");
+		}
+		
+		catch(Exception e){
+			System.out.println("Failed" + e.getMessage());
+		}
+		return response;
 	}	
 	
 	@Override
@@ -216,7 +274,6 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 				+ "DELETE relation,childNode";
 		
 		
-		System.out.println(query);
 		try{
 			neo4jTemplate.query(query, new HashMap<String,Object>());
 		}
@@ -243,7 +300,6 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 		query = query.substring(0, query.length()-1);
 		
 		
-		System.out.println(query);
 		try{
 			neo4jTemplate.query(query, new HashMap<String,Object>());
 		}

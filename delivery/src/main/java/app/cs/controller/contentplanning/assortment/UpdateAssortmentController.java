@@ -27,14 +27,14 @@ public class UpdateAssortmentController {
 
 	@RequestMapping(value = "/assortment/update/{name}/{path}")
 	public @ResponseBody String execute(@RequestBody Assortment assortment,
-			@PathVariable String name, @PathVariable String path) {
+			@PathVariable String id, @PathVariable String path) {
 
 		request.setAssortment(assortment);
 		request.setPath(path);
-		request.setName(name);
+		request.setName(id);
 
 		updateAssortment.execute(request);
-		return name;
+		return id;
 	}
 
 }

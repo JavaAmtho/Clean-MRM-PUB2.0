@@ -1,8 +1,10 @@
 package app.cs.impl.publicationasset;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +87,19 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 			responseMessage = neo4jRepository.createMultipleRelationships("id", assortmentID, products, PRODUCT_ASSORTMENT_RELATIONSHIP);
 		}
 		return responseMessage;
+	}
+	
+	@Override
+	public String editProperty(PublicationAssetObject objectToEdit){
+		Map<String,String> properties = new HashMap<String,String>();
+		properties.put("title", objectToEdit.getTitle());
+//		if(objectToEdit.getType().equals(CommonConstants.PublicationAsset.PUBLICATION_ASSET_TYPE_PAGE)){
+			properties.put("pageType", objectToEdit.getPageType());
+			properties.put("renderEngineType", objectToEdit.getRenderEngineType());
+			properties.put("fileID", objectToEdit.getFileID());
+//		}
+		String response = neo4jRepository.editProperties("id", objectToEdit.getId(), properties);
+		return response;
 	}
 		
 	
