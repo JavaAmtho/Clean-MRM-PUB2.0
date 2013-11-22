@@ -25,6 +25,7 @@ public class Product implements Serializable {
 	private String isLazy;
 	private String isFolder;
 	private String key;
+	private String rendererTemplateId;
 
 	@Override
 	public String toString() {
@@ -137,5 +138,13 @@ public class Product implements Serializable {
 
 	public void setKey(String key) {
 		this.key = key;
+	}
+	
+	public String getRendererTemplateId() {
+		return rendererTemplateId;
+	}
+
+	public void setRendererTemplateId(String rendererTemplateId) {
+		this.rendererTemplateId = rendererTemplateId;
 	}
 }
