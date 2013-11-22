@@ -114,7 +114,7 @@ var DynaTree = function(){
                     nodeToBeEdited = $.ui.dynatree.getNode(el);
                     /*If the type of element is not page*/
                     if(nodeToBeEdited.data.type !== "Page"){
-                        showCreateEditDimensionDialog(nodeToBeEdited.data.type,flag,nodeToBeEdited.data.title);
+                        showCreateEditDimensionDialog(nodeToBeEdited.data.type,flag,"Edit",nodeToBeEdited.data.title);
                     }else{
                         showCreateEditPageDialog("Edit","Page",flag);
                     }
@@ -124,7 +124,7 @@ var DynaTree = function(){
                              showCreateEditPageDialog("Create",action,flag);
                         }else{
                             //Create dimensions with only name
-                            showCreateEditDimensionDialog(action,flag);
+                            showCreateEditDimensionDialog(action,flag,"Create");
                         }
                     }else{
                         //Delete dimensions
@@ -162,6 +162,11 @@ var DynaTree = function(){
         nodeToBeEdited.data.title = data.responseString;
         nodeToBeEdited.render();
     }
+    function editDimension(data){
+        alert(JSON.stringify(data));
+        /*nodeToBeEdited.data.title = data.responseString;
+        nodeToBeEdited.render();*/
+    }
 
     function showDeletePrompt(nodeToBeDeleted){
         alertify.confirm("Are you sure you want to delete "+ nodeToBeDeleted.data.title, function (e) {
@@ -180,25 +185,43 @@ var DynaTree = function(){
         });
     }
 
-    function showCreateEditDimensionDialog(action,flag,defaultName){
-        alertify.prompt("Please enter "+action+" name", function (e, name) {
-            if (e) {
-                name = name.replace(/^\s+|\s+$/g,'')
-                if(name.length >0){
-                    var prefix=getUrlPrefix(action,"create");
-                    if(action == "Assortment"){
-                        newNode = createAssortmentNode(name,action,currentPath,flag);
-                        TreePresenter.createAssortment(prefix,action,name,currentPath,flag,addNode);
-                    }else{
-                        newNode = createNode(name,action,currentPath,flag);
-                        TreePresenter.createDimension(prefix,action,name,currentPath,flag,addNode);
+    function showCreateEditDimensionDialog(action,flag,type,defaultName){
+        if(type == "Create"){
+            alertify.prompt("Please enter "+action+" name", function (e, name) {
+                if (e) {
+                    name = name.replace(/^\s+|\s+$/g,'')
+                    if(name.length >0){
+                        var prefix=getUrlPrefix(action,"create");
+                        if(action == "Assortment"){
+                            newNode = createAssortmentNode(name,action,currentPath,flag);
+                            TreePresenter.createAssortment(prefix,action,name,currentPath,flag,addNode);
+                        }else{
+                            newNode = createNode(name,action,currentPath,flag);
+                            TreePresenter.createDimension(prefix,action,name,currentPath,flag,addNode);
+                        }
+                    }
+                    else{
+                        alertify.error("Please enter a valid name");
                     }
                 }
-                else{
-                    alertify.error("Please enter a valid name");
+            },defaultName);
+        }else{
+            alertify.prompt("Please enter "+action+" name", function (e, name) {
+                if (e) {
+                    name = name.replace(/^\s+|\s+$/g,'')
+                    if(name.length >0){
+                        var prefix=getUrlPrefix(action,"update");
+                        nodeToBeEdited.data.title = name;
+                        TreePresenter.updateDimension(prefix,nodeToBeEdited.data.id,nodeToBeEdited.data,editDimension);
+                    }
+                    else{
+                        alertify.error("Please enter a valid name");
+                    }
                 }
-            }
-        },defaultName);
+            },defaultName);
+        }
+
+
     }
 
     function  onDeleteSuccess(){

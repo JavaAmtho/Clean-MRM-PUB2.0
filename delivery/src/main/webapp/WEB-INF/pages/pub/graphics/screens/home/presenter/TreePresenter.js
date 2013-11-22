@@ -154,3 +154,7 @@ TreePresenter.dragAndDropAssortment = function(prefix,name,newPath,callBack){
 TreePresenter.deleteDimension = function(prefix,type,input,callback){
     DeleteDimension.deleteDim(prefix,type,input,callback);
 }
+
+TreePresenter.updateDimension =function(prefix,dimensionId,reqBody,callBack){
+    UpdateDimension.updateDim(prefix,dimensionId,reqBody,callBack);
+}
