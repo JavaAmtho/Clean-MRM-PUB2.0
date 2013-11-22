@@ -5,6 +5,8 @@
  * Time: 8:22 PM
  * To change this template use File | Settings | File Templates.
  */
+var editPage = false;
+
 var NewPageBreadCrumbWidget = function(){
 
 
@@ -14,6 +16,7 @@ var NewPageBreadCrumbWidget = function(){
 
         if(data){
             NewPageBreadCrumbWidget.preInsertFormDetails(data);
+            editPage = true;
         }
 
 
@@ -33,6 +36,7 @@ var NewPageBreadCrumbWidget = function(){
             autoOpen :true,
             close: function() {
                 NewPageBreadCrumbWidget.uncheckRadio();
+                $(document).unbind('editPageEvent');
                 $(document).unbind('createPageEvent');
             }
 
@@ -92,10 +96,19 @@ NewPageBreadCrumbWidget.createPage = function(){
                 GraphicDataStore.setNewPageObject(newPageObj)
                 var valid = step2_validation();
                 if(valid){
-                    $(document).trigger({
-                        type: "createPageEvent",
-                        pageObj: GraphicDataStore.getNewPageObject()
-                    });
+
+                    if(editPage){
+                       $(document).trigger({
+                            type: "editPageEvent",
+                            pageObj: GraphicDataStore.getNewPageObject()
+                       });
+                    }else{
+                        $(document).trigger({
+                            type: "createPageEvent",
+                            pageObj: GraphicDataStore.getNewPageObject()
+                        });
+                    }
+
                     $("#dialog-form").dialog( "close" );
                 }
             }

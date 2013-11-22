@@ -50,7 +50,16 @@ var DynaTree = function(){
             list.appendChild(elem);
         }
 
-        /*if(type === "Page"){
+        if(type != "root"){
+            var editAnchor = document.createElement("a");
+            editAnchor.href = "#edit";
+            editAnchor.textContent = "Edit";
+            var editElem = document.createElement("li");
+            editElem.appendChild(editAnchor);
+            list.appendChild(editElem);
+        }
+
+       /* if(type === "Page"){
             var editAnchor = document.createElement("a");
             editAnchor.href = "#edit";
             editAnchor.textContent = "Edit Page";
@@ -101,70 +110,90 @@ var DynaTree = function(){
                 }
                 var flag = isFolder(action);
 
-
                 if(action === "edit"){     //Edit page with same popup for create new page
                     nodeToBeEdited = $.ui.dynatree.getNode(el);
-                    /*$(document).bind("createPageEvent", function createPageHandler(e) {
-                        var prefix=getUrlPrefix(action,"edit");
-                        newNode = createNode(e.pageObj.name,action,currentPath,flag,e.pageObj);
-                        TreePresenter.editPage(prefix,action,e.pageObj.name,currentPath,flag, e.pageObj,addNode);
-                        $(document).unbind("createPageEvent");
-                    });*/
-                    WidgetPresenter.createWidgetForNewPage("BreadCrumb",nodeToBeEdited.data);
+                    /*If the type of element is not page*/
+                    if(nodeToBeEdited.data.type !== "Page"){
+                        showCreateEditDimensionDialog(nodeToBeEdited.data.type,flag,nodeToBeEdited.data.title);
+                    }else{
+                        showCreateEditPageDialog("Edit","Page",flag);
+                    }
                 }else{
                     if(action != "delete"){
                         if(action == "Page"){ //Create page with all other fields such as masterTemp and type and renderer
-                            $(document).bind("createPageEvent", function createPageHandler(e) {
-                                var prefix=getUrlPrefix(action,"create");
-                                newNode = createNode(e.pageObj.name,action,currentPath,flag,e.pageObj);
-                                TreePresenter.createPage(prefix,action,e.pageObj.name,currentPath,flag, e.pageObj,addNode);
-                                $(document).unbind("createPageEvent");
-                            });
-                            WidgetPresenter.createWidgetForNewPage("BreadCrumb");
-
+                             showCreateEditPageDialog("Create",action,flag);
                         }else{
                             //Create dimensions with only name
-                            alertify.prompt("Please enter "+action+" name", function (e, name) {
-                                if (e) {
-                                    name = name.replace(/^\s+|\s+$/g,'')
-                                    if(name.length >0){
-                                        var prefix=getUrlPrefix(action,"create");
-                                        if(action == "Assortment"){
-                                            newNode = createAssortmentNode(name,action,currentPath,flag);
-                                            TreePresenter.createAssortment(prefix,action,name,currentPath,flag,addNode);
-                                        }else{
-                                            newNode = createNode(name,action,currentPath,flag);
-                                            TreePresenter.createDimension(prefix,action,name,currentPath,flag,addNode);
-                                        }
-                                    }
-                                    else{
-                                        alertify.error("Please enter a valid name");
-                                    }
-                                }
-                            },""); //This is the default name if we want to give in prompt
+                            showCreateEditDimensionDialog(action,flag);
                         }
                     }else{
                         //Delete dimensions
                         nodeToBeDeleted = $.ui.dynatree.getNode(el);
-                        alertify.confirm("Are you sure you want to delete "+ nodeToBeDeleted.data.title, function (e) {
-                            if (e) {
-                                //Send API call to delete the node
-                                var input=new Object();
-                                input.id=nodeToBeDeleted.data.id;
-                                input.title=nodeToBeDeleted.data.title;
-                                input.type=nodeToBeDeleted.data.type;
-                                input.groupId=nodeToBeDeleted.data.groupId;
-                                var prefix=getUrlPrefix(nodeToBeDeleted.data.type,"delete");
-                                TreePresenter.deleteDimension(prefix,nodeToBeDeleted.data.type,input,onDeleteSuccess);
-
-                            } else {
-                            }
-                        });
+                        showDeletePrompt(nodeToBeDeleted);
                     }
                 }
             });
 
         }
+    }
+
+    function showCreateEditPageDialog(type,action,flag){
+        if(type === "Create"){
+            $(document).bind("createPageEvent", function createPageHandler(e) {
+                var prefix=getUrlPrefix(action,"create");
+                newNode = createNode(e.pageObj.name,action,currentPath,flag,e.pageObj);
+                TreePresenter.createPage(prefix,action,e.pageObj.name,currentPath,flag, e.pageObj,addNode);
+                $(document).unbind("createPageEvent");
+            });
+            WidgetPresenter.createWidgetForNewPage("BreadCrumb");
+        }else{
+            $(document).bind("editPageEvent", function editPageHandler(e) {
+                var prefix=getUrlPrefix(action,"update");
+                newNode = createNode(e.pageObj.name,action,currentPath,flag,e.pageObj);
+                e.pageObj.id = nodeToBeEdited.data.id;
+                //TreePresenter.editPage(prefix,action,e.pageObj.name,currentPath,flag, e.pageObj,addNode);
+                $(document).unbind("editPageEvent");
+            });
+            WidgetPresenter.createWidgetForNewPage("BreadCrumb",nodeToBeEdited.data);
+        }
+    }
+
+    function showDeletePrompt(nodeToBeDeleted){
+        alertify.confirm("Are you sure you want to delete "+ nodeToBeDeleted.data.title, function (e) {
+            if (e) {
+                //Send API call to delete the node
+                var input=new Object();
+                input.id=nodeToBeDeleted.data.id;
+                input.title=nodeToBeDeleted.data.title;
+                input.type=nodeToBeDeleted.data.type;
+                input.groupId=nodeToBeDeleted.data.groupId;
+                var prefix=getUrlPrefix(nodeToBeDeleted.data.type,"delete");
+                TreePresenter.deleteDimension(prefix,nodeToBeDeleted.data.type,input,onDeleteSuccess);
+
+            } else {
+            }
+        });
+    }
+
+    function showCreateEditDimensionDialog(action,flag,defaultName){
+        alertify.prompt("Please enter "+action+" name", function (e, name) {
+            if (e) {
+                name = name.replace(/^\s+|\s+$/g,'')
+                if(name.length >0){
+                    var prefix=getUrlPrefix(action,"create");
+                    if(action == "Assortment"){
+                        newNode = createAssortmentNode(name,action,currentPath,flag);
+                        TreePresenter.createAssortment(prefix,action,name,currentPath,flag,addNode);
+                    }else{
+                        newNode = createNode(name,action,currentPath,flag);
+                        TreePresenter.createDimension(prefix,action,name,currentPath,flag,addNode);
+                    }
+                }
+                else{
+                    alertify.error("Please enter a valid name");
+                }
+            }
+        },defaultName);
     }
 
     function  onDeleteSuccess(){
