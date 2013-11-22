@@ -524,7 +524,7 @@ var DynaTree = function(){
                         var newChildNode = draggedNode;
                         var oldPathForChild = draggedNode.data.path;
 
-                        newChildNode.data.path = parentNode.data.path +","+parentNode.data.title;
+                        newChildNode.data.path = parentNode.data.path +","+parentNode.data.id;
                         var newPathForChild   = newChildNode.data.path;
                         var flag=isFolder(draggedNode.data.type);
                         var prefix;
@@ -534,7 +534,7 @@ var DynaTree = function(){
                          }else{
                              prefix =getUrlPrefix(draggedNode.data.type,"move");
                              prefix = prefix+draggedNode.data.type;
-                             TreePresenter.dragAndDropDimensions(prefix,draggedNode.data.title,oldPathForChild,flag,newPathForChild,onDropSuccess);
+                             TreePresenter.dragAndDropDimensions(prefix,draggedNode.data.id,oldPathForChild,flag,newPathForChild,onDropSuccess);
                          }
 
                     }

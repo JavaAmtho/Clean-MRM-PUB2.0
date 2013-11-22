@@ -7,6 +7,7 @@ public class CommonConstants {
 	
 	public static final String FAIL_RESPONSE = "failed";
 	public static final String SUCCESS_RESPONSE = "success";
+	public static final String NEO4J_PUBLICATIONASSET_RELATIONSHIP = "CHILD_OF";
 
 	public class Dimension{
 		public static final String DIMENSION_TYPE_MARKETING_INITIATIVE = "MarketingInitiative";

@@ -57,17 +57,6 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 		Result<Map<String, Object>> queryResult = neo4jTemplate.query(query, new HashMap<String,Object>());
 		EndResult<T> endResult = queryResult.to(class1);
 		return endResult.singleOrNull();
-
-/*		Neo4jPersistentEntityImpl persistentEntity = ((Neo4jTemplate)neo4jTemplate).getInfrastructure().getMappingContext().getPersistentEntity(class1);
-		List<T> ret = new ArrayList<>();
-		Iterator iterator = endResult.iterator();
-		while(iterator.hasNext()){
-			Map resultMap = (Map)iterator.next();
-			RestNode a = (RestNode)resultMap.get("n");
-			ret.add(((Neo4jTemplate)neo4jTemplate).getInfrastructure().getEntityPersister().
-			createEntityFromState(a, class1,persistentEntity.getMappingPolicy(), (Neo4jTemplate)neo4jTemplate));
-		}*/
-		
 	}
 
 	@Override
@@ -309,6 +298,33 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 		}
 		System.out.println("return success");
 		return "success";
+	}
+	
+	@Override
+	public String changeRelationship(String keyToFindNode, String valueOfKey, String newParentValueOfKey, String newRelationshipType){
+		
+		String query = "START modifyNode = node(*), newParentNode = node(*) "
+				+ "MATCH oldParentNode<-[r]-modifyNode "
+				+ "WHERE ("
+				+ "(HAS(modifyNode." + keyToFindNode + ") "
+				+ "AND modifyNode." + keyToFindNode + " = \"" + valueOfKey + "\") AND "
+				+ "(HAS(newParentNode." + keyToFindNode + ") "
+				+ "AND newParentNode." + keyToFindNode + " = \"" + newParentValueOfKey + "\")"
+				+ ") "
+				+ "CREATE newParentNode<-[:" + newRelationshipType + "]-modifyNode "
+				+ "DELETE r";
+		
+		System.out.println(query);
+		try{
+			neo4jTemplate.query(query, new HashMap<String,Object>());
+		}
+		catch(Exception e){
+			System.out.println("Failed");
+			return "failed";
+		}
+		System.out.println("return success");
+		return "success";
+		
 	}
 	
 /*	public <T> Iterator getAllChildren(String key, String value, Class<T> class1) {

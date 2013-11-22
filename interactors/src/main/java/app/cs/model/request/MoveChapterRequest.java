@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public class MoveChapterRequest implements RequestModel {
 
 	private String type;
-	private String name;
+	private String id;
 	private String path;
 	private String newPath;
 	
@@ -22,12 +22,12 @@ public class MoveChapterRequest implements RequestModel {
 		this.type = type;
 	}
 
-	public String getName() {
-		return name;
+	public String getId() {
+		return id;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setId(String name) {
+		this.id = name;
 	}
 
 	public String getPath() {
@@ -56,11 +56,11 @@ public class MoveChapterRequest implements RequestModel {
 
 	private boolean isFolder;
 
-	public MoveChapterRequest(String type, String name, String path,
+	public MoveChapterRequest(String type, String id, String path,
 			boolean isFolder, String newPath) {
 		super();
 		this.type = type;
-		this.name = name;
+		this.id = id;
 		this.path = path;
 		this.isFolder = isFolder;
 		this.newPath = newPath;

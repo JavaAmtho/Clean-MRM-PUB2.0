@@ -12,6 +12,7 @@ import app.cs.impl.model.Assortment;
 import app.cs.impl.model.PublicationAssetObject;
 import app.cs.model.request.UpdateAssortmentRequest;
 import app.cs.model.request.UpdatePublicationAssetObjectRequest;
+import app.cs.utils.CommonConstants;
 
 @Controller
 public class UpdateChapterController {
@@ -27,13 +28,12 @@ public class UpdateChapterController {
 		this.request = request;
 	}
 
-	@RequestMapping(value = "/assortment/update/{id}")
+	@RequestMapping(value = "/chapter/update/{id}")
 	public @ResponseBody String execute(@RequestBody PublicationAssetObject chapter) {
 
-		request.setPublicationAssetObject(chapter);
-
+		request.setPublicationAssetObject(CommonConstants.PublicationAsset.PUBLICATION_ASSET_TYPE_CHAPTER,chapter);
 		updateChapter.execute(request);
-		return "Updated";
+		return request.getPublicationAssetObject().getTitle();
 	}
 
 }

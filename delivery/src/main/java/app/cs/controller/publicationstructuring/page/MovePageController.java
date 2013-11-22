@@ -18,7 +18,7 @@ import app.cs.model.request.MovePageRequest;
 public class MovePageController {
 
 	/** The Constant MOVE. */
-	private static final String MOVEPAGE = "/page/move/{type}/name/{name}/path/{path}/folder/{folder}/newpath/{newpath}";
+	private static final String MOVEPAGE = "/page/move/{type}/name/{id}/path/{path}/folder/{folder}/newpath/{newpath}";
 
 	private Interactor movePage;
 	private MovePageRequest movePageRequest;
@@ -56,20 +56,20 @@ public class MovePageController {
 	@RequestMapping(value = { MOVEPAGE })
 	public @ResponseBody
 	String execute(@PathVariable("type") String type,
-			@PathVariable("name") String name,
+			@PathVariable("id") String id,
 			@PathVariable("path") String path,
 			@PathVariable("folder") boolean isFolder,
 			@PathVariable("newpath") String newpath) {
 
 		movePageRequest.setType(type);
-		movePageRequest.setName(name);
+		movePageRequest.setId(id);
 		movePageRequest.setPath(path);
 		movePageRequest.setFolder(isFolder);
 		movePageRequest.setNewPath(newpath);
 
-		System.out.println("==>" + type + name + path + isFolder + newpath);
+		System.out.println("==>" + type + id + path + isFolder + newpath);
 		movePage.execute(movePageRequest);
-		return name;
+		return id;
 
 	}
 }

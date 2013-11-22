@@ -125,7 +125,7 @@ public class DimensionRepository implements IDimensionRepository {
 	private void updateGroupIdForAllAncestor(String path, String groupId) {
 		String[] paths = path.split(",");
 		for (String singlePath : paths) {
-			mongoRepository.updateById(singlePath, GROUPIDS, groupId,
+			mongoRepository.updateByIdSetProperty(singlePath, GROUPIDS, groupId,
 					MultiDimensionalObject.class);
 		}
 

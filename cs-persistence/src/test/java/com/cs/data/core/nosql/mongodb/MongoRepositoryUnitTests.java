@@ -70,7 +70,7 @@ public class MongoRepositoryUnitTests {
 		Teacher teacher = new Teacher("01", null);
 
 		// when
-		mongoRepository.updateById("01", "students", esha, Teacher.class);
+		mongoRepository.updateByIdPushIntoProperty("01", "students", esha, Teacher.class);
 
 		// then
 		verify(mongoTemplate).updateFirst(

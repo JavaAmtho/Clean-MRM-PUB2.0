@@ -24,6 +24,8 @@ import com.cs.data.api.core.nosql.neo4j.NoSqlNeo4jRepository;
 public class PublicationAssetRepository implements IPublicationAssetRepository{
 
 	
+	private static final String NODE_IDENTIFICATION_FIELD = "id";
+
 	private static final String PRODUCT_ASSORTMENT_RELATIONSHIP = "PRODUCTS_OF";
 
 	private NoSqlNeo4jRepository neo4jRepository;
@@ -40,7 +42,7 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 	@Override
 	public List<PublicationAssetObject> getPublicationAssetsUnderParent(PublicationAssetObject parent){
 		
-		PublicationAssetObject parentNode = neo4jRepository.getObjectByKeyValue("id", parent.getId(), PublicationAssetObject.class);
+		PublicationAssetObject parentNode = neo4jRepository.getObjectByKeyValue(NODE_IDENTIFICATION_FIELD, parent.getId(), PublicationAssetObject.class);
 		Iterable<PublicationAssetObject> iterable = neo4jRepository.traverseOneLevelFromNodeExcludeStart(parentNode,PublicationAssetObject.class);
 		Iterator<PublicationAssetObject> iterator = iterable.iterator();
 		List<PublicationAssetObject> listOfPublicationAssets = new ArrayList<PublicationAssetObject>();
@@ -48,7 +50,8 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 			PublicationAssetObject publicationAsset = iterator.next();
 			if(publicationAsset.getType().equalsIgnoreCase(CommonConstants.PublicationAsset.PUBLICATION_ASSET_TYPE_ASSORTMENT)){
 				/*Iterable productsIterable = neo4jRepository.traverseOneLevelFromNodeExcludeStart(publicationAsset, Product.class);*/
-				Iterator<Product> productsIterator = neo4jRepository.traverseIncomingRelationships("id",publicationAsset.getId(),"PRODUCTS_OF", Product.class);
+				Iterator<Product> productsIterator = neo4jRepository.
+						traverseIncomingRelationships(NODE_IDENTIFICATION_FIELD,publicationAsset.getId(),"PRODUCTS_OF", Product.class);
 				List<Product> products = new ArrayList<Product>();
 				while(productsIterator.hasNext()){
 					Product product = (Product)productsIterator.next();
@@ -67,7 +70,7 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 	public PublicationAssetObject save(PublicationAssetObject chapter) {
 //		if(chapter.getType() != CommonConstants.Dimension.DIMENSION_TYPE_PUBLICATION){
 			String parentID = finder.getParentId(chapter.getPath());
-			PublicationAssetObject parent = neo4jRepository.getObjectByKeyValue("id", parentID, PublicationAssetObject.class);
+			PublicationAssetObject parent = neo4jRepository.getObjectByKeyValue(NODE_IDENTIFICATION_FIELD, parentID, PublicationAssetObject.class);
 			GenericDomain publicationAssetObjectRelationship = chapter.isChildOf(parent, chapter.getType());
 			chapter = (PublicationAssetObject)neo4jRepository.saveData(chapter);
 			neo4jRepository.saveData(publicationAssetObjectRelationship);
@@ -82,9 +85,9 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 	@Override
 	public String updateAssortmentProducts(String assortmentID,List<Product> products){
 		String responseMessage = CommonConstants.FAIL_RESPONSE;
-		responseMessage = neo4jRepository.deleteAllNodesByRelationship("id", assortmentID, PRODUCT_ASSORTMENT_RELATIONSHIP);
+		responseMessage = neo4jRepository.deleteAllNodesByRelationship(NODE_IDENTIFICATION_FIELD, assortmentID, PRODUCT_ASSORTMENT_RELATIONSHIP);
 		if(products.size() > 0 && responseMessage.equals(CommonConstants.SUCCESS_RESPONSE)){
-			responseMessage = neo4jRepository.createMultipleRelationships("id", assortmentID, products, PRODUCT_ASSORTMENT_RELATIONSHIP);
+			responseMessage = neo4jRepository.createMultipleRelationships(NODE_IDENTIFICATION_FIELD, assortmentID, products, PRODUCT_ASSORTMENT_RELATIONSHIP);
 		}
 		return responseMessage;
 	}
@@ -93,41 +96,27 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 	public String editProperty(PublicationAssetObject objectToEdit){
 		Map<String,String> properties = new HashMap<String,String>();
 		properties.put("title", objectToEdit.getTitle());
-//		if(objectToEdit.getType().equals(CommonConstants.PublicationAsset.PUBLICATION_ASSET_TYPE_PAGE)){
-			properties.put("pageType", objectToEdit.getPageType());
-			properties.put("renderEngineType", objectToEdit.getRenderEngineType());
-			properties.put("fileID", objectToEdit.getFileID());
-//		}
-		String response = neo4jRepository.editProperties("id", objectToEdit.getId(), properties);
+		if(objectToEdit.getType().equals(CommonConstants.PublicationAsset.PUBLICATION_ASSET_TYPE_PAGE)){
+			properties.put("pageType",  (objectToEdit.getPageType()!=null ? objectToEdit.getPageType() : ""));
+			properties.put("renderEngineType", (objectToEdit.getRenderEngineType()!=null ? objectToEdit.getRenderEngineType() : ""));
+			properties.put("fileID", (objectToEdit.getFileID()!=null ? objectToEdit.getFileID() : ""));
+		}
+		String response = neo4jRepository.editProperties(NODE_IDENTIFICATION_FIELD, objectToEdit.getId(), properties);
 		return response;
 	}
 		
 	
 	@Override
 	public String delete(PublicationAssetObject chapter) {
-		neo4jRepository.deleteSelfAndAllItsChildren("id", chapter.getId());
+		neo4jRepository.deleteSelfAndAllItsChildren(NODE_IDENTIFICATION_FIELD, chapter.getId());
 		return "deleted";
 	}
 	
 	
 	@Override
 	public String move(PublicationAssetObject chapter, String newPath) {
-		String parentID = finder.getPublicationId(newPath);
-		PublicationAssetObject parentFromDB = neo4jRepository.getObjectByKeyValue("id", parentID, PublicationAssetObject.class);
-		PublicationAssetObject publicationAssetFromDB = neo4jRepository.getObjectByKeyValue("id", chapter.getId(), PublicationAssetObject.class);
-		Set<PublicationAssetObjectRelationShip> relationshipsList = null/*publicationAssetFromDB.getRelationships()*/;
-		if(!relationshipsList.isEmpty()){	
-			//Since Outgoing relationships are requested for each node will have only single relationship
-			PublicationAssetObjectRelationShip publicationAssetRelationship = relationshipsList.iterator().next();
-			publicationAssetFromDB.setPath(newPath);
-			neo4jRepository.saveData(publicationAssetFromDB);
-			publicationAssetRelationship.setParentObject(parentFromDB);
-			neo4jRepository.saveData(publicationAssetRelationship);
-			return "Move Success!";
-		}
-		else{
-			return "Move Failed!";
-		}
-		
+		String parentID = finder.getParentId(newPath);
+		return neo4jRepository.changeRelationship(NODE_IDENTIFICATION_FIELD, chapter.getId(), parentID, CommonConstants.NEO4J_PUBLICATIONASSET_RELATIONSHIP);
 	}
+	
 }

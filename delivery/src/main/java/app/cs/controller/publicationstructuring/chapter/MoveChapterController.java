@@ -18,7 +18,7 @@ import app.cs.model.request.MoveChapterRequest;
 public class MoveChapterController {
 
 	/** The Constant MOVE. */
-	private static final String MOVECHAPTER = "/chapter/move/{type}/name/{name}/path/{path}/folder/{folder}/newpath/{newpath}";
+	private static final String MOVECHAPTER = "/chapter/move/{type}/name/{id}/path/{path}/folder/{folder}/newpath/{newpath}";
 
 	private Interactor moveChapter;
 	private MoveChapterRequest moveChapterRequest;
@@ -44,7 +44,7 @@ public class MoveChapterController {
 	 * 
 	 * @param type
 	 *            the type
-	 * @param name
+	 * @param id
 	 *            the name
 	 * @param path
 	 *            the path
@@ -56,20 +56,20 @@ public class MoveChapterController {
 	@RequestMapping(value = { MOVECHAPTER })
 	public @ResponseBody
 	String execute(@PathVariable("type") String type,
-			@PathVariable("name") String name,
+			@PathVariable("id") String id,
 			@PathVariable("path") String path,
 			@PathVariable("folder") boolean isFolder,
 			@PathVariable("newpath") String newpath) {
 
 		moveChapterRequest.setType(type);
-		moveChapterRequest.setName(name);
+		moveChapterRequest.setId(id);
 		moveChapterRequest.setPath(path);
 		moveChapterRequest.setFolder(isFolder);
 		moveChapterRequest.setNewPath(newpath);
 
-		System.out.println("==>" + type + name + path + isFolder + newpath);
+		System.out.println("==>" + type + id + path + isFolder + newpath);
 		moveChapter.execute(moveChapterRequest);
-		return name;
+		return id;
 
 	}
 }

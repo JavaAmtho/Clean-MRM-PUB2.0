@@ -69,7 +69,7 @@ public class MongoRepositoryIntegrationTests {
 		Student esha = new Student("0099", "esha", "First");
 
 		// when
-		crudRepository.updateById("01", "students", esha, Teacher.class);
+		crudRepository.updateByIdPushIntoProperty("01", "students", esha, Teacher.class);
 		// then
 	}
 

@@ -5,7 +5,9 @@ import org.springframework.stereotype.Component;
 
 import app.cs.boundary.delivery.Interactor;
 import app.cs.impl.model.MultiDimensionalObject;
+import app.cs.impl.model.PublicationAssetObject;
 import app.cs.interfaces.chapter.IChapterRepository;
+import app.cs.interfaces.publicationasset.IPublicationAssetRepository;
 import app.cs.model.request.MoveChapterRequest;
 import app.cs.model.request.RequestModel;
 import app.cs.model.response.EmptyResponse;
@@ -21,7 +23,8 @@ public class MoveChapter implements Interactor {
 	private final String CONTENTOBJECT = "MultiDimensionalObject";
 
 	/** The chapter repository. */
-	private IChapterRepository chapterRepository;
+//	private IChapterRepository chapterRepository;
+	private IPublicationAssetRepository publicationAssetRepository;
 
 	/**
 	 * Instantiates a new chapter service.
@@ -31,19 +34,22 @@ public class MoveChapter implements Interactor {
 	 * @param factory
 	 */
 	@Autowired
-	public MoveChapter(IChapterRepository chapterRepository) {
+	public MoveChapter(/*IChapterRepository chapterRepository*/
+			IPublicationAssetRepository publicationAssetRepository) {
 		// TODO Auto-generated constructor stub
-		this.chapterRepository = chapterRepository;
+//		this.chapterRepository = chapterRepository;
+		this.publicationAssetRepository = publicationAssetRepository;
 	}
 
 	public ResponseModel execute(RequestModel model) {
 		MoveChapterRequest request = (MoveChapterRequest) model;
 
-		MultiDimensionalObject chapter = chapterRepository
-				.getDomain(CONTENTOBJECT);
-		setChapterAtrributes(chapter, request.getType(), request.getName(),
+		/*MultiDimensionalObject chapter = chapterRepository
+				.getDomain(CONTENTOBJECT);*/
+		PublicationAssetObject chapter = new PublicationAssetObject();
+		setChapterAtrributes(chapter, request.getType(), request.getId(),
 				request.getPath(), request.isFolder());
-		chapterRepository.move(chapter, request.getNewPath());
+		publicationAssetRepository.move(chapter, request.getNewPath());
 		return new EmptyResponse();
 
 	}
@@ -62,13 +68,11 @@ public class MoveChapter implements Interactor {
 	 * @param isFolder
 	 *            the is folder
 	 */
-	private void setChapterAtrributes(MultiDimensionalObject chapter,
-			String type, String name, String path, boolean isFolder) {
-		chapter.setId(name);
-		chapter.setTitle(name);
+	private void setChapterAtrributes(PublicationAssetObject chapter,
+			String type, String id, String path, boolean isFolder) {
+		chapter.setId(id);
 		chapter.setIsFolder(isFolder);
 		chapter.setPath(path);
-		chapter.setName(name);
 		chapter.setType(type);
 
 	}

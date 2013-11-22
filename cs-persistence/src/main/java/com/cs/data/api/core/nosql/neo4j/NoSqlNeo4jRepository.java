@@ -40,6 +40,9 @@ public interface NoSqlNeo4jRepository extends NoSqlOperations{
 	public String editProperties(String findKey, String findValue,
 			Map<String, String> properties);
 
+	public String changeRelationship(String keyToFindNode, String valueOfKey,
+			String newParentValueOfKey, String newRelationshipType);
+
 
 
 }

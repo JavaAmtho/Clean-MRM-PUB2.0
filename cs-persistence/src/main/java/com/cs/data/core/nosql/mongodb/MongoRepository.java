@@ -136,11 +136,20 @@ public class MongoRepository implements NoSqlRepository {
 	 * , java.lang.String, P, java.lang.Class)
 	 */
 	@Override
-	public <T, P> void updateById(String id, String field, P valueToAdd,
+	public <T, P> void updateByIdPushIntoProperty(String id, String field, P valueToAdd,
 			Class<T> type) {
 
 		mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(id)),
 				update.push(field, valueToAdd), type);
+
+	}
+	
+	@Override
+	public <T> void updateByIdSetProperty(String id, String field, String valueToAdd,
+			Class<T> type) {
+
+		mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(id)),
+				update.set(field, valueToAdd), type);
 
 	}
 

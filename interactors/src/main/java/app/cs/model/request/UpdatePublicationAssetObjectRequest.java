@@ -15,11 +15,10 @@ public class UpdatePublicationAssetObjectRequest implements RequestModel {
 		return publicationAssetObject;
 	}
 
-	public void setPublicationAssetObject(
+	public void setPublicationAssetObject(String type,
 			PublicationAssetObject publicationAssetObject) {
 		this.publicationAssetObject = publicationAssetObject;
+		this.publicationAssetObject.setType(type);
 	}
-	
-	
 	
 }
