@@ -18,14 +18,3 @@ UpdateAssortment.update = function(assortmentObj,reqBody,callBack){
         callBack(data);
     });
 }
-
-/**
- *
- * @param data
- */
-this.onUpdateSuccess = function(data){
-    /*$(document).trigger({
-        type: "assetsTreeDataLoaded",
-        treeData: data
-    });*/
-}

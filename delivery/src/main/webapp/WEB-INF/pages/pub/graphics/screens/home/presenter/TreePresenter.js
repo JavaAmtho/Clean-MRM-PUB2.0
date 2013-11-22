@@ -95,8 +95,8 @@ TreePresenter.createPage = function(prefix,action,name,currentPath,flag,pageObj,
 }
 
 
-TreePresenter.editPage = function(prefix,action,name,currentPath,flag,pageObj,callBack){
-    EditPage.edit(prefix,action,name,currentPath,flag,pageObj,callBack);
+TreePresenter.editPage = function(prefix,id,pageObj,callBack){
+    EditPage.edit(prefix,id,pageObj,callBack);
 }
 
 

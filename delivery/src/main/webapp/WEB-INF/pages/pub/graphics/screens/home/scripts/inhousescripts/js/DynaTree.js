@@ -151,11 +151,16 @@ var DynaTree = function(){
                 var prefix=getUrlPrefix(action,"update");
                 newNode = createNode(e.pageObj.name,action,currentPath,flag,e.pageObj);
                 e.pageObj.id = nodeToBeEdited.data.id;
-                //TreePresenter.editPage(prefix,action,e.pageObj.name,currentPath,flag, e.pageObj,addNode);
+                TreePresenter.editPage(prefix,e.pageObj.id,e.pageObj,editNode);
                 $(document).unbind("editPageEvent");
             });
             WidgetPresenter.createWidgetForNewPage("BreadCrumb",nodeToBeEdited.data);
         }
+    }
+
+    function editNode(data){
+        nodeToBeEdited.data.title = data;
+        nodeToBeEdited.render();
     }
 
     function showDeletePrompt(nodeToBeDeleted){
