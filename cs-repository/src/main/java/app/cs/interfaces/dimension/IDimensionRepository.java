@@ -65,4 +65,6 @@ public interface IDimensionRepository {
 	public abstract MultiDimensionalObject move(String oldPath, String newPath,
 			MultiDimensionalObject objectInMove);
 
+	public String editProperty(MultiDimensionalObject objectToEdit);
+
 }

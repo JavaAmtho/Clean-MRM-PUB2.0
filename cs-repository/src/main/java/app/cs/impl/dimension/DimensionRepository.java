@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +81,12 @@ public class DimensionRepository implements IDimensionRepository {
 		if (dimensionAlreadyExists(dimension))
 			return null;
 		return create(dimension);
+	}
+	
+	@Override
+	public String editProperty(MultiDimensionalObject objectToEdit){
+		mongoRepository.updateByIdSetProperty(objectToEdit.getId(), "title", objectToEdit.getTitle(), objectToEdit.getClass());
+		return "updated";
 	}
 
 	private MultiDimensionalObject create(MultiDimensionalObject dimension) {
