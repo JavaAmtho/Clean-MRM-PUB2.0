@@ -31,7 +31,8 @@ public class Product implements Serializable {
 	public String toString() {
 		return "{id:\"" + this.id + "\",label:\"" + this.label + "\",title:\"" + this.title + "\""
 				 + ",type:\"" + this.type + "\",image:\"" + this.image + "\""
-						+ ",description:\"" + this.description + "\",service:\"" + this.service + "\",isFolder:" + this.isFolder+ ",__type__:\"Product\"}";
+						+ ",description:\"" + this.description + "\",service:\"" + this.service + "\",isFolder:" + this.isFolder+ ""
+								+ ",__type__:\"Product\",rendererTemplateId:\"" + this.rendererTemplateId + "\"}";
 	}
 	
 	public Product() {

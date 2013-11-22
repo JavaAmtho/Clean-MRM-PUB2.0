@@ -25,7 +25,7 @@ public class UpdateAssortmentController {
 		this.request = request;
 	}
 
-	@RequestMapping(value = "/assortment/update/{name}/{path}")
+	@RequestMapping(value = "/assortment/update/{id}/{path}")
 	public @ResponseBody String execute(@RequestBody Assortment assortment,
 			@PathVariable String id, @PathVariable String path) {
 
