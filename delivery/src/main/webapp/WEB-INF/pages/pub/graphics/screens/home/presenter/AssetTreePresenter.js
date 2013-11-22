@@ -169,7 +169,7 @@ var myCount=0;
 AssetTreePresenter.makeProductsListDropable = function(){
     $("#subtab1").kendoDropTarget({
         dragenter: function (e) {
-            console.log(e.target)
+            console.log(e.draggable.hint)
             $("#subtab1").css('border', '2px solid #000');
             e.draggable.hint.css("opacity", 0.6);
         },
@@ -178,6 +178,7 @@ AssetTreePresenter.makeProductsListDropable = function(){
         },
         drop: function (e) {
             var item = assetsDataSource.getByUid(e.draggable.hint.data().uid);
+            item.rendererTemplateId = $("#templateDropDown option:selected").val();
             productsDataSource.add(item);
             $("#subtab1").css('border', '2px dashed #aaa');
             //unmappedtag_datasource.remove(item);

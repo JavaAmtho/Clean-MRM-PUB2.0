@@ -41,6 +41,10 @@
 
 }
 
+#templateDropDown{
+    width: 200px;
+}
+
 /**** Header for Panel ****/
 
 .assetType {
