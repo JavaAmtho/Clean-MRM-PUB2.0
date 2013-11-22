@@ -221,7 +221,7 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 		
 		Set<String> entrySet = properties.keySet();
 		for (String property : entrySet) {
-			query += "parentNode." + property + " = " + properties.get(property) + ",";
+			query += "parentNode." + property + " = \"" + properties.get(property) + "\",";
 		}
 		query = query.substring(0, query.length()-1);
 		

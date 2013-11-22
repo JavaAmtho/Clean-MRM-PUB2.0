@@ -159,7 +159,7 @@ var DynaTree = function(){
     }
 
     function editNode(data){
-        nodeToBeEdited.data.title = data;
+        nodeToBeEdited.data.title = data.responseString;
         nodeToBeEdited.render();
     }
 
