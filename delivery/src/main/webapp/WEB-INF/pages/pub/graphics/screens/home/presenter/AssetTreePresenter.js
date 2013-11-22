@@ -146,7 +146,8 @@ AssetTreePresenter.showAssortmentPanel = function (rendererData) {
     $("#subtab1").kendoListView({
         dataSource: productsDataSource,
         template: '<div class="tags k-block"> <img src="#:image#"/>' +
-            ' #:label# </div>'
+            ' #:label#' +  ' '+
+            '#:rendererTemplateId# </div>'
         /*template: kendo.template($("#template").html())*/
     });
 
