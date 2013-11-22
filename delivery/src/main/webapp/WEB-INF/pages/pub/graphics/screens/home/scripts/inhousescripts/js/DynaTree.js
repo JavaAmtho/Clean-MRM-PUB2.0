@@ -50,7 +50,7 @@ var DynaTree = function(){
             list.appendChild(elem);
         }
 
-        if(type != "root"){
+        if(type != "root" && type != "Assortment"){
             var editAnchor = document.createElement("a");
             editAnchor.href = "#edit";
             editAnchor.textContent = "Edit";
@@ -59,16 +59,7 @@ var DynaTree = function(){
             list.appendChild(editElem);
         }
 
-       /* if(type === "Page"){
-            var editAnchor = document.createElement("a");
-            editAnchor.href = "#edit";
-            editAnchor.textContent = "Edit Page";
-            var editElem = document.createElement("li");
-            editElem.appendChild(editAnchor);
-            list.appendChild(editElem);
-        }*/
-
-        if(type != "root"){
+        if(type != "root" && type != "Assortment"){
             var deleteAnchor = document.createElement("a");
             deleteAnchor.href = "#delete";
             deleteAnchor.textContent = "Delete";
