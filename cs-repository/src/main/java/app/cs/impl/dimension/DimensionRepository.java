@@ -179,16 +179,17 @@ public class DimensionRepository implements IDimensionRepository {
 	public void delete(MultiDimensionalObject dimension) {
 		List<String> possibleDeleteTypes = getPossibleTypesWhichAreGoingToAffected(dimension
 				.getType());
+		MultiDimensionalObject dimensionToBeDeleted = mongoRepository.find(dimension.getId(), MultiDimensionalObject.class);
 		if(possibleDeleteTypes.contains(CommonConstants.Dimension.DIMENSION_TYPE_PUBLICATION)){
 			List<MultiDimensionalObject> publicationsUnderNode = 
 					mongoRepository.getObjectForAndCriteria("type",CommonConstants.Dimension.DIMENSION_TYPE_PUBLICATION, 
-					"groupIds", dimension.getGroupId(),MultiDimensionalObject.class);
+					"groupIds", dimensionToBeDeleted.getGroupId(),MultiDimensionalObject.class);
 			for (MultiDimensionalObject multiDimensionalObject : publicationsUnderNode) {
 				System.out.println("ID => " +  multiDimensionalObject.getId());
 				neo4jRepository.deleteSelfAndAllItsChildren("id", multiDimensionalObject.getId());
 			}
 		}
-		mongoRepository.delete("groupIds", "type", dimension.getGroupId(),
+		mongoRepository.delete("groupIds", "type", dimensionToBeDeleted.getGroupId(),
 				possibleDeleteTypes, dimension.getClass());
 	}
 
