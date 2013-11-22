@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import app.cs.boundary.delivery.Interactor;
 import app.cs.impl.model.MultiDimensionalObject;
 import app.cs.model.request.EditDimensionRequest;
+import app.cs.model.response.ResponseModel;
+import app.cs.model.response.StringResponse;
 
 @Controller
 public class EditDimensionController {
@@ -24,10 +26,10 @@ public class EditDimensionController {
 
 	@RequestMapping(value = "/dimension/update/{dimensionId}")
 	public @ResponseBody
-           	MultiDimensionalObject execute(@RequestBody MultiDimensionalObject dimensionalObject) {
+           	ResponseModel execute(@RequestBody MultiDimensionalObject dimensionalObject) {
 		request.setDimensionalObject(dimensionalObject);
 		editDimension.execute(request);
-		return dimensionalObject;
+		return new StringResponse(dimensionalObject.getTitle());
 
 	}
 

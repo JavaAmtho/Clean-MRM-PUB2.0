@@ -86,6 +86,11 @@ public class DimensionRepository implements IDimensionRepository {
 	@Override
 	public String editProperty(MultiDimensionalObject objectToEdit){
 		mongoRepository.updateByIdSetProperty(objectToEdit.getId(), "title", objectToEdit.getTitle(), objectToEdit.getClass());
+		/*if(objectToEdit.getType().equalsIgnoreCase(CommonConstants.Dimension.DIMENSION_TYPE_PUBLICATION)){
+			Map<String,String> properties = new HashMap<String,String>();
+			properties.put("title", objectToEdit.getTitle());
+			neo4jRepository.editProperties(CommonConstants.NODE_IDENTIFICATION_FIELD, objectToEdit.getId(), properties);
+		}*/
 		return "updated";
 	}
 
@@ -119,6 +124,7 @@ public class DimensionRepository implements IDimensionRepository {
 			PublicationAssetObject partialDataForNeo4j = new PublicationAssetObject();
 			partialDataForNeo4j.setId(dimension.getId());
 			partialDataForNeo4j.setType(dimension.getType());
+//			partialDataForNeo4j.setTitle(dimension.getTitle());
 			neo4jRepository.saveData(partialDataForNeo4j);
 		}
 	}

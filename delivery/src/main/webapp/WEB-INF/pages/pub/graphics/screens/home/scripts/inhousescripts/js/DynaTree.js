@@ -154,9 +154,8 @@ var DynaTree = function(){
         nodeToBeEdited.render();
     }
     function editDimension(data){
-        alert(JSON.stringify(data));
-        /*nodeToBeEdited.data.title = data.responseString;
-        nodeToBeEdited.render();*/
+        nodeToBeEdited.data.title = data.responseString;
+        nodeToBeEdited.render();
     }
 
     function showDeletePrompt(nodeToBeDeleted){
