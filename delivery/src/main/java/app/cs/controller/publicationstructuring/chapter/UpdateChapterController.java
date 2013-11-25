@@ -12,6 +12,8 @@ import app.cs.impl.model.Assortment;
 import app.cs.impl.model.PublicationAssetObject;
 import app.cs.model.request.UpdateAssortmentRequest;
 import app.cs.model.request.UpdatePublicationAssetObjectRequest;
+import app.cs.model.response.ResponseModel;
+import app.cs.model.response.StringResponse;
 import app.cs.utils.CommonConstants;
 
 @Controller
@@ -21,19 +23,18 @@ public class UpdateChapterController {
 	private UpdatePublicationAssetObjectRequest request;
 
 	@Autowired
-	public UpdateChapterController(Interactor updateAssortment,
+	public UpdateChapterController(Interactor updateChapter,
 			UpdatePublicationAssetObjectRequest request) {
 
-		this.updateChapter = updateAssortment;
+		this.updateChapter = updateChapter;
 		this.request = request;
 	}
 
 	@RequestMapping(value = "/chapter/update/{id}")
-	public @ResponseBody String execute(@RequestBody PublicationAssetObject chapter) {
-
+	public @ResponseBody ResponseModel execute(@RequestBody PublicationAssetObject chapter) {
 		request.setPublicationAssetObject(CommonConstants.PublicationAsset.PUBLICATION_ASSET_TYPE_CHAPTER,chapter);
 		updateChapter.execute(request);
-		return request.getPublicationAssetObject().getTitle();
+		return new StringResponse(request.getPublicationAssetObject().getTitle());
 	}
 
 }
