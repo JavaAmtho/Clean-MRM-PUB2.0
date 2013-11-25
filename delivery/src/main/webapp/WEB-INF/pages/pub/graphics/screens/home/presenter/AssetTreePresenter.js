@@ -158,9 +158,7 @@ AssetTreePresenter.showAssortmentPanel = function (rendererData) {
 
     $("#subtab1").kendoListView({
         dataSource: productsDataSource,
-        template: '<div class="tags k-block"> <img src="#:image#"/>' +
-            ' #:label#' +  ' '+
-            '#:rendererTemplateId# </div>'
+        template: '<div class="tags k-block"> <img src="#:image#"/> <div class="labelRenderCSS">#:label#</div><div class="rendererTemplateCSS">#:rendererTemplateId#</div></div>'
         /*template: kendo.template($("#template").html())*/
     });
 
@@ -192,7 +190,10 @@ AssetTreePresenter.makeProductsListDropable = function(){
         },
         drop: function (e) {
             var item = assetsDataSource.getByUid(e.draggable.hint.data().uid);
-            item.rendererTemplateId = $("#templateDropDown option:selected").val();
+            var dropDownObj = document.getElementById("templateDropDown");
+            item.rendererTemplateId = "";
+            if(!dropDownObj.disabled)
+                item.rendererTemplateId = $("#templateDropDown option:selected").val();
             productsDataSource.add(item);
             $("#subtab1").css('border', '2px dashed #aaa');
             //unmappedtag_datasource.remove(item);
@@ -242,6 +243,4 @@ AssetTreePresenter.enableTemplatesDropdown = function(pageRendererType){
     }else{
         dropDownObj.disabled = true;
     }
-
-
 }
