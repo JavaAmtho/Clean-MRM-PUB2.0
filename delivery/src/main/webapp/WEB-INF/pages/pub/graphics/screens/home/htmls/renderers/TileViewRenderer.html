@@ -1,9 +1,11 @@
 {{#mydata}}<div class= "{{typeCSS}}" id="{{id}}" style="{{backgroundImageStyle}}">
     <div class="name">{{title}}</div>
     <div class="rulesText pageType {{hiddenCSS}}">Type: {{pageType}}</div>
-    <div class="rulesText renderer {{hiddenCSS}}">Renderer: {{renderEngineType}}</div>
+    <div class="rulesText {{hiddenCSS}}">Renderer: {{renderEngineType}}</div>
+    <div class="rulesText renderer {{hiddenCSS}}">{{renderEngineType}}</div>
     <div class="rulesText {{hiddenCSS}}">MamFileId:</div>
     <div class="rulesText mamFileId {{hiddenCSS}}">{{fileID}}</div>
+    <div class="editorURL hidden">{{editorUrl}} </div>
 	<p class="hidden pagePath">{{path}}</p>
     <div class='buttonsHolder {{hiddenCSS}}' >
     </div>

@@ -100,6 +100,15 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 		String response = neo4jRepository.editProperties(CommonConstants.NODE_IDENTIFICATION_FIELD, objectToEdit.getId(), properties);
 		return response;
 	}
+	
+	@Override
+	public String updateEditURLOfPage(String pageId, String editUrl){
+		Map<String,String> properties = new HashMap<String,String>();
+		properties.put("editorURL",editUrl);
+		String response = neo4jRepository.editProperties(CommonConstants.NODE_IDENTIFICATION_FIELD,pageId, properties);
+		return response;
+	}
+	
 		
 	
 	@Override

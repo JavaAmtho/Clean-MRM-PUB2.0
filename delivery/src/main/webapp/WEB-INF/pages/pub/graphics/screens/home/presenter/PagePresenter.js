@@ -12,325 +12,8 @@ var COLLAPSE_ICON_URL = 'url("../../../graphics/screens/home/images/collapse.png
 var EXPAND_ICON_URL = 'url("../../../graphics/screens/home/images/expand.png")';
 var LOADING_IMAGE_URL = '../../../graphics/screens/home/images/load.gif';
 
-/**
- *
- * @returns the created drop down option element
- * @description create a default disabled option for the drop down menu
- */
-PagePresenter.createDefaultDisabledDropDownOption = function () {
-    var dropDownOptions = document.createElement("option");
-    $(dropDownOptions).attr('selected', 'selected');
-    $(dropDownOptions).attr('disabled', 'disabled');
-    $(dropDownOptions).attr('value', '-1');
-    $(dropDownOptions).html('Select');
-    return dropDownOptions;
-}
-
-/**
- *
- * @param dropDownDisplayName : display name in the drop down list
- * @param dropDownListID : id value to be used in the drop down
- * @returns the created drop down option element
- * @description create an option tag for the dropdown menu
- */
-PagePresenter.createDropDownOption = function (dropDownDisplayName, dropDownListID) {
-    var dropDownOption = document.createElement("option");
-    if (dropDownListID) {
-        $(dropDownOption).attr('value', dropDownListID);
-    }
-    $(dropDownOption).html(dropDownDisplayName);
-    return dropDownOption;
-}
-
-/**
- *
- * @param parentMasterPageDiv : reference to the parent masterpage div
- * @description Sets the already saved page rules
- */
-PagePresenter.setRules = function (parentMasterPageDiv) {
-    var $dirtyFields = $(parentMasterPageDiv).find('.dataDirty');
-    var isDirty = getDataDirtyFlag($dirtyFields);
-    if (isDirty) {
-        $(parentMasterPageDiv).find('.thenChild').remove();
-        $dirtyFields.html('0');
-        var pageRules = GraphicDataStore.getPageRuleById(parentMasterPageDiv.id);
-        if (pageRules) {
-            var $thenReference = $(parentMasterPageDiv).children('.rule').children('.then');
-            for (var i = 0; i < pageRules.length; i++) {
-                var pageRule = pageRules[i]
-                if (pageRule.ruleResult) {
-                    var ruleStatementDiv = PagePresenter.createRuleStatement(parentMasterPageDiv, pageRule);
-                    $thenReference.append(ruleStatementDiv);
-                    /*****************Setting drop down values************************/
-                    var masterPageId = pageRules[i].ruleResult.masterPageId;
-                    var assortmentName = pageRules[i].ruleResult.assortmentId;
-                    $(ruleStatementDiv).children('.template').val(masterPageId);
-                    $(ruleStatementDiv).children('.assortment').val(assortmentName);
-
-                    var ruleConditions = pageRules[i].ruleConditions;
-                    if (ruleConditions) {
-                        for (var j = 0; j < ruleConditions.length; j++) {
-                            var groupType = ruleConditions[j].variable;
-                            var operation = ruleConditions[j].operator;
-                            var value = ruleConditions[j].value;
-                            var whenDiv = PagePresenter.createRuleConditionDiv(groupType);
-                            $(ruleStatementDiv).append(whenDiv);
-                            /******************Setting dropdown Values****************************/
-                            $(whenDiv).children('.groupType').val(groupType);
-                            //PagePresenter.modifyValueDropDown($(whenDiv).children('.groupType')[0], false)
-                            $(whenDiv).children('.operation').val(operation);
-                            $(whenDiv).children('.value').val(value);
-
-                        }
-                    }
-                }
-            }
-        }
-    }
-    $(".selectpicker").selectBoxIt({
-        autoWidth: false,
-        showEffect: "fadeIn",
-        hideEffect: "fadeOut"
-    });
-}
-
-PagePresenter.refreshScroll = function(){
-    $('.nano').nanoScroller();
-}
-
-/**
- *
- * @param pageRule : rule statement data
- * @param parentMasterPageDiv : parent master page div reference
- * @returns rule statement div
- * @description Create the rule statement div with the drop down
- *              menus for master template and assortment
- */
-PagePresenter.createRuleStatement = function (parentMasterPageDiv, pageRule) {
-    var ruleId = pageRule ? pageRule.ruleID : "";
-    var mamFileID = pageRule ? pageRule.additionalInformation.mamFileID : " ";
-    var wbdURL = pageRule ? pageRule.additionalInformation.editUrl : " ";
-
-    var newRuleStatementDiv = document.createElement("div");
-    $(newRuleStatementDiv).addClass("thenChild");
-    $(newRuleStatementDiv).addClass("row-fluid");
-
-    var ruleDataContent = "<p class='hidden ruleID'>" + ruleId + "</p>";
-    ruleDataContent += "<p class='hidden wbdURL'>" + wbdURL + "</p>";
-    ruleDataContent += "<p class='hidden mamFileID'>" + mamFileID + "</p>";
-    $(newRuleStatementDiv).append(ruleDataContent);
-
-    var masterTemplateFileNames = EngineDataStore.getMasterTemplateList();
-    var masterTemplateDropDown = document.createElement("select");
-    $(masterTemplateDropDown).addClass('rulesText  template selectpicker span2');
-    $(masterTemplateDropDown).attr('onchange', 'PagePresenter.makeRuleDirty(this.parentNode,true)');
-    $(masterTemplateDropDown).attr('data-width', '45%');
-    $(masterTemplateDropDown).attr('onclick','PagePresenter.refreshScroll()');
-    var dropDownOptions;
-    dropDownOptions = PagePresenter.createDefaultDisabledDropDownOption();
-    $(dropDownOptions).html('Select Master Template');
-    $(masterTemplateDropDown).append(dropDownOptions);
-    for (var j = 0; j < masterTemplateFileNames.length; j++) {
-        var masterTemplateID = masterTemplateFileNames[j].templateID;
-        var masterTemplateName = masterTemplateFileNames[j].templateName;
-        dropDownOptions = PagePresenter.createDropDownOption(masterTemplateName, masterTemplateID);
-        $(masterTemplateDropDown).append(dropDownOptions);
-    }
-    $(newRuleStatementDiv).append(masterTemplateDropDown);
-
-    GetAssortments.get($(parentMasterPageDiv).children('.pagePath').html(), parentMasterPageDiv.id, function (data) {
-        GraphicDataStore.pushToAssortmentsList(parentMasterPageDiv.id, data);
-    });
-    var assortmentList = GraphicDataStore.getAssortmentsByPageID(parentMasterPageDiv.id);
-    var assortmentsDropDown = document.createElement("select");
-    $(assortmentsDropDown).addClass('rulesText assortment selectpicker span3');
-    $(assortmentsDropDown).attr('onchange', 'PagePresenter.makeRuleDirty(this.parentNode,true)');
-    $(assortmentsDropDown).attr('data-width', '45%');
-    $(assortmentsDropDown).attr('onclick','PagePresenter.refreshScroll()');
-    dropDownOptions = PagePresenter.createDefaultDisabledDropDownOption();
-    $(dropDownOptions).html('Select Assortment');
-    $(assortmentsDropDown).append(dropDownOptions);
-    for (var j = 0; j < assortmentList.length; j++) {
-        var assortmentName = assortmentList[j].name;
-        dropDownOptions = PagePresenter.createDropDownOption(assortmentName);
-        $(assortmentsDropDown).append(dropDownOptions);
-    }
-    $(newRuleStatementDiv).append(assortmentsDropDown);
-
-    var ruleConfigureButtons = "<span title='Remove the rule statement' class='buttons remove' " +
-        "onclick='PagePresenter.removeNew(this.parentNode)'>-</span>"
-    ruleConfigureButtons += "<span title='Add a new rule condition' class='buttons addCondition' " +
-        "onclick='PagePresenter.addNewRuleCondition(this.parentNode)'>+</span>"
-    $(newRuleStatementDiv).append(ruleConfigureButtons);
-    ruleDataContent = "<p class='hidden dataDirty'>0</p>"
-    $(newRuleStatementDiv).append(ruleDataContent);
-
-    return newRuleStatementDiv;
-}
-
-/**
- *
- * @param groupType : selected group filter
- * @returns rule condition div
- * @description create the rule condition div and its drop downs (group type, operator and value)
- */
-PagePresenter.createRuleConditionDiv = function (groupType) {
-    var newRuleConditionDiv = document.createElement("div");
-    $(newRuleConditionDiv).addClass("whenChild");
-
-    var variablesList = groupTypes;
-    var groupTypeDropDown = document.createElement("select");
-    $(groupTypeDropDown).addClass('rulesText groupType selectpicker span2');
-    $(groupTypeDropDown).attr('onchange', 'PagePresenter.modifyValueDropDown(this)');
-    $(groupTypeDropDown).attr('data-width', 'auto');
-    $(groupTypeDropDown).attr('onclick','PagePresenter.refreshScroll()');
-    var dropDownOptions;
-    dropDownOptions = PagePresenter.createDefaultDisabledDropDownOption();
-    $(groupTypeDropDown).append(dropDownOptions);
-    for (var i = 0; i < variablesList.length; i++) {
-        var currentGroupType = variablesList[i];
-        dropDownOptions = PagePresenter.createDropDownOption(currentGroupType);
-        $(groupTypeDropDown).append(dropDownOptions);
-    }
-    $(newRuleConditionDiv).append(groupTypeDropDown);
-
-    var operatorDropDown = document.createElement("select");
-    $(operatorDropDown).addClass('rulesText operation selectpicker span2');
-    $(operatorDropDown).attr('onchange', 'PagePresenter.makeDirty(this)');
-    $(operatorDropDown).attr('data-width', 'auto');
-    $(operatorDropDown).attr('onclick','PagePresenter.refreshScroll()');
-    dropDownOptions = PagePresenter.createDropDownOption("=");
-    $(operatorDropDown).append(dropDownOptions);
-    $(newRuleConditionDiv).append(operatorDropDown);
-
-    var valuesDropDown = document.createElement("select");
-    $(valuesDropDown).addClass('input rulesText value selectpicker span2');
-    $(valuesDropDown).attr('onchange', 'PagePresenter.makeDirty(this.parentNode)');
-    $(valuesDropDown).attr('data-width', 'auto');
-    $(valuesDropDown).attr('onclick','PagePresenter.refreshScroll()');
-    dropDownOptions = PagePresenter.createDefaultDisabledDropDownOption();
-    $(valuesDropDown).append(dropDownOptions);
-    if (groupType) {
-        if (groupType == 'Region') {
-            var regionsList = regions;
-            for (var i = 0; i < regionsList.length; i++) {
-                var region = regionsList[i];
-                dropDownOptions = PagePresenter.createDropDownOption(region);
-                $(valuesDropDown).append(dropDownOptions);
-            }
-        }
-        else if (groupType == 'Target Group') {
-            var targetGroupsList = targetGroups;
-            for (var i = 0; i < targetGroupsList.length; i++) {
-                var targetGroup = targetGroupsList[i];
-                dropDownOptions = PagePresenter.createDropDownOption(targetGroup);
-                $(valuesDropDown).append(dropDownOptions);
-            }
-        }
-    }
-    $(newRuleConditionDiv).append(valuesDropDown);
-
-    var ruleConditionsConfigurationButton = "&nbsp;&nbsp;<span title='Remove the rule condition' " +
-        "class='buttons remove' " +
-        "onclick='PagePresenter.removeNew(this.parentNode)'>-</span>";
-    $(newRuleConditionDiv).append(ruleConditionsConfigurationButton);
-
-    var ruleConditionsData = "<p class='hidden dataDirty'>0</p>"
-    $(newRuleConditionDiv).append(ruleConditionsData);
-
-    return newRuleConditionDiv;
-}
-
-/**
- *
- * @param groupTypeDropDown : reference to the group type drop down(target group/region select drop-down)
- * @description : According to value selected in the group type drop-down modify the values in the value drop-down
- */
-PagePresenter.modifyValueDropDown = function (groupTypeDropDown) {
-    $(groupTypeDropDown.parentNode).children('.dataDirty').html('1');
-
-    //We encountered some issues after using the new drop-down component while modifying the
-    //values in the drop-down. So instead of modifying the values we replace the entire
-    //drop-down manually.
-
-    var valuesDropDown = document.createElement("select");
-    $(valuesDropDown).addClass('input rulesText value selectpicker span2');
-    $(valuesDropDown).attr('onchange', 'PagePresenter.makeDirty(this.parentNode)');
-    $(valuesDropDown).attr('data-width', 'auto');
-    $(valuesDropDown).attr('onclick','PagePresenter.refreshScroll()');
-    var dropDownOptions = PagePresenter.createDefaultDisabledDropDownOption();
-    $(valuesDropDown).append(dropDownOptions);
-
-    if (groupTypeDropDown.selectedIndex == 1) {
-        var regionsList = regions;                                          //
-        for (var i = 0; i < regionsList.length; i++) {                      //  If selected index is 1(Region)
-            var region = regionsList[i];                                    //  then add regions list
-            dropDownOptions = PagePresenter.createDropDownOption(region);   //  to the drop-down
-            $(valuesDropDown).append(dropDownOptions);                      //
-        }
-    }
-    else if (groupTypeDropDown.selectedIndex == 2) {
-        var targetGroupsList = targetGroups;                                    //
-        for (var i = 0; i < targetGroupsList.length; i++) {                     //  If selected index is
-            var targetGroup = targetGroupsList[i];                              //  2(Target Group) then add target
-            dropDownOptions = PagePresenter.createDropDownOption(targetGroup);  //  groups list to drop-down
-            $(valuesDropDown).append(dropDownOptions);                          //
-        }
-    }
-
-    $(groupTypeDropDown).siblings('.value').remove();               //remove the existing drop-down
-    //Get the last operator drop-down component and add the values drop-down after it
-    var $operationDropdown = $(groupTypeDropDown).siblings('.selectboxit-container');
-    $($operationDropdown[$operationDropdown.length - 1]).after(valuesDropDown);
-    $('.selectpicker').selectBoxIt({
-        autoWidth: false,
-        showEffect: "fadeIn",
-        hideEffect: "fadeOut"
-    });   //initialize the selectBoxIt component on the drop-downs
-}
 
 
-/**
- *
- * @param parentThenChildDiv : reference to the parent rule for the condition to be added
- * @description : Create a new condition for the rule(Called on the '+' next to the rule)
- */
-PagePresenter.addNewRuleCondition = function (parentThenChildDiv) {
-    //Set dirty flag to the paren thenChild
-    $(parentThenChildDiv).children('.dataDirty').html('1');
-
-    var newRuleConditionDiv = PagePresenter.createRuleConditionDiv();
-    parentThenChildDiv.appendChild(newRuleConditionDiv);
-
-    $(".selectpicker").selectBoxIt({
-        autoWidth: false,
-        showEffect: "fadeIn",
-        hideEffect: "fadeOut"
-    });
-    $('.nano').nanoScroller();
-}
-
-/**
- *
- * @param addNewRuleStatementButton : reference to the parent then div which contains all the rule statements
- * @description : Create a new rule(Called on click on top '+')
- */
-PagePresenter.addNewRuleStatement = function (addNewRuleStatementButton) {
-    var parentRuleStatementsListDiv = $(addNewRuleStatementButton).siblings('.then')
-    //Set the main dirty flag when new rule is added
-    $(parentRuleStatementsListDiv).children('.dataDirty').html('1');
-
-    var parentMasterPageDiv = $(parentRuleStatementsListDiv).closest('.masterPage')[0];
-    var newRuleStatement = PagePresenter.createRuleStatement(parentMasterPageDiv);
-    $(parentRuleStatementsListDiv).append(newRuleStatement);      //Add the new rule div to the parent div
-
-    $(".selectpicker").selectBoxIt({
-        autoWidth: false,
-        showEffect: "fadeIn",
-        hideEffect: "fadeOut"
-    });
-    $('.nano').nanoScroller();
-}
 
 /**
  *
@@ -394,7 +77,19 @@ PagePresenter.openWhiteBoard = function (childPageInnerDiv) {
 //                $parentMasterPageRuleReference.children('.dataDirty').html('1');
                 /*GraphicDataStore.addAdditionalInformationToPageRules(data, ruleID,
                     GraphicDataStore.getCurrentView() + "." + logicalPageID);*/
-                $('.childPages').trigger("loadingDone", [ruleID, data.editorURL]);    //trigger the loading done event
+                if(data && data.editorURL){
+                    var $parentMasterPageRuleReference = $("[id = '" + logicalPageID + "']") ;
+                    var pageType = $parentMasterPageRuleReference.children('.renderer').html();
+                    data.editorURL += "&rendererName=" + pageType;
+                    UpdateEditorUrl.updateUrl(logicalPageID,data.editorURL,function(data){
+                        console.log($parentMasterPageRuleReference.children('.editorURL'));
+                        $parentMasterPageRuleReference.children('.editorURL')[0].innerHTML = data.editorURL;
+                    });
+                    $('.childPages').trigger("loadingDone", [ruleID, data.editorURL]);    //trigger the loading done event
+                }
+                else{
+                    $('.childPages').trigger("loadingError", [ruleID]);  //trigger the loading error event
+                }
             }
             GraphicDataStore.stopLoadingStatus(ruleID)
         });
@@ -476,7 +171,7 @@ PagePresenter.createChildPageInnerDiv = function (rule, masterPageDiv, url) {
     }
     $(childPageInnerDiv).attr('ondblclick', 'PagePresenter.openWhiteBoard(this,event)');
 
-    var wbdURL = /*$(rule).children('.wbdURL').html()*/" ";
+    var wbdURL = $(masterPageDiv).children('.editorURL').html();/*$(rule).children('.wbdURL').html()*/
     var mamFileID = " ";
     var masterTemplate = $(masterPageDiv).children('.mamFileId').html();
 
@@ -580,11 +275,11 @@ PagePresenter.expandCollapseChildPages = function (masterPageDiv) {
         $childPages.unbind("loadingDone");
         $container.isotope('remove', $childPages);
         $(masterPageDiv).toggleClass('opened');
-        var $dirtyFields = $(masterPageDiv).find('.dataDirty');
+/*        var $dirtyFields = $(masterPageDiv).find('.dataDirty');
         var isDirty = getDataDirtyFlag($dirtyFields);
         if (isDirty) {
             PagePresenter.setRules(masterPageDiv);
-        }
+        }*/
     }
 
     PagePresenter.bindChildPagesToCustomLoadingWBDEvent();

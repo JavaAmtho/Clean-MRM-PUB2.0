@@ -250,6 +250,9 @@ HomePresenter.getChildrenForSelectedNode = function (node) {
         obj.pageType = node.data.children[i].pageType;
         obj.renderEngineType = node.data.children[i].renderEngineType;
         obj.fileID = node.data.children[i].fileID;
+        if(node.data.children[i].editorURL){
+            obj.editorUrl = node.data.children[i].editorURL;
+        }
         nodeDetails.push(obj);
     }
     return nodeDetails;

@@ -43,6 +43,8 @@ public class PublicationAssetObject implements GenericDomain{
 	
 	private String renderEngineType;
 	
+	private String editorURL;
+	
 	
 /*	@JsonIgnore @Fetch @RelatedToVia(type = "CHILD_OF" , direction = Direction.INCOMING)
 	private Set<PublicationAssetObjectRelationShip> relationships = new HashSet<PublicationAssetObjectRelationShip>();*/
@@ -208,6 +210,16 @@ public class PublicationAssetObject implements GenericDomain{
 
 	public void setRenderEngineType(String renderEngineType) {
 		this.renderEngineType = renderEngineType;
+	}
+
+	
+	
+	public String getEditorURL() {
+		return editorURL;
+	}
+
+	public void setEditorURL(String editorURL) {
+		this.editorURL = editorURL;
 	}
 
 	@Override
