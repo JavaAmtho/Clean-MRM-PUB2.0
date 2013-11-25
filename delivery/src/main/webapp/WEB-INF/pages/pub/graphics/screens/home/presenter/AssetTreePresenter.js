@@ -144,8 +144,7 @@ AssetTreePresenter.createAssetsListWithData = function(assetdata){
        $("#assetDetails").kendoListView({
            dataSource: assetsDataSource,
            template: '<div class="tags move k-block"> <img src="#:image#"/>' +
-               ' #:label# </div>'
-           /*template: kendo.template($("#template").html())*/
+               '<div class="labelRenderCSS">#:label#</div></div>'
        });
 
        if(myCount==0){

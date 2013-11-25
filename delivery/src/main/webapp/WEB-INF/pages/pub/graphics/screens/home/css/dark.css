@@ -486,4 +486,6 @@ h2.openRules{
    position: relative;
    float: left;
    font-family: calibri !important;
+   word-wrap: break-word;
+   word-break: break-all;
 }
