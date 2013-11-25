@@ -55,10 +55,22 @@ AssetTreePresenter.getPageTemplates = function(data){
     if(data == "error"){
         data=[];
     }
+    var treeData = [];
+    var listData = [];
+    for(var i=0; i <data.length; i++){
+        if(data[i].isLazy === true){
+            //Create tree data
+            treeData.push(data[i])
+        }else{
+            //Create list data
+            listData.push(data[i])
+        }
+    }
     var treeObj = document.getElementById("assetsTree");
     var assetsLazyTree = ElementFactory.getLazyTree();
-    assetsLazyTree.createTree(treeObj,data);
+    assetsLazyTree.createTree(treeObj,treeData);
     AssetTreePresenter.loadTemplates();
+    AssetTreePresenter.createAssetsListWithData(listData);
 }
 
 AssetTreePresenter.loadTemplates = function(){
