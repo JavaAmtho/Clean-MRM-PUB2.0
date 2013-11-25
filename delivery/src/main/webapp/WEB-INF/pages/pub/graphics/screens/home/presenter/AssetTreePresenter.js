@@ -237,7 +237,7 @@ AssetTreePresenter.createProductsJSON = function () {
     jsonData[columnName] = productsDataSource._data;
     var columnName = "id";
     jsonData[columnName] = GraphicDataStore.getCurrentAssortment().id;
-    UpdateAssortment.update(GraphicDataStore.getCurrentAssortment(), jsonData, HomePresenter.hideAssortPanel);
+    UpdateAssortment.update(GraphicDataStore.getCurrentAssortment(), jsonData, AssetTreePresenter.hideAssortPanel);
     $(document).trigger({
         type: "expandParentNode",
         currentId: GraphicDataStore.getCurrentAssortment().title,
@@ -262,4 +262,12 @@ AssetTreePresenter.enableTemplatesDropdown = function(pageRendererType){
     }else{
         dropDownObj.disabled = true;
     }
+}
+
+/**
+ *  @description hides assortment panel and shows mustache div
+ */
+AssetTreePresenter.hideAssortPanel = function () {
+    $('#assortPanel').hide();
+    $('#dim').show();
 }

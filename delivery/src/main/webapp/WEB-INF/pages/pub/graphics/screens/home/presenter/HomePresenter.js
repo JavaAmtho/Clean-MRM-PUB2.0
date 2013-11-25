@@ -220,16 +220,12 @@ HomePresenter.btnFocus = function (btn) {
     $(btn).css("border", "1px solid black");
 }
 
-HomePresenter.designUI = function(){
-
-}
-
 $(document).bind("TREE_ITEM_CLICKED", function itemClickedHandler(e) {
         if (e.nodeType == "Assortment") {
             AssetTreePresenter.enableTemplatesDropdown(e.rendererType);
             AssetTreePresenter.showAssortmentPanel(e.uiData);
         } else {
-            HomePresenter.hideAssortPanel();
+            AssetTreePresenter.hideAssortPanel();
             rendererData = {"mydata": e.uiData};
             HomePresenter.loadViewItems(rendererData, EngineDataStore.getBaseURL() + "graphics/screens/home/htmls/renderers/TileViewRenderer.html");
             HomePresenter.btnFocus(".tileBtnCSS");
@@ -265,7 +261,6 @@ HomePresenter.getChildrenForSelectedNode = function (node) {
  * @returns {Array}    all products under the selected node
  */
 HomePresenter.getProductsForSelectedNode = function (node) {
-
     var nodeDetails = [];
     for (var i = 0; i < node.data.products.length; i++) {
         var obj = new ProductVO();
@@ -276,17 +271,4 @@ HomePresenter.getProductsForSelectedNode = function (node) {
         nodeDetails.push(obj);
     }
     return nodeDetails;
-}
-
-
-var productArrMadeDirty=false;
-
-
-
-/**
- *  @description hides assortment panel and shows mustache div
- */
-HomePresenter.hideAssortPanel = function () {
-    $('#assortPanel').hide();
-    $('#dim').show();
 }
