@@ -158,13 +158,19 @@ AssetTreePresenter.showAssortmentPanel = function (rendererData) {
 
     $("#subtab1").kendoListView({
         dataSource: productsDataSource,
-        template: '<div class="tags k-block"> <img src="#:image#"/> <div class="labelRenderCSS">Product Name: #:label#</div><div class="rendererTemplateCSS">Product Template: #:rendererTemplateId#</div></div>'
-        /*template: kendo.template($("#template").html())*/
+        template: '<div class="tags k-block"> <img src="#:image#"/> ' +
+            '<div class="labelRenderCSS">Product Name: #:label#</div>' +
+            '<div class="rendererTemplateCSS">Product Template: #:rendererTemplateId#</div>' +
+            '<img src="../../../graphics/screens/home/images/_close.png" class="removeProductBtn" onclick="removeProduct()"/></div>'
     });
 
     AssetTreePresenter.makeProductsListDropable();
 
 
+}
+
+function removeProduct(){
+   alert(123)
 }
 
 AssetTreePresenter.makeAssetsListDraggable = function(){
@@ -236,8 +242,9 @@ AssetTreePresenter.enableTemplatesDropdown = function(pageRendererType){
         $("#templateDropDown option").remove();
         for(var i=0; i< dataProvider.length; i ++){
             var opt = document.createElement('option');
-            opt.value = dataProvider[i].tempName;
-            opt.innerHTML = dataProvider[i].tempName;
+            opt.id = dataProvider[i].templateId;
+            opt.value = dataProvider[i].templateName;
+            opt.innerHTML = dataProvider[i].templateName;
             dropDownObj.appendChild(opt);
         }
     }else{

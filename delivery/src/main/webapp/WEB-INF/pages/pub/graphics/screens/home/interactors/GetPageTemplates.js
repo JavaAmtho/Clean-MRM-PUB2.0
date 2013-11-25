@@ -37,6 +37,6 @@ GetPageTemplates.getAll = function(callBack){
             }
         ]
     }
-    callBack(data);
-    //Router.loadRequest("getPageTemplates",false,callBack,pageID);
+    //callBack(data);
+    Router.loadRequest("getPageTemplates",false,callBack);
 }

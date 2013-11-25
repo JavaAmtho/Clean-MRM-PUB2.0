@@ -283,5 +283,3 @@ HomePresenter.hideAssortPanel = function () {
     $('#assortPanel').hide();
     $('#dim').show();
 }
-
-
