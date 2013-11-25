@@ -219,6 +219,7 @@ HomePresenter.designUI = function(){
 
 $(document).bind("TREE_ITEM_CLICKED", function itemClickedHandler(e) {
         if (e.nodeType == "Assortment") {
+            AssetTreePresenter.enableTemplatesDropdown(e.rendererType);
             AssetTreePresenter.showAssortmentPanel(e.uiData);
         } else {
             HomePresenter.hideAssortPanel();

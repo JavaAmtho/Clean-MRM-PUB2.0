@@ -11,7 +11,7 @@
  * @constructor  GraphicDataStore
  */
 var GraphicDataStore = function(){
-    var schemaArray=[];
+   /* var schemaArray=[];
     var currentSchema;
     var prodcutsArr=[];
     var currentAssortment;
@@ -22,7 +22,23 @@ var GraphicDataStore = function(){
     var loadingRulesList;
     var publicationPosition;
     var currentPublication;
-    var newPageObject = {};
+    var newPageObject = {};*/
+}
+
+GraphicDataStore.templateLoaded = false;
+
+GraphicDataStore.setPageTemplates = function(templatesJson){
+    this.pageTemplatesJSON = templatesJson;
+    GraphicDataStore.templateLoaded = true;
+}
+
+GraphicDataStore.getPageTemplates = function(type){
+    var templatesColl;
+    $.each(this.pageTemplatesJSON, function (key, item) {
+        if(key == type)
+            templatesColl = item;
+    });
+    return templatesColl;
 }
 
 /**

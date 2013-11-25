@@ -4,6 +4,7 @@ var temp;
  *
  * @constructor
  */
+
 var DynaTree = function(){
     var currentPath;
     var parentNode;
@@ -447,7 +448,8 @@ var DynaTree = function(){
                     var data;
                     if(node.data.type == "Assortment"){
                         $('#showAllPagesBtn').addClass('hidden');
-
+                        var currentPage = $.ui.dynatree.getNode(node).parent;
+                        DynaTree.rendererType = getPageRendererType(currentPage);
                         nodeType = "Assortment";
                         GraphicDataStore.setCurrentAssortment(node.data);
                         data = node.data.products;//HomePresenter.getProductsForSelectedNode(node);
@@ -478,6 +480,7 @@ var DynaTree = function(){
                     $(document).trigger({
                         type: "TREE_ITEM_CLICKED",
                         uiData: data,
+                        rendererType: DynaTree.rendererType,
                         nodeType: nodeType
                     });
                 },
@@ -559,6 +562,15 @@ var DynaTree = function(){
                 }
             });
 
+
+            function getPageRendererType(currentPage){
+               if(currentPage.data.pageType === "creative"){
+                   return currentPage.data.renderEngineType;
+               }else{
+                   return null;
+               }
+            }
+
             /**
              *
              * @param name
@@ -607,5 +619,7 @@ var DynaTree = function(){
         return [{"title":"MI1","isLazy":true,"isFolder":true}];
     }
 }
+
+DynaTree.rendererType;
 
 

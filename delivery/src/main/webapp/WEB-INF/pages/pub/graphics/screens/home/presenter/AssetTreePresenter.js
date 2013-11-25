@@ -15,14 +15,7 @@ var btnSelectionFlag = 0;
  * @description creates a tree object instance
  */
 AssetTreePresenter.createTree = function (btnId) {
-    GetAssetsTree.get(btnId,function(data){
-        if(data == "error"){
-            data=[];
-        }
-        var treeObj = document.getElementById("assetsTree");
-        var assetsLazyTree = ElementFactory.getLazyTree();
-        assetsLazyTree.createTree(treeObj,data);
-    });
+    GetAssetsTree.get(btnId,AssetTreePresenter.getPageTemplates);
 }
 
 /**
@@ -56,6 +49,27 @@ AssetTreePresenter.slidePanel = function (evt) {
         AssetTreePresenter.createTree(btnId);
     }
     AssetTreePresenter.changeSelectedBtn(evt.currentTarget.id);
+}
+
+AssetTreePresenter.getPageTemplates = function(data){
+    if(data == "error"){
+        data=[];
+    }
+    var treeObj = document.getElementById("assetsTree");
+    var assetsLazyTree = ElementFactory.getLazyTree();
+    assetsLazyTree.createTree(treeObj,data);
+    AssetTreePresenter.loadTemplates();
+}
+
+AssetTreePresenter.loadTemplates = function(){
+    if(!GraphicDataStore.templateLoaded){
+        GetPageTemplates.getAll(AssetTreePresenter.onTemplatesLoaded);
+    }
+
+}
+
+AssetTreePresenter.onTemplatesLoaded = function(data){
+    GraphicDataStore.setPageTemplates(data);
 }
 
 /**
@@ -135,7 +149,6 @@ AssetTreePresenter.createAssetsListWithData = function(assetdata){
  */
 AssetTreePresenter.showAssortmentPanel = function (rendererData) {
 
-
     AssetTreePresenter.unHideAssortPanel();
     GraphicDataStore.setProdcutsArr(rendererData);
 
@@ -211,4 +224,24 @@ AssetTreePresenter.createProductsJSON = function () {
         currentId: GraphicDataStore.getCurrentAssortment().title,
         productsColl:  productsDataSource._data
     });
+}
+
+AssetTreePresenter.enableTemplatesDropdown = function(pageRendererType){
+    var dropDownObj = document.getElementById("templateDropDown");
+    if(pageRendererType){
+        dropDownObj.disabled = false;
+        AssetTreePresenter.loadTemplates();
+        var dataProvider = GraphicDataStore.getPageTemplates(pageRendererType);
+        $("#templateDropDown option").remove();
+        for(var i=0; i< dataProvider.length; i ++){
+            var opt = document.createElement('option');
+            opt.value = dataProvider[i].tempName;
+            opt.innerHTML = dataProvider[i].tempName;
+            dropDownObj.appendChild(opt);
+        }
+    }else{
+        dropDownObj.disabled = true;
+    }
+
+
 }
