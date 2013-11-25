@@ -335,6 +335,33 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 		return endResult.iterator();
 
 	}*/
+	
+	@Override
+	public <T> Iterator<T> getChildrenUnderParentByType(String parentId,String type,Class<T> entityClass){
+		//TODO: make generic types to search
+		String query = "START parentNode = node(*) "
+				+ "MATCH parentNode<-[]-child "
+				+ "WHERE ("
+				+ "(HAS(parentNode.id) "
+				+ "AND parentNode.id = \"" + parentId + "\") "
+				+ "AND "
+				+ "(HAS(child.type) "
+				+ "AND child.type = \"" + type + "\")"
+				+ ") "
+				+ "RETURN child";
+
+		EndResult<T> endResult = null;
+		try{
+			Result<Map<String, Object>> queryResult = neo4jTemplate.query(query, new HashMap<String,Object>());
+			endResult = queryResult.to(entityClass);
+		}
+		catch(Exception e){
+			System.out.println("Failed" + e.getMessage());
+			return null;
+		}
+		System.out.println("return success");
+		return endResult.iterator();
+	}
 
 	@Override
 	public <P> P getObjectByKey(String key, String objectKey, Class<P> class1) {

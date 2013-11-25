@@ -25,6 +25,8 @@ public class PageRuleRepositoryImpl implements IPageRuleRepository {
 	@Override
 	public String savePageRules(PageRules pageRules) {
 		String response = "{\"status\":\""+noSqlRepository.save(pageRules)+"\"}";
+		System.out.println(pageRules.getId());
+		System.out.println(pageRules.getPageRules());
 		return response;
 	}
 

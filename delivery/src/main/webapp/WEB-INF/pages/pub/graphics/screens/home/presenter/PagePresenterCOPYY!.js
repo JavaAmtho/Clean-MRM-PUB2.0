@@ -380,26 +380,52 @@ PagePresenter.openWhiteBoard = function (childPageInnerDiv) {
     var publicationID = GraphicDataStore.getCurrentPublication();
     var $innerDiv = $(childPageInnerDiv);
     var ruleID = $innerDiv.children('.ruleID').html();
-    alert(ruleID);
     var logicalPageID = $innerDiv.children('.logicalPageID').html();
     GraphicDataStore.addRuleToLoadingList(ruleID);
-    CreateWBD.createWBD(logicalPageID,function (data) {
+    CreateWBD.createWBD(ruleID, GraphicDataStore.getCurrentView() + "." + logicalPageID, publicationID,
+        function (data) {
             if (data == 'error') {
                 alert("Error creating WBD!!");
                 $('.childPages').trigger("loadingError", [ruleID]);  //trigger the loading error event
             }
             else {
-//                var $parentMasterPageRuleReference = $("[id = '" + logicalPageID + "']").children('.rule').children('.then');
+                var $parentMasterPageRuleReference = $("[id = '" + logicalPageID + "']").children('.rule').children('.then');
                 //Set the parent master page data as dirty so that it gets reset later with the new wbd url and mamfileid
-//                $parentMasterPageRuleReference.children('.dataDirty').html('1');
-                /*GraphicDataStore.addAdditionalInformationToPageRules(data, ruleID,
-                    GraphicDataStore.getCurrentView() + "." + logicalPageID);*/
+                $parentMasterPageRuleReference.children('.dataDirty').html('1');
+                GraphicDataStore.addAdditionalInformationToPageRules(data, ruleID,
+                    GraphicDataStore.getCurrentView() + "." + logicalPageID);
                 $('.childPages').trigger("loadingDone", [ruleID, data.editorURL]);    //trigger the loading done event
             }
             GraphicDataStore.stopLoadingStatus(ruleID)
         });
     $innerDiv.children('.loading-overlay').toggleClass('hidden');       //toggle loading screen
     $innerDiv.children('.loading-message').toggleClass('hidden');       //
+}
+
+/**
+ *
+ * @param childPageDiv : reference to the main child page div
+ * @param $dimensionValues
+ * @description according to the rule conditions set, add values to the classname for the filtering
+ */
+PagePresenter.setClassNamesToChildPagesForFilterByCondition = function (childPageDiv, $dimensionValues) {
+    for (var j = 0; j < $dimensionValues.length; j++) {
+        var currentDimensionValue = $dimensionValues[j];
+        var filterType = $(currentDimensionValue).children('.groupType')[0].value;                                                                //logic written
+        if (filterType == 'Region') {
+            if ($(childPageDiv).hasClass('anyRegion')) {
+                $(childPageDiv).removeClass('anyRegion')
+            }
+        }
+        else if (filterType == 'Target Group') {
+            if ($(childPageDiv).hasClass('anyTargetGroup')) {
+                $(childPageDiv).removeClass('anyTargetGroup');
+            }
+        }
+        if (!$(currentDimensionValue).hasClass('hidden')) {
+            $(childPageDiv).addClass($(currentDimensionValue).children('.value')[0].value.toLowerCase());
+        }
+    }
 }
 
 /**
@@ -477,9 +503,6 @@ PagePresenter.createChildPageInnerDiv = function (rule, masterPageDiv, url) {
     $(childPageInnerDiv).attr('ondblclick', 'PagePresenter.openWhiteBoard(this,event)');
 
     var wbdURL = /*$(rule).children('.wbdURL').html()*/" ";
-    var mamFileID = " ";
-    var masterTemplate = $(masterPageDiv).children('.mamFileId').html();
-
     var popupImage = document.createElement("img");
     $(popupImage).addClass('popupImage');
     $(popupImage).addClass('hidden');
@@ -496,15 +519,6 @@ PagePresenter.createChildPageInnerDiv = function (rule, masterPageDiv, url) {
     var loadingImage = loadingScreen.loadingImage;
     $(childPageInnerDiv).append(loadingOverlayDiv);
     $(childPageInnerDiv).append(loadingImage);
-
-    ruleID = masterPageDiv.id + "." + rule;
-
-    $(childPageInnerDiv).append("<div class='childPageName ruleID' >" + ruleID + "</div>");
-    $(childPageInnerDiv).append("<p class='hidden logicalPageID'>" + masterPageDiv.id + "</p>");
-    $(childPageInnerDiv).append("<p class='childPagesText'>Mstr Templ ID: </p>");
-    $(childPageInnerDiv).append("<p class='childPagesText data templateName' >" + masterTemplate + "</p>");
-    $(childPageInnerDiv).append("<p class='hidden data wbdURL'> " + wbdURL + " </p>");
-    $(childPageInnerDiv).append("<p class='hidden data mamFileID'>" + mamFileID + "</p>");
 
 //    var childPageData = PagePresenter.createChildPageData(rule, masterPageDiv);
 //    $(childPageInnerDiv).append(childPageData);
@@ -550,6 +564,37 @@ PagePresenter.expandCollapseChildPages = function (masterPageDiv) {
         //Expand the master page into its child pages
         $(masterPageDiv).children('.expand').css('background-image', COLLAPSE_ICON_URL);
         var $itemsToInsert = new Array();
+        /*var $rules = $(masterPageDiv).children('.rule').children('.then').children('.thenChild');
+        var rulesCount = $rules.length;
+        if (rulesCount > 0) {   //if no rules then 'opened' class does not need to be added
+            $(masterPageDiv).toggleClass('opened');
+        }
+        //iterate through the rules
+        for (var i = 0; i < rulesCount; i++) {
+
+            var currentRule = $rules[i];
+            var childPageDiv = document.createElement("div");     //create new div for the child page
+            $(childPageDiv).addClass('anyTargetGroup');
+            $(childPageDiv).addClass('anyRegion');
+            $(childPageDiv).addClass('childPages');
+            if ($(masterPageDiv).hasClass('odd')) {
+                $(childPageDiv).addClass('odd');
+            }
+            else {
+                $(childPageDiv).addClass('even');
+            }
+
+            var $dimensionValues = $(currentRule).children('.whenChild');
+
+            if ($dimensionValues.length > 0) {
+                PagePresenter.setClassNamesToChildPagesForFilterByCondition(childPageDiv, $dimensionValues);
+            }
+            var childPageInnerDiv = PagePresenter.createChildPageInnerDiv(currentRule, masterPageDiv);
+
+            $(childPageDiv).append(childPageInnerDiv);
+
+            $itemsToInsert[i] = childPageDiv;
+        }*/
         var mamFileId = $(masterPageDiv).children('.mamFileId').html();
         GetPageThumbnails.get(mamFileId,PagePresenter.getPageThumbnails);
             $(masterPageDiv).toggleClass('opened');
@@ -569,6 +614,21 @@ PagePresenter.expandCollapseChildPages = function (masterPageDiv) {
                 $(childPageDiv).append(childPageInnerDiv);
                 $itemsToInsert.push(childPageDiv);
             });
+
+            /*for(var i = 0 ; i < childPagesList.length ; i++){
+                var childPageDiv = document.createElement("div");     //create new div for the child page
+                $(childPageDiv).addClass('childPages');
+                if ($(masterPageDiv).hasClass('odd')) {
+                    $(childPageDiv).addClass('odd');
+                }
+                else {
+                    $(childPageDiv).addClass('even');
+                }
+                var childPageInnerDiv = PagePresenter.createChildPageInnerDiv(currentRule, masterPageDiv);
+
+                $(childPageDiv).append(childPageInnerDiv);
+                $itemsToInsert[i] = childPageDiv;
+            }*/
         $container.isotope('insert', $($itemsToInsert), $(masterPageDiv));
     }
     else {
@@ -596,6 +656,167 @@ PagePresenter.getPageThumbnails = function(data) {
    childPagesList = data;
 }
 
+/**
+ * @description : dialog to indicate incorrect rules configured
+ */
+PagePresenter.openIncorrectRulesDialog = function() {
+
+    $(function () {
+        $("#dialog-incorrect-rules").dialog({
+            resizable: false,
+            height: 140,
+            modal: true,
+            buttons: {
+                OK: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
+}
+
+/**
+ *
+ * @param masterPageDiv : reference to the parent master page div
+ * @returns success or faliure of save operation
+ * @description : save the configured rules to the server
+ */
+PagePresenter.saveRulesData = function (masterPageDiv) {
+    var $dirtyFields = $(masterPageDiv).find('.dataDirty');
+    var isDirty = getDataDirtyFlag($dirtyFields);
+    if (isDirty) {
+
+        var $rules = $(masterPageDiv).children('.rule').children('.then').children('.thenChild');
+
+        var pageRuleArr = [];
+
+        for (var i = 0; i < $rules.length; i++) {
+            var pageRule = {};
+            var currentRule = $rules[i]
+            var masterPageID = $(currentRule).children('.template')[0].value;
+            var assortmentID = $(currentRule).children('.assortment')[0].value;
+
+            var ruleResult = {};
+            if ((masterPageID != '-1' && masterPageID != 'Select') &&
+                (assortmentID != '-1' && assortmentID != 'Select')) {
+
+                var columnName = "masterPageId";
+                ruleResult[columnName] = masterPageID;
+                var columnName = "assortmentId";
+                ruleResult[columnName] = assortmentID;
+
+
+                var condArray = [];
+                var $ruleConditions = $(currentRule).children('.whenChild');
+                for (var j = 0; j < $ruleConditions.length; j++) {
+                    var currentCondition = $ruleConditions[j];
+                    var variable = $(currentCondition).children('.groupType')[0].value;
+                    var value = $(currentCondition).children('.value')[0].value;
+                    if ((variable != '-1' && variable != 'Select') &&
+                        (value != '-1' && value != 'Select')) {
+                        var condition = {};
+                        var columnName = "variable";
+                        condition[columnName] = variable;
+                        var columnName = "operator";
+                        condition[columnName] = $(currentCondition).children('.operation')[0].value;
+                        var columnName = "value";
+                        condition[columnName] = value;
+                        condArray.push(condition)
+                    }
+                    else {
+                        alertify.error("Incorrect Rules Configured! Please check the rules and save again.");
+//                        PagePresenter.openIncorrectRulesDialog();
+                        return false;
+                    }
+                }
+
+                var columnName = "ruleResult";
+                pageRule[columnName] = ruleResult;
+                var columnName = "ruleConditions";
+                pageRule[columnName] = condArray;
+                var columnName = "ruleID";
+                var ruleID = masterPageDiv.id + "." + i;
+                $(currentRule).children('.ruleID').html(ruleID);
+                pageRule[columnName] = ruleID;
+
+                var additional = {};
+                var columnName = "mamFileID";
+                var mamFileID = $(currentRule).children('.mamFileID').html()
+                additional[columnName] = mamFileID;
+                var columnName = "editUrl";
+                var editUrl = $(currentRule).children('.wbdURL').html()
+                additional[columnName] = editUrl;
+
+                var columnName = "additionalInformation";
+                pageRule[columnName] = additional;
+            }
+            else {
+                alertify.error("Incorrect Rules Configured! Please check the rules and save again.");
+//                PagePresenter.openIncorrectRulesDialog();
+                return false;
+            }
+            pageRuleArr.push(pageRule);
+
+        }
+
+        var finalJson = {};
+
+        var columnName = "logicalPageID";
+
+        finalJson[columnName] = GraphicDataStore.getCurrentView() + "." + masterPageDiv.id;
+        var columnName = "pageRules";
+        finalJson[columnName] = pageRuleArr;
+        //Sending Save call
+        SavePageRules.save(finalJson, PagePresenter.onSaveSuccess);
+        GraphicDataStore.addToPageRules(finalJson);
+        /*$(function () {
+            $("#dialog-rules-save-successfull").dialog({
+                resizable: false,
+                height: 140,
+                modal: true,
+                buttons: {
+                    OK: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+        });*/
+
+        alertify.success("Rules Saved Successfully!");
+
+        for (var i = 0; i < $dirtyFields.length; i++) {
+            $dirtyFields[i].innerHTML = '0';
+        }
+        return true;
+    }
+    else {
+        alertify.log("No changes detected. No save operation performed.");
+        //alert("No changes detected. No save operation performed.");
+        return true;
+    }
+    $('.nano').nanoScroller();
+}
+
+PagePresenter.onSaveSuccess = function (data) {
+    console.log(data);
+}
+
+/**
+ *
+ * @param parentMasterPageDiv : the respective master page div reference
+ * @description : toggle each of the elements that need to be removed or added according to
+ whether the rules menu is opened or closed
+ */
+PagePresenter.toggleRulesView = function (parentMasterPageDiv) {
+    $(parentMasterPageDiv).toggleClass('rules-opened');         //enlarge the master page size to fir the rules menu
+    $(parentMasterPageDiv).children(".openRules").toggle();     //toggle view of the open rules menu button
+    $(parentMasterPageDiv).children(".rule").toggle();          //toggle the rules menu(all the drop-downs)
+    $(parentMasterPageDiv).children(".name").toggle();          //toggle the master page name display
+    $(parentMasterPageDiv).children(".rulesText").toggle();          //toggle the master page name display
+    $(parentMasterPageDiv).children(".buttonsHolder").toggle(); //toggle the div behind the buttons
+
+    $isotopeContainer.isotope('reLayout');  //re-layout the isotope positioning once the rules menu has been opened
+}
 
 /**
  *
@@ -622,6 +843,111 @@ PagePresenter.displayExpandRulesButton = function (parentMasterPageDiv) {
     if ($rules.length > 0) {
         $(parentMasterPageDiv).children(".expand").toggle();
     }
+}
+
+/**
+ *
+ * @param parentMasterPageDiv : the respective master page div reference
+ * @description : Open the rules configuration menu
+ */
+PagePresenter.openRulesConfigurationMenu = function (parentMasterPageDiv) {
+    //When opening the rules configuration menu the expand button(if visible) needs to be hidden
+    $(parentMasterPageDiv).children(".expand").css('display', "none");
+    PagePresenter.toggleRulesView(parentMasterPageDiv);
+}
+
+/**
+ *
+ * @param parentMasterPageDiv : reference to the master page div
+ * @description : Open or close the rules configuration menu according to situation
+ */
+PagePresenter.toggleOpenCloseRules = function (parentMasterPageDiv) {
+
+    if (!$(parentMasterPageDiv).hasClass('opened')) { //check if the master page has been expanded to its child pages
+        //if pages not expanded then proceed straight for open/close rules menu
+        if ($(parentMasterPageDiv).hasClass('rules-opened')) {  //check if the rules configuration menu in open
+            //If opened then proceed to close the rules menu
+            var $dirtyFields = $(parentMasterPageDiv).find('.dataDirty');      //Get all the dirty flags
+            var isDirty = getDataDirtyFlag($dirtyFields);
+            if (isDirty) {                                                     //Check if any dirty flag is set
+
+                //If dirty then open up the dialog confirming close or save of rules
+                $(function () {
+                    $("#dialog-confirm").dialog({
+                        resizable: false,
+                        height: 140,
+                        modal: true,
+                        buttons: {
+                            //Actions to perform if user chooses the 'Save' option
+                            "Save": function () {
+                                //close the dialog box
+                                $(this).dialog("close");
+
+                                //Save the rules
+                                var isSaveSuccess = PagePresenter.saveRulesData(parentMasterPageDiv);
+                                if (isSaveSuccess) { //Check if successfully saved
+
+                                    //show the expand rules button on the master page if rules exist
+                                    PagePresenter.displayExpandRulesButton(parentMasterPageDiv);
+
+                                    //close the rules configuration menu
+                                    PagePresenter.toggleRulesView(parentMasterPageDiv);
+                                }
+                            },
+
+                            //Actions to perform if user chooses the 'Discard' option
+                            "Discard": function () {
+                                //Close the dialog box
+                                $(this).dialog("close");
+
+                                //Discard currently set values and pickup up last saved rules
+                                PagePresenter.setRules(parentMasterPageDiv);
+
+                                //show the expand rules button on the master page if rules exist
+                                PagePresenter.displayExpandRulesButton(parentMasterPageDiv);
+
+                                //close the rules configuration menu
+                                PagePresenter.toggleRulesView(parentMasterPageDiv);
+
+                                alertify.log("Changes Discarded");
+                            },
+
+                            //Actions to perform if user chooses the 'Cancel' option
+                            "Cancel": function () {
+                                $(this).dialog("close");
+                            }
+                        }
+                    });
+                });
+            }
+            else {  //Case when close is clicked and data is not dirty
+
+                /******Not sure why its been called so commented 09/10/2013******/
+                /****Please revert code if any issues****/
+                    //PagePresenter.setRules(parentMasterPageDiv);
+
+                    //show the expand rules button on the master page if rules exist
+                PagePresenter.displayExpandRulesButton(parentMasterPageDiv);
+
+                //close the rules configuration menu
+                PagePresenter.toggleRulesView(parentMasterPageDiv);
+            }
+        }
+        else {
+            //Rules menu is closed so proceed to opening rules configuration menu
+            PagePresenter.openRulesConfigurationMenu(parentMasterPageDiv);
+        }
+
+    }
+
+    else {
+        //When child pages have been expanded and rules configuration menu button clicked
+        //collapse all the child pages and open the rules configuration menu
+        PagePresenter.expandCollapseChildPages(parentMasterPageDiv);
+        PagePresenter.openRulesConfigurationMenu(parentMasterPageDiv);
+
+    }
+    $('.nano').nanoScroller();
 }
 
 /**

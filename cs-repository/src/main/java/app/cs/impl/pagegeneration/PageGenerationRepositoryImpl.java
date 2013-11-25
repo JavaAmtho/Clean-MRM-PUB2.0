@@ -16,7 +16,9 @@ import app.cs.impl.model.MultiDimensionalObject;
 import app.cs.impl.model.PageRule;
 import app.cs.impl.model.PageRules;
 import app.cs.impl.model.Product;
+import app.cs.impl.model.PublicationAssetObject;
 import app.cs.impl.pagerule.PageRuleRepositoryImpl;
+import app.cs.impl.publicationasset.PublicationAssetRepository;
 import app.cs.interfaces.pagegeneration.IPageGenerationRepository;
 import app.cs.interfaces.pagerule.IPageRuleRepository;
 
@@ -26,7 +28,8 @@ import com.sun.jersey.api.client.ClientResponse;
 @Component
 public class PageGenerationRepositoryImpl implements IPageGenerationRepository {
 
-	private ChapterRepository chapterRepository;
+//	private ChapterRepository chapterRepository;
+	private PublicationAssetRepository publicationAssetRepository;
 	private IPageRuleRepository pageRuleRepository;
 
 	private static final String CHARSET = "ISO-8859-1,utf-8;q=0.7,*;q=0.3"; //$NON-NLS-1$
@@ -50,17 +53,18 @@ public class PageGenerationRepositoryImpl implements IPageGenerationRepository {
 	private IRestClient client;
 
 	@Autowired
-	public PageGenerationRepositoryImpl(IRestClient client,
-			ChapterRepository chapterRepository,
+	public PageGenerationRepositoryImpl(IRestClient client/*,
+			ChapterRepository chapterRepository*/,
+			PublicationAssetRepository publicationAssetRepository,
 			PageRuleRepositoryImpl pageRuleRepository) {
 		this.client = client;
-		this.chapterRepository = chapterRepository;
+//		this.chapterRepository = chapterRepository;
+		this.publicationAssetRepository = publicationAssetRepository;
 		this.pageRuleRepository = pageRuleRepository;
 	}
 
 	@Override
-	public String createAndPlanWBD(String ruleID, String logicalPageID,
-			String publicationID) {
+	public String createAndPlanWBD(String logicalPageID) {
 
 		String output = "";
 		String input = "";
@@ -70,30 +74,36 @@ public class PageGenerationRepositoryImpl implements IPageGenerationRepository {
 
 		int countOfProducts = 1;
 
-		HashMap<String, String> additionalInformation = new HashMap<String, String>();
+//		HashMap<String, String> additionalInformation = new HashMap<String, String>();
 
 		// get the rule
+		System.out.println(logicalPageID);
 		PageRules pageRules = pageRuleRepository.getPageRulesFor(logicalPageID);
 		if (pageRules == null) {
 			return "pageRules not found";
 		}
-		PageRule pageRule = pageRuleRepository
+/*		PageRule pageRule = pageRuleRepository
 				.getPageRuleFor(pageRules, ruleID);
 		if (pageRule == null) {
 			return "pageRule not found";
+		}*/
+		List<PageRule> pageRulesList = pageRules.getPageRules();
+		for (PageRule rule : pageRulesList) {
+			masterPageID = rule.getRuleResult().getMasterPageId();
 		}
-
 		// get the assortmentID and the masterPageID from the ruleResult
-		assortmentID = pageRule.getRuleResult().getAssortmentId();
-		masterPageID = pageRule.getRuleResult().getMasterPageId();
+//		assortmentID = pageRule.getRuleResult().getAssortmentId();
+//		masterPageID = pageRule.getRuleResult().getMasterPageId();
 
 		// get the publication
-		MultiDimensionalObject publication = chapterRepository
-				.getParentPublicationByID(publicationID);
+/*		MultiDimensionalObject publication = chapterRepository
+				.getParentPublicationByID(assortmentId);
 
 		// find the assortment
 		MultiDimensionalObject assortment = chapterRepository
-				.findMultiDimensionalObjectByID(publication, assortmentID);
+				.findMultiDimensionalObjectByID(publication, assortmentID);*/
+		
+		PublicationAssetObject assortment = publicationAssetRepository.getAssortmentUnderPage(logicalPageID);
 
 		// get the products from assortment
 		// iterate over them and create a json string of ids
@@ -112,7 +122,7 @@ public class PageGenerationRepositoryImpl implements IPageGenerationRepository {
 				+ productIds + "]}";
 		
 		System.out.println(input);
-
+/*
 		Map<String, String> headerParameters = new HashMap<String, String>();
 		prepareHeaderParameters(headerParameters);
 
@@ -140,9 +150,10 @@ public class PageGenerationRepositoryImpl implements IPageGenerationRepository {
 
 		// store the information in the rule
 		pageRule.setAdditionalInformation(additionalInformation);
-		pageRuleRepository.savePageRules(pageRules);
+		pageRuleRepository.savePageRules(pageRules);*/
 
-		return output;
+//		return output;
+		return input;
 	}
 
 	private void prepareHeaderParameters(Map<String, String> headerParameters) {

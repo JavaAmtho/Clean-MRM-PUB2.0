@@ -20,4 +20,8 @@ public interface IPublicationAssetRepository {
 
 	public String editProperty(PublicationAssetObject objectToEdit);
 
+	public PublicationAssetObject getPublicationAsset(String id);
+
+	public PublicationAssetObject getAssortmentUnderPage(String pageId);
+
 }

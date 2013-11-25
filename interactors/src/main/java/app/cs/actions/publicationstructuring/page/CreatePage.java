@@ -1,5 +1,8 @@
 package app.cs.actions.publicationstructuring.page;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -7,7 +10,11 @@ import app.cs.actions.contentplanning.assortment.CreateAssortment;
 import app.cs.boundary.delivery.Interactor;
 import app.cs.impl.inmemory.InMemoryUniqueId;
 import app.cs.impl.model.Assortment;
+import app.cs.impl.model.PageRule;
+import app.cs.impl.model.PageRules;
 import app.cs.impl.model.PublicationAssetObject;
+import app.cs.impl.model.RuleResult;
+import app.cs.interfaces.pagerule.IPageRuleRepository;
 import app.cs.interfaces.publicationasset.IPublicationAssetRepository;
 import app.cs.model.request.CreateAssortmentRequest;
 import app.cs.model.request.CreatePageRequest;
@@ -28,6 +35,8 @@ public class CreatePage implements Interactor {
 //	private IChapterRepository chapterRepository;
 	private IPublicationAssetRepository publicationAssetRepository;
 	
+	private IPageRuleRepository pageRuleRepository;
+	
 	private CreateAssortment createAssortment;
 	
 	private InMemoryUniqueId inMemoryUniqueId;
@@ -41,12 +50,13 @@ public class CreatePage implements Interactor {
 	 */
 	@Autowired
 	public CreatePage(/*IChapterRepository chapterRepository*/IPublicationAssetRepository publicationAssetRepository,
-			CreateAssortment createAssortment,InMemoryUniqueId inMemoryUniqueId) {
+			CreateAssortment createAssortment,InMemoryUniqueId inMemoryUniqueId,IPageRuleRepository pageRuleRepository) {
 		// TODO Auto-generated constructor stub
 //		this.chapterRepository = chapterRepository;
 		this.publicationAssetRepository = publicationAssetRepository;
 		this.createAssortment = createAssortment;
 		this.inMemoryUniqueId = inMemoryUniqueId;
+		this.pageRuleRepository = pageRuleRepository;
 	}
 
 	public ResponseModel execute(RequestModel model) {
@@ -60,7 +70,23 @@ public class CreatePage implements Interactor {
 		//		has been added in the page object for the newly created assortment
 		PublicationAssetObject createdAssortment = createDefaultAssortmentForPage(page);
 		page.addToChildren(createdAssortment);
+		savePageRules(page, createdAssortment);
 		return new PublicationAssetObjectResponse(page);
+	}
+
+	private void savePageRules(PublicationAssetObject page,
+			PublicationAssetObject createdAssortment) {
+		PageRules pageRule = new PageRules();
+		RuleResult ruleResult = new RuleResult();
+		ruleResult.setMasterPageId(page.getFileID());
+		ruleResult.setAssortmentId(createdAssortment.getId());
+		PageRule rule = new PageRule();
+		rule.setRuleResult(ruleResult);
+		List<PageRule> pageRules = new ArrayList<PageRule>();
+		pageRules.add(rule);
+		pageRule.setPageRules(pageRules);
+		pageRule.setId(page.getId());
+		pageRuleRepository.savePageRules(pageRule);
 	}
 
 	private PublicationAssetObject createDefaultAssortmentForPage(

@@ -1,7 +1,7 @@
 {
     "Config":{
-    	"host": "http://14.141.2.211/",
-    	"context": "CS130Trunk"
+    	"host": "http://localhost:90/",
+    	"context": "CS_Trunk_MCPM"
     },
     "Front Cover":{
         "imageURL": "/admin/ImageServer.php?ID=6317da7973@CSLive&rand=904f6eb56438c3064534fdaf96fd3e4c&force=true&width=640&height=480&colorspace=rgb"

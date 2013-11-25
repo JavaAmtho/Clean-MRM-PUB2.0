@@ -1,13 +1,14 @@
-{{#mydata}}<div class= "{{typeCSS}}" id="{{title}}" style="{{backgroundImageStyle}}">
+{{#mydata}}<div class= "{{typeCSS}}" id="{{id}}" style="{{backgroundImageStyle}}">
     <div class="name">{{title}}</div>
     <div class="rulesText pageType {{hiddenCSS}}">Type: {{pageType}}</div>
     <div class="rulesText renderer {{hiddenCSS}}">Renderer: {{renderEngineType}}</div>
-    <div class="rulesText mamFileId {{hiddenCSS}}">MamFileId: {{fileID}}</div>
+    <div class="rulesText {{hiddenCSS}}">MamFileId:</div>
+    <div class="rulesText mamFileId {{hiddenCSS}}">{{fileID}}</div>
 	<p class="hidden pagePath">{{path}}</p>
     <div class='buttonsHolder {{hiddenCSS}}' >
     </div>
-    <h2 title='Open rules configuration menu' class='openRules {{hiddenCSS}}'
-        onclick='PagePresenter.toggleOpenCloseRules(this.parentNode)'></h2>
+    <!--<h2 title='Open rules configuration menu' class='openRules {{hiddenCSS}}'
+        onclick='PagePresenter.toggleOpenCloseRules(this.parentNode)'></h2>-->
 
     <h2 title='Expand/Collapse the child pages' class='expand {{hiddenCSS}}'
         onclick='PagePresenter.expandCollapseChildPages(this.parentNode)'></h2>

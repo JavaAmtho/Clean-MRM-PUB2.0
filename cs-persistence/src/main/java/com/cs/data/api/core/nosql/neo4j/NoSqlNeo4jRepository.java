@@ -43,6 +43,9 @@ public interface NoSqlNeo4jRepository extends NoSqlOperations{
 	public String changeRelationship(String keyToFindNode, String valueOfKey,
 			String newParentValueOfKey, String newRelationshipType);
 
+	public <T> Iterator<T> getChildrenUnderParentByType(String parentId, String type,
+			Class<T> entityClass);
+
 
 
 }

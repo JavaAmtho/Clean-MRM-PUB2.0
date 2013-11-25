@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Component;
 import app.cs.impl.helper.Finder;
 import app.cs.impl.model.Product;
 import app.cs.impl.model.PublicationAssetObject;
-import app.cs.impl.model.PublicationAssetObjectRelationShip;
 import app.cs.interfaces.publicationasset.IPublicationAssetRepository;
 import app.cs.utils.CommonConstants;
 
@@ -116,6 +114,29 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 		String parentID = finder.getParentId(newPath);
 		return neo4jRepository.changeRelationship(CommonConstants.NODE_IDENTIFICATION_FIELD, chapter.getId(), parentID, 
 				CommonConstants.NEO4J_PUBLICATIONASSET_RELATIONSHIP);
+	}
+	
+	@Override
+	public PublicationAssetObject getPublicationAsset(String id){
+		return neo4jRepository.getObjectByKeyValue("id", id, PublicationAssetObject.class);
+	}
+	
+	@Override
+	public PublicationAssetObject getAssortmentUnderPage(String pageId){
+		Iterator<PublicationAssetObject> iter = neo4jRepository.getChildrenUnderParentByType(pageId, "Assortment", PublicationAssetObject.class);
+		if(iter.hasNext()){
+			PublicationAssetObject publicationAsset = iter.next();
+			Iterator<Product> productsIterator = neo4jRepository.
+					traverseIncomingRelationships(CommonConstants.NODE_IDENTIFICATION_FIELD,publicationAsset.getId(),"PRODUCTS_OF", Product.class);
+			List<Product> products = new ArrayList<Product>();
+			while(productsIterator.hasNext()){
+				Product product = (Product)productsIterator.next();
+				products.add(product);
+			}
+			publicationAsset.setProducts(products);
+			return publicationAsset;
+		}
+		return null;
 	}
 	
 }

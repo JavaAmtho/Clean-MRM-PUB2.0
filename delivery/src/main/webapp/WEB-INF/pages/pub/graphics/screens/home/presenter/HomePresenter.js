@@ -60,7 +60,7 @@ HomePresenter.setEvenOddClassesToDimensions = function() {
 HomePresenter.setAllPageRulesOnActivateOfNode = function() {
     var $masterPages = $("#viewHolder").children('.masterPage');
     for (var i = 0; i < $masterPages.length; i++) {
-        var pageRule = $masterPages[i].id;
+        /*var pageRule = $masterPages[i].id;
         if (pageRule != null && pageRule.length > 0) {
             PagePresenter.setRules($masterPages[i]);
             //set the + button as displayed or hidden as per the rules data present
@@ -69,6 +69,13 @@ HomePresenter.setAllPageRulesOnActivateOfNode = function() {
                 if ($($masterPages[i]).children(".expand").css('display') == 'none') {
                     $($masterPages[i]).children(".expand").toggle();
                 }
+            }
+        }*/
+        var $masterPage = $($masterPages[i]);
+        var mamFileId = $masterPage.children('.mamFileId').html();
+        if(mamFileId && mamFileId.length!=0){
+            if ($masterPage.children(".expand").css('display') == 'none') {
+                $masterPage.children(".expand").toggle();
             }
         }
     }

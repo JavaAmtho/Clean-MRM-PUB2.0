@@ -8,6 +8,15 @@ public class WBDCreationAndPlanningRequest implements RequestModel {
 	private String ruleID;
 	private String logicalPageID;
 	private String publicationID;
+	private String assortmentID;
+
+	public String getAssortmentID() {
+		return assortmentID;
+	}
+
+	public void setAssortmentID(String assortmentID) {
+		this.assortmentID = assortmentID;
+	}
 
 	public String getRuleID() {
 		return ruleID;
