@@ -161,16 +161,17 @@ AssetTreePresenter.showAssortmentPanel = function (rendererData) {
         template: '<div class="tags k-block"> <img src="#:image#"/> ' +
             '<div class="labelRenderCSS">Product Name: #:label#</div>' +
             '<div class="rendererTemplateCSS">Product Template: #:rendererTemplateId#</div>' +
-            '<img src="../../../graphics/screens/home/images/_close.png" class="removeProductBtn" onclick="removeProduct()"/></div>'
+            '<img id="#:label#" src="../../../graphics/screens/home/images/_close.png" class="removeProductBtn" onclick="removeProduct(this.id)"/></div>'
     });
-
     AssetTreePresenter.makeProductsListDropable();
-
-
 }
 
-function removeProduct(){
-   alert(123)
+function removeProduct(nameOfProduct){
+    for(var i=0; i< productsDataSource._data.length; i++){
+        if(nameOfProduct == productsDataSource._data[i].label){
+            productsDataSource._data.remove(productsDataSource._data[i]);
+        }
+    }
 }
 
 AssetTreePresenter.makeAssetsListDraggable = function(){
