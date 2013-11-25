@@ -410,7 +410,6 @@ var DynaTree = function(){
                             node.childList = [];
                             node.render();
                         }
-
                     });
 
                 },

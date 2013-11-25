@@ -11,7 +11,7 @@ function GetLazyTree(){
  * @description calls REST api for getting a tree json object as per selected viewStructure
  */
 GetLazyTree.get = function(requestBody,callback){
-    Router.loadPOSTRequest("getLazyTree",false,null,requestBody,callback? callback : onTreeSuccess);
+    Router.loadPhpPostRequest("getLazyTree",false,null,requestBody,callback? callback : onTreeSuccess);
 }
 
 /**

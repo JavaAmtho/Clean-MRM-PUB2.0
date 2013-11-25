@@ -15,5 +15,5 @@ function CreateWBD(){
  * @description send a call to CS to create WBD and return the wbd url and mam file id
  */
 CreateWBD.createWBD = function(logicalPageID,callBack){
-    Router.loadRequest("createWBD",true,callBack,logicalPageID)
+    Router.loadPhpGetRequest("createWBD",true,callBack,logicalPageID)
 }

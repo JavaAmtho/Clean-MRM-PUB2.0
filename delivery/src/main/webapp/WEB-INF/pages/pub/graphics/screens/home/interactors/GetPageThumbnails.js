@@ -12,5 +12,5 @@ function GetPageThumbnails(){
  * @description send a call to get the master template id list
  */
 GetPageThumbnails.get = function(mamFileId,callBack){
-    Router.loadRequest("getPageThumbnails",false,callBack,mamFileId);
+    Router.loadPhpGetRequest("getPageThumbnails",false,callBack,mamFileId);
 }

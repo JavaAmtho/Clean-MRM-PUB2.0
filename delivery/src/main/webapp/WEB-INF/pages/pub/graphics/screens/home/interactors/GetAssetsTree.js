@@ -11,9 +11,9 @@ function GetAssetsTree(){
  * @description calls REST api for getting assets tree for PIM, MAM etc
  */
 GetAssetsTree.get = function(key,callBack){
-    Router.loadRequest(key,true,callBack);
+    Router.loadPhpGetRequest(key,true,callBack);
 }
 
 GetAssetsTree.getAssetsById = function(key,id,callBack){
-    Router.loadRequest(key,true,callBack,"/"+id);
+    Router.loadPhpGetRequest(key,true,callBack,"/"+id);
 }

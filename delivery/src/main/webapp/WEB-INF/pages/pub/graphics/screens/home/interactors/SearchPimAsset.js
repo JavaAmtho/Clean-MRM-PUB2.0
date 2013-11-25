@@ -13,6 +13,6 @@ function SearchPimAsset(){
  * @description calls REST api to search PIM tree and returns array of json
  */
 SearchPimAsset.search = function(searchKey,callBack){
-    Router.loadRequest("searchPimAssets",true,callBack,searchKey);
+    Router.loadPhpGetRequest("searchPimAssets",true,callBack,searchKey);
 }
 

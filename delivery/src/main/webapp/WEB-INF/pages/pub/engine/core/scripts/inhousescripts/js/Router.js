@@ -82,14 +82,35 @@ Router.loadRequest = function(key,async,callBack,params){
  * @param params   This gets append to the url
  * @description common gateway for all POST methods with or without params
  */
-Router.loadPOSTRequest = function(key,async,params,requestBody,callBack){
+Router.loadPhpPostRequest = function(key,async,params,requestBody,callBack){
     if(params){
-        Router.forwardWithPost(EngineDataStore.getApiMappingObject()[key]+params,async,requestBody,function(data){
+        Router.forwardWithPost(EngineDataStore.getRestBaseUrl()+EngineDataStore.getApiMappingObject()[key]+params,async,requestBody,function(data){
             callBack(data);
         });
     }
     else{
-        Router.forwardWithPost(EngineDataStore.getApiMappingObject()[key],async,requestBody,function(data){
+        Router.forwardWithPost(EngineDataStore.getRestBaseUrl()+EngineDataStore.getApiMappingObject()[key],async,requestBody,function(data){
+            callBack(data);
+        });
+    }
+}
+
+/**
+ *
+ * @param key
+ * @param async
+ * @param callBack
+ * @param params   This gets append to the url
+ * @description common gateway for all GET methods with or without params
+ */
+Router.loadPhpGetRequest = function(key,async,callBack,params){
+    if(params){
+        Router.forward(EngineDataStore.getRestBaseUrl()+EngineDataStore.getApiMappingObject()[key]+params,async,function(data){
+            callBack(data);
+        });
+    }
+    else{
+        Router.forward(EngineDataStore.getRestBaseUrl()+EngineDataStore.getApiMappingObject()[key],async,function(data){
             callBack(data);
         });
     }

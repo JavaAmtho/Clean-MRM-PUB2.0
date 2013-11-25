@@ -114,8 +114,5 @@ function getApiMappingObject(){
  */
 function parseApiMappingObject(json){
     EngineDataStore.setApiMappingObject(json);
-    Router.loadRequest("getMasterTemplateList",false,function(data){
-        EngineDataStore.setMasterTemplateList(data);
-    });
 }
 

@@ -1,6 +1,6 @@
 {
     "Config":{
-    	"host": "http://localhost:90/",
+    	"host": "http://192.168.135.32:90/",
     	"context": "CS_Trunk_MCPM"
     },
     "Front Cover":{
