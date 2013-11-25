@@ -322,13 +322,13 @@ var DynaTree = function(){
     var getUrlPrefix=function(type,action){
         switch(type){
             case "Chapter":
-                return  "/delivery/chapter/"+action+"/";
+                return  "chapter/"+action+"/";
             case "Page":
-               return  "/delivery/page/"+action+"/";
+               return  "page/"+action+"/";
             case "Assortment":
-                return  "/delivery/assortment/"+action+"/";
+                return  "assortment/"+action+"/";
         }
-        return "/delivery/dimension/"+action+"/";
+        return "/dimension/"+action+"/";
     }
 
     /**
@@ -402,7 +402,7 @@ var DynaTree = function(){
                     };
 
                     TreePresenter.getLazyTree(requestBody, function(data){
-                        if(data.length != 0){
+                        if(data && data.length > 0){
                             node.addChild(data);
                             node.data.children = data;
                         }

@@ -3,6 +3,7 @@
     "getPageTemplates" : "ProductTemplate/getAll",
     "btnPIM":"PimAssets/list",
     "btnMAM":"MamAssets/list",
+    "btnMIM":"text/list",
     "searchMamAssets":"MamAssets/search/",
     "searchPimAssets":"PimAssets/search/",
     "getPageThumbnails" : "page/pagethumbnails/",
@@ -11,6 +12,5 @@
 
     "getAllSchema":"/delivery/pub/all",
     "dragNDrop":"/delivery/",
-    "btnMIM":"../../../../../text/list",
     "getAllPagesUnderPublication" : "/delivery/page/all/"
 }
