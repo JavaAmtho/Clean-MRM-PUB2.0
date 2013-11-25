@@ -271,140 +271,10 @@ HomePresenter.getProductsForSelectedNode = function (node) {
     return nodeDetails;
 }
 
-/**
- *
- * @param rendererData
- * @description shows the assortment panel and hides the mustache div
- */
-/*HomePresenter.showAssortmentPanel = function (rendererData) {
-    HomePresenter.unHideAssortPanel();
-    GraphicDataStore.setProdcutsArr(rendererData);
-
-    $('#subtab1').jqxListBox({ selectedIndex: 0, allowDrag: false, source: GraphicDataStore.getProdcutsArr(), itemHeight: 70, height: 500, width: '100%',
-        renderer: function (index, label, value) {
-            //console.log(rendererData)
-            var datarecord = rendererData[index];
-
-            if (datarecord) {
-                console.log("Inside IF==>" + index);
-                var imgurl = datarecord.image;
-                var img = '<img height="50" width="40" src="' + imgurl + '"/>';
-                var table = '<table style="min-width: 130px; height: 70px"><tr><td style="width: 40px;" rowspan="1">' + img + '</td><td>' + datarecord.title + " " + '</td><td class="removeProductBtn"><img src="../../../graphics/screens/home/images/_close.png" onclick="removeProduct('+index+')"/></td></tr></table>';
-                return table;
-            }
-
-        }
-
-    });
-    $('#subtab1').jqxListBox('refresh');
-}*/
 
 var productArrMadeDirty=false;
 
-function removeProduct(indx){
-    event.stopImmediatePropagation();
-    var removed = $("#subtab1").jqxListBox('removeAt', indx );
 
-    if(removed){
-        GraphicDataStore.getProdcutsArr().splice(indx,1);
-        alertify.success("Product removed successfully");
-        //productArrMadeDirty = true;
-        //alert(JSON.stringify(GraphicDataStore.getProdcutsArr()));
-    }
-}
-/**
- *
- * @param data
- * @description shows list of assets under the node clicked in PIM/MAM tree
- */
-/*HomePresenter.populateAssetsList = function (data) {
-    //Converting the div into the jqwidget list with the renderer for that list
-    $("#assetDetails").jqxListBox('beginUpdate');
-    $("#assetDetails").jqxListBox({ source: data, autoItemsHeight: true, scrollBarSize: 15, height: '450px', displayMember: "title", valueMember: "description", width: 200, height: 250,
-        renderer: function (index, label, value) {
-            var datarecord = data[index];
-            var imgurl = datarecord.image;
-            var img = '<img height="30" width="40" src="' + imgurl + '"/>';
-            var table = '<table class="assestsJQList" style="min-width: 130px;"><tr><td style="width: 40px;" rowspan="1">' + img + '</td><td>' + datarecord.title + '</td></tr></table>';
-            return table;
-        }
-    });
-    $("#assetDetails").jqxListBox('endUpdate');
-    $('#assetDetails').jqxListBox('refresh');
-
-    //This will say that the assets list item needs to be dragged and the drop taget will be assortment panels div
-    $(".jqx-listitem-element").jqxDragDrop({ dropTarget: $('#subtab1'), revert: true });
-    //This will add all the necessary events for d&d operation
-    HomePresenter.addEventListeners();
-
-}*/
-
-/**
- *  @description adds all listeners for list in assortment panel like dragAccept onDrop etc
- */
-HomePresenter.addEventListeners = function () {
-
-    $('.jqx-listitem-element').bind('dropTargetEnter', function (event) {
-        onTarget = true;
-        $(event.args.target).css('border', '2px solid #000');
-        $(this).jqxDragDrop('dropAction', 'none');
-    });
-    $('.jqx-listitem-element').bind('dropTargetLeave', function (event) {
-        onTarget = false;
-        $(event.args.target).css('border', '2px solid #aaa');
-        $(this).jqxDragDrop('dropAction', 'copy');
-    });
-
-    //Drag End
-    $('.jqx-listitem-element').bind('dragEnd', function (event) {
-
-        var existingItems = $("#subtab1").jqxListBox('getItems');
-        if (onTarget) {
-            var exists = HomePresenter.productAlreadyExists(existingItems, event.args.actualData.title);
-            /*alert(exists)
-             if(!exists){
-             /*$("#subtab1").jqxListBox('beginUpdate');*/
-            GraphicDataStore.addProdcut(event.args.actualData);//Yet to decide what fields exactly needs to be added to this object
-            $("#subtab1").jqxListBox('addItem', event.args.actualData);
-            /* var source = $('#subtab1').jqxListBox('source');
-             source.push(event.args.actualData)
-             */
-            /*$("#subtab1").jqxListBox('endUpdate');
-             $('#subtab1').jqxListBox('refresh');*/
-            $('#subtab1').css('border', '2px dashed #aaa');
-
-            onTarget = false;
-            //productArrMadeDirty = true;
-            /*}*/
-        }
-
-    });
-    //Drag Start
-    $('.jqx-listitem-element').bind('dragStart', function (event) {
-        $('#subtab1').css('border', '2px solid #aaa');
-        var items = $("#assetDetails").jqxListBox('getSelectedItems');
-        $(this).jqxDragDrop('data', {
-            actualData: items[0].originalItem
-        });
-    });
-}
-
-/**
- *
- * @param existingItems
- * @param newLabel
- * @returns {boolean}   checks if the same product already exists for the same assortment
- */
-HomePresenter.productAlreadyExists = function (existingItems, newLabel) {
-    if (existingItems) {
-        for (var i = 0; i < existingItems.length; i++) {
-            if (existingItems[i].title === newLabel) {
-                return true
-            }
-        }
-    }
-    return false;
-}
 
 /**
  *  @description hides assortment panel and shows mustache div
@@ -413,14 +283,5 @@ HomePresenter.hideAssortPanel = function () {
     $('#assortPanel').hide();
     $('#dim').show();
 }
-
-
-/**
- * @description unHides assortment panel
- */
-/*HomePresenter.unHideAssortPanel = function () {
-    $("#dim").hide();
-    $("#assortPanel").show();
-}*/
 
 

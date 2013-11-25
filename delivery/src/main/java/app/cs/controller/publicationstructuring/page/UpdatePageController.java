@@ -12,6 +12,7 @@ import app.cs.impl.model.Assortment;
 import app.cs.impl.model.PublicationAssetObject;
 import app.cs.model.request.UpdateAssortmentRequest;
 import app.cs.model.request.UpdatePublicationAssetObjectRequest;
+import app.cs.model.response.PublicationAssetObjectResponse;
 import app.cs.model.response.ResponseModel;
 import app.cs.model.response.StringResponse;
 import app.cs.utils.CommonConstants;
@@ -35,7 +36,7 @@ public class UpdatePageController {
 
 		request.setPublicationAssetObject(CommonConstants.PublicationAsset.PUBLICATION_ASSET_TYPE_PAGE,page);
 		updatePage.execute(request);
-		return new StringResponse(request.getPublicationAssetObject().getTitle());
+		return new PublicationAssetObjectResponse(page);
 	}
 
 }

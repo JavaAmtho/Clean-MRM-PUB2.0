@@ -151,7 +151,7 @@ var DynaTree = function(){
     }
 
     function editNode(data){
-        nodeToBeEdited.data.title = data.responseString;
+        nodeToBeEdited.data = data.response;
         nodeToBeEdited.render();
     }
     function editDimension(data){

@@ -158,7 +158,7 @@ AssetTreePresenter.showAssortmentPanel = function (rendererData) {
 
     $("#subtab1").kendoListView({
         dataSource: productsDataSource,
-        template: '<div class="tags k-block"> <img src="#:image#"/> <div class="labelRenderCSS">#:label#</div><div class="rendererTemplateCSS">#:rendererTemplateId#</div></div>'
+        template: '<div class="tags k-block"> <img src="#:image#"/> <div class="labelRenderCSS">Product Name: #:label#</div><div class="rendererTemplateCSS">Product Template: #:rendererTemplateId#</div></div>'
         /*template: kendo.template($("#template").html())*/
     });
 
@@ -191,7 +191,7 @@ AssetTreePresenter.makeProductsListDropable = function(){
         drop: function (e) {
             var item = assetsDataSource.getByUid(e.draggable.hint.data().uid);
             var dropDownObj = document.getElementById("templateDropDown");
-            item.rendererTemplateId = "";
+            item.rendererTemplateId = "NA";
             if(!dropDownObj.disabled)
                 item.rendererTemplateId = $("#templateDropDown option:selected").val();
             productsDataSource.add(item);
