@@ -24,7 +24,7 @@ var DynaLazyTree = function(){
                 },
                 onLazyRead: function(node){
                     AssetTreePresenter.getLazyNodes(node.data.id,function(data){
-                        if(data.length != 0){
+                        /*if(data.length != 0){*/
                             var treeData = [];
                             var listData = [];
                             for(var i=0; i <data.length; i++){
@@ -44,11 +44,11 @@ var DynaLazyTree = function(){
                             }
 
                             AssetTreePresenter.createAssetsListWithData(listData);
-                        }
+                        /*}
                         else{
                             node.childList = [];
                             node.render();
-                        }
+                        }*/
                     });
                 }
             });
