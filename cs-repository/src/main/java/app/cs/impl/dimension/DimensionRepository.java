@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,11 +84,6 @@ public class DimensionRepository implements IDimensionRepository {
 	@Override
 	public String editProperty(MultiDimensionalObject objectToEdit){
 		mongoRepository.updateByIdSetProperty(objectToEdit.getId(), "title", objectToEdit.getTitle(), objectToEdit.getClass());
-		/*if(objectToEdit.getType().equalsIgnoreCase(CommonConstants.Dimension.DIMENSION_TYPE_PUBLICATION)){
-			Map<String,String> properties = new HashMap<String,String>();
-			properties.put("title", objectToEdit.getTitle());
-			neo4jRepository.editProperties(CommonConstants.NODE_IDENTIFICATION_FIELD, objectToEdit.getId(), properties);
-		}*/
 		return "updated";
 	}
 
@@ -139,7 +132,7 @@ public class DimensionRepository implements IDimensionRepository {
 	private void updateGroupIdForAllAncestor(String path, String groupId) {
 		String[] paths = path.split(",");
 		for (String singlePath : paths) {
-			mongoRepository.updateByIdSetProperty(singlePath, GROUPIDS, groupId,
+			mongoRepository.updateByIdPushIntoProperty(singlePath, GROUPIDS, groupId,
 					MultiDimensionalObject.class);
 		}
 

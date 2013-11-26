@@ -16,6 +16,6 @@ UpdateEditorUrl.updateUrl = function(pageId,editorUrl,callback){
     var body = {};
     body["pageId"] = pageId;
     body["editorUrl"] = editorUrl;
-    Router.loadPOSTRequest("updateEditorUrl",true,pageId,body,callback);
+    Router.loadPhpPostRequest("updateEditorUrl",true,pageId,body,callback);
 }
 

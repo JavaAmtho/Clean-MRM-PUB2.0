@@ -195,7 +195,7 @@ HomePresenter.loadViewItems = function (evt, currentTemplateView) {
 
         $isotopeContainer.isotope();
 
-        HomePresenter.bindClickEventToFilterButtons();
+//        HomePresenter.bindClickEventToFilterButtons();
 //        $('.nano').nanoScroller();
     });
 }

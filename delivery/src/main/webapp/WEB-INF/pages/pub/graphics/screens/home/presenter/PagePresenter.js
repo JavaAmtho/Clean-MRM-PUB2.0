@@ -63,7 +63,7 @@ PagePresenter.openWhiteBoard = function (childPageInnerDiv) {
     var publicationID = GraphicDataStore.getCurrentPublication();
     var $innerDiv = $(childPageInnerDiv);
     var ruleID = $innerDiv.children('.ruleID').html();
-    alert(ruleID);
+//    alert(ruleID);
     var logicalPageID = $innerDiv.children('.logicalPageID').html();
     GraphicDataStore.addRuleToLoadingList(ruleID);
     CreateWBD.createWBD(logicalPageID,function (data) {
