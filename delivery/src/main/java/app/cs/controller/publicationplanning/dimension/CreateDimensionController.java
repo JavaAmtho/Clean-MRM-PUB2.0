@@ -1,10 +1,13 @@
 package app.cs.controller.publicationplanning.dimension;
 
+import javax.ws.rs.POST;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cs.data.api.core.GenericDomain;
@@ -61,7 +64,7 @@ public class CreateDimensionController {
 	 *            the is folder
 	 * @return the string
 	 */
-	@RequestMapping(value = { CREATE })
+	@RequestMapping(value = { CREATE }, method = RequestMethod.POST)
 	public @ResponseBody
 	GenericDomain create(@PathVariable("type") String type,
 			@PathVariable("name") String name,

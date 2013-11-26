@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import app.cs.boundary.delivery.Interactor;
@@ -56,7 +57,7 @@ public class SwitchPerspectiveController {
 		return output.getTree();
 	}
 	
-	@RequestMapping(value = "/dimension/getLazy")
+	@RequestMapping(value = "/dimension/getLazy", method = RequestMethod.POST)
 //{id}/{type}/{path}/{structure}/{groupID}")
 	public @ResponseBody
 	<E> List<E> getDimensionsBy(/*@PathVariable String id,*/
