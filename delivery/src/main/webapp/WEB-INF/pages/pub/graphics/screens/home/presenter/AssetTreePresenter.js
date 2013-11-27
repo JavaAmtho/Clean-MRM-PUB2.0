@@ -108,9 +108,9 @@ AssetTreePresenter.changeSelectedBtn = function (btnId) {
  *   @description resets the css for all PIM/MAM buttons as unclicked
  */
 AssetTreePresenter.reset = function () {
-    $("#btnMIM").css("background-image", "url(/delivery/pages/pub/graphics/screens/home/images/icons/MIM.png)");
-    $("#btnPIM").css("background-image", "url(/delivery/pages/pub/graphics/screens/home/images/icons/PIM.png)");
-    $("#btnMAM").css("background-image", "url(/delivery/pages/pub/graphics/screens/home/images/icons/MAM.png)");
+    $("#btnMIM").css("background-image", "url("+ EngineDataStore.getBaseURL() + "graphics/screens/home/images/icons/MIM.png)");
+    $("#btnPIM").css("background-image", "url("+ EngineDataStore.getBaseURL() + "graphics/screens/home/images/icons/PIM.png)");
+    $("#btnMAM").css("background-image", "url("+ EngineDataStore.getBaseURL() + "graphics/screens/home/images/icons/MAM.png)");
 }
 
 AssetTreePresenter.getLazyNodes = function(id,callBack){
