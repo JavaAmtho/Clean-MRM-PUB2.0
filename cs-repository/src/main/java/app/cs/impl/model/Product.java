@@ -26,6 +26,7 @@ public class Product implements Serializable {
 	private String isFolder;
 	private String key;
 	private String rendererTemplateId;
+	private String rendererTemplateName;
 	private String response;
 
 	public String getResponse() {
@@ -41,7 +42,8 @@ public class Product implements Serializable {
 		return "{id:\"" + this.id + "\",label:\"" + this.label + "\",title:\"" + this.title + "\""
 				 + ",type:\"" + this.type + "\",image:\"" + this.image + "\""
 						+ ",description:\"" + this.description + "\",service:\"" + this.service + "\",isFolder:" + this.isFolder+ ""
-								+ ",__type__:\"Product\",rendererTemplateId:\"" + this.rendererTemplateId + "\"}";
+								+ ",__type__:\"Product\",rendererTemplateId:\"" + this.rendererTemplateId + "\""
+										+ ",rendererTemplateName:\"" + this.rendererTemplateName + "\"}";
 	}
 	
 	public Product() {
@@ -157,4 +159,13 @@ public class Product implements Serializable {
 	public void setRendererTemplateId(String rendererTemplateId) {
 		this.rendererTemplateId = rendererTemplateId;
 	}
+
+	public String getRendererTemplateName() {
+		return rendererTemplateName;
+	}
+
+	public void setRendererTemplateName(String rendererTemplateName) {
+		this.rendererTemplateName = rendererTemplateName;
+	}
+	
 }

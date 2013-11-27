@@ -74,34 +74,16 @@ public class PageGenerationRepositoryImpl implements IPageGenerationRepository {
 
 		int countOfProducts = 1;
 
-//		HashMap<String, String> additionalInformation = new HashMap<String, String>();
-
 		// get the rule
 		System.out.println(logicalPageID);
 		PageRules pageRules = pageRuleRepository.getPageRulesFor(logicalPageID);
 		if (pageRules == null) {
 			return "pageRules not found";
 		}
-/*		PageRule pageRule = pageRuleRepository
-				.getPageRuleFor(pageRules, ruleID);
-		if (pageRule == null) {
-			return "pageRule not found";
-		}*/
 		List<PageRule> pageRulesList = pageRules.getPageRules();
 		for (PageRule rule : pageRulesList) {
 			masterPageID = rule.getRuleResult().getMasterPageId();
 		}
-		// get the assortmentID and the masterPageID from the ruleResult
-//		assortmentID = pageRule.getRuleResult().getAssortmentId();
-//		masterPageID = pageRule.getRuleResult().getMasterPageId();
-
-		// get the publication
-/*		MultiDimensionalObject publication = chapterRepository
-				.getParentPublicationByID(assortmentId);
-
-		// find the assortment
-		MultiDimensionalObject assortment = chapterRepository
-				.findMultiDimensionalObjectByID(publication, assortmentID);*/
 		
 		PublicationAssetObject assortment = publicationAssetRepository.getAssortmentUnderPage(logicalPageID);
 
@@ -110,9 +92,9 @@ public class PageGenerationRepositoryImpl implements IPageGenerationRepository {
 		List<Product> products = assortment.getProducts();
 		for (Product product : products) {
 			if (countOfProducts < products.size()) {
-				productIds += "{\"id\":\"" + product.getId() + "\"},";
+				productIds += "{\"id\":\"" + product.getId() + "\", \"rendererTemplateId\":\"" + product.getRendererTemplateId() + "\"},";
 			} else {
-				productIds += "{\"id\":\"" + product.getId() + "\"}";
+				productIds += "{\"id\":\"" + product.getId() + "\", \"rendererTemplateId\":\"" + product.getRendererTemplateId() + "\"}";
 			}
 			countOfProducts++;
 		}
