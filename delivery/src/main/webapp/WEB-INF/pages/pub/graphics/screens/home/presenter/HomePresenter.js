@@ -168,9 +168,9 @@ HomePresenter.loadViewItems = function (evt, currentTemplateView) {
     });
     if(pageIDs.length > 0){
         pages["pageIDs"] = pageIDs;
-        GetAllPageRules.get(pages,function(data){
+        /*GetAllPageRules.get(pages,function(data){
             GraphicDataStore.addAllPageRules(data.listOfPageRules);
-        });
+        });*/
 
     }
 
