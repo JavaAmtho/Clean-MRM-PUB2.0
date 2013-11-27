@@ -8,7 +8,8 @@
     {"id":"btnMIM","event":"click","func":AssetTreePresenter.slidePanel},
 	{"id":"asSearch","event":"keyup","func":AssetTreePresenter.searchList},
 	{"id":"btnCreatePage","event":"click","func":NewPageBreadCrumbWidget.createPage},
-	{"id":"btnChooseIndd","event":"click","func":NewPageBreadCrumbWidget.chooseIndd}, {"id":"pageType1","event":"change","func":NewPageBreadCrumbWidget.enableRenderingEngine},
+	{"id":"btnChooseIndd","event":"click","func":NewPageBreadCrumbWidget.chooseIndd}, 
     {"id":"pageType2","event":"change","func":NewPageBreadCrumbWidget.enableRenderingEngine},
+	{"id":"pageType1","event":"change","func":NewPageBreadCrumbWidget.enableRenderingEngine},
     {"id":"pageType3","event":"change","func":NewPageBreadCrumbWidget.enableRenderingEngine}
 ]

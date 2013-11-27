@@ -171,7 +171,7 @@ AssetTreePresenter.showAssortmentPanel = function (rendererData) {
         dataSource: productsDataSource,
         template: '<div class="tags k-block"> <img src="#:image#"/> ' +
             '<div class="labelRenderCSS">Product Name: #:label#</div>' +
-            '<div class="rendererTemplateCSS">Product Template: #:rendererTemplateId#</div>' +
+            '<div class="rendererTemplateCSS">Product Template: #:rendererTemplateName#</div>' +
             '<img id="#:label#" src="../../../graphics/screens/home/images/_close.png" class="removeProductBtn" onclick="removeProduct(this.id)"/></div>'
     });
     AssetTreePresenter.makeProductsListDropable();
@@ -210,8 +210,10 @@ AssetTreePresenter.makeProductsListDropable = function(){
             var item = assetsDataSource.getByUid(e.draggable.hint.data().uid);
             var dropDownObj = document.getElementById("templateDropDown");
             item.rendererTemplateId = "NA";
+            item.rendererTemplateName = "NA";
             if(!dropDownObj.disabled)
-                item.rendererTemplateId = $("#templateDropDown option:selected").val();
+                item.rendererTemplateId = $("#templateDropDown option:selected").attr("id");
+                item.rendererTemplateName = $("#templateDropDown option:selected").val();
             productsDataSource.add(item);
             $("#subtab1").css('border', '2px dashed #aaa');
             //unmappedtag_datasource.remove(item);
