@@ -26,10 +26,10 @@ var GraphicDataStore = function(){
 }
 
 GraphicDataStore.templateLoaded = false;
+GraphicDataStore.isAssortmentUpdated = false;
 
 GraphicDataStore.setPageTemplates = function(templatesJson){
     this.pageTemplatesJSON = templatesJson;
-    GraphicDataStore.templateLoaded = true;
 }
 
 GraphicDataStore.getPageTemplates = function(type){

@@ -367,6 +367,54 @@ var DynaTree = function(){
     var droppedSrcNode;
     var oldParentNode;
 
+    var currentClickedNode;
+
+
+    function getPageRendererType(currentPage){
+        if(currentPage.data.pageType === "creative"){
+            return currentPage.data.renderEngineType;
+        }else{
+            return null;
+        }
+    }
+
+
+    function showCurrentActivatedNode(){
+        var nodeType = "Dimension";
+        var data;
+
+        if(currentClickedNode.data.type == "Assortment"){
+            $('#showAllPagesBtn').addClass('hidden');
+            var currentPage = $.ui.dynatree.getNode(currentClickedNode).parent;
+            DynaTree.rendererType = getPageRendererType(currentPage);
+            nodeType = "Assortment";
+            GraphicDataStore.setCurrentAssortment(currentClickedNode.data);
+            data = currentClickedNode.data.products;//HomePresenter.getProductsForSelectedNode(node);
+            //alert(JSON.stringify(data.length))
+        }else{
+            GraphicDataStore.setCurrentView(currentClickedNode.data.title);
+            data = HomePresenter.getChildrenForSelectedNode(currentClickedNode)
+            if(currentClickedNode.data.type == "Publication"){
+                $('#showAllPagesBtn').css('opacity','1');
+                $('.option-combo').css('opacity','1');
+            }
+            else if( currentClickedNode.data.type == "Chapter"){
+                $('#showAllPagesBtn').css('opacity','0');
+                $('.option-combo').css('opacity','1');
+            }
+            else{
+                $('#showAllPagesBtn').css('opacity','0');
+                $('.option-combo').css('opacity','0');
+            }
+        }
+        $(document).trigger({
+            type: "TREE_ITEM_CLICKED",
+            uiData: data,
+            rendererType: DynaTree.rendererType,
+            nodeType: nodeType
+        });
+    }
+
     /**
      *
      * @param treeObj
@@ -375,9 +423,13 @@ var DynaTree = function(){
     this.createTree = function(treeObj,data){
         $(document).bind("expandParentNode", function onExpandParentNode(e){
             var pNode = searchFolderNodeWithName(e.currentId,null)
-            pNode.data.products = e.productsColl;
-            pNode.parent.activate();
-            pNode.parent.expand()
+            pNode.data.products = e.productsCollection;
+            if(e.callBack){
+                e.callBack();
+            }else{
+                pNode.parent.activate();
+                pNode.parent.expand();
+            }
         });
 
         if(temp != null){
@@ -386,6 +438,14 @@ var DynaTree = function(){
         }else{
             $(treeObj).dynatree({
                 children : data,
+                /**
+                 *
+                 * @param node
+                 * @param span
+                 */
+                onCreate: function(node, span){
+                    bindContextMenu(span,node.data.type);
+                },
                 /**
                  * On lazy read of node
                  * @param node
@@ -415,14 +475,6 @@ var DynaTree = function(){
                 },
                 /**
                  *
-                 * @param node
-                 * @param span
-                 */
-                onCreate: function(node, span){
-                    bindContextMenu(span,node.data.type);
-                },
-                /**
-                 *
                  * @param flag
                  * @param node
                  * @description called on expansion of an element in the dyna tree
@@ -443,45 +495,12 @@ var DynaTree = function(){
                  * @description called when a node in the tree is activate i.e. clicked on
                  */
                 onActivate: function(node) {
-                    var nodeType = "Dimension";
-                    var data;
-                    if(node.data.type == "Assortment"){
-                        $('#showAllPagesBtn').addClass('hidden');
-                        var currentPage = $.ui.dynatree.getNode(node).parent;
-                        DynaTree.rendererType = getPageRendererType(currentPage);
-                        nodeType = "Assortment";
-                        GraphicDataStore.setCurrentAssortment(node.data);
-                        data = node.data.products;//HomePresenter.getProductsForSelectedNode(node);
+                    currentClickedNode = node;
+                    if(GraphicDataStore.isAssortmentUpdated){
+                        AssetTreePresenter.saveChangesOfAssortment(showCurrentActivatedNode);
                     }else{
-
-                        GraphicDataStore.setCurrentView(node.data.title);
-                        data = HomePresenter.getChildrenForSelectedNode(node)
-                        if(node.data.type == "Publication"){
-                            $('#showAllPagesBtn').css('opacity','1');
-                            $('.option-combo').css('opacity','1');
-                        }
-                       else if( node.data.type == "Chapter"){
-                            $('#showAllPagesBtn').css('opacity','0');
-                          $('.option-combo').css('opacity','1');
-
-                          /* if(data.length>0){
-                               var me = findPagesForPub(data);
-                               alert(JSON.stringify(me.length));
-                           }*/
-                       }
-                        else{
-                           $('#showAllPagesBtn').css('opacity','0');
-                           $('.option-combo').css('opacity','0');
-                       }
-
-
+                        showCurrentActivatedNode();
                     }
-                    $(document).trigger({
-                        type: "TREE_ITEM_CLICKED",
-                        uiData: data,
-                        rendererType: DynaTree.rendererType,
-                        nodeType: nodeType
-                    });
                 },
                 /**
                  * Drag and drop for tree
@@ -561,15 +580,6 @@ var DynaTree = function(){
                 }
             });
 
-
-            function getPageRendererType(currentPage){
-               if(currentPage.data.pageType === "creative"){
-                   return currentPage.data.renderEngineType;
-               }else{
-                   return null;
-               }
-            }
-
             /**
              *
              * @param name
@@ -594,7 +604,7 @@ var DynaTree = function(){
                     }
                 });
                 return match;
-            };
+            }
             
             temp = $(treeObj).dynatree("getRoot");
             if(pubIdToOpen){
@@ -612,11 +622,6 @@ var DynaTree = function(){
         }
     }
 
-    DynaTree.testData = function(url){
-        alert("hello!")
-//        return [{"id":"MI","type":"MarketingInitiative","children":[],"groupID":[],"isFolder":true,"title":"HELLO!"}];
-        return [{"title":"MI1","isLazy":true,"isFolder":true}];
-    }
 }
 
 DynaTree.rendererType;

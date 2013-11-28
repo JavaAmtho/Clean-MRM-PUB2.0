@@ -82,6 +82,7 @@ AssetTreePresenter.loadTemplates = function(){
 
 AssetTreePresenter.onTemplatesLoaded = function(data){
     GraphicDataStore.setPageTemplates(data);
+    GraphicDataStore.templateLoaded = true;
 }
 
 /**
@@ -147,8 +148,8 @@ AssetTreePresenter.createAssetsListWithData = function(assetdata){
                '<div class="labelRenderCSS">#:label#</div></div>'
        });
 
-       if(myCount==0){
-         myCount++;
+       if(AssetTreePresenter.myCount==0){
+           AssetTreePresenter.myCount++;
          AssetTreePresenter.makeAssetsListDraggable();
        }
 }
@@ -181,6 +182,7 @@ function removeProduct(nameOfProduct){
     for(var i=0; i< productsDataSource._data.length; i++){
         if(nameOfProduct == productsDataSource._data[i].label){
             productsDataSource._data.remove(productsDataSource._data[i]);
+            AssetTreePresenter.makeAssortmentDirtyOrNot(true);
         }
     }
 }
@@ -194,7 +196,7 @@ AssetTreePresenter.makeAssetsListDraggable = function(){
     });
 }
 
-var myCount=0;
+AssetTreePresenter.myCount=0;
 
 AssetTreePresenter.makeProductsListDropable = function(){
     $("#subtab1").kendoDropTarget({
@@ -215,10 +217,15 @@ AssetTreePresenter.makeProductsListDropable = function(){
                 item.rendererTemplateId = $("#templateDropDown option:selected").attr("id");
                 item.rendererTemplateName = $("#templateDropDown option:selected").val();
             productsDataSource.add(item);
+            AssetTreePresenter.makeAssortmentDirtyOrNot(true);
             $("#subtab1").css('border', '2px dashed #aaa');
             //unmappedtag_datasource.remove(item);
         }
     });
+}
+
+AssetTreePresenter.makeAssortmentDirtyOrNot = function(flag){
+    GraphicDataStore.isAssortmentUpdated = flag;
 }
 
 /**
@@ -232,19 +239,28 @@ AssetTreePresenter.unHideAssortPanel = function () {
 /**
  * @description creates the products json object and calls interactor to update the assortment
  */
-AssetTreePresenter.createProductsJSON = function () {
-    var jsonData = {};
-    var columnName = "products";
-    //jsonData[columnName] = GraphicDataStore.getProdcutsArr();
-    jsonData[columnName] = productsDataSource._data;
-    var columnName = "id";
-    jsonData[columnName] = GraphicDataStore.getCurrentAssortment().id;
-    UpdateAssortment.update(GraphicDataStore.getCurrentAssortment(), jsonData, AssetTreePresenter.hideAssortPanel);
-    $(document).trigger({
-        type: "expandParentNode",
-        currentId: GraphicDataStore.getCurrentAssortment().title,
-        productsColl:  productsDataSource._data
-    });
+AssetTreePresenter.createProductsJSON = function (e,callBack) {
+    if(GraphicDataStore.isAssortmentUpdated){
+        var jsonData = {};
+        var columnName = "products";
+        //jsonData[columnName] = GraphicDataStore.getProdcutsArr();
+        jsonData[columnName] = productsDataSource._data;
+        var columnName = "id";
+        jsonData[columnName] = GraphicDataStore.getCurrentAssortment().id;
+        UpdateAssortment.update(GraphicDataStore.getCurrentAssortment(), jsonData,function(){
+            AssetTreePresenter.makeAssortmentDirtyOrNot(false);
+            //AssetTreePresenter.hideAssortPanel();
+            $(document).trigger({
+                type: "expandParentNode",
+                callBack:callBack,
+                currentId: GraphicDataStore.getCurrentAssortment().title,
+                productsCollection:  productsDataSource._data
+            });
+            alertify.success("Products saved successfully");
+        });
+    }else{
+        alertify.error("There are no unsaved changes");
+    }
 }
 
 AssetTreePresenter.enableTemplatesDropdown = function(pageRendererType){
@@ -264,6 +280,18 @@ AssetTreePresenter.enableTemplatesDropdown = function(pageRendererType){
     }else{
         dropDownObj.disabled = true;
     }
+}
+
+
+AssetTreePresenter.saveChangesOfAssortment = function(callBack){
+    alertify.confirm("Do you want to save the unsaved changes", function (e) {
+        if(e){
+            AssetTreePresenter.createProductsJSON(null,callBack);
+        }else{
+            AssetTreePresenter.makeAssortmentDirtyOrNot(false);
+            callBack();
+        }
+    });
 }
 
 /**

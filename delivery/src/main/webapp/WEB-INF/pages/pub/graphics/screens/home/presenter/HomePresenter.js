@@ -221,15 +221,21 @@ HomePresenter.btnFocus = function (btn) {
 }
 
 $(document).bind("TREE_ITEM_CLICKED", function itemClickedHandler(e) {
+
+    //Check if something is unsaved in previous opened assortment
+   /* if(GraphicDataStore.isAssortmentUpdated){
+        AssetTreePresenter.saveChangesOfAssortment();
+    }else{*/
         if (e.nodeType == "Assortment") {
             AssetTreePresenter.enableTemplatesDropdown(e.rendererType);
             AssetTreePresenter.showAssortmentPanel(e.uiData);
-        } else {
+        }else{
             AssetTreePresenter.hideAssortPanel();
             rendererData = {"mydata": e.uiData};
             HomePresenter.loadViewItems(rendererData, EngineDataStore.getBaseURL() + "graphics/screens/home/htmls/renderers/TileViewRenderer.html");
             HomePresenter.btnFocus(".tileBtnCSS");
         }
+    /*}*/
 });
 
 /**
