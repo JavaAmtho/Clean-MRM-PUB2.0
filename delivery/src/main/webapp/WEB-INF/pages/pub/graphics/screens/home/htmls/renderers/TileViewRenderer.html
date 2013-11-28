@@ -1,4 +1,10 @@
 {{#mydata}}<div class= "{{typeCSS}}" id="{{id}}" style="{{backgroundImageStyle}}">
+    <img class='popupImage hidden' src='../../../graphics/screens/home/images/popup_icon.png'
+         onclick='PagePresenter.openURL(this)'>
+    <div class="loading-overlay hidden"></div>
+    <img class="loading-message hidden" src ='../../../graphics/screens/home/images/load.gif'
+         ondblclick ="event.stopPropagation()">
+
     <div class="name">{{title}}</div>
     <div class="rulesText pageType {{hiddenCSS}}">Type: {{pageType}}</div>
     <div class="rulesText {{hiddenCSS}}">Renderer:</div>
@@ -7,6 +13,9 @@
     <div class="rulesText mamFileId {{hiddenCSS}}">{{fileID}}</div>
     <div class="editorURL hidden">{{editorUrl}} </div>
 	<p class="hidden pagePath">{{path}}</p>
+    <div class="masterPageHoverDiv hidden">
+        <div class="doubleClickMessage">Double-click to generate Whiteboard</div>
+    </div>
     <div class='buttonsHolder {{hiddenCSS}}' >
     </div>
     <!--<h2 title='Open rules configuration menu' class='openRules {{hiddenCSS}}'

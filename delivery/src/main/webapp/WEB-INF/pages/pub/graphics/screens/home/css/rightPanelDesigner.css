@@ -167,8 +167,36 @@
     -ms-transition: all 0.2s ease-in;
     -o-transition: all 0.2s ease-in;
     transition: all 0.2s ease-in;
-    background-size: cover;
+    background-size: contain;
     background-repeat:no-repeat;
+}
+
+.masterPageHoverDiv{
+    position : absolute;
+    top:0px;
+    left:0px;
+    height: 100%;
+    width: 100%;
+    opacity : 0;
+
+    background-color: black;
+}
+
+.masterPageHoverDiv:hover{
+    opacity : 0.6;
+    -webkit-transition: all 0.2s ease-in;
+    -moz-transition: all 0.2s ease-in;
+    -ms-transition: all 0.2s ease-in;
+    -o-transition: all 0.2s ease-in;
+}
+
+.doubleClickMessage{
+    color : white;
+    text-align: center;
+    font-weight: bold;
+    position : absolute;
+    top:30%;
+    text-shadow: 1px 1px 1px lightgrey;
 }
 
 .masterPage.odd {

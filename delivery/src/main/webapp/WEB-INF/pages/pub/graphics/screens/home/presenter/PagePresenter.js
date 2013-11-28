@@ -17,12 +17,12 @@ var LOADING_IMAGE_URL = '../../../graphics/screens/home/images/load.gif';
 
 /**
  *
- * @param childPageInnerDiv : the respective child page inner div of the popout icon
+ * @param pageDiv : the respective child page inner div of the popout icon
  * @description : Open the WBD URL in a popout window
  */
-PagePresenter.openURL = function (childPageInnerDiv) {
+PagePresenter.openURL = function (pageDiv) {
     //Get the wbd url from the hidden data in the div
-    var urlToOpen = $(childPageInnerDiv).children('.wbdURL').html();
+    var urlToOpen = $(pageDiv).children('.editorURL').html();
     urlToOpen = urlToOpen.replace(/&amp;/g, '&');
     var config = EngineDataStore.getPublicationDetailsArray()["Config"];
     urlToOpen = urlToOpen.replace("../admin", config.host + config.context + "/admin");
@@ -37,15 +37,15 @@ PagePresenter.openURL = function (childPageInnerDiv) {
 /**
  *
  * @param url : the url that has been received from CS and need to be embedded into the child page
- * @param childPageInnerDiv : the respective child page inner div of the popout icon
+ * @param divReference : the respective child page inner div of the popout icon
  * @description : display the popup icon and add a click event to it once the WBD url has been received
  (called once the wbd has been created and the url is received)
  */
-PagePresenter.addClickEventForWBDPopup = function (url, childPageInnerDiv) {
+PagePresenter.addClickEventForWBDPopup = function (url, divReference) {
 
-    var $childPage = $(childPageInnerDiv);
-    $childPage.children('.wbdURL').html(url);
-    $imageReference = $childPage.children('.popupImage');
+    var $pageDiv = $(divReference);
+    $pageDiv.children('.editorURL').html(url);
+    $imageReference = $pageDiv.children('.popupImage');
     $imageReference.attr('onclick', "PagePresenter.openURL(this.parentNode)");
     $imageReference.removeClass('hidden');
     setInterval(function () {                   //pulsating glow logic
@@ -55,46 +55,38 @@ PagePresenter.addClickEventForWBDPopup = function (url, childPageInnerDiv) {
 
 /**
  *
- * @param childPageInnerDiv : the respective child page inner div of the popout icon
+ * @param pageDiv : the respective child page inner div of the popout icon
  * @description : Make server call to create WBD according to the data from the page rules and get the url to open it
  */
-PagePresenter.openWhiteBoard = function (childPageInnerDiv) {
+PagePresenter.openWhiteBoard = function (pageDiv) {
 
-    var publicationID = GraphicDataStore.getCurrentPublication();
-    var $innerDiv = $(childPageInnerDiv);
-    var ruleID = $innerDiv.children('.ruleID').html();
-//    alert(ruleID);
-    var logicalPageID = $innerDiv.children('.logicalPageID').html();
-    GraphicDataStore.addRuleToLoadingList(ruleID);
-    CreateWBD.createWBD(logicalPageID,function (data) {
+    var $divReference = $(pageDiv);
+    var logicalPageID = $divReference.attr("id");
+    var rendererName = $divReference.children('.renderer').html();
+    GraphicDataStore.addRuleToLoadingList(logicalPageID);
+    CreateWBD.createWBD(logicalPageID,rendererName,function (data) {
             if (data == 'error') {
                 alert("Error creating WBD!!");
-                $('.childPages').trigger("loadingError", [ruleID]);  //trigger the loading error event
+                $divReference.trigger("loadingError", [logicalPageID]);  //trigger the loading error event
             }
             else {
-//                var $parentMasterPageRuleReference = $("[id = '" + logicalPageID + "']").children('.rule').children('.then');
-                //Set the parent master page data as dirty so that it gets reset later with the new wbd url and mamfileid
-//                $parentMasterPageRuleReference.children('.dataDirty').html('1');
-                /*GraphicDataStore.addAdditionalInformationToPageRules(data, ruleID,
-                    GraphicDataStore.getCurrentView() + "." + logicalPageID);*/
                 if(data && data.editorURL){
-                    var $parentMasterPageRuleReference = $("[id = '" + logicalPageID + "']") ;
-                    var pageType = $parentMasterPageRuleReference.children('.renderer').html();
-                    data.editorURL += "&rendererName=" + pageType;
+//                    var $parentMasterPageRuleReference = $("[id = '" + logicalPageID + "']") ;
+                    var pageType = $divReference.children('.renderer').html();
+                    var editorURL = data.editorURL += "&rendererName=" + pageType;
                     UpdateEditorUrl.updateUrl(logicalPageID,data.editorURL,function(data){
-                        console.log($parentMasterPageRuleReference.children('.editorURL'));
-                        $parentMasterPageRuleReference.children('.editorURL')[0].innerHTML = data.editorURL;
+                        $divReference.children('.editorURL')[0].innerHTML = editorURL;
                     });
-                    $('.childPages').trigger("loadingDone", [ruleID, data.editorURL]);    //trigger the loading done event
+                    $divReference.trigger("loadingDone", [logicalPageID, data.editorURL]);    //trigger the loading done event
                 }
                 else{
-                    $('.childPages').trigger("loadingError", [ruleID]);  //trigger the loading error event
+                    $divReference.trigger("loadingError", [logicalPageID]);  //trigger the loading error event
                 }
             }
-            GraphicDataStore.stopLoadingStatus(ruleID)
+            GraphicDataStore.stopLoadingStatus(logicalPageID)
         });
-    $innerDiv.children('.loading-overlay').toggleClass('hidden');       //toggle loading screen
-    $innerDiv.children('.loading-message').toggleClass('hidden');       //
+    $divReference.children('.loading-overlay').toggleClass('hidden');       //toggle loading screen
+    $divReference.children('.loading-message').toggleClass('hidden');       //
 }
 
 /**
@@ -169,9 +161,9 @@ PagePresenter.createChildPageInnerDiv = function (rule, masterPageDiv, url) {
     else {
         $(childPageInnerDiv).addClass("even");
     }
-    $(childPageInnerDiv).attr('ondblclick', 'PagePresenter.openWhiteBoard(this,event)');
+/*    $(childPageInnerDiv).attr('ondblclick', 'PagePresenter.openWhiteBoard(this,event)');
 
-    var wbdURL = $(masterPageDiv).children('.editorURL').html();/*$(rule).children('.wbdURL').html()*/
+    var wbdURL = $(masterPageDiv).children('.editorURL').html();
     var mamFileID = " ";
     var masterTemplate = $(masterPageDiv).children('.mamFileId').html();
 
@@ -192,18 +184,17 @@ PagePresenter.createChildPageInnerDiv = function (rule, masterPageDiv, url) {
     $(childPageInnerDiv).append(loadingOverlayDiv);
     $(childPageInnerDiv).append(loadingImage);
 
-    ruleID = masterPageDiv.id + "." + rule;
 
-    $(childPageInnerDiv).append("<div class='childPageName ruleID' >" + ruleID + "</div>");
+    $(childPageInnerDiv).append("<div class='childPageName ruleID' >" + masterPageDiv.id + "</div>");
     $(childPageInnerDiv).append("<p class='hidden logicalPageID'>" + masterPageDiv.id + "</p>");
     $(childPageInnerDiv).append("<p class='childPagesText'>Mstr Templ ID: </p>");
     $(childPageInnerDiv).append("<p class='childPagesText data templateName' >" + masterTemplate + "</p>");
     $(childPageInnerDiv).append("<p class='hidden data wbdURL'> " + wbdURL + " </p>");
-    $(childPageInnerDiv).append("<p class='hidden data mamFileID'>" + mamFileID + "</p>");
+    $(childPageInnerDiv).append("<p class='hidden data mamFileID'>" + mamFileID + "</p>");*/
 
 //    var childPageData = PagePresenter.createChildPageData(rule, masterPageDiv);
 //    $(childPageInnerDiv).append(childPageData);
-
+    $(childPageInnerDiv).append("<p class='hidden logicalPageID'>" + masterPageDiv.id + "</p>");
     return childPageInnerDiv;
 }
 
@@ -229,6 +220,22 @@ PagePresenter.bindChildPagesToCustomLoadingWBDEvent = function () {
             $innerDiv.children('.loading-overlay').addClass('hidden');
             $innerDiv.children('.loading-message').addClass('hidden');
         }
+    });
+}
+
+PagePresenter.bindLogicalPagesToCustomLoadingWBDEvent = function ($masterPage) {
+    $masterPage.bind("loadingDone", function (event, ruleIDFinishLoading, wbdURL) {
+        var $masterPageDiv = $(this);
+        $masterPageDiv.children('.loading-overlay').addClass('hidden');
+        $masterPageDiv.children('.loading-message').addClass('hidden');
+        $masterPageDiv.children('.masterPageHoverDiv').addClass('hidden');
+        PagePresenter.addClickEventForWBDPopup(wbdURL, this);
+    });
+
+    $masterPage.bind("loadingError", function (event, ruleIDFinishLoading) {
+        var $masterPageDiv = $(this);
+        $masterPageDiv.children('.loading-overlay').addClass('hidden');
+        $masterPageDiv.children('.loading-message').addClass('hidden');
     });
 }
 
@@ -271,18 +278,14 @@ PagePresenter.expandCollapseChildPages = function (masterPageDiv) {
         //jquery reference of all children having the parent's logicalpage id
         var $logicalPageIDOfParentOfChild = $('.childPages').children('.inner').children('.logicalPageID:contains(' + masterPageDiv.id + ')');
         var $childPages = $('.childPages').has($logicalPageIDOfParentOfChild);
-        $childPages.unbind("loadingError");
-        $childPages.unbind("loadingDone");
+//        $childPages.unbind("loadingError");
+//        $childPages.unbind("loadingDone");
         $container.isotope('remove', $childPages);
         $(masterPageDiv).toggleClass('opened');
-/*        var $dirtyFields = $(masterPageDiv).find('.dataDirty');
-        var isDirty = getDataDirtyFlag($dirtyFields);
-        if (isDirty) {
-            PagePresenter.setRules(masterPageDiv);
-        }*/
+
     }
 
-    PagePresenter.bindChildPagesToCustomLoadingWBDEvent();
+//    PagePresenter.bindChildPagesToCustomLoadingWBDEvent();
 }
 
 var childPagesList = [];
