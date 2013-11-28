@@ -38,6 +38,8 @@ var NewPageBreadCrumbWidget = function(){
                 NewPageBreadCrumbWidget.uncheckRadio();
                 $(document).unbind('editPageEvent');
                 $(document).unbind('createPageEvent');
+                $("#inddFileName").html("");
+                $('#pageNameText').html("");
             }
 
         });
@@ -51,7 +53,9 @@ NewPageBreadCrumbWidget.chooseIndd = function(){
         data = eval('(' + data + ')');
         var newPageObj = GraphicDataStore.getNewPageObject();
         newPageObj.fileID = data.FileID;
+        newPageObj.filePath = data.FilePath;
         GraphicDataStore.setNewPageObject(newPageObj);
+        $("#inddFileName").html(newPageObj.filePath)
     }
 
     //alert(JSON.stringify(GraphicDataStore.getNewPageObject()));

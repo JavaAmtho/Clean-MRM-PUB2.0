@@ -153,10 +153,12 @@ var DynaTree = function(){
     function editNode(data){
         nodeToBeEdited.data = data.response;
         nodeToBeEdited.render();
+        alertify.success("Edited successfully");
     }
     function editDimension(data){
         nodeToBeEdited.data.title = data.responseString;
         nodeToBeEdited.render();
+        alertify.success("Edited successfully");
     }
 
     function showDeletePrompt(nodeToBeDeleted){
@@ -181,15 +183,21 @@ var DynaTree = function(){
             alertify.prompt("Please enter "+action+" name", function (e, name) {
                 if (e) {
                     name = name.replace(/^\s+|\s+$/g,'')
+
                     if(name.length >0){
-                        var prefix=getUrlPrefix(action,"create");
-                        if(action == "Assortment"){
-                            newNode = createAssortmentNode(name,action,currentPath,flag);
-                            TreePresenter.createAssortment(prefix,action,name,currentPath,flag,addNode);
+                        if(name.length>45){
+                            alertify.error("Inserted name too long! Please insert name upto 45 characters")
                         }else{
-                            newNode = createNode(name,action,currentPath,flag);
-                            TreePresenter.createDimension(prefix,action,name,currentPath,flag,addNode);
+                            var prefix=getUrlPrefix(action,"create");
+                            if(action == "Assortment"){
+                                newNode = createAssortmentNode(name,action,currentPath,flag);
+                                TreePresenter.createAssortment(prefix,action,name,currentPath,flag,addNode);
+                            }else{
+                                newNode = createNode(name,action,currentPath,flag);
+                                TreePresenter.createDimension(prefix,action,name,currentPath,flag,addNode);
+                            }
                         }
+
                     }
                     else{
                         alertify.error("Please enter a valid name");
@@ -201,9 +209,13 @@ var DynaTree = function(){
                 if (e) {
                     name = name.replace(/^\s+|\s+$/g,'')
                     if(name.length >0){
-                        var prefix=getUrlPrefix(action,"update");
-                        nodeToBeEdited.data.title = name;
-                        TreePresenter.updateDimension(prefix,nodeToBeEdited.data.id,nodeToBeEdited.data,editDimension);
+                        if(name.length>45){
+                            alertify.error("Inserted name too long! Please insert name upto 45 characters")
+                        }else{
+                            var prefix=getUrlPrefix(action,"update");
+                            nodeToBeEdited.data.title = name;
+                            TreePresenter.updateDimension(prefix,nodeToBeEdited.data.id,nodeToBeEdited.data,editDimension);
+                        }
                     }
                     else{
                         alertify.error("Please enter a valid name");
@@ -422,8 +434,11 @@ var DynaTree = function(){
      */
     this.createTree = function(treeObj,data){
         $(document).bind("expandParentNode", function onExpandParentNode(e){
-            var pNode = searchFolderNodeWithName(e.currentId,null)
-            pNode.data.products = e.productsCollection;
+            var pNode = searchFolderNodeWithName(e.currentId,null);
+            pNode.data.products = new Array();
+            for(var i=0; i< e.productsCollection.length; i++){
+                pNode.data.products.push(e.productsCollection[i]);
+            }
             if(e.callBack){
                 e.callBack();
             }else{

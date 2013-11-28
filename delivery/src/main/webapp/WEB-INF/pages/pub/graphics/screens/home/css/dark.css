@@ -431,6 +431,7 @@ li#targetRegionText , li#targetGroupText{
     background-repeat: no-repeat;
     padding-top: 5px;
     padding-left: 10px;
+    cursor: pointer;
 }
 
 h2.openRules{
@@ -489,3 +490,4 @@ h2.openRules{
    word-wrap: break-word;
    word-break: break-all;
 }
+

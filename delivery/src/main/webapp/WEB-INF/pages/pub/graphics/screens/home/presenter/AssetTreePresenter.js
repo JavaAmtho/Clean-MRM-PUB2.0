@@ -201,7 +201,6 @@ AssetTreePresenter.myCount=0;
 AssetTreePresenter.makeProductsListDropable = function(){
     $("#subtab1").kendoDropTarget({
         dragenter: function (e) {
-            console.log(e.draggable.hint)
             $("#subtab1").css('border', '2px solid #000');
             e.draggable.hint.css("opacity", 0.6);
         },

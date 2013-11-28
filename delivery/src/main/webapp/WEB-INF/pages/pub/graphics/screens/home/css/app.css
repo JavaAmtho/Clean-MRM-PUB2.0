@@ -41,6 +41,13 @@ body { background-color:#fff; }
     display: none;
 }
 
+#inddFileName {
+    margin-right: 3px;
+    right: 30px;
+    bottom: 45px;
+    position: absolute;
+}
+
 #slider{
     color: #000;
     background:#f4f4f4;
