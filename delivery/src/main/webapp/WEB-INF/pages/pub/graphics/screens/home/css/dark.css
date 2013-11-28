@@ -475,9 +475,24 @@ h2.openRules{
 
 .k-block img{
     float: left !important;
-    min-height: 45px ;
+    padding-top: 5px;
+    /*margin: 0 auto;*/
+    /*min-height: 45px ;*/
     max-width: 33px;
+    height: auto ;
+    display: block;
+    margin: auto auto;
+    max-height: 45px ;
 
+}
+
+.imgWrapper{
+    float: left !important;
+    margin: 0 auto;
+    max-width: 33px;
+    min-width: 33px;
+    height: auto ;
+    min-height: 45px ;
 }
 
 .labelRenderCSS,.rendererTemplateCSS{

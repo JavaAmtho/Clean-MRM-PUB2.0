@@ -170,7 +170,7 @@ AssetTreePresenter.showAssortmentPanel = function (rendererData) {
 
     $("#subtab1").kendoListView({
         dataSource: productsDataSource,
-        template: '<div class="tags k-block"> <img src="#:image#"/> ' +
+        template: '<div class="tags k-block"><div class="imgWrapper"> <img src="#:image#"/> </div>' +
             '<div class="labelRenderCSS">Product Name: #:label#</div>' +
             '<div class="rendererTemplateCSS">Product Template: #:rendererTemplateName#</div>' +
             '<img id="#:label#" src="../../../graphics/screens/home/images/_close.png" class="removeProductBtn" onclick="removeProduct(this.id)"/></div>'
@@ -217,13 +217,25 @@ AssetTreePresenter.makeProductsListDropable = function(){
                 item.rendererTemplateName = $("#templateDropDown option:selected").val();
             productsDataSource.add(item);
             AssetTreePresenter.makeAssortmentDirtyOrNot(true);
-            $("#subtab1").css('border', '2px dashed #aaa');
+            //$("#subtab1").css('border', '2px dashed #aaa');
             //unmappedtag_datasource.remove(item);
         }
     });
 }
 
 AssetTreePresenter.makeAssortmentDirtyOrNot = function(flag){
+    $("#subtab1").css('border', '2px dashed #F00');
+   /* var $childPage = $(childPageInnerDiv);
+    $childPage.children('.wbdURL').html(url);
+    $imageReference = $childPage.children('.popupImage');
+    $imageReference.attr('onclick', "PagePresenter.openURL(this.parentNode)");
+    $imageReference.removeClass('hidden');
+    setInterval(function () {                   //pulsating glow logic
+        $imageReference.toggleClass('urlInjected');
+    }, 1000);*/
+    if(!flag){
+        $("#subtab1").css('border', '2px dashed #aaa');
+    }
     GraphicDataStore.isAssortmentUpdated = flag;
 }
 

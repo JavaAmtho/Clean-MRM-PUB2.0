@@ -64,6 +64,8 @@ NewPageBreadCrumbWidget.chooseIndd = function(){
 }
 
 NewPageBreadCrumbWidget.preInsertFormDetails = function(data){
+    $("#btnCreatePage").text('Save Page');
+
     var radioElementsOfPage = document.getElementsByName("pageType");
     for(var i = 0; i < radioElementsOfPage.length; i++){
         if(radioElementsOfPage[i].value == data.pageType){
