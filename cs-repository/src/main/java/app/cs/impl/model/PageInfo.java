@@ -6,6 +6,8 @@ public class PageInfo {
 	private String name;
 	private String pageType;
 	private String renderEngineType;
+	private String filePath;
+	
 	public String getFileID() {
 		return fileID;
 	}
@@ -29,6 +31,12 @@ public class PageInfo {
 	}
 	public void setRenderEngineType(String renderEngineType) {
 		this.renderEngineType = renderEngineType;
+	}
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 	
 	

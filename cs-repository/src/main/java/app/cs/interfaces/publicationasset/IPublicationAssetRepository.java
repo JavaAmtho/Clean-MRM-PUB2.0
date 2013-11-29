@@ -24,6 +24,6 @@ public interface IPublicationAssetRepository {
 
 	public PublicationAssetObject getAssortmentUnderPage(String pageId);
 
-	public String updateEditURLOfPage(String pageId, String editUrl);
+	public String updateEditURLOfPage(String pageId, String editUrl, String mamFileId);
 
 }

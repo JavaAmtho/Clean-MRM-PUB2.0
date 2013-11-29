@@ -25,7 +25,7 @@ public class UpdateEditUrlOfPage implements Interactor {
 
 		UpdatePageEditorURLRequest updatePageEditorURLRequest = (UpdatePageEditorURLRequest) requestModel;
 		publicationAssetRepository.updateEditURLOfPage(updatePageEditorURLRequest.getPageId(),
-				updatePageEditorURLRequest.getEditorUrl());
+				updatePageEditorURLRequest.getEditorUrl(), updatePageEditorURLRequest.getMamFileId());
 		return new EmptyResponse();
 	}
 	

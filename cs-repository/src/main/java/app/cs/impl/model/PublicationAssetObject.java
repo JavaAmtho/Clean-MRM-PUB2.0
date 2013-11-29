@@ -45,6 +45,8 @@ public class PublicationAssetObject implements GenericDomain{
 	
 	private String editorURL;
 	
+	private String filePath;
+	
 	
 /*	@JsonIgnore @Fetch @RelatedToVia(type = "CHILD_OF" , direction = Direction.INCOMING)
 	private Set<PublicationAssetObjectRelationShip> relationships = new HashSet<PublicationAssetObjectRelationShip>();*/
@@ -220,6 +222,14 @@ public class PublicationAssetObject implements GenericDomain{
 
 	public void setEditorURL(String editorURL) {
 		this.editorURL = editorURL;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 
 	@Override

@@ -103,8 +103,11 @@ PagePresenter.openWhiteBoard = function (pageDiv) {
 //                    var $parentMasterPageRuleReference = $("[id = '" + logicalPageID + "']") ;
                     var pageType = $divReference.children('.renderer').html();
                     var editorURL = data.editorURL += "&rendererName=" + pageType;
-                    UpdateEditorUrl.updateUrl(logicalPageID,data.editorURL,function(data){
+                    var mamFileId = data.mamFileId;
+                    alert(JSON.stringify(data));
+                    UpdateEditorUrl.updateUrl(logicalPageID,data.editorURL,mamFileId,function(data){
                         $divReference.children('.editorURL')[0].innerHTML = editorURL;
+                        $divReference.children('.mamFileId')[0].innerHTML = mamFileId;
                     });
                     $divReference.trigger("loadingDone", [logicalPageID, data.editorURL]);    //trigger the loading done event
                 }

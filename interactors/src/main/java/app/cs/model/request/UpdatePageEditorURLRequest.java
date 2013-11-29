@@ -11,6 +11,8 @@ public class UpdatePageEditorURLRequest implements RequestModel {
 	private String pageId;
 	
 	private String editorUrl;
+	
+	private String mamFileId;
 
 	public String getPageId() {
 		return pageId;
@@ -26,6 +28,14 @@ public class UpdatePageEditorURLRequest implements RequestModel {
 
 	public void setEditorUrl(String editorUrl) {
 		this.editorUrl = editorUrl;
+	}
+
+	public String getMamFileId() {
+		return mamFileId;
+	}
+
+	public void setMamFileId(String mamFileId) {
+		this.mamFileId = mamFileId;
 	}
 
 	
