@@ -103,7 +103,7 @@ PagePresenter.openWhiteBoard = function (pageDiv) {
 //                    var $parentMasterPageRuleReference = $("[id = '" + logicalPageID + "']") ;
                     var pageType = $divReference.children('.renderer').html();
                     var editorURL = data.editorURL += "&rendererName=" + pageType;
-                    var mamFileId = data.mamFileId;
+                    var mamFileId = data.mamFileID;
                     alert(JSON.stringify(data));
                     UpdateEditorUrl.updateUrl(logicalPageID,data.editorURL,mamFileId,function(data){
                         $divReference.children('.editorURL')[0].innerHTML = editorURL;

@@ -53,9 +53,11 @@ NewPageBreadCrumbWidget.chooseIndd = function(){
         data = eval('(' + data + ')');
         var newPageObj = GraphicDataStore.getNewPageObject();
         newPageObj.fileID = data.FileID;
-        newPageObj.filePath = data.FilePath;
+        var splitFilePath = data.FilePath.split("/");
+        var fileName = splitFilePath[splitFilePath.length];
+        newPageObj.filePath = fileName;
         GraphicDataStore.setNewPageObject(newPageObj);
-        $("#inddFileName").html(newPageObj.filePath)
+        $("#inddFileName").html(fileName)
     }
 
     //alert(JSON.stringify(GraphicDataStore.getNewPageObject()));

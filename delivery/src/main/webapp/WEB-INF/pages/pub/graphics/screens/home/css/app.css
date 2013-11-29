@@ -4,8 +4,8 @@ body { background-color:#fff; }
     border-radius: 5px 5px 5px 5px;
     box-shadow: 2px 2px 2px #E1E1E1;
     background: #fff;
-    width:700px;
-    height:480px;
+    width:450px;
+    height:300px;
     background:#f4f4f4;
 
 
@@ -27,8 +27,8 @@ body { background-color:#fff; }
     /*IE bugfix*/
     padding-top:15px;
     margin:0;
-    width:700px;
-    height:400px;
+    width:98%;
+    height:98%;
     overflow: hidden;
 
 }
@@ -42,10 +42,12 @@ body { background-color:#fff; }
 }
 
 #inddFileName {
-    margin-right: 3px;
-    right: 30px;
-    bottom: 45px;
-    position: absolute;
+    border: 1px solid black;
+    float: left;
+    margin-top: 5px;
+    margin-left: 10px;
+    width: 160px;
+    height: 20px;
 }
 
 #slider{
@@ -70,7 +72,7 @@ body { background-color:#fff; }
     color: #FFFFFF;
     display: block;
     margin: 0 20px 20px;
-    padding: 5px;
+    padding: 3px;
     text-align: center;
 
     z-index: 10;
@@ -95,7 +97,10 @@ body { background-color:#fff; }
 }
 
 #btnChooseIndd{
-    margin-right: 250px;
+    position: absolute;
+    float: right;
+    right: 0px;
+    margin-top: 2px;
 }
 
 

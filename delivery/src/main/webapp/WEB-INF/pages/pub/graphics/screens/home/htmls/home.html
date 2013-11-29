@@ -52,7 +52,7 @@
                        <div id="typeHolder"></div>
                        <div id="assetSearch"><input type="text" placeholder="Search" id="asSearch"/> </div>
                        <div id="assetsTree"></div>
-					   <select id="templateDropDown">
+					   <select id="templateDropDown" disabled>
 						 
 					   </select>
                        <div id="assetDetails" class="assetDetails"></div>
@@ -77,7 +77,7 @@
 
                          </div>
                          <div id="assortPanel">
-                             <div id="assortPanelHeader"> <div id='btnSaveAssort'><img src='../../../graphics/screens/home/images/save.png'></div></div>
+                             <div id="assortPanelHeader"> <div id='btnSaveAssort'><img title="Save" src='../../../graphics/screens/home/images/save.png'></div></div>
 
                              <div id="subtab1">
                              </div>
@@ -111,7 +111,7 @@
 		
 <div id="dialog-form">
             <div id="wrapper">
-               <input type="text" id="pageName" name="pageName" class="form-input" />
+               <input type="text" maxlength="40" id="pageName" name="pageName" class="form-input" />
                 <form name="createPageForm">
                     <div id="slider">
 					
@@ -142,7 +142,8 @@
 						</div>
 						 <div class="form_row">
 								<div class="form-left">Choose Master Template: </div>
-								<a id="btnChooseIndd" class="form-btn">Choose Indd File</a>
+								<div id="inddFileName"></div>
+								<a id="btnChooseIndd" href="#" class="form-btn">Browse</a>
 								<div class="form-error"></div>
 						</div>
 						<div class="form_row">
