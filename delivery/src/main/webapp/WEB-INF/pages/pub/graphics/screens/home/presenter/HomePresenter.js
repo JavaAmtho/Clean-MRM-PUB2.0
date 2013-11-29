@@ -53,34 +53,6 @@ HomePresenter.setEvenOddClassesToDimensions = function() {
     });
 }
 
-/**
- * @description if the node that is activated contains pages then set all the pages
- *              with their respective rules
- */
-HomePresenter.setAllPageRulesOnActivateOfNode = function() {
-    var $masterPages = $("#viewHolder").children('.masterPage');
-    for (var i = 0; i < $masterPages.length; i++) {
-        var $masterPage = $($masterPages[i]);
-
-        var mamFileId = $masterPage.children('.mamFileId').html();
-        var editorURL = $masterPage.children('.editorURL').html();
-        if(mamFileId && mamFileId.length!=0){
-            PagePresenter.bindLogicalPagesToCustomLoadingWBDEvent($masterPage);
-            if ($masterPage.children(".expand").css('display') == 'none') {
-                $masterPage.children(".expand").toggle();
-            }
-            if(editorURL && editorURL.trim().length!=0){
-                PagePresenter.addClickEventForWBDPopup(editorURL,$masterPages[i]);
-            }
-            else{
-                $masterPage.children('.masterPageHoverDiv').toggleClass('hidden');
-                $masterPage.attr("ondblclick","PagePresenter.openWhiteBoard(this,event)");
-            }
-        }
-    }
-}
-
-
 
 /**
  * @description bind the filter buttons to a click event that performs the filtering operation
@@ -181,7 +153,7 @@ HomePresenter.loadViewItems = function (evt, currentTemplateView) {
         //Set rules for all the master Pages
 
         if (pages.pageIDs != null && pages.pageIDs.length > 0) {
-            HomePresenter.setAllPageRulesOnActivateOfNode();
+            PagePresenter.setAllPageRulesOnActivateOfNode();
         }
 
 

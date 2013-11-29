@@ -13,6 +13,35 @@ var EXPAND_ICON_URL = 'url("../../../graphics/screens/home/images/expand.png")';
 var LOADING_IMAGE_URL = '../../../graphics/screens/home/images/load.gif';
 
 
+/**
+ * @description if the node that is activated contains pages then set all the pages
+ *              with their respective rules
+ */
+PagePresenter.setAllPageRulesOnActivateOfNode = function() {
+    var $masterPages = $("#viewHolder").children('.masterPage');
+    for (var i = 0; i < $masterPages.length; i++) {
+        var $masterPage = $($masterPages[i]);
+
+        var mamFileId = $masterPage.children('.mamFileId').html();
+        var editorURL = $masterPage.children('.editorURL').html();
+        var pageType = $masterPage.children('.pageType').html();
+        if(mamFileId && mamFileId.length!=0){
+            PagePresenter.bindLogicalPagesToCustomLoadingWBDEvent($masterPage);
+            if ($masterPage.children(".expand").css('display') == 'none') {
+                $masterPage.children(".expand").toggle();
+            }
+            if(pageType && pageType == "creative"){
+                if(editorURL && editorURL.trim().length!=0){
+                    PagePresenter.addClickEventForWBDPopup(editorURL,$masterPages[i]);
+                }
+                else{
+                    $masterPage.children('.masterPageHoverDiv').toggleClass('hidden');
+                    $masterPage.attr("ondblclick","PagePresenter.openWhiteBoard(this,event)");
+                }
+            }
+        }
+    }
+}
 
 
 /**
