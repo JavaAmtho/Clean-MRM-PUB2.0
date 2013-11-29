@@ -261,6 +261,7 @@ PagePresenter.bindLogicalPagesToCustomLoadingWBDEvent = function ($masterPage) {
         $masterPageDiv.children('.loading-overlay').addClass('hidden');
         $masterPageDiv.children('.loading-message').addClass('hidden');
         $masterPageDiv.children('.masterPageHoverDiv').addClass('hidden');
+        $masterPageDiv.attr('ondblclick','');
         PagePresenter.addClickEventForWBDPopup(wbdURL, this);
     });
 

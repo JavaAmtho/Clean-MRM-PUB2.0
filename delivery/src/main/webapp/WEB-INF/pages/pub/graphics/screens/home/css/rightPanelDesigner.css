@@ -332,6 +332,10 @@ h2.expand {
     user-select: none;
 }
 
+.rulesText{
+    font-size: 11px;
+}
+
 /********* CSS FOR PAGE STUFF ENDS **********/
 
 /********* CSS FOR RULE STUFF STARTS *********/
@@ -583,7 +587,7 @@ img.save {
 }
 
 .name {
-    font-size: 15px;
+    font-size: 13px;
     line-height: 1.2em;
     font-family: tahoma;
     word-break: break-all;
@@ -591,6 +595,7 @@ img.save {
     color: #FFF;
     width: 80%;
     margin: 7%;
+    margin-top:18px;
 }
 
 #showAllPagesBtn{
