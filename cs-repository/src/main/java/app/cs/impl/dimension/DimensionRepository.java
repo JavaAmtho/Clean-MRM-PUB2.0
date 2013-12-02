@@ -83,7 +83,10 @@ public class DimensionRepository implements IDimensionRepository {
 	
 	@Override
 	public String editProperty(MultiDimensionalObject objectToEdit){
-		mongoRepository.updateByIdSetProperty(objectToEdit.getId(), "title", objectToEdit.getTitle(), objectToEdit.getClass());
+		MultiDimensionalObject currentObject = mongoRepository.find(objectToEdit.getId(), MultiDimensionalObject.class);
+		currentObject.setTitle(objectToEdit.getTitle());
+		save(currentObject);
+//		mongoRepository.updateByIdSetProperty(objectToEdit.getId(), "name", objectToEdit.getTitle(), objectToEdit.getClass());
 		return "updated";
 	}
 

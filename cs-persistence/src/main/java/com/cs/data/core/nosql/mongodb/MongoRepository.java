@@ -147,11 +147,11 @@ public class MongoRepository implements NoSqlRepository {
 	@Override
 	public <T> void updateByIdSetProperty(String id, String field, String valueToAdd,
 			Class<T> type) {
-
 		mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(id)),
 				update.set(field, valueToAdd), type);
 
 	}
+
 
 	/*
 	 * Gets all documents of given collection.

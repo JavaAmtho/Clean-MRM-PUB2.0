@@ -76,7 +76,6 @@ public class CreateDimensionController {
 		createDimensionRequest.setPath(path);
 		createDimensionRequest.setType(type);
 		createDimensionRequest.setDimensionInfo(dimensionInfo);
-
 		return ((ResponseModel) createDimension
 				.execute(createDimensionRequest)).getResponse();
 

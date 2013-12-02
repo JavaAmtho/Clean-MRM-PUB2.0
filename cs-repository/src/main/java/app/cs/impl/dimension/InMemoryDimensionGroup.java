@@ -42,7 +42,7 @@ public class InMemoryDimensionGroup implements IInMemoryDimensionGroup {
 
 		delete(dimension);
 		redisRepository.set(
-				dimension.getPath().concat("," + dimension.getName()), groupId);
+				dimension.getPath().concat("," + dimension.getId()), groupId);
 	}
 
 	/**
@@ -64,10 +64,10 @@ public class InMemoryDimensionGroup implements IInMemoryDimensionGroup {
 	public void addNewGroup(MultiDimensionalObject dimension, String groupId) {
 		// TODO Auto-generated method stub
 		if (dimension.isRoot()) {
-			redisRepository.set(dimension.getName(), groupId);
+			redisRepository.set(dimension.getId(), groupId);
 		} else {
 			redisRepository.set(
-					dimension.getPath().concat("," + dimension.getName()),
+					dimension.getPath().concat("," + dimension.getId()),
 					groupId);
 		}
 
