@@ -143,20 +143,48 @@ var DynaTree = function(){
                 var prefix=getUrlPrefix(action,"update");
                 newNode = createNode(e.pageObj.name,action,currentPath,flag,e.pageObj);
                 e.pageObj.id = nodeToBeEdited.data.id;
-                TreePresenter.editPage(prefix,e.pageObj.id,e.pageObj,editNode);
+                TreePresenter.editPage(prefix,e.pageObj.id,e.pageObj,editPageNode);
                 $(document).unbind("editPageEvent");
             });
             WidgetPresenter.createWidgetForNewPage("BreadCrumb",nodeToBeEdited.data);
         }
     }
 
-    function editNode(data){
-        nodeToBeEdited.data = data.response;
+    function editPageNode(data){
+        nodeToBeEdited.data.fileID = data.response.fileID;
+        nodeToBeEdited.data.filePath = data.response.filePath;
+        nodeToBeEdited.data.name = data.response.name;
+        nodeToBeEdited.data.title = data.response.title;
+        nodeToBeEdited.data.pageType = data.response.pageType;
+        nodeToBeEdited.data.renderEngineType = data.response.renderEngineType;
+        updateEditedPageInParent(nodeToBeEdited.parent,nodeToBeEdited);
         nodeToBeEdited.render();
         alertify.success("Edited successfully");
     }
+
+    function updateEditedPageInParent(parent,editedNode){
+        for(var i=0; i< parent.data.children.length; i++){
+            if(parent.data.children[i].id === editedNode.data.id){
+                parent.data.children[i] = editedNode.data;
+            }
+        }
+        currentClickedNode = parent;
+        showCurrentActivatedNode();
+    }
+
+    function updateEditedDimInParent(parent,editedNode){
+        for(var i=0; i< parent.data.children.length; i++){
+            if(parent.data.children[i].id === editedNode.data.id){
+                parent.data.children[i].title = editedNode.data.title;
+            }
+        }
+        currentClickedNode = parent;
+        showCurrentActivatedNode();
+    }
+
     function editDimension(data){
         nodeToBeEdited.data.title = data.responseString;
+        updateEditedDimInParent(nodeToBeEdited.parent,nodeToBeEdited);
         nodeToBeEdited.render();
         alertify.success("Edited successfully");
     }

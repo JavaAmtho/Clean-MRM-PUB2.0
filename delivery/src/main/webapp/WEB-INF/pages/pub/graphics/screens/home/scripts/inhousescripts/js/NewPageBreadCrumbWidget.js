@@ -15,7 +15,11 @@ var NewPageBreadCrumbWidget = function(){
         GraphicDataStore.setNewPageObject(newPageObj);
 
         if(data){
-            newPageObj = data;
+            newPageObj.fileID = data.fileID;
+            newPageObj.filePath = data.filePath;
+            newPageObj.name = data.name;
+            newPageObj.pageType = data.pageType;
+            newPageObj.renderEngineType = data.renderEngineType;
             GraphicDataStore.setNewPageObject(newPageObj);
             NewPageBreadCrumbWidget.preInsertFormDetails(data);
             editPage = true;
