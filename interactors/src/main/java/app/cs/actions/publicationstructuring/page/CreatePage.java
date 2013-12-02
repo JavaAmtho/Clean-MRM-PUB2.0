@@ -144,6 +144,7 @@ public class CreatePage implements Interactor {
 		publicationAsset.setFileID(request.getPageInfo().getFileID());
 		publicationAsset.setPageType(request.getPageInfo().getPageType());
 		publicationAsset.setRenderEngineType(request.getPageInfo().getRenderEngineType());
+		publicationAsset.setFilePath(request.getPageInfo().getFilePath());
 	}
 
 }

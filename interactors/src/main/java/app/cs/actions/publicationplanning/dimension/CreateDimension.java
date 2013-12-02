@@ -55,6 +55,7 @@ public class CreateDimension implements Interactor {
 			setDimensionAttributes(dimension, request.getType(), request.getName(),
 					request.getPath(), request.isFolder(),
 					request.getDimensionInfo());
+			System.out.println(dimension.getTitle());
 			return new MultiDimensionalObjectResponse(
 					dimensionRepository.createDimension(dimension));
 	}

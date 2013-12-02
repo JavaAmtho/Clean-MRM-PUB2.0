@@ -96,6 +96,7 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 			properties.put("pageType",  (objectToEdit.getPageType()!=null ? objectToEdit.getPageType() : ""));
 			properties.put("renderEngineType", (objectToEdit.getRenderEngineType()!=null ? objectToEdit.getRenderEngineType() : ""));
 			properties.put("fileID", (objectToEdit.getFileID()!=null ? objectToEdit.getFileID() : ""));
+			properties.put("filePath", (objectToEdit.getFilePath()!=null ? objectToEdit.getFilePath() : ""));
 		}
 		String response = neo4jRepository.editProperties(CommonConstants.NODE_IDENTIFICATION_FIELD, objectToEdit.getId(), properties);
 		return response;
