@@ -15,6 +15,8 @@ var NewPageBreadCrumbWidget = function(){
         GraphicDataStore.setNewPageObject(newPageObj);
 
         if(data){
+            newPageObj = data;
+            GraphicDataStore.setNewPageObject(newPageObj);
             NewPageBreadCrumbWidget.preInsertFormDetails(data);
             editPage = true;
         }
@@ -64,6 +66,9 @@ NewPageBreadCrumbWidget.chooseIndd = function(){
 }
 
 NewPageBreadCrumbWidget.preInsertFormDetails = function(data){
+
+    $("#inddFileName").html(data.filePath);
+
     $("#btnCreatePage").text('Save Page');
 
     var radioElementsOfPage = document.getElementsByName("pageType");
