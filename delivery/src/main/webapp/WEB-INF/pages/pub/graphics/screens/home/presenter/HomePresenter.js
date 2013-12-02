@@ -139,12 +139,9 @@ HomePresenter.loadViewItems = function (evt, currentTemplateView) {
         }
 
     });
+
     if(pageIDs.length > 0){
         pages["pageIDs"] = pageIDs;
-        /*GetAllPageRules.get(pages,function(data){
-            GraphicDataStore.addAllPageRules(data.listOfPageRules);
-        });*/
-
     }
 
     MustacheWrapper.createUI(currentTemplateView, evt, function (currentViewStr) {
@@ -168,8 +165,7 @@ HomePresenter.loadViewItems = function (evt, currentTemplateView) {
 
         $isotopeContainer.isotope();
 
-//        HomePresenter.bindClickEventToFilterButtons();
-//        $('.nano').nanoScroller();
+        //$('.nano').nanoScroller();
     });
 }
 
@@ -195,20 +191,15 @@ HomePresenter.btnFocus = function (btn) {
 
 $(document).bind("TREE_ITEM_CLICKED", function itemClickedHandler(e) {
 
-    //Check if something is unsaved in previous opened assortment
-   /* if(GraphicDataStore.isAssortmentUpdated){
-        AssetTreePresenter.saveChangesOfAssortment();
-    }else{*/
-        if (e.nodeType == "Assortment") {
-            AssetTreePresenter.enableTemplatesDropdown(e.rendererType);
-            AssetTreePresenter.showAssortmentPanel(e.uiData);
-        }else{
-            AssetTreePresenter.hideAssortPanel();
-            rendererData = {"mydata": e.uiData};
-            HomePresenter.loadViewItems(rendererData, EngineDataStore.getBaseURL() + "graphics/screens/home/htmls/renderers/TileViewRenderer.html");
-            HomePresenter.btnFocus(".tileBtnCSS");
-        }
-    /*}*/
+    if (e.nodeType == "Assortment") {
+        AssetTreePresenter.enableTemplatesDropdown(e.rendererType);
+        AssetTreePresenter.showAssortmentPanel(e.uiData);
+    }else{
+        AssetTreePresenter.hideAssortPanel();
+        rendererData = {"mydata": e.uiData};
+        HomePresenter.loadViewItems(rendererData, EngineDataStore.getBaseURL() + "graphics/screens/home/htmls/renderers/TileViewRenderer.html");
+        HomePresenter.btnFocus(".tileBtnCSS");
+    }
 });
 
 /**
