@@ -14,6 +14,7 @@ var NewPageBreadCrumbWidget = function(){
         var newPageObj = new Object();
         GraphicDataStore.setNewPageObject(newPageObj);
 
+        $("#btnCreatePage").text('Create Page');
         if(data){
             newPageObj.fileID = data.fileID;
             newPageObj.filePath = data.filePath;
@@ -46,6 +47,10 @@ var NewPageBreadCrumbWidget = function(){
                 $(document).unbind('createPageEvent');
                 $("#inddFileName").html("");
                 $('#pageNameText').html("");
+                var radioElementsOfRenderer = document.getElementsByName("renderType");
+                for(var i = 0; i < radioElementsOfRenderer.length; i++){
+                    radioElementsOfRenderer[i].disabled = true;
+                }
             }
 
         });
