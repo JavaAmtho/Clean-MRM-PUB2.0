@@ -163,21 +163,23 @@ var DynaTree = function(){
     }
 
     function updateEditedPageInParent(parent,editedNode){
-        for(var i=0; i< parent.data.children.length; i++){
-            if(parent.data.children[i].id === editedNode.data.id){
-                parent.data.children[i] = editedNode.data;
-            }
-        }
+        var childIndex = findChildIndexInParent(parent,editedNode);
+        parent.data.children[childIndex] = editedNode.data;
         currentClickedNode = parent;
         showCurrentActivatedNode();
     }
 
-    function updateEditedDimInParent(parent,editedNode){
+    function findChildIndexInParent(parent,child){
         for(var i=0; i< parent.data.children.length; i++){
-            if(parent.data.children[i].id === editedNode.data.id){
-                parent.data.children[i].title = editedNode.data.title;
+            if(parent.data.children[i].id === child.data.id){
+               return i;
             }
         }
+    }
+
+    function updateEditedDimInParent(parent,editedNode){
+        var childIndex = findChildIndexInParent(parent,editedNode);
+        parent.data.children[childIndex].title = editedNode.data.title;
         currentClickedNode = parent;
         showCurrentActivatedNode();
     }
@@ -258,13 +260,20 @@ var DynaTree = function(){
     function  onDeleteSuccess(){
         nodeToBeDeleted.remove();
         var parNode = nodeToBeDeleted.parent;
-        for(var i=0; i< parNode.data.children.length; i++){
-            if(nodeToBeDeleted.data.title == parNode.data.children[i].title){
+        /*for(var i=0; i< parNode.data.children.length; i++){
+            if(nodeToBeDeleted.data.id == parNode.data.children[i].id){
                 parNode.data.children.splice(i,1);
             }
         }
         alertify.success("Deleted successfully");
+        parNode.activate();*/
+
+        var childIndex = findChildIndexInParent(parNode,nodeToBeDeleted);
+        parNode.data.children.splice(childIndex,1);
+        currentClickedNode = parNode;
+        alertify.success("Deleted successfully");
         parNode.activate();
+        showCurrentActivatedNode();
     }
 
     /**
