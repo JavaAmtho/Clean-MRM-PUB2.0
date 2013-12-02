@@ -54,7 +54,7 @@ NewPageBreadCrumbWidget.chooseIndd = function(){
         var newPageObj = GraphicDataStore.getNewPageObject();
         newPageObj.fileID = data.FileID;
         var splitFilePath = data.FilePath.split("/");
-        var fileName = splitFilePath[splitFilePath.length];
+        var fileName = splitFilePath[splitFilePath.length - 1];
         newPageObj.filePath = fileName;
         GraphicDataStore.setNewPageObject(newPageObj);
         $("#inddFileName").html(fileName)
