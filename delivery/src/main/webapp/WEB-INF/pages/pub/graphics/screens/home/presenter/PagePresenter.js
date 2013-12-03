@@ -95,7 +95,8 @@ PagePresenter.openWhiteBoard = function (pageDiv) {
     GraphicDataStore.addRuleToLoadingList(logicalPageID);
     CreateWBD.createWBD(logicalPageID,rendererName,function (data) {
             if (data == 'error') {
-                alert("Error creating WBD!!");
+                //alert("Error creating WBD!!");
+                alertify.error("Error Creating WBD!!");
                 $divReference.trigger("loadingError", [logicalPageID]);  //trigger the loading error event
             }
             else {
