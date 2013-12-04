@@ -288,7 +288,7 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 		}
 		query = query.substring(0, query.length()-1);
 		
-		
+		System.out.println(query);
 		try{
 			neo4jTemplate.query(query, new HashMap<String,Object>());
 		}

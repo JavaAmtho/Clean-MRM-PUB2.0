@@ -28,6 +28,8 @@ public class Product implements Serializable {
 	private String rendererTemplateId;
 	private String rendererTemplateName;
 	private String response;
+	private String myId;
+	
 
 	public String getResponse() {
 		return response;
@@ -40,10 +42,10 @@ public class Product implements Serializable {
 	@Override
 	public String toString() {
 		return "{id:\"" + this.id + "\",label:\"" + this.label + "\",title:\"" + this.title + "\""
-				 + ",type:\"" + this.type + "\",image:\"" + this.image + "\""
-						+ ",description:\"" + this.description + "\",service:\"" + this.service + "\",isFolder:" + this.isFolder+ ""
-								+ ",__type__:\"Product\",rendererTemplateId:\"" + this.rendererTemplateId + "\""
-										+ ",rendererTemplateName:\"" + this.rendererTemplateName + "\"}";
+				+ ",type:\"" + this.type + "\",image:\"" + this.image + "\""
+				+ ",description:\"" + this.description + "\",service:\"" + this.service + "\",isFolder:" + this.isFolder+ ""
+				+ ",__type__:\"Product\",rendererTemplateId:\"" + this.rendererTemplateId + "\""
+				+ ",rendererTemplateName:\"" + this.rendererTemplateName + "\",myId:\"" + this.myId + "\"}";
 	}
 	
 	public Product() {
@@ -167,5 +169,14 @@ public class Product implements Serializable {
 	public void setRendererTemplateName(String rendererTemplateName) {
 		this.rendererTemplateName = rendererTemplateName;
 	}
+	
+	public String getMyId() {
+		  return myId;
+		 }
+
+		 public void setMyId(String myId) {
+		  this.myId = myId;
+		 }
+		
 	
 }

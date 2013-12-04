@@ -40,6 +40,7 @@ public class UpdateAssortment implements Interactor {
 		assortmentObject.setName(updateAssortmentRequest.getName());
 */
 //		assortmentRepository.updateAssortment(assortmentObject);
+		System.out.println("Inside Update Assortment");
 		publicationRepository.updateAssortmentProducts(updateAssortmentRequest.getName(), assortment.getProducts());
 		return new EmptyResponse();
 	}
