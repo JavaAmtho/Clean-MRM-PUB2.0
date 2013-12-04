@@ -212,22 +212,26 @@ var DynaTree = function(){
         if(type == "Create"){
             alertify.prompt("Please enter "+action+" name", function (e, name) {
                 if (e) {
-                    name = name.replace(/^\s+|\s+$/g,'')
+                    name = name.replace(/^\s+|\s+$/g,''); //Removing whitespaces at start and end of text entered
 
                     if(name.length >0){
-                        if(name.length>45){
-                            alertify.error("Inserted name too long! Please insert name upto 45 characters")
-                        }else{
-                            var prefix=getUrlPrefix(action,"create");
-                            if(action == "Assortment"){
-                                newNode = createAssortmentNode(name,action,currentPath,flag);
-                                TreePresenter.createAssortment(prefix,action,name,currentPath,flag,addNode);
-                            }else{
-                                newNode = createNode(name,action,currentPath,flag);
-                                TreePresenter.createDimension(prefix,action,name,currentPath,flag,addNode);
-                            }
-                        }
-
+                        var validTextEntered = checkInvalidCharacters(name);
+                         if(validTextEntered){
+                             if(name.length>45){
+                                 alertify.error("Inserted name too long! Please insert name upto 45 characters")
+                             }else{
+                                 var prefix=getUrlPrefix(action,"create");
+                                 if(action == "Assortment"){
+                                     newNode = createAssortmentNode(name,action,currentPath,flag);
+                                     TreePresenter.createAssortment(prefix,action,name,currentPath,flag,addNode);
+                                 }else{
+                                     newNode = createNode(name,action,currentPath,flag);
+                                     TreePresenter.createDimension(prefix,action,name,currentPath,flag,addNode);
+                                 }
+                             }
+                         }else{
+                             alertify.error('Your entered name contains illegal characters.');
+                         }
                     }
                     else{
                         alertify.error("Please enter a valid name");
@@ -238,17 +242,23 @@ var DynaTree = function(){
             alertify.prompt("Please enter "+action+" name", function (e, name) {
                 if (e) {
                     name = name.replace(/^\s+|\s+$/g,'')
-                    if(name.length >0){
-                        if(name.length>45){
-                            alertify.error("Inserted name too long! Please insert name upto 45 characters")
-                        }else{
-                            var prefix=getUrlPrefix(action,"update");
-                            nodeToBeEdited.data.title = name;
-                            TreePresenter.updateDimension(prefix,nodeToBeEdited.data.id,nodeToBeEdited.data,editDimension);
+
+                    var validTextEntered = checkInvalidCharacters(name);
+                    if(validTextEntered){
+                        if(name.length >0){
+                            if(name.length>45){
+                                alertify.error("Inserted name too long! Please insert name upto 45 characters")
+                            }else{
+                                var prefix=getUrlPrefix(action,"update");
+                                nodeToBeEdited.data.title = name;
+                                TreePresenter.updateDimension(prefix,nodeToBeEdited.data.id,nodeToBeEdited.data,editDimension);
+                            }
                         }
-                    }
-                    else{
-                        alertify.error("Please enter a valid name");
+                        else{
+                            alertify.error("Please enter a valid name");
+                        }
+                    }else{
+                        alertify.error('Your entered name contains illegal characters.');
                     }
                 }
             },defaultName);

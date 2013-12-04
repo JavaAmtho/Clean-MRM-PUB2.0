@@ -2,6 +2,11 @@ var validatePageName = function(){
     var err = 0;
     var name = $('#pageName').val();
     name = name.replace(/^\s+|\s+$/g,'')
+    var validTextEntered = checkInvalidCharacters(name);
+    if(!validTextEntered){
+        alertify.error('Your entered name contains illegal characters.');
+        err++;
+    }
     if(name == ''){
         $('#pageNameText').html("Page Name Can Not Be Empty");
         err++;
@@ -75,3 +80,10 @@ var step2_validation = function(){
     }
 
 };
+
+function checkInvalidCharacters(enteredText){
+    if(/^[a-zA-Z0-9-]*$/.test(enteredText) == false) {
+        return false;
+    }
+    return true;
+}
