@@ -68,15 +68,14 @@ NewPageBreadCrumbWidget.chooseIndd = function(){
         var fileName = splitFilePath[splitFilePath.length - 1];
         newPageObj.filePath = fileName;
         GraphicDataStore.setNewPageObject(newPageObj);
-        $("#inddFileName").html(fileName)
+        $("#inddFileName").val(fileName)
     }
 
     //alert(JSON.stringify(GraphicDataStore.getNewPageObject()));
 }
 
 NewPageBreadCrumbWidget.preInsertFormDetails = function(data){
-
-    $("#inddFileName").html(data.filePath);
+    $("#inddFileName").val(data.filePath);
 
     $("#btnCreatePage").text('Save Page');
 
@@ -96,7 +95,7 @@ NewPageBreadCrumbWidget.preInsertFormDetails = function(data){
         }
     }
 
-    $('input:text').val(data.title);
+    $("#pageName").val(data.title);
 
     NewPageBreadCrumbWidget.enableRenderingEngine();
 }
