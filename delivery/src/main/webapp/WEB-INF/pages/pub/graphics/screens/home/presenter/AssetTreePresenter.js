@@ -159,11 +159,12 @@ AssetTreePresenter.createAssetsListWithData = function(assetdata){
  * @param rendererData
  * @description shows the assortment panel and hides the mustache div
  */
-AssetTreePresenter.showAssortmentPanel = function (rendererData) {
+AssetTreePresenter.showAssortmentPanel = function (productData) {
 
     AssetTreePresenter.unHideAssortPanel();
-    GraphicDataStore.setProdcutsArr(rendererData);
+    GraphicDataStore.setProdcutsArr(productData);
 
+    var rendererData = AssetTreePresenter.assignNewIds(productData);
     productsDataSource = new kendo.data.DataSource({
         data: rendererData
     });
@@ -198,13 +199,18 @@ AssetTreePresenter.makeAssetsListDraggable = function(){
 
 AssetTreePresenter.myCount=0;
 
-AssetTreePresenter.makeProductsListDropable = function(){
-    var len = productsDataSource._data.length;
-    var myIdCount = 0;
+AssetTreePresenter.assignNewIds = function(data){
+    var len = data.length;
     for(var i=0; i< len; i++){
-        productsDataSource._data[i].myId = i+1;
-        myIdCount = i+1;
+        data[i].myId = i+1;
     }
+    return data;
+}
+
+AssetTreePresenter.myIdCount;
+
+AssetTreePresenter.makeProductsListDropable = function(){
+    AssetTreePresenter.myIdCount = productsDataSource._data.length;
     $("#subtab1").kendoDropTarget({
         dragenter: function (e) {
             $("#subtab1").css('border', '2px solid #000');
@@ -214,12 +220,12 @@ AssetTreePresenter.makeProductsListDropable = function(){
             e.draggable.hint.css("opacity", 1);
         },
         drop: function (e) {
-            myIdCount++;
+            AssetTreePresenter.myIdCount++;
             var item = assetsDataSource.getByUid(e.draggable.hint.data().uid);
             var dropDownObj = document.getElementById("templateDropDown");
             item.rendererTemplateId = "NA";
             item.rendererTemplateName = "NA";
-            item.myId = myIdCount;
+            item.myId = AssetTreePresenter.myIdCount;
             if(!dropDownObj.disabled)
                 item.rendererTemplateId = $("#templateDropDown option:selected").attr("id");
                 item.rendererTemplateName = $("#templateDropDown option:selected").val();
