@@ -225,22 +225,12 @@ AssetTreePresenter.makeProductsListDropable = function(){
                 item.rendererTemplateName = $("#templateDropDown option:selected").val();
             productsDataSource.add(item);
             AssetTreePresenter.makeAssortmentDirtyOrNot(true);
-            //$("#subtab1").css('border', '2px dashed #aaa');
-            //unmappedtag_datasource.remove(item);
         }
     });
 }
 
 AssetTreePresenter.makeAssortmentDirtyOrNot = function(flag){
     $("#subtab1").css('border', '2px dashed #F00');
-   /* var $childPage = $(childPageInnerDiv);
-    $childPage.children('.wbdURL').html(url);
-    $imageReference = $childPage.children('.popupImage');
-    $imageReference.attr('onclick', "PagePresenter.openURL(this.parentNode)");
-    $imageReference.removeClass('hidden');
-    setInterval(function () {                   //pulsating glow logic
-        $imageReference.toggleClass('urlInjected');
-    }, 1000);*/
     if(!flag){
         $("#subtab1").css('border', '2px dashed #aaa');
     }
@@ -317,6 +307,14 @@ AssetTreePresenter.saveChangesOfAssortment = function(callBack){
  *  @description hides assortment panel and shows mustache div
  */
 AssetTreePresenter.hideAssortPanel = function () {
+    $("#panel").animate({right: '-200px'}, "slow");
+    setTimeout(function() {
+        $("#panel").css('display','none')
+
+    }, 500);
+    AssetTreePresenter.reset();
+    btnSelectionFlag = 0;
+
     $('#assortPanel').hide();
     $('#dim').show();
 }
