@@ -43,7 +43,10 @@ Router.forward = function(url,async,callback){
         async:async,
         success:function(result){
             if(result.status === "success"){
-                callback(result.response);
+                if(result.response)
+                    callback(result.response);
+                if(result.responseString)
+                    callback(result.responseString);
             }else{
                 alert("Something went wrong| Please try again later");
             }
@@ -71,7 +74,10 @@ Router.forwardWithPost = function(url,async,reqBody,callback){
         async:async,
         success:function(result){
             if(result.status === "success"){
-                callback(result.response);
+                if(result.response)
+                    callback(result.response);
+                if(result.responseString)
+                    callback(result.responseString);
             }else{
                 alert("Something went wrong| Please try again later");
             }

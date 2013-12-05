@@ -151,12 +151,12 @@ var DynaTree = function(){
     }
 
     function editPageNode(data){
-        nodeToBeEdited.data.fileID = data.response.fileID;
-        nodeToBeEdited.data.filePath = data.response.filePath;
-        nodeToBeEdited.data.name = data.response.name;
-        nodeToBeEdited.data.title = data.response.title;
-        nodeToBeEdited.data.pageType = data.response.pageType;
-        nodeToBeEdited.data.renderEngineType = data.response.renderEngineType;
+        nodeToBeEdited.data.fileID = data.fileID;
+        nodeToBeEdited.data.filePath = data.filePath;
+        nodeToBeEdited.data.name = data.name;
+        nodeToBeEdited.data.title = data.title;
+        nodeToBeEdited.data.pageType = data.pageType;
+        nodeToBeEdited.data.renderEngineType = data.renderEngineType;
         updateEditedPageInParent(nodeToBeEdited.parent,nodeToBeEdited);
         nodeToBeEdited.render();
         alertify.success("Edited successfully");
@@ -185,7 +185,7 @@ var DynaTree = function(){
     }
 
     function editDimension(data){
-        nodeToBeEdited.data.title = data.responseString;
+        nodeToBeEdited.data.title = data;
         updateEditedDimInParent(nodeToBeEdited.parent,nodeToBeEdited);
         nodeToBeEdited.render();
         alertify.success("Edited successfully");

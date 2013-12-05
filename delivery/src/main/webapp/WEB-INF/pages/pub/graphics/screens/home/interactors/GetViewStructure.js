@@ -47,6 +47,7 @@ GetViewStructure.getAll = function(){
  * @param data
  */
 GetViewStructure.onViewStructuresLoaded = function(data){
+    data=eval('(' + data + ')');
     GraphicDataStore.setSchemaArray(data);
     GraphicDataStore.setDefaultSchema();
     GraphicDataStore.setSchemaLabel();
