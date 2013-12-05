@@ -1,7 +1,5 @@
 package app.cs.controller.publicationplanning.perspective;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,12 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import app.cs.boundary.delivery.Interactor;
-import app.cs.impl.model.MultiDimensionalObject;
+import app.cs.actions.publicationplanning.perspective.SwitchPerspective;
 import app.cs.model.request.StringRequest;
 import app.cs.model.request.SwitchPerspectiveRequest;
-import app.cs.model.response.TreeResponseModel;
 import app.cs.model.response.TreeResponse;
+import app.cs.model.response.TreeResponseModel;
 
 /**
  * The Class NodeController.
@@ -24,7 +21,7 @@ import app.cs.model.response.TreeResponse;
 public class SwitchPerspectiveController {
 
 	/** The dimension service. */
-	private Interactor switchPerspective;
+	private SwitchPerspective switchPerspective;
 
 	private StringRequest request;
 	
@@ -41,7 +38,7 @@ public class SwitchPerspectiveController {
 	 *            the cache
 	 */
 	@Autowired
-	public SwitchPerspectiveController(Interactor switchPerspective,
+	public SwitchPerspectiveController(SwitchPerspective switchPerspective,
 			StringRequest request,SwitchPerspectiveRequest lazyLoadRequest) {
 		this.switchPerspective = switchPerspective;
 		this.request = request;

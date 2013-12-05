@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import app.cs.actions.publicationstructuring.page.MovePage;
 import app.cs.boundary.delivery.Interactor;
 import app.cs.model.request.MovePageRequest;
 import app.cs.model.response.ResponseModel;
@@ -21,7 +22,7 @@ public class MovePageController {
 	/** The Constant MOVE. */
 	private static final String MOVEPAGE = "/page/move/{type}/name/{id}/path/{path}/folder/{folder}/newpath/{newpath}";
 
-	private Interactor movePage;
+	private MovePage movePage;
 	private MovePageRequest movePageRequest;
 
 	/**
@@ -33,7 +34,7 @@ public class MovePageController {
 	 *            the factory
 	 */
 	@Autowired
-	public MovePageController(Interactor movePage,
+	public MovePageController(MovePage movePage,
 			MovePageRequest movePageRequest) {
 		this.movePage = movePage;
 		this.movePageRequest = movePageRequest;

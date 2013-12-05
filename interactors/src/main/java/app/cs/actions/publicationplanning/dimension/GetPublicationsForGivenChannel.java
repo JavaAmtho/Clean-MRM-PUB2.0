@@ -11,6 +11,7 @@ import app.cs.impl.model.MultiDimensionalObject;
 import app.cs.interfaces.dimension.IDimensionRepository;
 import app.cs.model.request.GetDimensionByIdRequest;
 import app.cs.model.request.RequestModel;
+import app.cs.model.response.EmptyResponse;
 import app.cs.model.response.ResponseModel;
 import app.cs.model.response.TreeResponse;
 import app.cs.model.response.TreeResponseModel;
@@ -19,7 +20,7 @@ import app.cs.utils.CommonConstants;
 
 //TODO:::REMOVED INTERACTOR IMPLEMENTAION!!!PLEASE CHECK AND CHAGNGE!!
 @Component
-public class GetPublicationsForGivenChannel{
+public class GetPublicationsForGivenChannel implements Interactor{
 
 	private IDimensionRepository dimensionRepository;
 
@@ -29,7 +30,7 @@ public class GetPublicationsForGivenChannel{
 		this.dimensionRepository = dimensionRepository;
 	}
 
-	public TreeResponseModel execute(RequestModel model) {
+	public ResponseModel execute(RequestModel model) {
 		GetDimensionByIdRequest dimensionByIdRequest = (GetDimensionByIdRequest) model;
 		String status = CommonConstants.FAIL_RESPONSE;
 		List<MultiDimensionalObject> response = dimensionRepository.getDimensionsBy(
@@ -37,7 +38,7 @@ public class GetPublicationsForGivenChannel{
 		if(response != null){
 			status = CommonConstants.SUCCESS_RESPONSE;
 		}
-		return new TreeResponse(response,status);
+		return new EmptyResponse();
 	}
 
 }

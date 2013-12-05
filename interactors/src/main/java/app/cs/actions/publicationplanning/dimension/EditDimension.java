@@ -8,6 +8,7 @@ import app.cs.impl.dimension.DimensionRepository;
 import app.cs.model.request.EditDimensionRequest;
 import app.cs.model.request.RequestModel;
 import app.cs.model.response.EmptyResponse;
+import app.cs.model.response.EmptyResponseWithStatus;
 import app.cs.model.response.ResponseModel;
 
 @Component
@@ -24,7 +25,7 @@ public class EditDimension implements Interactor {
 	public ResponseModel execute(RequestModel requestMdel) {
 		EditDimensionRequest request = (EditDimensionRequest) requestMdel;
 		request.getDimensionalObject().setIsFolder(true);
-		dimensionRepository.editProperty(request.getDimensionalObject());
-		return new EmptyResponse();
+		String status = dimensionRepository.editProperty(request.getDimensionalObject());
+		return new EmptyResponseWithStatus(status, request.getDimensionalObject().getId());
 	}
 }

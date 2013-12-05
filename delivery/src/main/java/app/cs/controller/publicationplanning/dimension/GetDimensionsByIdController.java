@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import app.cs.actions.publicationplanning.dimension.GetPublicationsForGivenChannel;
 import app.cs.boundary.delivery.Interactor;
 import app.cs.model.request.GetDimensionByIdRequest;
 import app.cs.model.response.TreeResponse;
@@ -15,10 +16,10 @@ import app.cs.model.response.TreeResponse;
 @Controller
 public class GetDimensionsByIdController {
 
-	private Interactor getPublicationsForGivenChannel;
+	private GetPublicationsForGivenChannel getPublicationsForGivenChannel;
 
 	@Autowired
-	public GetDimensionsByIdController(Interactor getPublicationsForGivenChannel) {
+	public GetDimensionsByIdController(GetPublicationsForGivenChannel getPublicationsForGivenChannel) {
 		this.getPublicationsForGivenChannel = getPublicationsForGivenChannel;
 	}
 

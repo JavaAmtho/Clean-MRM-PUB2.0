@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import app.cs.actions.publicationstructuring.page.UpdatePage;
 import app.cs.boundary.delivery.Interactor;
 import app.cs.impl.model.Assortment;
 import app.cs.impl.model.PublicationAssetObject;
@@ -20,11 +21,11 @@ import app.cs.utils.CommonConstants;
 @Controller
 public class UpdatePageController {
 
-	private Interactor updatePage;
+	private UpdatePage updatePage;
 	private UpdatePublicationAssetObjectRequest request;
 
 	@Autowired
-	public UpdatePageController(Interactor updatePage,
+	public UpdatePageController(UpdatePage updatePage,
 			UpdatePublicationAssetObjectRequest request) {
 
 		this.updatePage = updatePage;

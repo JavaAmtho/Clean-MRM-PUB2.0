@@ -6,9 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import app.cs.boundary.delivery.Interactor;
+import app.cs.actions.publicationstructuring.page.DeletePage;
 import app.cs.impl.model.PublicationAssetObject;
-import app.cs.model.request.DeleteDimensionRequest;
 import app.cs.model.request.DeletePublicationAssetRequest;
 import app.cs.model.response.ResponseModel;
 
@@ -22,7 +21,7 @@ public class DeletePageController {
 	private static final String DELETE = "/page/delete/Page/{name}";
 
 	/** The dimension service. */
-	private Interactor deletePage;
+	private DeletePage deletePage;
 
 	private DeletePublicationAssetRequest deletePageRequest;
 
@@ -37,7 +36,7 @@ public class DeletePageController {
 	 *            the cache
 	 */
 	@Autowired
-	public DeletePageController(Interactor deletePage,
+	public DeletePageController(DeletePage deletePage,
 			DeletePublicationAssetRequest deletePageRequest) {
 		this.deletePage = deletePage;
 		this.deletePageRequest = deletePageRequest;

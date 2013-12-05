@@ -2,23 +2,15 @@ package app.cs.controller.publicationstructuring.page;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.cs.data.api.core.GenericDomain;
-
-import app.cs.boundary.delivery.Interactor;
+import app.cs.actions.publicationstructuring.page.CreatePage;
 import app.cs.impl.model.PageInfo;
 import app.cs.model.request.CreatePageRequest;
 import app.cs.model.response.ResponseModel;
-import app.cs.model.response.StringResponse;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 /**
  * The Class ChapterController. TODO. com.cs.business.ifacadeservices controller
@@ -33,7 +25,7 @@ public class CreatePageController<T> {
 	private static final String CREATEPAGE = "/page/create/{type}/name/{name}/path/{path}/folder/{folder}";
 
 	/** The chapter service. */
-	private Interactor createPage;
+	private CreatePage createPage;
 
 	private CreatePageRequest createPageRequestModel;
 
@@ -46,7 +38,7 @@ public class CreatePageController<T> {
 	 *            the factory
 	 */
 	@Autowired
-	public CreatePageController(Interactor createPage,
+	public CreatePageController(CreatePage createPage,
 			CreatePageRequest createPageRequestModel) {
 		this.createPage = createPage;
 		this.createPageRequestModel = createPageRequestModel;
