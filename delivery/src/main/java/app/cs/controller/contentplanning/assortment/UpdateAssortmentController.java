@@ -1,4 +1,4 @@
-/*package app.cs.controller.contentplanning.assortment;
+package app.cs.controller.contentplanning.assortment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import app.cs.boundary.delivery.Interactor;
 import app.cs.impl.model.Assortment;
 import app.cs.model.request.UpdateAssortmentRequest;
+import app.cs.model.response.ResponseModel;
 
 @Controller
 public class UpdateAssortmentController {
@@ -26,16 +27,15 @@ public class UpdateAssortmentController {
 	}
 
 	@RequestMapping(value = "/assortment/update/{id}/{path}")
-	public @ResponseBody String execute(@RequestBody Assortment assortment,
+	public @ResponseBody ResponseModel execute(@RequestBody Assortment assortment,
 			@PathVariable String id, @PathVariable String path) {
 
 		request.setAssortment(assortment);
 		request.setPath(path);
 		request.setName(id);
 
-		updateAssortment.execute(request);
-		return id;
+		ResponseModel response = updateAssortment.execute(request);
+		return response;
 	}
 
 }
-*/

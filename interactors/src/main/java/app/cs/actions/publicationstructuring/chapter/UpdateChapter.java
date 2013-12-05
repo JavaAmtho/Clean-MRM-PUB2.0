@@ -33,7 +33,7 @@ public class UpdateChapter implements Interactor {
 		UpdatePublicationAssetObjectRequest updateChapterRequest = (UpdatePublicationAssetObjectRequest) requestModel;
 		PublicationAssetObject chapter = updateChapterRequest.getPublicationAssetObject();
 		boolean result = publicationRepository.editProperty(chapter);
-		return new EmptyResponseWithStatus(result ? CommonConstants.SUCCESS_RESPONSE : CommonConstants.FAIL_RESPONSE, chapter.getId());
+		return new EmptyResponseWithStatus(result ? CommonConstants.SUCCESS_RESPONSE : CommonConstants.FAIL_RESPONSE, chapter.getTitle());
 	}
 
 }

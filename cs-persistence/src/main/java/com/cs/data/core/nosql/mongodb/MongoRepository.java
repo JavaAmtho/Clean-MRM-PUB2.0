@@ -239,11 +239,14 @@ public class MongoRepository implements NoSqlRepository {
 	public <T, P, Q> List<Q> getObjectForAndCriteria(String secondField,
 			P secondFieldValue, String firstField,
 			Collection<T> firstFieldValue, Class<Q> type) {
-
-		return mongoTemplate.find(
+		try{
+			return mongoTemplate.find(
 				Query.query(Criteria.where(firstField).in(firstFieldValue)
 						.and(secondField).is(secondFieldValue)), type);
-
+		}
+		catch(Throwable e){
+			return null;
+		}
 	}
 
 	/*
@@ -255,7 +258,12 @@ public class MongoRepository implements NoSqlRepository {
 	 */
 	@Override
 	public <T> T getObjectByKey(String id, Class<T> type) {
-		return mongoTemplate.findById(id, type);
+		try{
+			return mongoTemplate.findById(id, type);
+		}
+		catch(Throwable e){
+			return null;
+		}
 	}
 
 	@Override

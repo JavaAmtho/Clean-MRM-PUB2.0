@@ -82,13 +82,23 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 
 	@Override
 	public boolean save(GenericDomain objectToInsert) {
-		neo4jTemplate.save(objectToInsert);
+		try{
+			neo4jTemplate.save(objectToInsert);
+		}
+		catch(Throwable e){
+			return false;
+		}
 		return true;
 	}
 	
 	@Override
 	public GenericDomain saveData(GenericDomain objectToInsert) {
-		return neo4jTemplate.save(objectToInsert);
+		try{
+			return neo4jTemplate.save(objectToInsert);
+		}
+		catch(Throwable e){
+			return null;
+		}
 	}
 	
 	@Override
@@ -111,10 +121,13 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 						+ "DELETE outgoingRelationships,child,parentNode";
 		
 		System.out.println(query);
-		boolean response = false;
-		neo4jTemplate.query(query, new HashMap<String,Object>());
-		response = true;
-		return response;
+		try{
+			neo4jTemplate.query(query, new HashMap<String,Object>());
+		}
+		catch(Throwable e){
+			return false;
+		}
+		return true;
 	
 	}
 	
@@ -156,15 +169,23 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 	public Object getObjectByKey(String key,String value) {
 		// TODO Auto-generated method stub
 		String query = "START n = node(*) WHERE (n." + key + " = \"" + value + "\") RETURN n";
-		Result<Map<String, Object>> result = neo4jTemplate.query(query, new HashMap<String,Object>());
-		return result;
+		try{
+			return neo4jTemplate.query(query, new HashMap<String,Object>());
+		}
+		catch(Throwable e){
+			return null;
+		}
 	}
 
 	@Override
 	public <T> Iterable<T> traverseFromNode(GenericDomain startElement,Class<T> elementClass) {
 		TraversalDescription traversalDescription = Traversal.description().breadthFirst().evaluator(Evaluators.toDepth(10));
-		Iterable<T> returnIterable = ((Neo4jTemplate)neo4jTemplate).traverse(startElement, elementClass,traversalDescription);
-		return returnIterable;
+		try{
+			return  ((Neo4jTemplate)neo4jTemplate).traverse(startElement, elementClass,traversalDescription);
+		}
+		catch(Throwable e){
+			return null;
+		}
 	}
 	
 	//Evaluators.excludeStartPosition()
@@ -209,12 +230,13 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 			query += "parentNode." + property + " = \"" + properties.get(property) + "\",";
 		}
 		query = query.substring(0, query.length()-1);
-		
-		System.out.println(query);
-		boolean response = false;
-		neo4jTemplate.query(query, new HashMap<String,Object>());
-		response = true;
-		return response;
+		try{
+			neo4jTemplate.query(query, new HashMap<String,Object>());
+		}
+		catch(Throwable e){
+			return false;
+		}
+		return true;
 	}	
 	
 	@Override
@@ -223,10 +245,12 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 				breadthFirst().evaluator(Evaluators.toDepth(1)).relationships(Rels.CHILD_OF,Direction.INCOMING ).
 				evaluator(Evaluators.excludeStartPosition());
 		Iterable<T> returnIterable = null;
-
-		returnIterable = ((Neo4jTemplate)neo4jTemplate).traverse(startElement, elementClass,traversalDescription);
-
-		return returnIterable;
+		try{	
+			return  ((Neo4jTemplate)neo4jTemplate).traverse(startElement, elementClass,traversalDescription);
+		}
+		catch(Throwable e){
+			return null;
+		}
 	}
 	
 	@Override
@@ -240,8 +264,12 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 				+ ")"
 				+ "DELETE relation,childNode";
 		
-		
-		neo4jTemplate.query(query, new HashMap<String,Object>());
+		try{
+			neo4jTemplate.query(query, new HashMap<String,Object>());
+		}
+		catch(Throwable e){
+			return false;
+		}
 		return true;
 	}
 	
@@ -258,8 +286,12 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 			query += "parentNode<-[:" + relationship.toUpperCase() + "]-(" + node.toString() + "),";
 		}
 		query = query.substring(0, query.length()-1);
-		
-		neo4jTemplate.query(query, new HashMap<String,Object>());
+		try{
+			neo4jTemplate.query(query, new HashMap<String,Object>());
+		}
+		catch(Throwable e){
+			return false;
+		}
 		return true;
 	}
 	

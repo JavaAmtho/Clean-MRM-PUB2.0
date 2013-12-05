@@ -150,16 +150,20 @@ public class TreeBuilder implements ITreeBuilder {
 			MultiDimensionalObject currentRoot = parentLevel;
 			List<String>groupIds = currentRoot.getGroupId();
 			childrenOfCurrentLevel = getAllChildrenOfCurrentRoot(groupIds, nextLevel);
-			for (MultiDimensionalObject child : childrenOfCurrentLevel) {
-	
-				child.setPath(removeMinusOne(currentRoot.getPath()) + "," + currentRoot.getId());
-	
+			if(childrenOfCurrentLevel != null){
+				for (MultiDimensionalObject child : childrenOfCurrentLevel) {
+		
+					child.setPath(removeMinusOne(currentRoot.getPath()) + "," + currentRoot.getId());
+		
+				}
 			}
 		}
 		else{
 			childrenOfCurrentLevel = getAllSeparatedTrees(orderedTypes[0]);
-			for (MultiDimensionalObject dimension : childrenOfCurrentLevel) {
-				dimension.setPath("-1");
+			if(childrenOfCurrentLevel != null){
+				for (MultiDimensionalObject dimension : childrenOfCurrentLevel) {
+					dimension.setPath("-1");
+				}
 			}
 		}
 		

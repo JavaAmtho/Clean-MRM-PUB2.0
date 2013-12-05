@@ -165,8 +165,13 @@ public class DimensionRepository implements IDimensionRepository {
 
 	@Override
 	public List<MultiDimensionalObject> getDimensionsOfType(String type) {
-		return mongoRepository.getObjectsBy(TYPE, type,
-				MultiDimensionalObject.class);
+		try{
+			return mongoRepository.getObjectsBy(TYPE, type,
+					MultiDimensionalObject.class);
+		}
+		catch(Throwable e){
+			return null;
+		}
 	}
 
 	@Override

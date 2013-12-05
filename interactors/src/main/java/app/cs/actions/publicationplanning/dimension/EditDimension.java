@@ -26,6 +26,6 @@ public class EditDimension implements Interactor {
 		EditDimensionRequest request = (EditDimensionRequest) requestMdel;
 		request.getDimensionalObject().setIsFolder(true);
 		String status = dimensionRepository.editProperty(request.getDimensionalObject());
-		return new EmptyResponseWithStatus(status, request.getDimensionalObject().getId());
+		return new EmptyResponseWithStatus(status, request.getDimensionalObject().getTitle());
 	}
 }
