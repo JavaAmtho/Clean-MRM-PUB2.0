@@ -115,7 +115,12 @@ public class MongoRepository implements NoSqlRepository {
 	 */
 	@Override
 	public <P> P getObjectByKey(GenericDomain key, Class<P> type) {
-		return mongoTemplate.findById(key.getKey(), type);
+		try{
+			return mongoTemplate.findById(key.getKey(), type);
+		}
+		catch(Throwable e){
+			return null;
+		}
 	}
 
 	/*
@@ -202,8 +207,12 @@ public class MongoRepository implements NoSqlRepository {
 	 */
 	@Override
 	public <T> T find(String key, Class<T> class1) {
-
-		return mongoTemplate.findById(key, class1);
+			try{
+			return mongoTemplate.findById(key, class1);
+		}
+		catch(Throwable e){
+			return null;
+		}
 
 	}
 
@@ -216,9 +225,13 @@ public class MongoRepository implements NoSqlRepository {
 	 */
 	@Override
 	public <T> List<T> getObjectsBy(String field, String value, Class<T> type) {
-
-		return mongoTemplate.find(Query.query(Criteria.where(field).is(value)),
-				type);
+		try{
+			return mongoTemplate.find(Query.query(Criteria.where(field).is(value)),
+					type);
+		}
+		catch(Throwable e){
+			return null;
+		}
 
 	}
 
