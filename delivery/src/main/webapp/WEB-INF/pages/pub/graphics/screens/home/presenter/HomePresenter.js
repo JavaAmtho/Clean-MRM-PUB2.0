@@ -131,6 +131,7 @@ HomePresenter.loadViewItems = function (evt, currentTemplateView) {
                 ref.hiddenCSS = 'hidden';
             }
             var pubImageList = EngineDataStore.getPublicationDetailsArray();
+            //alert(JSON.stringify(pubImageList))
             if(pubImageList[ref.title]){
             	var config = pubImageList["Config"];
                 ref.backgroundImageStyle = "background-image: url("+config.host+config.context+pubImageList[ref.title].imageURL+")";

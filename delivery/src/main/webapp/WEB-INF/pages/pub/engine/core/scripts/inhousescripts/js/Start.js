@@ -24,7 +24,7 @@ $(document).ready(function() {
  * @description Loads InitialConfiguration.json file which has baseURl and other important configuration details
  */
 function loadInitialConfigurations(){
-    Router.forward("../../../graphics/tacks/InitialConfiguration.json",true,function(json){
+    Router.loadConfigFile("../../../graphics/tacks/InitialConfiguration.json",true,function(json){
         parseInitialConfiguration(json);
         getPublicationDetailsObject();
     });
@@ -47,7 +47,7 @@ function parseInitialConfiguration(data){
  * @description Loads PublicationDetails.json file which has information about which image to show for Publication in coverflow
  */
 function getPublicationDetailsObject(){
-    Router.forward(EngineDataStore.getBaseURL()+"graphics/tacks/PublicationDetails.json",true,function(json){
+    Router.loadConfigFile(EngineDataStore.getBaseURL()+"graphics/tacks/PublicationDetails.json",true,function(json){
         parsePublicationDetailsObject(json);
     });
 }
@@ -78,7 +78,7 @@ function getParameterByName(name) {
  * @description Loads ScreenMapping.json file which has information about which screen needs to be loaded as per the requested URL
  */
 function getScreenMappingObject(){
-    Router.forward(EngineDataStore.getBaseURL()+"graphics/tacks/screenMapping.json",true,function(json){
+    Router.loadConfigFile(EngineDataStore.getBaseURL()+"graphics/tacks/screenMapping.json",true,function(json){
         parseScreenMappingObject(json);
     });
 }
@@ -103,7 +103,7 @@ function parseScreenMappingObject(json){
  * @description Loads RequestMapping.json file which has information about which REST API needs to be called as per the requested URL
  */
 function getApiMappingObject(){
-    Router.forward(EngineDataStore.getBaseURL()+"graphics/tacks/RequestMapping.json",true,function(json){
+    Router.loadConfigFile(EngineDataStore.getBaseURL()+"graphics/tacks/RequestMapping.json",true,function(json){
         parseApiMappingObject(json);
     });
 }
