@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import app.cs.model.response.EmptyResponseWithStatus;
+import app.cs.model.response.ResponseModel;
+import app.cs.utils.CommonConstants;
 import app.cs.utils.FileUtils;
 
 /**
@@ -40,22 +43,22 @@ public class TreeViewStructureController {
 
 	@RequestMapping("/treeviewstructure/default")
 	public @ResponseBody
-	String getDefault() throws IOException, URISyntaxException {
+	ResponseModel getDefault() throws IOException, URISyntaxException {
 
-		return utils.getFileContents("schema1.json"); //$NON-NLS-1$
+		return new EmptyResponseWithStatus(CommonConstants.SUCCESS_RESPONSE,utils.getFileContents("schema1.json")); //$NON-NLS-1$
 
 	}
 
 	@RequestMapping("/mrm/all")
 	public @ResponseBody
-	String getAllForMrm() throws IOException, URISyntaxException {
-		return utils.getFileContents("mrm/schema/allSchema.json");
+	ResponseModel getAllForMrm() throws IOException, URISyntaxException {
+		return new EmptyResponseWithStatus(CommonConstants.SUCCESS_RESPONSE,utils.getFileContents("mrm/schema/allSchema.json"));
 	}
 
 	@RequestMapping("/pub/all")
 	public @ResponseBody
-	String getAllPub() throws IOException, URISyntaxException {
-		return utils.getFileContents("pub/schema/allSchema.json");
+	ResponseModel getAllPub() throws IOException, URISyntaxException {
+		return new EmptyResponseWithStatus(CommonConstants.SUCCESS_RESPONSE,utils.getFileContents("pub/schema/allSchema.json"));
 	}
 
 }
