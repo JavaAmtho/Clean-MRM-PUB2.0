@@ -280,7 +280,7 @@ PagePresenter.bindLogicalPagesToCustomLoadingWBDEvent = function ($masterPage) {
  */
 PagePresenter.expandCollapseChildPages = function (masterPageDiv) {
 
-    var $container = $isotopeContainer;
+    //var $container = $isotopeContainer;
     //Check if master page has been expanded into the child pages
     if (!$(masterPageDiv).hasClass('opened')) {
         //Expand the master page into its child pages
@@ -305,7 +305,8 @@ PagePresenter.expandCollapseChildPages = function (masterPageDiv) {
                 $(childPageDiv).append(childPageInnerDiv);
                 $itemsToInsert.push(childPageDiv);
             });
-        $container.isotope('insert', $($itemsToInsert), $(masterPageDiv));
+        IsotopeWrapper.insertChild($itemsToInsert,masterPageDiv);
+        //$container.isotope('insert', $($itemsToInsert), $(masterPageDiv));
     }
     else {
         $(masterPageDiv).children('.expand').css('background-image', EXPAND_ICON_URL);
@@ -314,7 +315,8 @@ PagePresenter.expandCollapseChildPages = function (masterPageDiv) {
         var $childPages = $('.childPages').has($logicalPageIDOfParentOfChild);
 //        $childPages.unbind("loadingError");
 //        $childPages.unbind("loadingDone");
-        $container.isotope('remove', $childPages);
+        IsotopeWrapper.removeChild($childPages);
+        //$container.isotope('remove', $childPages);
         $(masterPageDiv).toggleClass('opened');
 
     }
@@ -393,9 +395,7 @@ PagePresenter.removeNew = function (reference) {
  in order to re-layout(position) the isotope elements properly
  */
 PagePresenter.setContainerRelayout = function () {
-    if ($isotopeContainer) {
-        $isotopeContainer.isotope('reLayout');
-    }
+    IsotopeWrapper.relayout();
 }
 
 /**

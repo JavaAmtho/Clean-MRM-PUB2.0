@@ -40,7 +40,7 @@ HomePresenter.handleViewChange = function (evt) {
 /**
  * @description set each dimension as even or odd which assigns different colour to them
  */
-HomePresenter.setEvenOddClassesToDimensions = function() {
+/*HomePresenter.setEvenOddClassesToDimensions = function() {
     $isotopeContainer.find('.masterPage,.dimension,.chapter,.assortmentItem').each(function (key, value) {
         var $this = $(this),
             number = key + 1;
@@ -51,7 +51,7 @@ HomePresenter.setEvenOddClassesToDimensions = function() {
             $this.addClass('even');
         }
     });
-}
+}*/
 
 
 /**
@@ -91,7 +91,8 @@ HomePresenter.bindClickEventToFilterButtons = function() {
         else {
             selector = isoFilters.join('');
         }
-        $isotopeContainer.isotope({ filter: selector });
+        IsotopeWrapper.addFilter(selector);
+        /*$isotopeContainer.isotope({ filter: selector });*/
 
         return false;
     });
@@ -155,16 +156,18 @@ HomePresenter.loadViewItems = function (evt, currentTemplateView) {
         }
 
 
-        if ($isotopeContainer) {
+        /*if ($isotopeContainer) {
             $isotopeContainer.isotope('destroy');
-        }
+        }*/
+        IsotopeWrapper.checkIfInitializedAndDestroy($('#viewHolder'));
 
+        IsotopeWrapper.initialize($('#viewHolder'));
 
-        $isotopeContainer = $('#viewHolder');
+        //$isotopeContainer = $('#viewHolder');
 
-        HomePresenter.setEvenOddClassesToDimensions();
+        IsotopeWrapper.setEvenOddClassesToDimensions();
 
-        $isotopeContainer.isotope();
+        //$isotopeContainer.isotope();
 
         //$('.nano').nanoScroller();
     });
