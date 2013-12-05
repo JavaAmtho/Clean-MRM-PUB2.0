@@ -11,7 +11,9 @@ import app.cs.interfaces.publicationasset.IPublicationAssetRepository;
 import app.cs.model.request.RequestModel;
 import app.cs.model.request.UpdateAssortmentRequest;
 import app.cs.model.response.EmptyResponse;
+import app.cs.model.response.EmptyResponseWithStatus;
 import app.cs.model.response.ResponseModel;
+import app.cs.utils.CommonConstants;
 
 @Component
 public class UpdateAssortment implements Interactor {
@@ -41,8 +43,12 @@ public class UpdateAssortment implements Interactor {
 */
 //		assortmentRepository.updateAssortment(assortmentObject);
 		System.out.println("Inside Update Assortment");
-		publicationRepository.updateAssortmentProducts(updateAssortmentRequest.getName(), assortment.getProducts());
-		return new EmptyResponse();
+		boolean result = publicationRepository.updateAssortmentProducts(updateAssortmentRequest.getName(), assortment.getProducts());
+		String status = CommonConstants.FAIL_RESPONSE;
+		if(result){
+			status = CommonConstants.SUCCESS_RESPONSE 	;
+		}
+		return new EmptyResponseWithStatus(status, assortment.getID());
 	}
 
 }

@@ -28,8 +28,8 @@ public class EditDimensionController {
 	public @ResponseBody
            	ResponseModel execute(@RequestBody MultiDimensionalObject dimensionalObject) {
 		request.setDimensionalObject(dimensionalObject);
-		editDimension.execute(request);
-		return new StringResponse(dimensionalObject.getTitle());
+		ResponseModel response = editDimension.execute(request);
+		return response;
 
 	}
 

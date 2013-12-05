@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import app.cs.boundary.delivery.Interactor;
 import app.cs.model.request.StringRequest;
+import app.cs.model.response.ObjectResponse;
 import app.cs.model.response.PIMOrMAMNode;
+import app.cs.model.response.ResponseModel;
 import app.cs.model.response.StringResponse;
 import app.cs.presentor.JsonFormatter;
+import app.cs.utils.CommonConstants;
 
 @Controller
 public class MAMSearchController {
@@ -38,14 +41,15 @@ public class MAMSearchController {
 
 	@RequestMapping(value = { "/mam/search/{key}" }, method = RequestMethod.GET)
 	public @ResponseBody
-	List<PIMOrMAMNode> searchMAM(@PathVariable String key)
+	ResponseModel searchMAM(@PathVariable String key)
 			throws JsonParseException, JsonMappingException, IOException,
 			ParseException {
 		request.setStringRequest(key);
-		return new ObjectMapper().readValue(formatter
+		
+		return new ObjectResponse(new ObjectMapper().readValue(formatter
 				.format(((StringResponse) mamSearch.execute(request))
 						.getResponseString()),
 				new TypeReference<List<PIMOrMAMNode>>() {
-				});
+				}),CommonConstants.SUCCESS_RESPONSE);
 	}
 }

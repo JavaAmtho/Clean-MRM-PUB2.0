@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import app.cs.boundary.delivery.Interactor;
 import app.cs.model.request.StringRequest;
+import app.cs.model.response.ObjectResponse;
 import app.cs.model.response.PIMOrMAMNode;
+import app.cs.model.response.ResponseModel;
 import app.cs.model.response.StringResponse;
 import app.cs.presentor.JsonFormatter;
+import app.cs.utils.CommonConstants;
 
 @Controller
 public class GetMAMAssetController {
@@ -54,13 +57,14 @@ public class GetMAMAssetController {
 
 	@RequestMapping(value = { "/mam/list" }, method = RequestMethod.GET)
 	public @ResponseBody
-	List<PIMOrMAMNode> list() throws JsonParseException, JsonMappingException,
+	ResponseModel list() throws JsonParseException, JsonMappingException,
 			IOException, ParseException {
 		request.setStringRequest("");
-		return new ObjectMapper().readValue(formatter
+		
+		return new ObjectResponse(new ObjectMapper().readValue(formatter
 				.format(((StringResponse) getMAMAssets.execute(request))
 						.getResponseString()),
 				new TypeReference<List<PIMOrMAMNode>>() {
-				});
+				}),CommonConstants.SUCCESS_RESPONSE);
 	}
 }

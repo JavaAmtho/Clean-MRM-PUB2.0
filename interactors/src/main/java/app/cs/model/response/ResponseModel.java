@@ -4,7 +4,7 @@ import com.cs.data.api.core.GenericDomain;
 
 public interface ResponseModel {
 
-	public abstract GenericDomain getResponse();
+	public abstract Object getResponse();
 	
 	public abstract String getStatus();
 	
