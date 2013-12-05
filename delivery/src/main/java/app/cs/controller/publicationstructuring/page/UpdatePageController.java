@@ -35,8 +35,8 @@ public class UpdatePageController {
 	public @ResponseBody ResponseModel execute(@RequestBody PublicationAssetObject page) {
 
 		request.setPublicationAssetObject(CommonConstants.PublicationAsset.PUBLICATION_ASSET_TYPE_PAGE,page);
-		updatePage.execute(request);
-		return new PublicationAssetObjectResponse(page);
+		ResponseModel response = updatePage.execute(request);
+		return response;
 	}
 
 }

@@ -14,7 +14,7 @@ public interface FileOperations extends IRepository {
 	/* (non-Javadoc)
 	 * @see com.cs.data.core.IRepository#save(com.cs.data.core.GenericDomain)
 	 */
-	String save(GenericDomain objectToInsert);
+	boolean save(GenericDomain objectToInsert);
 
 	/* (non-Javadoc)
 	 * @see com.cs.data.core.IRepository#getObjectByKey(com.cs.data.core.GenericDomain, java.lang.Class)

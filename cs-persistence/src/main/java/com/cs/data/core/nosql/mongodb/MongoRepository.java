@@ -51,10 +51,10 @@ public class MongoRepository implements NoSqlRepository {
 	 * GenericDomain)
 	 */
 	@Override
-	public String save(GenericDomain objectToInsert) {
+	public boolean save(GenericDomain objectToInsert) {
 		mongoTemplate.save(objectToInsert);
 
-		return "inserted";
+		return true;
 
 	}
 
@@ -85,8 +85,18 @@ public class MongoRepository implements NoSqlRepository {
 	 * @see com.cs.data.core.nosql.mongodb.NoSqlRepository#delete(T)
 	 */
 	@Override
-	public <T> void delete(T objectToDelete) {
-		mongoTemplate.remove(objectToDelete);
+	public <T> boolean delete(T objectToDelete) {
+		
+		boolean response = true;
+		try{
+			mongoTemplate.remove(objectToDelete);
+			
+		}
+		catch(Exception e){
+			response = false; 
+		}
+		return response;
+
 	}
 
 	/*
@@ -136,20 +146,34 @@ public class MongoRepository implements NoSqlRepository {
 	 * , java.lang.String, P, java.lang.Class)
 	 */
 	@Override
-	public <T, P> void updateByIdPushIntoProperty(String id, String field, P valueToAdd,
+	public <T, P> boolean updateByIdPushIntoProperty(String id, String field, P valueToAdd,
 			Class<T> type) {
+		boolean response = true;
+		try{
 
-		mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(id)),
-				update.push(field, valueToAdd), type);
+			mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(id)),
+					update.push(field, valueToAdd), type);
+		}
+		catch(Exception e){
+			response = false;
+		}
+		return response;
+
 
 	}
 	
 	@Override
-	public <T> void updateByIdSetProperty(String id, String field, String valueToAdd,
+	public <T> boolean updateByIdSetProperty(String id, String field, String valueToAdd,
 			Class<T> type) {
-		mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(id)),
-				update.set(field, valueToAdd), type);
-
+		boolean response = true;
+		try{
+			mongoTemplate.updateFirst(Query.query(Criteria.where("id").is(id)),
+					update.set(field, valueToAdd), type);
+		}
+		catch(Exception e){
+			response = false;
+		}
+		return response;
 	}
 
 
@@ -219,17 +243,23 @@ public class MongoRepository implements NoSqlRepository {
 	@Override
 	public <T> T getObjectByKey(String id, Class<T> type) {
 		return mongoTemplate.findById(id, type);
-
 	}
 
 	@Override
-	public <P, T> void delete(String firstField, String secondField,
+	public <P, T> boolean delete(String firstField, String secondField,
 			List<P> groupId, List<T> possibleDeleteTypes,
 			Class<? extends GenericDomain> type) {
-
-		mongoTemplate.remove(
-				Query.query(Criteria.where(firstField).in(groupId)
-						.and(secondField).in(possibleDeleteTypes)), type);
+		boolean response = true;
+		try{
+			mongoTemplate.remove(
+					Query.query(Criteria.where(firstField).in(groupId)
+							.and(secondField).in(possibleDeleteTypes)), type);
+			
+		}
+		catch(Exception e){
+			response = false; 
+		}
+		return response;
 
 	}
 

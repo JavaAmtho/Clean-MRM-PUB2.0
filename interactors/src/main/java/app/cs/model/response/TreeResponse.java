@@ -2,30 +2,32 @@ package app.cs.model.response;
 
 import java.util.List;
 
-import com.cs.data.api.core.GenericDomain;
-
 import app.cs.impl.model.MultiDimensionalObject;
 
-public class TreeResponse implements ResponseModel,TreeModel {
+public class TreeResponse implements TreeResponseModel {
+
+	private List<MultiDimensionalObject> tree;
 	
-	public TreeResponse(List<MultiDimensionalObject> tree) {
+	private String status;
+
+	public TreeResponse(List<MultiDimensionalObject> tree,String status) {
 		super();
 		this.tree = tree;
+		this.status = status;
 	}
-
-	List<MultiDimensionalObject> tree;
-
-	public <E> List<E> getTree() {
+	
+	@Override
+	public <E> List<E> getResponse() {
 		return (List<E>) tree;
 	}
 
 	public void setTree(List<MultiDimensionalObject> tree) {
 		this.tree = tree;
 	}
-	
+
 	@Override
-	public GenericDomain getResponse() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getStatus() {
+		return status;
 	}
+
 }

@@ -2,8 +2,6 @@ package app.cs.actions.publicationstructuring.page;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,12 +10,10 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import app.cs.actions.contentplanning.assortment.CreateAssortment;
-import app.cs.impl.assortment.AssortmentRepository;
-import app.cs.impl.chapter.ChapterRepository;
 import app.cs.impl.delegate.factory.DomainFactory;
 import app.cs.impl.inmemory.InMemoryUniqueId;
 import app.cs.impl.model.MultiDimensionalObject;
-import app.cs.impl.publicationasset.PublicationAssetRepository;
+import app.cs.interfaces.pagerule.IPageRuleRepository;
 import app.cs.interfaces.publicationasset.IPublicationAssetRepository;
 import app.cs.model.request.CreatePageRequest;
 import app.cs.model.response.ResponseModel;
@@ -35,13 +31,15 @@ public class CreatePageUnitTests {
 	@Mock
 	private InMemoryUniqueId inMemoryUniqueId;
 	
-
+	@Mock
+	private IPageRuleRepository pageRuleRepository;
+	
 	@Mock
 	private DomainFactory factory;
 
 	@Before
 	public void setUp() {
-		createPage = new CreatePage(chapterRepository,createAssortment,inMemoryUniqueId);
+		createPage = new CreatePage(chapterRepository,createAssortment,inMemoryUniqueId, pageRuleRepository);
 
 	}
 

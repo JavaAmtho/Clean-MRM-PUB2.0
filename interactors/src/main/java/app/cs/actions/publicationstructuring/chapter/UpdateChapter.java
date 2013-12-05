@@ -13,7 +13,9 @@ import app.cs.model.request.RequestModel;
 import app.cs.model.request.UpdateAssortmentRequest;
 import app.cs.model.request.UpdatePublicationAssetObjectRequest;
 import app.cs.model.response.EmptyResponse;
+import app.cs.model.response.EmptyResponseWithStatus;
 import app.cs.model.response.ResponseModel;
+import app.cs.utils.CommonConstants;
 
 @Component
 public class UpdateChapter implements Interactor {
@@ -30,8 +32,8 @@ public class UpdateChapter implements Interactor {
 
 		UpdatePublicationAssetObjectRequest updateChapterRequest = (UpdatePublicationAssetObjectRequest) requestModel;
 		PublicationAssetObject chapter = updateChapterRequest.getPublicationAssetObject();
-		publicationRepository.editProperty(chapter);
-		return new EmptyResponse();
+		boolean result = publicationRepository.editProperty(chapter);
+		return new EmptyResponseWithStatus(result ? CommonConstants.SUCCESS_RESPONSE : CommonConstants.FAIL_RESPONSE, chapter.getId());
 	}
 
 }

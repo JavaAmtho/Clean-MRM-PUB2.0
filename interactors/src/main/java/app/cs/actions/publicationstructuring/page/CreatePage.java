@@ -21,6 +21,7 @@ import app.cs.model.request.CreatePageRequest;
 import app.cs.model.request.RequestModel;
 import app.cs.model.response.PublicationAssetObjectResponse;
 import app.cs.model.response.ResponseModel;
+import app.cs.utils.CommonConstants;
 
 /**
  * The Class ChapterService.
@@ -61,6 +62,7 @@ public class CreatePage implements Interactor {
 
 	public ResponseModel execute(RequestModel model) {
 
+		String status = CommonConstants.FAIL_RESPONSE;
 		CreatePageRequest request = (CreatePageRequest) model;
 		PublicationAssetObject publicationAsset = new PublicationAssetObject();
 		setPublicationAssetAttributes(request, publicationAsset);
@@ -69,9 +71,12 @@ public class CreatePage implements Interactor {
 		//TODO: after creation of assortment, publicationAssetObject(page object) is stale since new relationship 
 		//		has been added in the page object for the newly created assortment
 		PublicationAssetObject createdAssortment = createDefaultAssortmentForPage(page);
+		if(page != null && createdAssortment != null){
+			status = CommonConstants.SUCCESS_RESPONSE;
+		}
 		page.addToChildren(createdAssortment);
 		savePageRules(page, createdAssortment);
-		return new PublicationAssetObjectResponse(page);
+		return new PublicationAssetObjectResponse(page,status);
 	}
 
 	private void savePageRules(PublicationAssetObject page,

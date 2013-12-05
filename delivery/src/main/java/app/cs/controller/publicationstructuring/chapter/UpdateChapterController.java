@@ -33,8 +33,8 @@ public class UpdateChapterController {
 	@RequestMapping(value = "/chapter/update/{id}")
 	public @ResponseBody ResponseModel execute(@RequestBody PublicationAssetObject chapter) {
 		request.setPublicationAssetObject(CommonConstants.PublicationAsset.PUBLICATION_ASSET_TYPE_CHAPTER,chapter);
-		updateChapter.execute(request);
-		return new StringResponse(request.getPublicationAssetObject().getTitle());
+		ResponseModel response = updateChapter.execute(request);
+		return response;
 	}
 
 }

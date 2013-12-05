@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import app.cs.boundary.delivery.Interactor;
 import app.cs.interfaces.assortment.IAssortmentRepository;
+import app.cs.interfaces.publicationasset.IPublicationAssetRepository;
 import app.cs.model.request.GetAllAssortmentsRequest;
 import app.cs.model.request.RequestModel;
 import app.cs.model.response.ResponseModel;
@@ -13,18 +14,19 @@ import app.cs.model.response.StringResponse;
 @Component
 public class GetAllAssortments implements Interactor {
 
-	private IAssortmentRepository assortmentRepository;
+	private IPublicationAssetRepository publicationAssetRepository;
 
 	@Autowired
-	public GetAllAssortments(IAssortmentRepository assortmentRepository) {
-		this.assortmentRepository = assortmentRepository;
+	public GetAllAssortments(IPublicationAssetRepository publicationAssetRepository) {
+		this.publicationAssetRepository = publicationAssetRepository;
 
 	}
 
 	public ResponseModel execute(RequestModel request) {
 		GetAllAssortmentsRequest getAllAssortmentsRequest = (GetAllAssortmentsRequest) request;
-		return new StringResponse(assortmentRepository.getAllAssortmentNames(
+		/*return new StringResponse(publicationAssetRepository.getAllAssortmentNames(
 				getAllAssortmentsRequest.getPagePath(),
-				getAllAssortmentsRequest.getLogicalPageID()));
+				getAllAssortmentsRequest.getLogicalPageID()));*/
+		return null;
 	}
 }

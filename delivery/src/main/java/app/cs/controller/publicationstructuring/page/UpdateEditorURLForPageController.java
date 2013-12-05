@@ -26,8 +26,8 @@ public class UpdateEditorURLForPageController {
 	@RequestMapping(value = "/page/updateEditorURL/{pageId}")
 	public @ResponseBody ResponseModel execute(@RequestBody UpdatePageEditorURLRequest request) {
 
-		updateEditUrlOfPage.execute(request);
-		return new EmptyResponse();
+		ResponseModel response = updateEditUrlOfPage.execute(request);
+		return response;
 	}
 
 }

@@ -50,11 +50,11 @@ public class RedisRepository implements InMemoryNoSqlRepository {
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public String save(GenericDomain objectToInsert) {
+	public boolean save(GenericDomain objectToInsert) {
 		redisTemplate.opsForHash().put(objectToInsert.getKey(),
 				objectToInsert.getObjectKey(), objectToInsert);
 
-		return "inserted";
+		return true;
 		// TODO Auto-generated method stub
 
 	}
@@ -86,7 +86,8 @@ public class RedisRepository implements InMemoryNoSqlRepository {
 	 * @see com.cs.data.core.nosql.redis.InMemoryNoSqlRepository#delete(T)
 	 */
 	@Override
-	public <T> void delete(T objectToDelete) {
+	public <T> boolean delete(T objectToDelete) {
+		return false;
 	}
 
 	/*

@@ -40,10 +40,10 @@ public class RedisRepositoryIntegrationTests {
 
 		// When
 
-		String id = crudRepository.save(amar);
+		boolean response = crudRepository.save(amar);
 
 		// then
-		Assert.assertNotNull(id);
+		Assert.assertTrue(response);
 
 	}
 

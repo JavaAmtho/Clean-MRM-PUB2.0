@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import app.cs.boundary.delivery.Interactor;
 import app.cs.model.request.MoveChapterRequest;
+import app.cs.model.response.ResponseModel;
 
 /**
  * The Class ChapterController. TODO. com.cs.business.ifacadeservices controller
@@ -55,7 +56,7 @@ public class MoveChapterController {
 	 */
 	@RequestMapping(value = { MOVECHAPTER })
 	public @ResponseBody
-	String execute(@PathVariable("type") String type,
+	ResponseModel execute(@PathVariable("type") String type,
 			@PathVariable("id") String id,
 			@PathVariable("path") String path,
 			@PathVariable("folder") boolean isFolder,
@@ -67,9 +68,8 @@ public class MoveChapterController {
 		moveChapterRequest.setFolder(isFolder);
 		moveChapterRequest.setNewPath(newpath);
 
-		System.out.println("==>" + type + id + path + isFolder + newpath);
-		moveChapter.execute(moveChapterRequest);
-		return id;
+		ResponseModel response = moveChapter.execute(moveChapterRequest);
+		return response;
 
 	}
 }

@@ -11,6 +11,7 @@ import app.cs.model.request.DeleteDimensionRequest;
 import app.cs.model.request.DeletePublicationAssetRequest;
 import app.cs.model.request.RequestModel;
 import app.cs.model.response.EmptyResponse;
+import app.cs.model.response.EmptyResponseWithStatus;
 import app.cs.model.response.ResponseModel;
 
 @Component
@@ -27,7 +28,7 @@ public class DeleteChapter implements Interactor {
 	public ResponseModel execute(RequestModel requestMdel) {
 
 		DeletePublicationAssetRequest request = (DeletePublicationAssetRequest) requestMdel;
-		publicationAssetRepository.delete(request.getPublicationAsset());
-		return new EmptyResponse();
+		String status = publicationAssetRepository.delete(request.getPublicationAsset());
+		return new EmptyResponseWithStatus(status,request.getPublicationAsset().getId());
 	}
 }

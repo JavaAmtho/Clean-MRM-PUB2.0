@@ -12,6 +12,7 @@ import app.cs.boundary.delivery.Interactor;
 import app.cs.impl.model.MultiDimensionalObject;
 import app.cs.model.request.GetAllPagesRequest;
 import app.cs.model.response.TreeResponse;
+import app.cs.model.response.TreeResponseModel;
 
 @Controller
 public class GetAllPagesController {
@@ -28,9 +29,11 @@ public class GetAllPagesController {
 
 	@RequestMapping(value = "/page/all/{publicationId}")
 	public @ResponseBody
-	List<MultiDimensionalObject> get(@PathVariable String publicationId) {
+	TreeResponseModel get(@PathVariable String publicationId) {
 		request.setPublicationId(publicationId);
-		return ((TreeResponse) getAllPages.execute(request)).getTree();
+		//return getAllPages.execute(request);
+		//TODO:: Fix this!!
+		return null;
 
 	}
 }

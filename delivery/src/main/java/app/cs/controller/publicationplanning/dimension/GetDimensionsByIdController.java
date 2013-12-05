@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import app.cs.boundary.delivery.Interactor;
 import app.cs.impl.model.MultiDimensionalObject;
 import app.cs.model.request.GetDimensionByIdRequest;
+import app.cs.model.response.ResponseModel;
 import app.cs.model.response.TreeResponse;
 
 @Controller
@@ -27,20 +28,20 @@ public class GetDimensionsByIdController {
 
 	@RequestMapping(value = "/publication/get/{channelName}", method = RequestMethod.POST)
 	public @ResponseBody
-	List<MultiDimensionalObject> getPublicationBy(
+	TreeResponse getPublicationBy(
 			@RequestBody GetDimensionByIdRequest byIdRequest,
 			@PathVariable String channelName) {
 		return ((TreeResponse) getPublicationsForGivenChannel
-				.execute(byIdRequest)).getTree();
+				.execute(byIdRequest));
 
 	}
     @RequestMapping(value = "/communicationchannel/get/{planName}", method = RequestMethod.POST)
     public @ResponseBody
-    List<MultiDimensionalObject> getCommunicationChannelBy(
+    TreeResponse getCommunicationChannelBy(
             @RequestBody GetDimensionByIdRequest byIdRequest,
             @PathVariable String planName) {
         return ((TreeResponse) getPublicationsForGivenChannel
-                .execute(byIdRequest)).getTree();
+                .execute(byIdRequest));
 
     }
 

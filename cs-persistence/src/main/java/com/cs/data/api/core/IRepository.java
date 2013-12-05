@@ -18,7 +18,7 @@ public interface IRepository {
  	 * @param objectToInsert the object to insert
  	 * @return the string
  	 */
- 	String save(GenericDomain objectToInsert);
+ 	boolean save(GenericDomain objectToInsert);
 	
 	/**
 	 * Update.
@@ -36,7 +36,7 @@ public interface IRepository {
 	 * @param objectToDelete the object to delete
 	 * @return the t
 	 */
-	<T> void delete(T objectToDelete);
+	<T> boolean delete(T objectToDelete);
 	
 	/**
 	 * Gets the object by key.

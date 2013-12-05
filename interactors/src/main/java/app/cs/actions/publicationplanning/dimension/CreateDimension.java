@@ -15,6 +15,7 @@ import app.cs.model.request.CreateDimensionRequest;
 import app.cs.model.request.RequestModel;
 import app.cs.model.response.MultiDimensionalObjectResponse;
 import app.cs.model.response.ResponseModel;
+import app.cs.utils.CommonConstants;
 
 /**
  * The Class DimensionService. TODO remove out all annotation from class
@@ -56,8 +57,12 @@ public class CreateDimension implements Interactor {
 					request.getPath(), request.isFolder(),
 					request.getDimensionInfo());
 			System.out.println(dimension.getTitle());
-			return new MultiDimensionalObjectResponse(
-					dimensionRepository.createDimension(dimension));
+			MultiDimensionalObject response = dimensionRepository.createDimension(dimension);
+			String status = CommonConstants.FAIL_RESPONSE;
+			if(response != null){
+				status = CommonConstants.SUCCESS_RESPONSE;
+			}
+			return new MultiDimensionalObjectResponse(response,status);
 	}
 
 

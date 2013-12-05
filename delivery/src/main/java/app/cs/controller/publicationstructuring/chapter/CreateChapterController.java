@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import app.cs.boundary.delivery.Interactor;
 import app.cs.model.request.CreateChapterRequest;
+import app.cs.model.response.ResponseModel;
 
 import com.cs.data.api.core.GenericDomain;
 
@@ -58,7 +59,7 @@ public class CreateChapterController {
 	 */
 	@RequestMapping(value = { CREATECHAPTER})
 	public @ResponseBody
-	GenericDomain execute(@PathVariable("type") String type,
+	ResponseModel execute(@PathVariable("type") String type,
 			@PathVariable("name") String name,
 			@PathVariable("path") String path,
 			@PathVariable("folder") boolean isFolder) {
@@ -68,7 +69,8 @@ public class CreateChapterController {
 		createChapterRequestModel.setName(name);
 		createChapterRequestModel.setPath(path);
 		createChapterRequestModel.setType(type);
-		return createChapter.execute(createChapterRequestModel).getResponse();
+		ResponseModel response = createChapter.execute(createChapterRequestModel);
+		return response;
 
 	}
 

@@ -66,7 +66,7 @@ public class CreateDimensionController {
 	 */
 	@RequestMapping(value = { CREATE }, method = RequestMethod.POST)
 	public @ResponseBody
-	GenericDomain create(@PathVariable("type") String type,
+	ResponseModel create(@PathVariable("type") String type,
 			@PathVariable("name") String name,
 			@PathVariable("path") String path,
 			@PathVariable("folder") boolean isFolder,
@@ -76,8 +76,7 @@ public class CreateDimensionController {
 		createDimensionRequest.setPath(path);
 		createDimensionRequest.setType(type);
 		createDimensionRequest.setDimensionInfo(dimensionInfo);
-		return ((ResponseModel) createDimension
-				.execute(createDimensionRequest)).getResponse();
+		return createDimension.execute(createDimensionRequest);
 
 	}
 }

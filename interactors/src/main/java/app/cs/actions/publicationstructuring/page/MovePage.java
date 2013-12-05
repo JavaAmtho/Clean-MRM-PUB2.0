@@ -11,8 +11,10 @@ import app.cs.interfaces.publicationasset.IPublicationAssetRepository;
 import app.cs.model.request.MovePageRequest;
 import app.cs.model.request.RequestModel;
 import app.cs.model.response.EmptyResponse;
+import app.cs.model.response.EmptyResponseWithStatus;
 import app.cs.model.response.ResponseModel;
 import app.cs.model.response.StringResponse;
+import app.cs.utils.CommonConstants;
 
 /**
  * The Class ChapterService.
@@ -23,8 +25,6 @@ public class MovePage implements Interactor {
 	/** The contentobject. */
 	private final String CONTENTOBJECT = "MultiDimensionalObject";
 
-	/** The chapter repository. */
-//	private IChapterRepository chapterRepository;
 	private IPublicationAssetRepository publicationAssetRepository;
 
 	/**
@@ -35,21 +35,18 @@ public class MovePage implements Interactor {
 	 * @param factory
 	 */
 	@Autowired
-	public MovePage(/*IChapterRepository chapterRepository*/IPublicationAssetRepository publicationAssetRepository) {
-		// TODO Auto-generated constructor stub
-//		this.chapterRepository = chapterRepository;
+	public MovePage(IPublicationAssetRepository publicationAssetRepository) {
 		this.publicationAssetRepository = publicationAssetRepository;
 	}
 
 	public ResponseModel execute(RequestModel model) {
 		MovePageRequest request = (MovePageRequest) model;
 
-		/*MultiDimensionalObject chapter = chapterRepository
-				.getDomain(CONTENTOBJECT);*/
 		PublicationAssetObject page = new PublicationAssetObject();
 		setPageAtrributes(page, request.getType(), request.getId(),
 				request.getPath(), request.isFolder());
-		return new StringResponse(publicationAssetRepository.move(page, request.getNewPath()));
+		boolean response = publicationAssetRepository.move(page, request.getNewPath());
+		return new EmptyResponseWithStatus(response ? CommonConstants.SUCCESS_RESPONSE : CommonConstants.FAIL_RESPONSE,request.getId());
 
 	}
 

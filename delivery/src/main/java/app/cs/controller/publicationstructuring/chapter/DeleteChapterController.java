@@ -10,6 +10,7 @@ import app.cs.boundary.delivery.Interactor;
 import app.cs.impl.model.PublicationAssetObject;
 import app.cs.model.request.DeleteDimensionRequest;
 import app.cs.model.request.DeletePublicationAssetRequest;
+import app.cs.model.response.ResponseModel;
 
 /**
  * The Class NodeController.
@@ -58,12 +59,12 @@ public class DeleteChapterController {
 	 */
 	@RequestMapping(value = { DELETE })
 	public @ResponseBody
-	String delete(@RequestBody PublicationAssetObject chapterToBeDeleted) {
+	ResponseModel delete(@RequestBody PublicationAssetObject chapterToBeDeleted) {
 
 
 		deleteChapterRequest.setPublicationAsset(chapterToBeDeleted);
-		deleteChapter.execute(deleteChapterRequest);
-		return chapterToBeDeleted.getId();
+		ResponseModel response = deleteChapter.execute(deleteChapterRequest);
+		return response;
 
 	}
 }

@@ -9,7 +9,7 @@ import app.cs.boundary.delivery.Interactor;
 import app.cs.impl.model.Assortment;
 import app.cs.impl.model.DimensionInfo;
 import app.cs.impl.model.MultiDimensionalObject;
-import app.cs.interfaces.assortment.IAssortmentRepository;
+import app.cs.interfaces.publicationasset.IPublicationAssetRepository;
 import app.cs.model.request.CopyAssortmentRequest;
 import app.cs.model.request.RequestModel;
 import app.cs.model.response.EmptyResponse;
@@ -18,20 +18,20 @@ import app.cs.model.response.ResponseModel;
 @Component
 public class CopyAssortment implements Interactor {
 
-	private IAssortmentRepository assortmentRepository;
+	private IPublicationAssetRepository publicationassetRepository;
 
 	private String type = "Assortment";
 
 	@Autowired
-	public CopyAssortment(IAssortmentRepository assortmentRepository) {
-		this.assortmentRepository = assortmentRepository;
+	public CopyAssortment(IPublicationAssetRepository publicationassetRepository) {
+		this.publicationassetRepository = publicationassetRepository;
 
 	}
 
 	public ResponseModel execute(RequestModel request) {
 		CopyAssortmentRequest copyAssortmentRequest = (CopyAssortmentRequest) request;
-		MultiDimensionalObject assortmentObject = assortmentRepository
-				.getDomain("MultiDimensionalObject");
+		MultiDimensionalObject assortmentObject = /*publicationassetRepository
+				.getDomain("MultiDimensionalObject")*/null;
 
 		Assortment assortment = copyAssortmentRequest.getAssortment();
 
@@ -46,7 +46,7 @@ public class CopyAssortment implements Interactor {
 		assortmentObject.setDimensionInfo(new DimensionInfo());
 		
 		System.out.println("Interactor");
-		assortmentRepository.copy(assortmentObject);
+//		publicationassetRepository.copy(assortmentObject);
 		return new EmptyResponse();
 
 	}

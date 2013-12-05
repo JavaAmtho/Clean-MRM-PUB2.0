@@ -4,23 +4,25 @@ import java.util.List;
 
 import app.cs.impl.model.PublicationAssetObject;
 
-import com.cs.data.api.core.GenericDomain;
 
 
-
-public class LazyTreePublicationAssetResponse implements ResponseModel,TreeModel{
+public class LazyTreePublicationAssetResponse implements TreeResponseModel{
 	
 
 	private List<PublicationAssetObject> tree;
 	
-	public <E> LazyTreePublicationAssetResponse(List<PublicationAssetObject> tree) {
+	private String status;
+	
+	public <E> LazyTreePublicationAssetResponse(
+			List<PublicationAssetObject> tree, String status) {
 		super();
 		this.tree = tree;
+		this.status = status;
 	}
 
 
 	@Override
-	public <E> List<E> getTree() {
+	public <E> List<E> getResponse() {
 		return (List<E>) tree;
 	}
 
@@ -29,9 +31,8 @@ public class LazyTreePublicationAssetResponse implements ResponseModel,TreeModel
 	}
 
 	@Override
-	public GenericDomain getResponse() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getStatus() {
+		return status;
 	}
 
 

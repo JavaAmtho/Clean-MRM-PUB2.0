@@ -14,7 +14,7 @@ import app.cs.boundary.delivery.Interactor;
 import app.cs.impl.model.MultiDimensionalObject;
 import app.cs.model.request.StringRequest;
 import app.cs.model.request.SwitchPerspectiveRequest;
-import app.cs.model.response.TreeModel;
+import app.cs.model.response.TreeResponseModel;
 import app.cs.model.response.TreeResponse;
 
 /**
@@ -50,20 +50,20 @@ public class SwitchPerspectiveController {
 
 	@RequestMapping(value = "/dimension/get/{structure}")
 	public @ResponseBody
-	List<MultiDimensionalObject> getDimensionsBy(@PathVariable String structure) {
+	TreeResponseModel getDimensionsBy(@PathVariable String structure) {
 
 		request.setStringRequest(structure);
 		TreeResponse output =  ((TreeResponse) switchPerspective.execute(request)); 
-		return output.getTree();
+		return output;
 	}
 	
 	@RequestMapping(value = "/dimension/getLazy", method = RequestMethod.POST)
 //{id}/{type}/{path}/{structure}/{groupID}")
 	public @ResponseBody
-	<E> List<E> getDimensionsBy(/*@PathVariable String id,*/
+	TreeResponseModel getDimensionsBy(/*@PathVariable String id,*/
 			@RequestBody SwitchPerspectiveRequest switchPerspectiveRequest) {
 		lazyLoadRequest = switchPerspectiveRequest;
-		TreeModel output =  ((TreeModel) switchPerspective.execute(lazyLoadRequest));
-		return (output.getTree());
+		TreeResponseModel output =  ((TreeResponseModel) switchPerspective.execute(lazyLoadRequest));
+		return output;
 	}
 }

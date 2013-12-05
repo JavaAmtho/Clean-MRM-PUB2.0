@@ -7,20 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import app.cs.boundary.delivery.Interactor;
-import app.cs.impl.model.Assortment;
-import app.cs.impl.model.MultiDimensionalObject;
 import app.cs.impl.model.PageRule;
 import app.cs.impl.model.PageRules;
 import app.cs.impl.model.PublicationAssetObject;
 import app.cs.impl.model.RuleResult;
-import app.cs.interfaces.assortment.IAssortmentRepository;
 import app.cs.interfaces.pagerule.IPageRuleRepository;
 import app.cs.interfaces.publicationasset.IPublicationAssetRepository;
 import app.cs.model.request.RequestModel;
-import app.cs.model.request.UpdateAssortmentRequest;
 import app.cs.model.request.UpdatePublicationAssetObjectRequest;
 import app.cs.model.response.EmptyResponse;
+import app.cs.model.response.PublicationAssetObjectResponse;
 import app.cs.model.response.ResponseModel;
+import app.cs.utils.CommonConstants;
 
 @Component
 public class UpdatePage implements Interactor {
@@ -41,11 +39,11 @@ public class UpdatePage implements Interactor {
 
 		UpdatePublicationAssetObjectRequest updatePageRequest = (UpdatePublicationAssetObjectRequest) requestModel;
 		PublicationAssetObject page = updatePageRequest.getPublicationAssetObject();
-		publicationAssetRepository.editProperty(page);
+		boolean result = publicationAssetRepository.editProperty(page);
 		if(page.getFileID() != null){
 			savePageRules(page);
 		}
-		return new EmptyResponse();
+		return new PublicationAssetObjectResponse(page,result ? CommonConstants.SUCCESS_RESPONSE : CommonConstants.FAIL_RESPONSE);
 	}
 	
 	private void savePageRules(PublicationAssetObject page) {

@@ -1,18 +1,12 @@
 package app.cs.impl.pagegeneration;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import app.cs.impl.chapter.ChapterRepository;
-import app.cs.impl.model.MultiDimensionalObject;
 import app.cs.impl.model.PageRule;
 import app.cs.impl.model.PageRules;
 import app.cs.impl.model.Product;
@@ -23,7 +17,6 @@ import app.cs.interfaces.pagegeneration.IPageGenerationRepository;
 import app.cs.interfaces.pagerule.IPageRuleRepository;
 
 import com.cs.data.api.webservices.rest.IRestClient;
-import com.sun.jersey.api.client.ClientResponse;
 
 @Component
 public class PageGenerationRepositoryImpl implements IPageGenerationRepository {

@@ -23,8 +23,9 @@ public interface NoSqlRepository extends NoSqlOperations {
 	 *            the value to add
 	 * @param type
 	 *            the type
+	 * @return 
 	 */
-	public abstract <T, P> void updateByIdPushIntoProperty(String id, String field,
+	public abstract <T, P> boolean updateByIdPushIntoProperty(String id, String field,
 			P valueToAdd, Class<T> type);
 
 	/**
@@ -94,10 +95,10 @@ public interface NoSqlRepository extends NoSqlOperations {
 	 */
 	public abstract <T> T getObjectByKey(String id, Class<T> type);
 
-	public abstract <P, T> void delete(String firstField, String secondField,
+	public abstract <P, T> boolean delete(String firstField, String secondField,
 			List<P> groupId, List<T> possibleDeleteTypes,
 			Class<? extends GenericDomain> class1);
 
-	public <T> void updateByIdSetProperty(String id, String field, String valueToAdd, Class<T> type);
+	public <T> boolean updateByIdSetProperty(String id, String field, String valueToAdd, Class<T> type);
 
 }

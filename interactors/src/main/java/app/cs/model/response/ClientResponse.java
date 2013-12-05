@@ -102,4 +102,10 @@ public class ClientResponse implements ResponseModel {
 		return null;
 	}
 
+	@Override
+	public String getStatus() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

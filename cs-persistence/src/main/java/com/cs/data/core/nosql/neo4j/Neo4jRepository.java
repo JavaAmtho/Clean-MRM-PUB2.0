@@ -41,6 +41,11 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 	}
 	
 	@Override
+	public <T>T findOne(Long id, Class<T> entityClass){
+		return neo4jTemplate.findOne(id, entityClass);
+	}
+	
+	@Override
 	public <T> T getObjectByKeyValue(String key, String value, Class<T> class1) {
 
 		/*MustacheFactory mustacheFactory = new DefaultMustacheFactory();
@@ -56,7 +61,14 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 		String query = /*queryGetByKeyMustache.execute(writer, mustacheVariables).toString()*/"START n = node(*) WHERE (HAS(n."+key+") and n." + key + " = \"" + value + "\") RETURN n";
 		Result<Map<String, Object>> queryResult = neo4jTemplate.query(query, new HashMap<String,Object>());
 		EndResult<T> endResult = queryResult.to(class1);
-		return endResult.singleOrNull();
+		T object = null;
+		try{
+			object = endResult.singleOrNull();
+		}
+		catch(Throwable e){
+			System.out.println("Error in getObjectByKeyvalue() " + e.getMessage());
+		}
+		return object;
 	}
 
 	@Override
@@ -67,19 +79,11 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 	    	resultList.add((T)resultsIterator.next());
 	    return resultList;
 	}
-	
-	@Override
-	public <T> T findOne(Long ID, Class<T> classOfObjectToBeFetched) {
-		return neo4jTemplate.findOne(ID, classOfObjectToBeFetched);
-	}	
-	
-
-
 
 	@Override
-	public String save(GenericDomain objectToInsert) {
+	public boolean save(GenericDomain objectToInsert) {
 		neo4jTemplate.save(objectToInsert);
-		return "success";
+		return true;
 	}
 	
 	@Override
@@ -94,7 +98,7 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 	}
 
 	@Override
-	public String deleteSelfAndAllItsChildren(String key,String value) {
+	public boolean deleteSelfAndAllItsChildren(String key,String value) {
 //		neo4jTemplate.delete(objectToDelete);
 		String query = "START parentNode = node(*) "
 						+ "MATCH parentNode<-[incomingRelationships?*]-child, "
@@ -107,16 +111,9 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 						+ "DELETE outgoingRelationships,child,parentNode";
 		
 		System.out.println(query);
-		String response;
-		try{
-			neo4jTemplate.query(query, new HashMap<String,Object>());
-			System.out.println("SUCCESS");
-			response = "success";
-		}
-		catch(Exception e){
-			System.out.println("Failed" + e.getMessage());
-			response = "failed";
-		}
+		boolean response = false;
+		neo4jTemplate.query(query, new HashMap<String,Object>());
+		response = true;
 		return response;
 	
 	}
@@ -141,7 +138,7 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 			System.out.println("SUCCESS");
 			response = "success";
 		}
-		catch(Exception e){
+		catch(Throwable e){
 			System.out.println("Failed" + e.getMessage());
 			response = "failed";
 		}
@@ -151,8 +148,6 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 
 	@Override
 	public <P> P getObjectByKey(GenericDomain key, Class<P> type) {
-//		neo4jTemplate.findOne(key.getKey(), type);
-//		TraversalDescription traversalDescription = Traversal.description();
 		
 		return null;
 	}
@@ -162,15 +157,6 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 		// TODO Auto-generated method stub
 		String query = "START n = node(*) WHERE (n." + key + " = \"" + value + "\") RETURN n";
 		Result<Map<String, Object>> result = neo4jTemplate.query(query, new HashMap<String,Object>());
-
-		//TODO: TO BE OPTIMIZED! 
-//		Iterator iterator = result.iterator();
-/*		while(iterator.hasNext()){
-			Map resultMap = (Map)iterator.next();
-			RestNode a = (RestNode)resultMap.get("n");
-			a.
-			System.out.println(a);
-		}*/
 		return result;
 	}
 
@@ -201,16 +187,15 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 			Result<Map<String, Object>> queryResult = neo4jTemplate.query(query, new HashMap<String,Object>());
 			endResult = queryResult.to(elementClass);
 		}
-		catch(Exception e){
-			System.out.println("Failed" + e.getMessage());
+		catch(Throwable e){
+			System.out.println("Error in traverseIncomingRelationships() : " + e.getMessage());
 			return null;
 		}
-		System.out.println("return success");
 		return endResult.iterator();
 	}	
 	
 	@Override
-	public String editProperties(String findKey, String findValue,Map<String,String> properties) {
+	public boolean editProperties(String findKey, String findValue,Map<String,String> properties) {
 		String query = "START parentNode = node(*) "
 						+ "WHERE ("
 						+ "HAS(parentNode." + findKey + ") "
@@ -226,16 +211,9 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 		query = query.substring(0, query.length()-1);
 		
 		System.out.println(query);
-		String response = "failed";
-		try{
-			neo4jTemplate.query(query, new HashMap<String,Object>());
-			response = "success";
-			System.out.println("return success");
-		}
-		
-		catch(Exception e){
-			System.out.println("Failed" + e.getMessage());
-		}
+		boolean response = false;
+		neo4jTemplate.query(query, new HashMap<String,Object>());
+		response = true;
 		return response;
 	}	
 	
@@ -252,7 +230,7 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 	}
 	
 	@Override
-	public String deleteAllNodesByRelationship(String parentKey,String parentValue, String relationship) {
+	public boolean deleteAllNodesByRelationship(String parentKey,String parentValue, String relationship) {
 		
 		String query = "START parentNode = node(*) "
 				+ "MATCH parentNode<-[relation:" + relationship + "]-childNode "
@@ -263,19 +241,12 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 				+ "DELETE relation,childNode";
 		
 		
-		try{
-			neo4jTemplate.query(query, new HashMap<String,Object>());
-		}
-		catch(Exception e){
-			System.out.println("return Failed");
-			return "failed";
-		}
-		System.out.println("return success");
-		return "success";
+		neo4jTemplate.query(query, new HashMap<String,Object>());
+		return true;
 	}
 	
 	@Override
-	public <E, T> String createMultipleRelationships(String parentKey,String parentValue,List<E> childNodes,String relationship) {
+	public <E> boolean createMultipleRelationships(String parentKey,String parentValue,List<E> childNodes,String relationship) {
 		
 		String query = "START parentNode = node(*) "
 				+ "WHERE ("
@@ -288,20 +259,12 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 		}
 		query = query.substring(0, query.length()-1);
 		
-		System.out.println(query);
-		try{
-			neo4jTemplate.query(query, new HashMap<String,Object>());
-		}
-		catch(Exception e){
-			System.out.println("Failed");
-			return "failed";
-		}
-		System.out.println("return success");
-		return "success";
+		neo4jTemplate.query(query, new HashMap<String,Object>());
+		return true;
 	}
 	
 	@Override
-	public String changeRelationship(String keyToFindNode, String valueOfKey, String newParentValueOfKey, String newRelationshipType){
+	public boolean changeRelationship(String keyToFindNode, String valueOfKey, String newParentValueOfKey, String newRelationshipType){
 		
 		String query = "START modifyNode = node(*), newParentNode = node(*) "
 				+ "MATCH oldParentNode<-[r]-modifyNode "
@@ -318,12 +281,11 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 		try{
 			neo4jTemplate.query(query, new HashMap<String,Object>());
 		}
-		catch(Exception e){
-			System.out.println("Failed");
-			return "failed";
+		catch(Throwable e){
+			System.out.println("Error in changeRelationship() : " + e.getMessage());
+			return false;
 		}
-		System.out.println("return success");
-		return "success";
+		return true;
 		
 	}
 	
@@ -355,11 +317,10 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 			Result<Map<String, Object>> queryResult = neo4jTemplate.query(query, new HashMap<String,Object>());
 			endResult = queryResult.to(entityClass);
 		}
-		catch(Exception e){
-			System.out.println("Failed" + e.getMessage());
+		catch(Throwable e){
+			System.out.println("Error in getChildrenUnderParentByType() : " + e.getMessage());
 			return null;
 		}
-		System.out.println("return success");
 		return endResult.iterator();
 	}
 
@@ -370,7 +331,7 @@ public class Neo4jRepository implements NoSqlNeo4jRepository {
 	}
 
 	@Override
-	public <T> void delete(T objectToDelete) {
-		// TODO Auto-generated method stub
+	public <T> boolean delete(T objectToDelete) {
+		return false;
 	}
 }

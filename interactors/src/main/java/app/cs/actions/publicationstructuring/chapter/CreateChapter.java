@@ -33,9 +33,6 @@ public class CreateChapter implements Interactor {
 	
 	private InMemoryUniqueId inMemoryUniqueId;
 	
-	/** The chapter repository. */
-//	private IChapterRepository chapterRepository;
-
 	/**
 	 * Instantiates a new chapter service.
 	 * 
@@ -44,26 +41,23 @@ public class CreateChapter implements Interactor {
 	 * @param factory
 	 */
 	@Autowired
-	public CreateChapter(/*IChapterRepository chapterRepository*/IPublicationAssetRepository publicationAssetRepository,
+	public CreateChapter(IPublicationAssetRepository publicationAssetRepository,
 			InMemoryUniqueId inMemoryUniqueId) {
-		// TODO Auto-generated constructor stub
-//		this.chapterRepository = chapterRepository;
 		this.publicationAssetRepository = publicationAssetRepository;
 		this.inMemoryUniqueId = inMemoryUniqueId;
 	}
 
 	public ResponseModel execute(RequestModel model) {
 
+		String status = CommonConstants.FAIL_RESPONSE;
 		CreateChapterRequest request = (CreateChapterRequest) model;
-		/*MultiDimensionalObject chapter = (MultiDimensionalObject) chapterRepository
-				.getDomain(CONTENTOBJECT);*/
-		/*setChapterAtrributes(chapter, request.getType(), request.getName(),
-				request.getPath(), request.isFolder());*/
-//		return new StringResponse(chapterRepository.save(chapter));
-			PublicationAssetObject publicationAsset = new PublicationAssetObject();
-			setPublicationAssetAttributes(request, publicationAsset);
-			return new PublicationAssetObjectResponse(
-					publicationAssetRepository.save(publicationAsset));
+		PublicationAssetObject publicationAsset = new PublicationAssetObject();
+		setPublicationAssetAttributes(request, publicationAsset);
+		PublicationAssetObject response = publicationAssetRepository.save(publicationAsset);
+		if(response != null){
+			status  = CommonConstants.SUCCESS_RESPONSE;
+		}
+		return new PublicationAssetObjectResponse(response,status);
 	}
 
 	/**
@@ -80,24 +74,10 @@ public class CreateChapter implements Interactor {
 	 * @param isFolder
 	 *            the is folder
 	 */
-/*	private void setChapterAtrributes(MultiDimensionalObject chapter,
-			String type, String name, String path, boolean isFolder) {
-		chapter.setId(name);
-		chapter.setTitle(name);
-		chapter.setIsFolder(isFolder);
-		chapter.setPath(path);
-		chapter.setName(name);
-		chapter.setType(type);
-		chapter.setDimensionInfo(new DimensionInfo());
-		chapter.setChildren(new ArrayList<MultiDimensionalObject>());
-
-	}*/
-	
 	protected void setPublicationAssetAttributes(CreateChapterRequest request,
 			PublicationAssetObject publicationAsset) {
 		publicationAsset.setId(inMemoryUniqueId.getUniqueIDForDimensions());
 		publicationAsset.setTitle(request.getName());
-//		publicationAsset.setName(request.getName());
 		publicationAsset.setPath(request.getPath());
 		publicationAsset.setType(request.getType());
 		publicationAsset.setIsFolder(request.isFolder());

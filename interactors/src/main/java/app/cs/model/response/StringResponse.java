@@ -23,4 +23,10 @@ public class StringResponse implements ResponseModel {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String getStatus() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

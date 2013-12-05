@@ -14,16 +14,16 @@ public interface IPublicationAssetRepository {
 
 	public abstract String delete(PublicationAssetObject chapter);
 
-	public abstract String move(PublicationAssetObject chapter, String path);
+	public abstract boolean move(PublicationAssetObject chapter, String path);
 
-	public String updateAssortmentProducts(String assortmentID, List<Product> products);
+	public boolean updateAssortmentProducts(String assortmentID, List<Product> products);
 
-	public String editProperty(PublicationAssetObject objectToEdit);
+	public boolean editProperty(PublicationAssetObject objectToEdit);
 
 	public PublicationAssetObject getPublicationAsset(String id);
 
 	public PublicationAssetObject getAssortmentUnderPage(String pageId);
 
-	public String updateEditURLOfPage(String pageId, String editUrl, String mamFileId);
+	public boolean updateEditURLOfPage(String pageId, String editUrl, String mamFileId);
 
 }

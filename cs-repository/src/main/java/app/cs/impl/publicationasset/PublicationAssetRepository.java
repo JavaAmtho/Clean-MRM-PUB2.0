@@ -63,33 +63,28 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 	}
 	
 	@Override
-	public PublicationAssetObject save(PublicationAssetObject chapter) {
-//		if(chapter.getType() != CommonConstants.Dimension.DIMENSION_TYPE_PUBLICATION){
-			String parentID = finder.getParentId(chapter.getPath());
-			PublicationAssetObject parent = neo4jRepository.getObjectByKeyValue(CommonConstants.NODE_IDENTIFICATION_FIELD, parentID, PublicationAssetObject.class);
-			GenericDomain publicationAssetObjectRelationship = chapter.isChildOf(parent, chapter.getType());
-			chapter = (PublicationAssetObject)neo4jRepository.saveData(chapter);
-			neo4jRepository.saveData(publicationAssetObjectRelationship);
-/*		}
-		else{
-			chapter = (PublicationAssetObject)neo4jRepository.saveData(chapter);
-		}*/
-		return chapter/*String.valueOf(chapter.getGraphID())*/;
+	public PublicationAssetObject save(PublicationAssetObject publicationAssetObject) {
+		String parentID = finder.getParentId(publicationAssetObject.getPath());
+		PublicationAssetObject parent = neo4jRepository.getObjectByKeyValue(CommonConstants.NODE_IDENTIFICATION_FIELD, parentID, PublicationAssetObject.class);
+		GenericDomain publicationAssetObjectRelationship = publicationAssetObject.isChildOf(parent, publicationAssetObject.getType());
+		publicationAssetObject = (PublicationAssetObject)neo4jRepository.saveData(publicationAssetObject);
+		neo4jRepository.saveData(publicationAssetObjectRelationship);
+		return publicationAssetObject;
 
 	}
 	
 	@Override
-	public String updateAssortmentProducts(String assortmentID,List<Product> products){
-		String responseMessage = CommonConstants.FAIL_RESPONSE;
-		responseMessage = neo4jRepository.deleteAllNodesByRelationship(CommonConstants.NODE_IDENTIFICATION_FIELD, assortmentID, PRODUCT_ASSORTMENT_RELATIONSHIP);
-		if(products.size() > 0 && responseMessage.equals(CommonConstants.SUCCESS_RESPONSE)){
-			responseMessage = neo4jRepository.createMultipleRelationships(CommonConstants.NODE_IDENTIFICATION_FIELD, assortmentID, products, PRODUCT_ASSORTMENT_RELATIONSHIP);
+	public boolean updateAssortmentProducts(String assortmentID,List<Product> products){
+		boolean response = false;
+		response = neo4jRepository.deleteAllNodesByRelationship(CommonConstants.NODE_IDENTIFICATION_FIELD, assortmentID, PRODUCT_ASSORTMENT_RELATIONSHIP);
+		if(products.size() > 0 && response){
+			response = neo4jRepository.createMultipleRelationships(CommonConstants.NODE_IDENTIFICATION_FIELD, assortmentID, products, PRODUCT_ASSORTMENT_RELATIONSHIP);
 		}
-		return responseMessage;
+		return response;
 	}
 	
 	@Override
-	public String editProperty(PublicationAssetObject objectToEdit){
+	public boolean editProperty(PublicationAssetObject objectToEdit){
 		Map<String,String> properties = new HashMap<String,String>();
 		properties.put("title", objectToEdit.getTitle());
 		if(objectToEdit.getType().equals(CommonConstants.PublicationAsset.PUBLICATION_ASSET_TYPE_PAGE)){
@@ -98,16 +93,16 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 			properties.put("fileID", (objectToEdit.getFileID()!=null ? objectToEdit.getFileID() : ""));
 			properties.put("filePath", (objectToEdit.getFilePath()!=null ? objectToEdit.getFilePath() : ""));
 		}
-		String response = neo4jRepository.editProperties(CommonConstants.NODE_IDENTIFICATION_FIELD, objectToEdit.getId(), properties);
+		boolean response = neo4jRepository.editProperties(CommonConstants.NODE_IDENTIFICATION_FIELD, objectToEdit.getId(), properties);
 		return response;
 	}
 	
 	@Override
-	public String updateEditURLOfPage(String pageId, String editUrl, String mamFileId){
+	public boolean updateEditURLOfPage(String pageId, String editUrl, String mamFileId){
 		Map<String,String> properties = new HashMap<String,String>();
 		properties.put("editorURL",editUrl);
 		properties.put("fileID",mamFileId);
-		String response = neo4jRepository.editProperties(CommonConstants.NODE_IDENTIFICATION_FIELD,pageId, properties);
+		boolean response = neo4jRepository.editProperties(CommonConstants.NODE_IDENTIFICATION_FIELD,pageId, properties);
 		return response;
 	}
 	
@@ -115,13 +110,17 @@ public class PublicationAssetRepository implements IPublicationAssetRepository{
 	
 	@Override
 	public String delete(PublicationAssetObject chapter) {
-		neo4jRepository.deleteSelfAndAllItsChildren(CommonConstants.NODE_IDENTIFICATION_FIELD, chapter.getId());
-		return "deleted";
+		String response = CommonConstants.FAIL_RESPONSE;
+		boolean result = neo4jRepository.deleteSelfAndAllItsChildren(CommonConstants.NODE_IDENTIFICATION_FIELD, chapter.getId());
+		if(result){
+			response = CommonConstants.SUCCESS_RESPONSE;
+		}
+		return response;
 	}
 	
 	
 	@Override
-	public String move(PublicationAssetObject chapter, String newPath) {
+	public boolean move(PublicationAssetObject chapter, String newPath) {
 		String parentID = finder.getParentId(newPath);
 		return neo4jRepository.changeRelationship(CommonConstants.NODE_IDENTIFICATION_FIELD, chapter.getId(), parentID, 
 				CommonConstants.NEO4J_PUBLICATIONASSET_RELATIONSHIP);

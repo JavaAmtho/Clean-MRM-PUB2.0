@@ -1,5 +1,7 @@
 package app.cs.actions.publicationplanning.perspective;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,13 +16,15 @@ import app.cs.model.request.SwitchPerspectiveRequest;
 import app.cs.model.response.LazyTreePublicationAssetResponse;
 import app.cs.model.response.ResponseModel;
 import app.cs.model.response.TreeResponse;
+import app.cs.model.response.TreeResponseModel;
 import app.cs.utils.CommonConstants;
 
 /**
  * The Class DimensionService.
  */
+//TODO : removed interactor implementation!!!!CHECK AND CHANGE!!!
 @Component
-public class SwitchPerspective implements Interactor{
+public class SwitchPerspective{
 
 	/** The tree builder. */
 	private ITreeBuilder treeBuilder;
@@ -48,12 +52,16 @@ public class SwitchPerspective implements Interactor{
 
 	}
 
-	public ResponseModel execute(RequestModel model) {
+	public TreeResponseModel execute(RequestModel model) {
 		if(model instanceof StringRequest){
 			StringRequest request = (StringRequest) model;
 			setCurrentViewStructure(request.getStringRequest());
-			return new TreeResponse(treeBuilder.buildTree(request
-					.getStringRequest()));
+			List<MultiDimensionalObject> response = treeBuilder.buildTree(request.getStringRequest());
+			String status = CommonConstants.FAIL_RESPONSE;
+			if(response != null){
+				status = CommonConstants.SUCCESS_RESPONSE;
+			}
+			return new TreeResponse(response,status);
 
 		}
 		else if(model instanceof SwitchPerspectiveRequest){
@@ -63,11 +71,21 @@ public class SwitchPerspective implements Interactor{
 					CommonConstants.Dimension.DIMENSION_TYPE_PUBLICATION.equals(request.getType())){
 				
 				PublicationAssetObject parentLevel = new PublicationAssetObject(request.getId(), request.getType(), request.getPath());
-				return new LazyTreePublicationAssetResponse(treeBuilder.getLazyLoadObjectForPublicationAssets(parentLevel));
+				List<PublicationAssetObject> response = treeBuilder.getLazyLoadObjectForPublicationAssets(parentLevel);
+				String status = CommonConstants.FAIL_RESPONSE;
+				if(response != null){
+					status = CommonConstants.SUCCESS_RESPONSE;
+				}
+				return new LazyTreePublicationAssetResponse(response,status);
 			}
 			else{
 				MultiDimensionalObject parentLevel = new MultiDimensionalObject(request.getId(), request.getType(), request.getPath(), request.getGroupID());
-				return new TreeResponse(treeBuilder.getLazyLoadLevelForDimensions(parentLevel, request.getStructure()));
+				List<MultiDimensionalObject> response = treeBuilder.getLazyLoadLevelForDimensions(parentLevel, request.getStructure());
+				String status = CommonConstants.FAIL_RESPONSE;
+				if(response != null){
+					status = CommonConstants.SUCCESS_RESPONSE;
+				}
+				return new TreeResponse(response,status);
 			}
 		}
 		return null;

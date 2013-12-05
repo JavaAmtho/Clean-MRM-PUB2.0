@@ -8,7 +8,9 @@ import app.cs.interfaces.publicationasset.IPublicationAssetRepository;
 import app.cs.model.request.RequestModel;
 import app.cs.model.request.UpdatePageEditorURLRequest;
 import app.cs.model.response.EmptyResponse;
+import app.cs.model.response.EmptyResponseWithStatus;
 import app.cs.model.response.ResponseModel;
+import app.cs.utils.CommonConstants;
 
 @Component
 public class UpdateEditUrlOfPage implements Interactor {
@@ -24,9 +26,10 @@ public class UpdateEditUrlOfPage implements Interactor {
 	public ResponseModel execute(RequestModel requestModel) {
 
 		UpdatePageEditorURLRequest updatePageEditorURLRequest = (UpdatePageEditorURLRequest) requestModel;
-		publicationAssetRepository.updateEditURLOfPage(updatePageEditorURLRequest.getPageId(),
+		boolean result = publicationAssetRepository.updateEditURLOfPage(updatePageEditorURLRequest.getPageId(),
 				updatePageEditorURLRequest.getEditorUrl(), updatePageEditorURLRequest.getMamFileId());
-		return new EmptyResponse();
+		return new EmptyResponseWithStatus(
+				result ? CommonConstants.SUCCESS_RESPONSE : CommonConstants.FAIL_RESPONSE);
 	}
 	
 

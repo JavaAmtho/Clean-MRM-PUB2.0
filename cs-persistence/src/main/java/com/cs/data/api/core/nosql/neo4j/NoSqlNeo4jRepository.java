@@ -16,8 +16,6 @@ public interface NoSqlNeo4jRepository extends NoSqlOperations{
 	
 	public GenericDomain saveData(GenericDomain objectToInsert);
 	
-	public <T> T findOne(Long ID, Class<T> classOfObjectToBeFetched);
-	
 	public <T> T getObjectByKeyValue(String key, String objectKey,Class<T> class1);
 
 	public <T> Iterable<T> traverseFromNode(GenericDomain startElement,
@@ -26,25 +24,27 @@ public interface NoSqlNeo4jRepository extends NoSqlOperations{
 	public <T> Iterable<T> traverseOneLevelFromNodeExcludeStart(
 			GenericDomain startElement, Class<T> elementClass);
 
-	public <E, T> String createMultipleRelationships(String parentKey, String parentValue,
+	public <E> boolean createMultipleRelationships(String parentKey, String parentValue,
 			List<E> childNodes, String relationship);
 
 	public <T> Iterator traverseIncomingRelationships(String key, String value,
 			String realtionship, Class<T> elementClass);
 
-	public String deleteAllNodesByRelationship(String parentKey, String parentValue,
+	public boolean deleteAllNodesByRelationship(String parentKey, String parentValue,
 			String relationship);
 
-	public String deleteSelfAndAllItsChildren(String key, String value);
+	public boolean deleteSelfAndAllItsChildren(String key, String value);
 
-	public String editProperties(String findKey, String findValue,
+	public boolean editProperties(String findKey, String findValue,
 			Map<String, String> properties);
 
-	public String changeRelationship(String keyToFindNode, String valueOfKey,
+	public boolean changeRelationship(String keyToFindNode, String valueOfKey,
 			String newParentValueOfKey, String newRelationshipType);
 
 	public <T> Iterator<T> getChildrenUnderParentByType(String parentId, String type,
 			Class<T> entityClass);
+
+	public <T>T findOne(Long id, Class<T> entityClass);
 
 
 

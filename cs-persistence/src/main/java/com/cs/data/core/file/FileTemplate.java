@@ -23,16 +23,17 @@ public class FileTemplate implements FileOperations {
 	 * @see com.cs.data.core.IRepository#delete(java.lang.Object)
 	 */
 	@Override
-	public <T> void delete(T objectToDelete) {
+	public <T> boolean delete(T objectToDelete) {
+		return false;
 	}
 
 	/* (non-Javadoc)
 	 * @see com.cs.data.core.file.FileOperations#save(com.cs.data.core.GenericDomain)
 	 */
 	@Override
-	public String save(GenericDomain objectToInsert) {
+	public boolean save(GenericDomain objectToInsert) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	/* (non-Javadoc)

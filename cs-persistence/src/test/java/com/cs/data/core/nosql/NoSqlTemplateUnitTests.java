@@ -36,13 +36,13 @@ public class NoSqlTemplateUnitTests {
 
 		// when
 
-		String id = noSqlRepository.save(studentInserted);
+		boolean response = noSqlRepository.save(studentInserted);
 		Student studentRetrieved = noSqlRepository.getObjectByKey(
 				studentInserted, Student.class);
 
 		// then
 
-		Assert.assertNotNull(id);
+		Assert.assertTrue(response);
 		Assert.assertEquals(studentInserted.getId(), studentRetrieved.getId());
 		Assert.assertEquals(studentInserted.getClass(),
 				studentRetrieved.getClass());
@@ -58,12 +58,12 @@ public class NoSqlTemplateUnitTests {
 
 		// when
 
-		String id = inMemoryNoSqlRepository.save(studentInserted);
+		boolean response = inMemoryNoSqlRepository.save(studentInserted);
 		Student studentRetrieved = inMemoryNoSqlRepository.getObjectByKey(
 				studentInserted, Student.class);
 		// then
 
-		Assert.assertNotNull(id);
+		Assert.assertTrue(response);
 		Assert.assertEquals(studentInserted.getId(), studentRetrieved.getId());
 		Assert.assertEquals(studentInserted.getClass(),
 				studentRetrieved.getClass());
