@@ -60,7 +60,7 @@ public interface IDimensionRepository {
 
 	public MultiDimensionalObject getDomain(String type);
 
-	public abstract void delete(MultiDimensionalObject dimension);
+	public abstract boolean delete(MultiDimensionalObject dimension);
 
 	public abstract MultiDimensionalObject move(String oldPath, String newPath,
 			MultiDimensionalObject objectInMove);

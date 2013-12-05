@@ -178,7 +178,7 @@ public class DimensionRepository implements IDimensionRepository {
 	}
 
 	@Override
-	public void delete(MultiDimensionalObject dimension) {
+	public boolean delete(MultiDimensionalObject dimension) {
 		List<String> possibleDeleteTypes = getPossibleTypesWhichAreGoingToAffected(dimension
 				.getType());
 		MultiDimensionalObject dimensionToBeDeleted = mongoRepository.find(dimension.getId(), MultiDimensionalObject.class);
@@ -191,7 +191,7 @@ public class DimensionRepository implements IDimensionRepository {
 				neo4jRepository.deleteSelfAndAllItsChildren("id", multiDimensionalObject.getId());
 			}
 		}
-		mongoRepository.delete("groupIds", "type", dimensionToBeDeleted.getGroupId(),
+		return mongoRepository.delete("groupIds", "type", dimensionToBeDeleted.getGroupId(),
 				possibleDeleteTypes, dimension.getClass());
 	}
 

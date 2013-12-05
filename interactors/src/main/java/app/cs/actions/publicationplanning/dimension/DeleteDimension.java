@@ -9,7 +9,9 @@ import app.cs.interfaces.dimension.IDimensionRepository;
 import app.cs.model.request.DeleteDimensionRequest;
 import app.cs.model.request.RequestModel;
 import app.cs.model.response.EmptyResponse;
+import app.cs.model.response.EmptyResponseWithStatus;
 import app.cs.model.response.ResponseModel;
+import app.cs.utils.CommonConstants;
 
 @Component
 public class DeleteDimension implements Interactor {
@@ -25,7 +27,9 @@ public class DeleteDimension implements Interactor {
 	public ResponseModel execute(RequestModel requestMdel) {
 
 		DeleteDimensionRequest request = (DeleteDimensionRequest) requestMdel;
-		dimensionRepository.delete(request.getDimension());
-		return new EmptyResponse();
+		boolean result = dimensionRepository.delete(request.getDimension());
+		return new EmptyResponseWithStatus(
+				result ? CommonConstants.SUCCESS_RESPONSE : CommonConstants.FAIL_RESPONSE,
+						request.getDimension().getId());
 	}
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import app.cs.boundary.delivery.Interactor;
 import app.cs.impl.model.MultiDimensionalObject;
 import app.cs.model.request.DeleteDimensionRequest;
+import app.cs.model.response.ResponseModel;
 
 /**
  * The Class NodeController.
@@ -57,12 +58,12 @@ public class DeleteDimensionController {
 	 */
 	@RequestMapping(value = { DELETE })
 	public @ResponseBody
-	String delete(@RequestBody MultiDimensionalObject dimensionTobeDeleted) {
+	ResponseModel delete(@RequestBody MultiDimensionalObject dimensionTobeDeleted) {
 
 
 		deleteDimensionRequest.setDimension(dimensionTobeDeleted);
-		deleteDimension.execute(deleteDimensionRequest);
-		return dimensionTobeDeleted.getId();
+		ResponseModel response = deleteDimension.execute(deleteDimensionRequest);
+		return response;
 
 	}
 }
