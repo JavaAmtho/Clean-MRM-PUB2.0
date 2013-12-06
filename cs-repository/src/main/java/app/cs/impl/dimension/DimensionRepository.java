@@ -251,5 +251,25 @@ public class DimensionRepository implements IDimensionRepository {
 		List<String> types = Arrays.asList(alltypes);
 		return types;
 	}
+	
+	@Override
+	public String updateTags(String id, List<String> tags){
+		
+		MultiDimensionalObject currentObject = mongoRepository.find(id, MultiDimensionalObject.class);
+		currentObject.setTags(tags);
+		save(currentObject);
+		return CommonConstants.SUCCESS_RESPONSE;
+		
+	}
+	
+	@Override
+	public String updateMarkers(String id, List<String> markers){
+		
+		MultiDimensionalObject currentObject = mongoRepository.find(id, MultiDimensionalObject.class);
+		currentObject.setTags(markers);
+		save(currentObject);
+		return CommonConstants.SUCCESS_RESPONSE;
+		
+	}
 
 }

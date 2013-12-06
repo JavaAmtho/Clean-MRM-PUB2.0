@@ -66,5 +66,9 @@ public interface IDimensionRepository {
 			MultiDimensionalObject objectInMove);
 
 	public String editProperty(MultiDimensionalObject objectToEdit);
+	
+	public String updateTags(String id, List<String> tags);
+
+	String updateMarkers(String id, List<String> markers);
 
 }

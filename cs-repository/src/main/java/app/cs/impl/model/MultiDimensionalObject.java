@@ -30,6 +30,8 @@ public class MultiDimensionalObject implements Serializable, GenericDomain {
 
 	private List<MultiDimensionalObject> children;
 	
+	private List<String> tags;
+	
 //	@GraphId
 	private Long graphID;
 
@@ -375,6 +377,14 @@ public class MultiDimensionalObject implements Serializable, GenericDomain {
 		this.type = type;
 	}
 
+
+	public List<String> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<String> tags) {
+		this.tags = tags;
+	}
 
 	@Override
 	public String toString() {
