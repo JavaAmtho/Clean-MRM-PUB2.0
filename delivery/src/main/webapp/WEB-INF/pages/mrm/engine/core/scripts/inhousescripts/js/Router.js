@@ -6,6 +6,28 @@ var Router = function(){
 
 }
 
+
+/**
+ *
+ * @param url
+ * @param async
+ * @param callback
+ * @description AJAX request to a server with GET method
+ */
+Router.loadConfigFile = function(url,async,callback){
+    $.ajax({
+        url:url,
+        dataType:"json",
+        async:async,
+        success:function(result){
+            callback(result);
+        },
+        error: function (error) {
+            callback("error");
+        }
+    });
+}
+
 /**
  *
  * @param url
@@ -19,7 +41,14 @@ Router.forward = function(url,async,callback){
         dataType:"json",
         async:async,
         success:function(result){
-            callback(result);
+            if(result.status === "success"){
+                if(result.response)
+                    callback(result.response);
+                if(result.responseString)
+                    callback(result.responseString);
+            }else{
+                alert("Something went wrong| Please try again later");
+            }
         },
         error: function (error) {
             callback("error");
@@ -44,7 +73,14 @@ Router.forwardWithPost = function(url,async,reqBody,callback){
         dataType:"json",
         async:async,
         success:function(result){
-            callback(result);
+            if(result.status === "success"){
+                if(result.response)
+                    callback(result.response);
+                if(result.responseString)
+                    callback(result.responseString);
+            }else{
+                alert("Something went wrong| Please try again later");
+            }
         },
         error: function (error) {
             callback("error");

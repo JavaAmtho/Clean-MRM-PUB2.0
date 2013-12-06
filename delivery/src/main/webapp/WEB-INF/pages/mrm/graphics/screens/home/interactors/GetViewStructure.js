@@ -48,6 +48,7 @@ GetViewStructure.getAll = function(){
  * @description callBack for getAllViewStructure REST api
  */
 GetViewStructure.onViewStructuresLoaded = function(data){
+    data = eval('(' + data + ')');
     GraphicDataStore.setSchemaArray(data);
     GraphicDataStore.setDefaultSchema();
     $(document).trigger({
