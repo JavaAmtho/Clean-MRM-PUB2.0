@@ -3,6 +3,7 @@
     "getTree":"dimension/get/",
     "getPublications":"publication/get/",
     "getAllTags":"tag/getAll",
+    "addTags":"tag/create/",
 
 
 

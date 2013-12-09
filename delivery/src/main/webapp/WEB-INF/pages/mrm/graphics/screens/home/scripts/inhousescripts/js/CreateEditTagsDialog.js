@@ -67,6 +67,15 @@ CreateEditTagsDialog.createTagsLIst = function(row){
     });
 }
 
+CreateEditTagsDialog.addTagToMasterList = function(){
+    var tagNameEntered = $("#tagName").val();
+    AddTags.add("addTags",tagNameEntered,CreateEditTagsDialog.onTagAdded);
+}
+
+CreateEditTagsDialog.onTagAdded = function(data){
+   //alert(JSON.stringify(data))   Need to add to the below list
+}
+
 function closeTagsDialog(){
     $("#editTagsdialog").dialog( "close" );
 }
