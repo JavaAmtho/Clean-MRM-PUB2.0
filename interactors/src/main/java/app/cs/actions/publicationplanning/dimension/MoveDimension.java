@@ -13,7 +13,9 @@ import app.cs.interfaces.slicingdicing.ITreeBuilder;
 import app.cs.model.request.MoveDimensionRequest;
 import app.cs.model.request.RequestModel;
 import app.cs.model.response.MultiDimensionalObjectResponse;
+import app.cs.model.response.ObjectResponse;
 import app.cs.model.response.ResponseModel;
+import app.cs.utils.CommonConstants;
 
 @Component
 public class MoveDimension implements Interactor {
@@ -37,11 +39,18 @@ public class MoveDimension implements Interactor {
 				dimensionRequest.getOldPath(), dimensionRequest.getNewPath(),
 				dimensionRequest.getObjectInMove());
 
+		String status = CommonConstants.FAIL_RESPONSE;
+		
+		if(dimensionalObject != null){
+			status = CommonConstants.SUCCESS_RESPONSE;
+		}
+		
 		builder.buildTreeForRootNode(dimensionalObject,
 				getOrderTypes(dimensionalObject.getType()),
 				dimensionalObject.getGroupId());
 
-		return new MultiDimensionalObjectResponse(dimensionalObject);
+	
+		return new MultiDimensionalObjectResponse(dimensionalObject,status);
 	}
 
 	protected String[] getOrderTypes(String type) {

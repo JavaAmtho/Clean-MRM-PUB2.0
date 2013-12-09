@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import app.cs.actions.publicationplanning.dimension.DeleteDimension;
+import app.cs.controller.pub.publicationplanning.dimension.DeleteDimensionController;
 import app.cs.impl.model.MultiDimensionalObject;
 import app.cs.model.request.DeleteDimensionRequest;
 

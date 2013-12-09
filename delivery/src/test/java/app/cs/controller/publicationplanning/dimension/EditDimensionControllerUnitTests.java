@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import app.cs.boundary.delivery.Interactor;
+import app.cs.controller.pub.publicationplanning.dimension.EditDimensionController;
 import app.cs.impl.model.MultiDimensionalObject;
 import app.cs.model.request.EditDimensionRequest;
 

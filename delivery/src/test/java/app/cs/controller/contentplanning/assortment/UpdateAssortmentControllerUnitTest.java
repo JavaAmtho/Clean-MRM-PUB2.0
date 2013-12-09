@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import app.cs.actions.contentplanning.assortment.UpdateAssortment;
+import app.cs.controller.pub.contentplanning.assortment.UpdateAssortmentController;
 import app.cs.impl.model.Assortment;
 import app.cs.model.request.UpdateAssortmentRequest;
 

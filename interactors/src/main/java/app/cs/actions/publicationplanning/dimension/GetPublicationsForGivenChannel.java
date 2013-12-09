@@ -20,7 +20,7 @@ import app.cs.utils.CommonConstants;
 
 //TODO:::REMOVED INTERACTOR IMPLEMENTAION!!!PLEASE CHECK AND CHAGNGE!!
 @Component
-public class GetPublicationsForGivenChannel implements Interactor{
+public class GetPublicationsForGivenChannel{
 
 	private IDimensionRepository dimensionRepository;
 
@@ -30,7 +30,7 @@ public class GetPublicationsForGivenChannel implements Interactor{
 		this.dimensionRepository = dimensionRepository;
 	}
 
-	public ResponseModel execute(RequestModel model) {
+	public TreeResponseModel execute(RequestModel model) {
 		GetDimensionByIdRequest dimensionByIdRequest = (GetDimensionByIdRequest) model;
 		String status = CommonConstants.FAIL_RESPONSE;
 		List<MultiDimensionalObject> response = dimensionRepository.getDimensionsBy(
@@ -38,7 +38,7 @@ public class GetPublicationsForGivenChannel implements Interactor{
 		if(response != null){
 			status = CommonConstants.SUCCESS_RESPONSE;
 		}
-		return new EmptyResponse();
+		return new TreeResponse(response,status);
 	}
 
 }

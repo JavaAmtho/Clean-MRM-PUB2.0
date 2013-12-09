@@ -7,7 +7,6 @@ import app.cs.boundary.delivery.Interactor;
 import app.cs.impl.dimension.DimensionRepository;
 import app.cs.model.request.EditDimensionRequest;
 import app.cs.model.request.RequestModel;
-import app.cs.model.response.EmptyResponse;
 import app.cs.model.response.EmptyResponseWithStatus;
 import app.cs.model.response.ResponseModel;
 

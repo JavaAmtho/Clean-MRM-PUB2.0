@@ -7,8 +7,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import app.cs.actions.publicationplanning.dimension.GetPublicationsForGivenChannel;
+import app.cs.controller.pub.publicationplanning.dimension.GetDimensionsByIdController;
 import app.cs.model.request.GetDimensionByIdRequest;
 import app.cs.model.response.TreeResponse;
 
