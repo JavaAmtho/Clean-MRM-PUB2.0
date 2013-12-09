@@ -18,6 +18,7 @@ CreateDimensionDialog.create = function(G,row,col,name){
             effect: "clip",
             duration: 500
         },
+
         buttons: {
 
             "Create ": function() {
@@ -101,6 +102,7 @@ CreateDimensionDialog.create = function(G,row,col,name){
 
                 }
             },
+
             Cancel: function() {
                 closeDimensionDialog();
             }
@@ -117,6 +119,9 @@ CreateDimensionDialog.create = function(G,row,col,name){
             clearForm();
         },
         autoOpen :true,
+       /* option: {
+            position: { my: "left top", at: "left bottom", of: window }
+        },*/
         changeTitle: document.getElementById("ui-id-1").innerHTML="Create New " + name,
         changeLabel: document.getElementById("dimensionName").innerHTML=name + " Name",
         datePicker: $(function() {

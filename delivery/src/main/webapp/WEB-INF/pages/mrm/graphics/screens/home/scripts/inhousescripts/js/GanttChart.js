@@ -84,6 +84,14 @@ var GanttChart = function(){
             var keyName2 = "Text";
             viewItem[keyName2] = "View";
             menuItems.push(viewItem);
+
+            //This is for editing the tags
+            var tagsItem = {};
+            var keyName3 = "Name";
+            tagsItem[keyName3] = "Edit Tags";
+            var keyName3 = "Text";
+            tagsItem[keyName3] = "Edit Tags";
+            menuItems.push(tagsItem);
         }
         return menu;
     }
@@ -138,6 +146,9 @@ var GanttChart = function(){
                 break;
             case "View":
                 ViewDimensionDialog.create(G,row,col,name);
+                break;
+            case "Edit Tags":
+                CreateEditTagsDialog.create(G,row,col,name);
                 break;
             default :
                 CreateDimensionDialog.create(G,row,col,name);

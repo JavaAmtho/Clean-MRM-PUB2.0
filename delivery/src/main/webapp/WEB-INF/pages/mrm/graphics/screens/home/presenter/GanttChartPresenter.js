@@ -36,6 +36,10 @@ var GanttChartPresenter = function(){
             };
 
             $(document).bind("treeDataLoaded", function onSchemaLoadedHandler(e){
+                //This is to get all tags defined
+                GetTags.getAllTags("getAllTags",function(data){
+                    GraphicDataStore.setTagsCollection(data);
+                });
 
                 if(e.treeData != "error"){
                   treeData[0].Items = e.treeData;

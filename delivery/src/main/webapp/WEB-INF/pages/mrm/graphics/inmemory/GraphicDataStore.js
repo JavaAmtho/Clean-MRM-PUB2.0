@@ -9,6 +9,14 @@ var GraphicDataStore = function(){
     var currentFocusedItem;
 }
 
+GraphicDataStore.setTagsCollection = function(tagsData){
+    this.tagsColl = tagsData;
+}
+
+GraphicDataStore.getTagsCollection = function(){
+    return this.tagsColl;
+}
+
 /**
  *
  * @param schemaData

@@ -11,6 +11,13 @@ body {
     overflow: scroll;
 }
 
+#editTagsdialog {
+    /* width:600px;
+     margin:50px auto;*/
+    display: none;
+}
+
+
 .assestsJQList {
     position: relative;
 }

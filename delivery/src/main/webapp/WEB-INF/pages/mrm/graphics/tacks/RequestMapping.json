@@ -2,6 +2,9 @@
     "getAllSchema":"mrm/all",
     "getTree":"dimension/get/",
     "getPublications":"publication/get/",
+    "getAllTags":"tag/getAll",
+
+
 
     "dragNDrop":"/delivery/"
 
