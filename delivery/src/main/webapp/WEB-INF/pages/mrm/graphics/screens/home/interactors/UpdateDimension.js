@@ -22,6 +22,7 @@ UpdateDimension.updateDim = function(prefix,row,callBack){
     input.title=row.title;
     input.dimensionInfo={"managerName":row.manager, "name":row.name, "startDate":row.startDate,"endDate":row.endDate,
         "budget":row.budget,"budgetOwner":row.budgetOwner,"currency":row.currency};
-    Router.forwardWithPost(prefix+row.id,true,input,callBack);
+
+    Router.forwardWithPost(EngineDataStore.getRestBaseUrl()+prefix+row.id,true,input,callBack);
 }
 

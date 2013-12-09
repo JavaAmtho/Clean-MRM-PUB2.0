@@ -39,7 +39,7 @@ GetViewStructure.onViewStructureSuccess = function(data){
  * @description calls getAllViewStructure REST api
  */
 GetViewStructure.getAll = function(){
-    Router.loadRequest("getAllSchema",true,GetViewStructure.onViewStructuresLoaded);
+    Router.loadPhpGetRequest("getAllSchema",true,GetViewStructure.onViewStructuresLoaded);
 }
 
 /**
@@ -48,7 +48,6 @@ GetViewStructure.getAll = function(){
  * @description callBack for getAllViewStructure REST api
  */
 GetViewStructure.onViewStructuresLoaded = function(data){
-    data = eval('(' + data + ')');
     GraphicDataStore.setSchemaArray(data);
     GraphicDataStore.setDefaultSchema();
     $(document).trigger({

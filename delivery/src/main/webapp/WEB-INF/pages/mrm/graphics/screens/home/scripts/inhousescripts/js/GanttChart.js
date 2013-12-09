@@ -254,19 +254,19 @@ var GanttChart = function(){
     Grids.OnGetGanttHtml = function(G,row,col,width,comp,crit){
         switch(row.type){
             case "MarketingInitiative":
-                Grids[0].SetValue(row,"nameIcon","../../../graphics/screens/home/images/cal1.png",1);
+                Grids[0].SetValue(row,"titleIcon","../../../graphics/screens/home/images/cal1.png",1);
                 return "<div style=\"background: #6e6e6e;color:white;padding:2px; height: 11px; border:1px solid #6e6e6e; border-radius: 4px;  box-shadow: 2px 2px 3px rgba(255, 255, 255, .9) inset; \"></div>";
             case "Campaign":
-                Grids[0].SetValue(row,"nameIcon","../../../graphics/screens/home/images/cal2.png",1);
+                Grids[0].SetValue(row,"titleIcon","../../../graphics/screens/home/images/cal2.png",1);
                 return "<div style=\"background: #7a8b8b;color:white;padding:2px; height: 11px; border:1px solid  #7a8b8b ; border-radius: 4px;  box-shadow: 2px 2px 3px rgba(255, 255, 255, .9) inset\"></div>";
             case "SubCampaign":
-                Grids[0].SetValue(row,"nameIcon","../../../graphics/screens/home/images/cal1.png",1);
+                Grids[0].SetValue(row,"titleIcon","../../../graphics/screens/home/images/cal1.png",1);
                 return "<div style=\"background: #b4cdcd;color:white;padding:2px; height: 11px; border:1px solid #b4cdcd; border-radius: 4px;  box-shadow: 2px 2px 3px rgba(255, 255, 255, .9) inset\"></div>";
             case "CommunicationPlan":
-                Grids[0].SetValue(row,"nameIcon","../../../graphics/screens/home/images/cal2.png",1);
+                Grids[0].SetValue(row,"titleIcon","../../../graphics/screens/home/images/cal2.png",1);
                 return "<div style=\"background: #b0e0e6;color:white;padding:2px; height: 11px; border:1px solid #b0e0e6; border-radius: 4px;  box-shadow: 2px 2px 3px rgba(255, 255, 255, .9) inset\"></div>";
             case "CommunicationChannel":
-                Grids[0].SetValue(row,"nameIcon","../../../graphics/screens/home/images/cal2.png",1);
+                Grids[0].SetValue(row,"titleIcon","../../../graphics/screens/home/images/cal2.png",1);
                 return "<div style=\"background: #60affe;color:white;padding:2px; height: 11px; border:1px solid #60affe; border-radius: 4px;  box-shadow: 2px 2px 3px rgba(255, 255, 255, .9) inset\"></div>";
             default:
                 return null;
@@ -290,7 +290,7 @@ var GanttChart = function(){
            var oldPathForChild = row.path;
            var newChildNode = row;
            var parentNode = torow;
-           newChildNode.path = parentNode.path +","+parentNode.title;
+           newChildNode.path = parentNode.path +","+parentNode.id;
            var newPathForChild = newChildNode.path;
 
            if(newPathForChild.indexOf("-1")==0)
@@ -299,7 +299,7 @@ var GanttChart = function(){
            var flag=isFolder(newChildNode.type);
            var prefix;
            prefix =getUrlPrefix(row.type,"move");
-           prefix = prefix+row.type;
+           //prefix = prefix+row.type;
            GanttChartPresenter.dragAndDropDimensions(prefix,row,oldPathForChild,flag,newPathForChild,onDropSuccess);
        }
     }
@@ -314,7 +314,7 @@ var GanttChart = function(){
      */
     Grids.OnClick = function(grid,row,col,x,y){
         if(row.id != "Header"){
-            if(col === "name"){
+            if(col === "title"){
                 if(row.type === "CommunicationPlan"){
                     //Call to server to get the publications of this Communication Channel
                     GanttChartPresenter.getPublications(row,GanttChartPresenter.onPublicationHandler);
@@ -465,13 +465,13 @@ function isFolder(dim){
 var getUrlPrefix=function(type,action){
     switch(type){
         case "Chapter":
-            return  "/delivery/chapter/"+action+"/";
+            return  "chapter/"+action+"/";
         case "Page":
-            return  "/delivery/page/"+action+"/";
+            return  "page/"+action+"/";
         case "Assortment":
-            return  "/delivery/assortment/"+action+"/";
+            return  "assortment/"+action+"/";
     }
-    return "/delivery/dimension/"+action+"/";
+    return "dimension/"+action+"/";
 };
 
 var currentRow;

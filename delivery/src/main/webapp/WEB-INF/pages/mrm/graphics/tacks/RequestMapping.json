@@ -1,7 +1,8 @@
 {
-    "getAllSchema":"/delivery/mrm/all",
-    "getSchema":"/delivery/treeviewstructure/",
-    "getTree":"/delivery/dimension/get/",
-    "dragNDrop":"/delivery/",
-    "getPublications":"/delivery/publication/get/"
+    "getAllSchema":"mrm/all",
+    "getTree":"dimension/get/",
+    "getPublications":"publication/get/",
+
+    "dragNDrop":"/delivery/"
+
 }

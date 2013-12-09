@@ -2,7 +2,7 @@
 
     <Cfg
             id="Search"
-            MainCol="name"
+            MainCol="title"
             ShowDeleted= "0"
             Style= "ExtJS"
             MinRowHeight= "23"
@@ -82,8 +82,8 @@
 
               GanttSlack= "Slack"
               GanttFormatObject= "MainPrev"
-              GanttFormat= "*name*"
-              GanttMainTip= "&lt;div style='height: 16px;padding-bottom:5px;position:relative;font-weight:bold'>*name*&lt;/div>
+              GanttFormat= "*title*"
+              GanttMainTip= "&lt;div style='height: 16px;padding-bottom:5px;position:relative;font-weight:bold'>*title*&lt;/div>
                             &lt;div style='height: 13px;padding-bottom:5px;position:relative;'> &lt;span  style='text-align: left;
                             float:left;font-size:11px'>Start:&lt;/span>&lt;span style='text-align: right;
                             margin-left:65px;float:right;font-size:11px'>*startDate*&lt;/span>&lt;/div>
@@ -132,7 +132,7 @@
         WidthPad= "17"
         Buttons= "Delete,Move"/>
 
-        <C Name = "name"
+        <C Name = "title"
         ResultMask="^[A-Za-z0-9]+[ A-Za-z0-9]*$"
         Type= "Text"
         Width= "500"

@@ -25,7 +25,7 @@ CreateDimensions.createDim = function(prefix,action,input,currentPath,flag,callB
     //reqBody.type=input.type;    //Only for mocks
     if(input.budget)
     reqBody.budget=input.budget;
-    Router.forwardWithPost(prefix+action+"/name/"+input.name+"/path/"+currentPath+"/folder/"+flag,true,reqBody,function(data){
+    Router.forwardWithPost(EngineDataStore.getRestBaseUrl()+prefix + action + "/name/" + input.name + "/path/" + currentPath + "/folder/" + flag, true, reqBody, function (data) {
         callBack(data);
     });
 }

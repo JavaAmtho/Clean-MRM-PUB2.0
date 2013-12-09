@@ -26,6 +26,7 @@ function parseInitialConfiguration(data){
     EngineDataStore.setBaseURL(data.baseUrl);
     EngineDataStore.setMrmUrl(data.MRMUrl);
     EngineDataStore.setPubUrl(data.PubUrl);
+    EngineDataStore.setRestBaseUrl(data.restBaseUrl);
 }
 
 /**

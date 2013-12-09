@@ -15,6 +15,22 @@ var EngineDataStore = function(){
  *
  * @param url
  */
+EngineDataStore.setRestBaseUrl = function(url){
+    this.restBaseUrl = url;
+}
+
+/**
+ *
+ * @returns rest base-url
+ */
+EngineDataStore.getRestBaseUrl = function(){
+    return this.restBaseUrl;
+}
+
+/**
+ *
+ * @param url
+ */
 EngineDataStore.setBaseURL = function(url){
     this.baseURL = url;
 }

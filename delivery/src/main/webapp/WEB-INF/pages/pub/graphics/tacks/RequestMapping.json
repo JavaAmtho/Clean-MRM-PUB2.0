@@ -9,8 +9,8 @@
     "getPageThumbnails" : "page/pagethumbnails/",
     "createWBD" : "page/createwbd/",
     "updateEditorUrl" : "page/updateEditorURL/",
+    "getAllSchema":"pub/all",
 
-    "getAllSchema":"/delivery/pub/all",
     "dragNDrop":"/delivery/",
     "getAllPagesUnderPublication" : "/delivery/page/all/"
 }

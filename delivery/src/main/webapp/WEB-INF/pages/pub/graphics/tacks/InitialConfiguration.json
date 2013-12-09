@@ -3,5 +3,5 @@
     "MRMUrl":"/delivery/pages/mrm/engine/core/html/start.html",
     "PubUrl":"/delivery/pages/pub/engine/core/html/start.html",
     "restBaseUrl":"http://192.168.135.32:90/CS_Trunk_MCPM/admin/rest/mcpm/",
-    "chooseMasterTemplateUrl":"http://192.168.135.32:90/CS_Trunk_MCPM/admin/forward.php?forward=dialogs|FileInputDialog|FileInputDialog.php&CS_FILEINPUT_FILTER=indd&localeLang=de"
+    "chooseMasterTemplateUrl":"http://192.168.135.58/CS_Trunk_MCPM/admin/forward.php?forward=dialogs|FileInputDialog|FileInputDialog.php&CS_FILEINPUT_FILTER=indd&localeLang=de"
 }

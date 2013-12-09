@@ -1,5 +1,6 @@
 {
     "baseUrl":"../../../",
+    "restBaseUrl":"http://192.168.135.32:90/CS_Trunk_MCPM/admin/rest/mcpm/",
     "MRMUrl":"/delivery/pages/mrm/engine/core/html/start.html",
     "PubUrl":"/delivery/pages/pub/engine/core/html/start.html"
 }

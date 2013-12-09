@@ -7,7 +7,7 @@ function GetTree(){
 }
 
 GetTree.get = function(){
-    Router.loadRequest("getTree",true,onTreeSuccess,GraphicDataStore.getCurrentSchema().name);
+    Router.loadPhpGetRequest("getTree",true,onTreeSuccess,GraphicDataStore.getCurrentSchema().name);
 }
 
 /**

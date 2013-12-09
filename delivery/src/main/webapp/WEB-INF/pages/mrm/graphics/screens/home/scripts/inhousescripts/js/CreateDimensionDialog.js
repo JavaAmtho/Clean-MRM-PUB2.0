@@ -85,7 +85,8 @@ CreateDimensionDialog.create = function(G,row,col,name){
                             currentPath = "-1";
                         }
                         else{
-                            currentPath = parentNode.path+","+ parentNode.title;
+                            //alert(parentNode.id)
+                            currentPath = parentNode.path+","+ parentNode.id;
                             if(currentPath.indexOf("-1")==0)
                                 currentPath = currentPath.match(/([^,]*),(.*)/)[2];   //To remove -1 root folder
                         }
