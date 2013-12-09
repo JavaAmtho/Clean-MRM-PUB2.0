@@ -335,22 +335,22 @@ var GanttChart = function(){
         while(currentChild){
             switch(currentChild.type){
                 case "MarketingInitiative":
-                    Grids[0].SetValue(currentChild,"nameIcon","../../../graphics/screens/home/images/cal1.png",1);
+                    Grids[0].SetValue(currentChild,"titleIcon","../../../graphics/screens/home/images/cal1.png",1);
                     break;
                 case "Campaign":
-                    Grids[0].SetValue(currentChild,"nameIcon","../../../graphics/screens/home/images/cal1.png",1);
+                    Grids[0].SetValue(currentChild,"titleIcon","../../../graphics/screens/home/images/cal1.png",1);
                     break;
                 case "SubCampaign":
-                    Grids[0].SetValue(currentChild,"nameIcon","../../../graphics/screens/home/images/cal1.png",1);
+                    Grids[0].SetValue(currentChild,"titleIcon","../../../graphics/screens/home/images/cal1.png",1);
                     break;
                 case "CommunicationPlan":
-                    Grids[0].SetValue(currentChild,"nameIcon","../../../graphics/screens/home/images/cal2.png",1);
+                    Grids[0].SetValue(currentChild,"titleIcon","../../../graphics/screens/home/images/cal2.png",1);
                     break;
                 case "CommunicationChannel":
-                    Grids[0].SetValue(currentChild,"nameIcon","../../../graphics/screens/home/images/cal2.png",1);
+                    Grids[0].SetValue(currentChild,"titleIcon","../../../graphics/screens/home/images/cal2.png",1);
                     break;
                 default:
-                    Grids[0].SetValue(currentChild,"nameIcon","../../../graphics/screens/home/images/cal2.png",1);
+                    Grids[0].SetValue(currentChild,"titleIcon","../../../graphics/screens/home/images/cal2.png",1);
                     break;
             }
             currentChild = currentChild.nextSibling;
@@ -414,7 +414,7 @@ var GanttChart = function(){
             "title": name,
             "type": type,
             "path": path,
-            "nameIcon":icon,
+            "titleIcon":icon,
             "Items": []
         }
         return newRowNode;
@@ -497,22 +497,22 @@ GanttChart.addNode = function(data){
         Grids[0].SetValue(currentRow.lastChild,"Items",data.Items,1);
         switch(data.type){
             case "MarketingInitiative":
-                Grids[0].SetValue(currentRow.lastChild,"nameIcon","../../../graphics/screens/home/images/cal1.png",1);
+                Grids[0].SetValue(currentRow.lastChild,"titleIcon","../../../graphics/screens/home/images/cal1.png",1);
                 break;
             case "Campaign":
-                Grids[0].SetValue(currentRow.lastChild,"nameIcon","../../../graphics/screens/home/images/cal1.png",1);
+                Grids[0].SetValue(currentRow.lastChild,"titleIcon","../../../graphics/screens/home/images/cal1.png",1);
                 break;
             case "SubCampaign":
-                Grids[0].SetValue(currentRow.lastChild,"nameIcon","../../../graphics/screens/home/images/cal1.png",1);
+                Grids[0].SetValue(currentRow.lastChild,"titleIcon","../../../graphics/screens/home/images/cal1.png",1);
                 break;
             case "CommunicationPlan":
-                Grids[0].SetValue(currentRow.lastChild,"nameIcon","../../../graphics/screens/home/images/cal2.png",1);
+                Grids[0].SetValue(currentRow.lastChild,"titleIcon","../../../graphics/screens/home/images/cal2.png",1);
                 break;
             case "CommunicationChannel":
-                Grids[0].SetValue(currentRow.lastChild,"nameIcon","../../../graphics/screens/home/images/cal2.png",1);
+                Grids[0].SetValue(currentRow.lastChild,"titleIcon","../../../graphics/screens/home/images/cal2.png",1);
                 break;
             default:
-                Grids[0].SetValue(currentRow.lastChild,"nameIcon","../../../graphics/screens/home/images/cal2.png",1);
+                Grids[0].SetValue(currentRow.lastChild,"titleIcon","../../../graphics/screens/home/images/cal2.png",1);
                 break;
         }
 
