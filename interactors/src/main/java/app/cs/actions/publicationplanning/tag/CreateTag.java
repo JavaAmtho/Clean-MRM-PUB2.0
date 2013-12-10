@@ -31,7 +31,7 @@ public class CreateTag implements Interactor{
 		if(result){
 			status = CommonConstants.SUCCESS_RESPONSE;
 		}
-		return new EmptyResponseWithStatus(status);
+		return new EmptyResponseWithStatus(status,request.getTagName());
 	}
 	
 }
