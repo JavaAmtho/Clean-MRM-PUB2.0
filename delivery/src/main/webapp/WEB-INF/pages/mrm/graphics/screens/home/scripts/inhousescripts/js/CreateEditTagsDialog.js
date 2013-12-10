@@ -73,7 +73,21 @@ CreateEditTagsDialog.addTagToMasterList = function(){
 }
 
 CreateEditTagsDialog.onTagAdded = function(data){
-   //alert(JSON.stringify(data))   Need to add to the below list
+   //server should give a tagObject rather than just name
+    var newTag = new Object();
+    newTag.tagName = data;
+    newTag.key = data;
+    newTag.objectKey = data;
+    newTag.checked = null;
+    GraphicDataStore.addTagToTagsCollection(newTag);
+    CreateEditTagsDialog.tagsDataSource = new kendo.data.DataSource({
+        data: GraphicDataStore.getTagsCollection()
+    });
+
+    $("#tagsList").kendoListView({
+        dataSource: CreateEditTagsDialog.tagsDataSource,
+        template: '<div class="tags move k-block"><input type="checkbox" #:checked#>#:tagName#</div>'
+    });
 }
 
 function closeTagsDialog(){

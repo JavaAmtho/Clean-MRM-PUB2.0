@@ -17,6 +17,10 @@ GraphicDataStore.getTagsCollection = function(){
     return this.tagsColl;
 }
 
+GraphicDataStore.addTagToTagsCollection = function(tagObj){
+    this.tagsColl.push(tagObj);
+}
+
 /**
  *
  * @param schemaData
