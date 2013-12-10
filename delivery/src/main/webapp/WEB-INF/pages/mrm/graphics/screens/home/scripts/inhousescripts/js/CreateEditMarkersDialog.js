@@ -84,10 +84,19 @@ CreateEditMarkersDialog.createKendoList = function(){
     });
 }
 
-
-CreateEditMarkersDialog.addMarkerToMasterList = function(){
-    var markerNameEntered = $("#markerName").val();
-    MarkersPresenter.addMarkerToMasterList(markerNameEntered,CreateEditMarkersDialog.onMarkerAdded);
+CreateEditMarkersDialog.searchMarkersInMasterList = function(){
+    var searchedMarkerName = $("#markerName").val();
+    var searchedColl = $.grep(GraphicDataStore.getMarkersCollection() , function (value) {
+            if(value.markerName.indexOf(searchedMarkerName) !== -1)
+                return true;
+            return false;
+        }
+    );
+    CreateEditMarkersDialog.markersDataSource = new kendo.data.DataSource({
+        data: searchedColl
+    });
+    CreateEditMarkersDialog.createKendoList();
+    /*MarkersPresenter.addMarkerToMasterList(markerNameEntered,CreateEditMarkersDialog.onMarkerAdded); Used for adding marker NOT IN USE*/
 }
 
 CreateEditMarkersDialog.onMarkerAdded = function(data){

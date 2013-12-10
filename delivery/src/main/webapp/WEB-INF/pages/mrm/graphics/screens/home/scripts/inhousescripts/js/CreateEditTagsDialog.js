@@ -117,6 +117,21 @@ CreateEditTagsDialog.changeTagValue = function(item){
     }
 }
 
+CreateEditTagsDialog.searchTagsInMasterList = function(){
+    var searchedTagName = $("#tagName").val();
+    var searchedColl = $.grep(GraphicDataStore.getTagsCollection() , function (value) {
+            if(value.tagName.indexOf(searchedTagName) !== -1)
+                return true;
+            return false;
+        }
+    );
+    CreateEditTagsDialog.tagsDataSource = new kendo.data.DataSource({
+        data: searchedColl
+    });
+
+    CreateEditTagsDialog.createKendoList();
+}
+
 CreateEditTagsDialog.updateDimension = function(){
     CreateEditTagsDialog.tagsList = [];
     for(var i=0; i< GraphicDataStore.getTagsCollection().length; i++){
@@ -136,3 +151,4 @@ CreateEditTagsDialog.onDimensionTagsUpdateSuccess = function(data){
 function closeTagsDialog(){
     $("#editTagsdialog").dialog( "close" );
 }
+

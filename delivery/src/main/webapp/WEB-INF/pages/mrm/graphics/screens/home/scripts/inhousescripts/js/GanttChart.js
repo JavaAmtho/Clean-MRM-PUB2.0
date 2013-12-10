@@ -105,27 +105,6 @@ var GanttChart = function(){
     }
 
     /**
-     * @param grid
-     * @param row
-     * @param col
-     * @param Menu
-     * @param GanttXY
-     * @returns true
-     * @description eventListner when user right clicks on gantt bars row
-     */
-    Grids.OnGanttMenu = function(grid,row,col,Menu,GanttXY) {
-        return true;
-    }
-
-    /**
-     * Delete a row from Gantt
-     */
-    GanttChart.onDeleteSuccess=function(){
-        Grids[0].DeleteRow(currentRow,2);
-        alertify.success("Deleted successfully");
-    }
-
-    /**
      * @param G
      * @param row
      * @param col
@@ -166,6 +145,52 @@ var GanttChart = function(){
                 break;
         }
     }
+
+    Grids.OnGetGanttMenu = function(grid, row, col, menu, GanttXY){
+        /*var menuItems = [];
+        var menu = {Items:menuItems};
+        var markersItem = {};
+        var keyName4 = "Name";
+        markersItem[keyName4] = "Edit Markers";
+        var keyName3 = "Text";
+        markersItem[keyName4] = "Edit Markers";
+        menuItems.push(markersItem);
+        return menu;*/
+    }
+
+
+    /**
+     * @param grid
+     * @param row
+     * @param col
+     * @param Menu
+     * @param GanttXY
+     * @returns true
+     * @description eventListner when user right clicks on gantt bars row
+     */
+    Grids.OnGanttMenu = function(grid,row,col,Menu,GanttXY) {
+        //return true;
+        //console.log(Menu)
+        /*var Menu = {Items:menuItems};
+        var item = {};
+        var keyName = "Name";
+        item[keyName] = possibleDim[i];
+        var keyName = "Text";
+        item[keyName] = "Create "+possibleDim[i];
+        menuItems.push(item);
+
+        return Menu;*/
+    }
+
+    /**
+     * Delete a row from Gantt
+     */
+    GanttChart.onDeleteSuccess=function(){
+        Grids[0].DeleteRow(currentRow,2);
+        alertify.success("Deleted successfully");
+    }
+
+
 
     /**
      * @param grid
