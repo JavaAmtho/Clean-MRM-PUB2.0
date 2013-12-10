@@ -2,7 +2,7 @@ function AddTags(){
 
 }
 
-AddTags.add = function(key,nameOfTag,callBack){
-     Router.loadPhpGetRequest(key,true,callBack,nameOfTag)
+AddTags.add = function(nameOfTag,callBack){
+     Router.loadPhpGetRequest("addTags",true,callBack,nameOfTag)
 }
 

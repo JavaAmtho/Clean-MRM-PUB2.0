@@ -37,7 +37,7 @@ var GanttChartPresenter = function(){
 
             $(document).bind("treeDataLoaded", function onSchemaLoadedHandler(e){
                 //This is to get all tags defined
-                GetTags.getAllTags("getAllTags",function(data){
+                TagsPresenter.getTags(function(data){
                     GraphicDataStore.setTagsCollection(data);
                 });
 

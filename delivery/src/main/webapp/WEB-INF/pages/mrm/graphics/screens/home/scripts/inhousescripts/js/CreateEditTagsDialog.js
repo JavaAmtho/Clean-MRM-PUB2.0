@@ -5,7 +5,7 @@ function CreateEditTagsDialog(){
 /*Static Variables*/
 CreateEditTagsDialog.currentRow;
 
-CreateEditTagsDialog.tagsList = [];
+CreateEditTagsDialog.tagsList;
 
 CreateEditTagsDialog.tagsDataSource;
 
@@ -29,7 +29,7 @@ CreateEditTagsDialog.create = function(G,row,col,name){
         },
 
         buttons: {
-            "Create": function(){
+            "Update": function(){
                 CreateEditTagsDialog.updateDimension();
             },
             Cancel: function(){
@@ -49,7 +49,7 @@ CreateEditTagsDialog.create = function(G,row,col,name){
 CreateEditTagsDialog.createTagsList = function(row){
     var assignedTagsList=[];
     if(row.tags)
-        assignedTagsList = row.tags;
+        assignedTagsList = CreateEditTagsDialog.currentRow.tags;
 
     var tagsColl = GraphicDataStore.getTagsCollection();
     for(var i=0; i< tagsColl.length; i++){
@@ -81,7 +81,7 @@ CreateEditTagsDialog.createKendoList = function(){
 
 CreateEditTagsDialog.addTagToMasterList = function(){
     var tagNameEntered = $("#tagName").val();
-    AddTags.add("addTags",tagNameEntered,CreateEditTagsDialog.onTagAdded);
+    TagsPresenter.addTagToMasterList(tagNameEntered,CreateEditTagsDialog.onTagAdded);
 }
 
 CreateEditTagsDialog.onTagAdded = function(data){
@@ -105,30 +105,32 @@ CreateEditTagsDialog.changeTagValue = function(item){
     var matchedIndex;
     for(var i=0; i< GraphicDataStore.getTagsCollection().length; i++){
          if(GraphicDataStore.getTagsCollection()[i].tagName === item.id){
-             matchedIndex = i;
+             matchedIndex = i+1;
          }
     }
     if(matchedIndex){
         if($(item).is(':checked')){
-            GraphicDataStore.getTagsCollection()[matchedIndex].checked = "checked";
+            GraphicDataStore.getTagsCollection()[matchedIndex-1].checked = "checked";
         }else{
-            GraphicDataStore.getTagsCollection()[matchedIndex].checked = null;
+            GraphicDataStore.getTagsCollection()[matchedIndex-1].checked = null;
         }
     }
 }
 
 CreateEditTagsDialog.updateDimension = function(){
-
+    CreateEditTagsDialog.tagsList = [];
     for(var i=0; i< GraphicDataStore.getTagsCollection().length; i++){
         if(GraphicDataStore.getTagsCollection()[i].checked){
             CreateEditTagsDialog.tagsList.push(GraphicDataStore.getTagsCollection()[i].tagName);
         }
     }
-    UpdateTagsOfDimension.update(CreateEditTagsDialog.currentRow.id,CreateEditTagsDialog.tagsList,CreateEditTagsDialog.onDimensionTagsUpdateSuccess)
+    TagsPresenter.updateTagsForDimension(CreateEditTagsDialog.currentRow.id,CreateEditTagsDialog.tagsList,CreateEditTagsDialog.onDimensionTagsUpdateSuccess)
 }
 
 CreateEditTagsDialog.onDimensionTagsUpdateSuccess = function(data){
     CreateEditTagsDialog.currentRow.tags = CreateEditTagsDialog.tagsList;
+    closeTagsDialog();
+    alertify.success("Tags Edited Successfully");
 }
 
 function closeTagsDialog(){
