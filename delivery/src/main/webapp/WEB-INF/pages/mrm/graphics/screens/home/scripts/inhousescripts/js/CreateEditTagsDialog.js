@@ -2,9 +2,17 @@ function CreateEditTagsDialog(){
 
 }
 
+/*Static Variables*/
+CreateEditTagsDialog.currentRow;
+
+CreateEditTagsDialog.tagsList = [];
+
+CreateEditTagsDialog.tagsDataSource;
+
 CreateEditTagsDialog.create = function(G,row,col,name){
     //Always get the tagsList first and find which are provided to this dimension
-    CreateEditTagsDialog.createTagsLIst(row);
+    CreateEditTagsDialog.currentRow = row;
+    CreateEditTagsDialog.createTagsList(CreateEditTagsDialog.currentRow);
 
     $( "#editTagsdialog" ).dialog({
         height: 490,
@@ -22,7 +30,7 @@ CreateEditTagsDialog.create = function(G,row,col,name){
 
         buttons: {
             "Create": function(){
-
+                CreateEditTagsDialog.updateDimension();
             },
             Cancel: function(){
                 closeTagsDialog();
@@ -31,16 +39,14 @@ CreateEditTagsDialog.create = function(G,row,col,name){
         close: function() {
             clearForm();
         },
-        autoOpen :true
-        //changeTitle: document.getElementById("ui-id-1").innerHTML="Create New " + name
+        autoOpen :true,
+        changeTitle: document.getElementById("ui-id-1").innerHTML="Edit Tags"
 
     });
 
 }
 
-CreateEditTagsDialog.tagsDataSource;
-
-CreateEditTagsDialog.createTagsLIst = function(row){
+CreateEditTagsDialog.createTagsList = function(row){
     var assignedTagsList=[];
     if(row.tags)
         assignedTagsList = row.tags;
@@ -61,11 +67,17 @@ CreateEditTagsDialog.createTagsLIst = function(row){
         data: tagsColl
     });
 
+    CreateEditTagsDialog.createKendoList();
+}
+
+
+CreateEditTagsDialog.createKendoList = function(){
     $("#tagsList").kendoListView({
         dataSource: CreateEditTagsDialog.tagsDataSource,
-        template: '<div class="tags move k-block"><input type="checkbox" #:checked#>#:tagName#</div>'
+        template: '<div class="tags move k-block"><input type="checkbox"  id="#:tagName#" onchange="CreateEditTagsDialog.changeTagValue(this)" #:checked#>#:tagName#</div>'
     });
 }
+
 
 CreateEditTagsDialog.addTagToMasterList = function(){
     var tagNameEntered = $("#tagName").val();
@@ -80,14 +92,43 @@ CreateEditTagsDialog.onTagAdded = function(data){
     newTag.objectKey = data;
     newTag.checked = null;
     GraphicDataStore.addTagToTagsCollection(newTag);
+    $("#tagName").val("");
+    alertify.success("Tag added successfully");
     CreateEditTagsDialog.tagsDataSource = new kendo.data.DataSource({
         data: GraphicDataStore.getTagsCollection()
     });
 
-    $("#tagsList").kendoListView({
-        dataSource: CreateEditTagsDialog.tagsDataSource,
-        template: '<div class="tags move k-block"><input type="checkbox" #:checked#>#:tagName#</div>'
-    });
+    CreateEditTagsDialog.createKendoList();
+}
+
+CreateEditTagsDialog.changeTagValue = function(item){
+    var matchedIndex;
+    for(var i=0; i< GraphicDataStore.getTagsCollection().length; i++){
+         if(GraphicDataStore.getTagsCollection()[i].tagName === item.id){
+             matchedIndex = i;
+         }
+    }
+    if(matchedIndex){
+        if($(item).is(':checked')){
+            GraphicDataStore.getTagsCollection()[matchedIndex].checked = "checked";
+        }else{
+            GraphicDataStore.getTagsCollection()[matchedIndex].checked = null;
+        }
+    }
+}
+
+CreateEditTagsDialog.updateDimension = function(){
+
+    for(var i=0; i< GraphicDataStore.getTagsCollection().length; i++){
+        if(GraphicDataStore.getTagsCollection()[i].checked){
+            CreateEditTagsDialog.tagsList.push(GraphicDataStore.getTagsCollection()[i].tagName);
+        }
+    }
+    UpdateTagsOfDimension.update(CreateEditTagsDialog.currentRow.id,CreateEditTagsDialog.tagsList,CreateEditTagsDialog.onDimensionTagsUpdateSuccess)
+}
+
+CreateEditTagsDialog.onDimensionTagsUpdateSuccess = function(data){
+    CreateEditTagsDialog.currentRow.tags = CreateEditTagsDialog.tagsList;
 }
 
 function closeTagsDialog(){

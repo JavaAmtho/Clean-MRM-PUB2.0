@@ -4,7 +4,7 @@
     "getPublications":"publication/get/",
     "getAllTags":"tag/getAll",
     "addTags":"tag/create/",
-
+    "updateTagsOfDimension":"dimension/updateTag/",
 
 
     "dragNDrop":"/delivery/"
