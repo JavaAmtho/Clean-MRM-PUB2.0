@@ -9,6 +9,27 @@ var GraphicDataStore = function(){
     var currentFocusedItem;
 }
 
+GraphicDataStore.setIfMarkersLoaded = function(value){
+    this.ifMarkersLoaded =  value;
+}
+
+GraphicDataStore.getIfMarkersLoaded = function(){
+    return this.ifMarkersLoaded;
+}
+
+GraphicDataStore.setMarkersCollection = function(markersData){
+    this.markersColl = markersData;
+    GraphicDataStore.setIfMarkersLoaded(true);
+}
+
+GraphicDataStore.getMarkersCollection = function(){
+    return this.markersColl;
+}
+
+GraphicDataStore.addMarkerToMarkersCollection = function(markerObj){
+    this.markersColl.push(markerObj);
+}
+
 GraphicDataStore.setTagsCollection = function(tagsData){
     this.tagsColl = tagsData;
 }

@@ -92,6 +92,14 @@ var GanttChart = function(){
             var keyName3 = "Text";
             tagsItem[keyName3] = "Edit Tags";
             menuItems.push(tagsItem);
+
+            //This is for editing the markers
+            var markersItem = {};
+            var keyName4 = "Name";
+            markersItem[keyName4] = "Edit Markers";
+            var keyName3 = "Text";
+            markersItem[keyName4] = "Edit Markers";
+            menuItems.push(markersItem);
         }
         return menu;
     }
@@ -149,6 +157,9 @@ var GanttChart = function(){
                 break;
             case "Edit Tags":
                 CreateEditTagsDialog.create(G,row,col,name);
+                break;
+            case "Edit Markers":
+                CreateEditMarkersDialog.create(G,row,col,name);
                 break;
             default :
                 CreateDimensionDialog.create(G,row,col,name);

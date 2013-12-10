@@ -5,6 +5,9 @@
     "getAllTags":"tag/getAll",
     "addTags":"tag/create/",
     "updateTagsOfDimension":"dimension/updateTag/",
+    "getAllMarkers":"marker/getAll",
+    "addMarkers":"marker/create/",
+    "updateMarkersOfDimension":"dimension/updateMarker/",
 
 
     "dragNDrop":"/delivery/"

@@ -36,6 +36,7 @@ var GanttChartPresenter = function(){
             };
 
             $(document).bind("treeDataLoaded", function onSchemaLoadedHandler(e){
+                GraphicDataStore.setIfMarkersLoaded(false); //To set that markers list is not loaded yet
                 //This is to get all tags defined
                 TagsPresenter.getTags(function(data){
                     GraphicDataStore.setTagsCollection(data);
