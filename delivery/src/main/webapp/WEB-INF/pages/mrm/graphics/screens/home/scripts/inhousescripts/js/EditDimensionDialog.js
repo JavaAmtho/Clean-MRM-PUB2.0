@@ -138,18 +138,32 @@ EditDimensionDialog.create = function(G,row,col,name){
 }
 
 EditDimensionDialog.preInsertData = function(rowData){
-   $("#name").val(rowData.name);
-   $("#manager").val(rowData.manager);
-   /*$("#startdate").val(rowData.startDate);
-   ("#enddate").val(rowData.endDate);*/
+    EditDimensionDialog.enableAllFields();
+    if(rowData.name)
+       $("#name").val(rowData.name);
+    if(rowData.manager)
+       $("#manager").val(rowData.manager);
+    if(rowData.budgetOwner)
+       $("#budgetOwner").val(rowData.budgetOwner);
+    if(rowData.budgetOwner){
+        //Need to extract last charachter for currenct and rest is budget
+        var currency = rowData.budget.substr(rowData.budget.length - 1);
+        var budget = rowData.budget.substring(0, rowData.budget.length - 1);
+        $("#budget").val(budget);
+        $("#currency").val(currency);
+    }
+    /*$("#startdate").val(rowData.startDate);
+     ("#enddate").val(rowData.endDate);*/
+}
 
-
-   $("#budgetOwner").val(rowData.budgetOwner);
-    //Need to extract last charachter for currenct and rest is budget
-   var currency = rowData.budget.substr(rowData.budget.length - 1);
-   var budget = rowData.budget.substring(0, rowData.budget.length - 1);
-   $("#budget").val(budget);
-   $("#currency").val(currency);
+EditDimensionDialog.enableAllFields = function(rowData){
+    $("#name").attr('disabled', false);
+    $("#manager").attr('disabled', false);
+    $("#budgetOwner").attr('disabled', false);
+    $("#budget").attr('disabled', false);
+    $("#currency").attr('disabled', false);
+    $("#startdate").attr('disabled', false);
+    $("#enddate").attr('disabled', false);
 }
 
 function closeDimensionDialog(){
