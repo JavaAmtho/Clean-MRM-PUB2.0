@@ -152,8 +152,15 @@ EditDimensionDialog.preInsertData = function(rowData){
         $("#budget").val(budget);
         $("#currency").val(currency);
     }
-    /*$("#startdate").val(rowData.startDate);
-     ("#enddate").val(rowData.endDate);*/
+    if(rowData.startDate){
+        var startDate = new Date(rowData.startDate).toMDY();
+        $("#startdate").val(startDate);
+    }
+
+    if(rowData.endDate){
+        var endDate = new Date(rowData.endDate).toMDY();
+        $("#enddate").val(endDate);
+    }
 }
 
 EditDimensionDialog.enableAllFields = function(rowData){

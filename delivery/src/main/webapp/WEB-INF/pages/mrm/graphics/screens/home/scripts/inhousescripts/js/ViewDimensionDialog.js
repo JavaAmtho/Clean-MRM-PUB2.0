@@ -71,10 +71,16 @@ ViewDimensionDialog.preInsertData = function(rowData){
         $("#budget").val(budget);
         $("#currency").val(currency);
     }
+    if(rowData.startDate){
+        var startDate = new Date(rowData.startDate).toMDY();
+        $("#startdate").val(startDate);
+    }
 
+    if(rowData.endDate){
+        var endDate = new Date(rowData.endDate).toMDY();
+        $("#enddate").val(endDate);
+    }
 
-    /*$("#startdate").val(rowData.startDate);
-     ("#enddate").val(rowData.endDate);*/
 }
 
 ViewDimensionDialog.disableAllFields = function(rowData){
