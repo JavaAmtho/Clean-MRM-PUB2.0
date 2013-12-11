@@ -158,11 +158,17 @@ NewPageBreadCrumbWidget.enableRenderingEngine = function(){
         if(radioElementsPfPage[checkedIndex-1].value == "creative"){
             for(var i = 0; i < radioElementsOfRenderer.length; i++){
                 radioElementsOfRenderer[i].disabled = false;
+                radioElementsOfRenderer[i].checked = false;
             }
         }
-        else{
+        else if(radioElementsPfPage[checkedIndex-1].value == "dynamic"){
+            radioElementsOfRenderer[0].disabled = false;
+            radioElementsOfRenderer[0].checked = true;
+            radioElementsOfRenderer[1].disabled = true;
+        }else{
             for(var i = 0; i < radioElementsOfRenderer.length; i++){
                 radioElementsOfRenderer[i].disabled = true;
+
                 radioElementsOfRenderer[i].checked = false;
             }
         }

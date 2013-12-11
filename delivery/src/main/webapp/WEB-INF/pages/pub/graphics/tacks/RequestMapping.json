@@ -10,7 +10,7 @@
     "createWBD" : "page/createwbd/",
     "updateEditorUrl" : "page/updateEditorURL/",
     "getAllSchema":"pub/all",
-
+    "createIndd":"page/createIndd/",
     "dragNDrop":"/delivery/",
     "getAllPagesUnderPublication" : "/delivery/page/all/"
 }

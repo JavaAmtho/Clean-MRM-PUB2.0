@@ -430,7 +430,7 @@ var DynaTree = function(){
 
 
     function getPageRendererType(currentPage){
-        if(currentPage.data.pageType === "creative"){
+        if(currentPage.data.pageType === "creative" || currentPage.data.pageType === "dynamic" ){
             return currentPage.data.renderEngineType;
         }else{
             return null;

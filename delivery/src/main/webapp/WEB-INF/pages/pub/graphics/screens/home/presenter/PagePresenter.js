@@ -17,7 +17,7 @@ var LOADING_IMAGE_URL = '../../../graphics/screens/home/images/load.gif';
  * @description if the node that is activated contains pages then set all the pages
  *              with their respective rules
  */
-PagePresenter.setAllPageRulesOnActivateOfNode = function() {
+PagePresenter.setAllPageRulesOnActivateOfNode = function () {
     var $masterPages = $("#viewHolder").children('.masterPage');
     for (var i = 0; i < $masterPages.length; i++) {
         var $masterPage = $($masterPages[i]);
@@ -25,18 +25,26 @@ PagePresenter.setAllPageRulesOnActivateOfNode = function() {
         var mamFileId = $masterPage.children('.mamFileId').html();
         var editorURL = $masterPage.children('.editorURL').html();
         var pageType = $masterPage.children('.pageType').html();
-        if(mamFileId && mamFileId.length!=0){
+        if (mamFileId && mamFileId.length != 0) {
             PagePresenter.bindLogicalPagesToCustomLoadingWBDEvent($masterPage);
             if ($masterPage.children(".expand").css('display') == 'none') {
                 $masterPage.children(".expand").toggle();
             }
-            if(pageType && pageType == "creative"){
-                if(editorURL && editorURL.trim().length!=0){
-                    PagePresenter.addClickEventForWBDPopup(editorURL,$masterPages[i]);
+            if (pageType) {
+
+                if (pageType == "creative") {
+
+                    if (editorURL && editorURL.trim().length != 0) {
+                        PagePresenter.addClickEventForWBDPopup(editorURL, $masterPages[i]);
+                    }
+                    else {
+                        $masterPage.children('.masterPageHoverDivCreative').toggleClass('hidden');
+                        $masterPage.attr("ondblclick", "PagePresenter.openWhiteBoard(this,event)");
+                    }
                 }
-                else{
-                    $masterPage.children('.masterPageHoverDiv').toggleClass('hidden');
-                    $masterPage.attr("ondblclick","PagePresenter.openWhiteBoard(this,event)");
+                else if (pageType == "dynamic") {
+                    $masterPage.children('.masterPageHoverDivDynamic').toggleClass('hidden');
+                    $masterPage.attr("ondblclick", "PagePresenter.generateIndd(this,event)");
                 }
             }
         }
@@ -93,33 +101,62 @@ PagePresenter.openWhiteBoard = function (pageDiv) {
     var logicalPageID = $divReference.attr("id");
     var rendererName = $divReference.children('.renderer').html();
     GraphicDataStore.addRuleToLoadingList(logicalPageID);
-    CreateWBD.createWBD(logicalPageID,rendererName,function (data) {
-            if (data == 'error') {
-                //alert("Error creating WBD!!");
-                alertify.error("Error Creating WBD!!");
-                $divReference.trigger("loadingError", [logicalPageID]);  //trigger the loading error event
+    CreateWBD.createWBD(logicalPageID, rendererName, function (data) {
+        if (data == 'error') {
+            //alert("Error creating WBD!!");
+            alertify.error("Error Creating WBD!!");
+            $divReference.trigger("loadingError", [logicalPageID]);  //trigger the loading error event
+        }
+        else {
+            if (data && data.editorURL) {
+//                    var $parentMasterPageRuleReference = $("[id = '" + logicalPageID + "']") ;
+                var pageType = $divReference.children('.renderer').html();
+                var editorURL = data.editorURL += "&rendererName=" + pageType;
+                var mamFileId = data.mamFileID;
+                //alert(JSON.stringify(data));
+                UpdateEditorUrl.updateUrl(logicalPageID, data.editorURL, mamFileId, function (data) {
+                    $divReference.children('.editorURL')[0].innerHTML = editorURL;
+                    $divReference.children('.mamFileId')[0].innerHTML = mamFileId;
+                });
+                $divReference.trigger("loadingDone", [logicalPageID, data.editorURL]);    //trigger the loading done event
             }
             else {
-                if(data && data.editorURL){
-//                    var $parentMasterPageRuleReference = $("[id = '" + logicalPageID + "']") ;
-                    var pageType = $divReference.children('.renderer').html();
-                    var editorURL = data.editorURL += "&rendererName=" + pageType;
-                    var mamFileId = data.mamFileID;
-                    //alert(JSON.stringify(data));
-                    UpdateEditorUrl.updateUrl(logicalPageID,data.editorURL,mamFileId,function(data){
-                        $divReference.children('.editorURL')[0].innerHTML = editorURL;
-                        $divReference.children('.mamFileId')[0].innerHTML = mamFileId;
-                    });
-                    $divReference.trigger("loadingDone", [logicalPageID, data.editorURL]);    //trigger the loading done event
-                }
-                else{
-                    $divReference.trigger("loadingError", [logicalPageID]);  //trigger the loading error event
-                }
+                $divReference.trigger("loadingError", [logicalPageID]);  //trigger the loading error event
             }
-            GraphicDataStore.stopLoadingStatus(logicalPageID)
-        });
+        }
+        GraphicDataStore.stopLoadingStatus(logicalPageID)
+    });
     $divReference.children('.loading-overlay').toggleClass('hidden');       //toggle loading screen
     $divReference.children('.loading-message').toggleClass('hidden');       //
+}
+
+PagePresenter.generateIndd = function (pageDiv) {
+
+    var $divReference = $(pageDiv);
+    var logicalPageID = $divReference.attr("id");
+    var mamFileId = $divReference.children('.mamFileId').html();
+    var rendererName = $divReference.children('.renderer').html();
+
+    GraphicDataStore.addRuleToLoadingList(logicalPageID);
+    CreateIndd.createIndd(logicalPageID, mamFileId, rendererName, function (data) {
+        if (data == 'error') {
+            alertify.error("Error Creating Indd!!");
+            $divReference.trigger("loadingError", [logicalPageID]);  //trigger the loading error event
+        }
+        else {
+            if (data == 'success') {
+                $divReference.trigger("loadingDone", [logicalPageID, data.editorURL]);    //trigger the loading done event
+            }
+            else {
+                $divReference.trigger("loadingError", [logicalPageID]);  //trigger the loading error event
+            }
+        }
+        $divReference.trigger("loadingDone", [logicalPageID, data.editorURL]);    //trigger the loading done event
+        GraphicDataStore.stopLoadingStatus(logicalPageID)
+    });
+    $divReference.children('.loading-overlay').toggleClass('hidden');       //toggle loading screen
+    $divReference.children('.loading-message').toggleClass('hidden');       //
+
 }
 
 /**
@@ -186,7 +223,7 @@ PagePresenter.createChildPageInnerDiv = function (rule, masterPageDiv, url) {
     $(childPageInnerDiv).addClass("inner");
     var config = EngineDataStore.getPublicationDetailsArray()["Config"];
     url = url.replace("../admin", config.host + config.context + "/admin");
-    $(childPageInnerDiv).css("background-image","url("+url+")");
+    $(childPageInnerDiv).css("background-image", "url(" + url + ")");
 
     if ($(masterPageDiv).hasClass('odd')) {
         $(childPageInnerDiv).addClass("odd");
@@ -194,36 +231,36 @@ PagePresenter.createChildPageInnerDiv = function (rule, masterPageDiv, url) {
     else {
         $(childPageInnerDiv).addClass("even");
     }
-/*    $(childPageInnerDiv).attr('ondblclick', 'PagePresenter.openWhiteBoard(this,event)');
+    /*    $(childPageInnerDiv).attr('ondblclick', 'PagePresenter.openWhiteBoard(this,event)');
 
-    var wbdURL = $(masterPageDiv).children('.editorURL').html();
-    var mamFileID = " ";
-    var masterTemplate = $(masterPageDiv).children('.mamFileId').html();
+     var wbdURL = $(masterPageDiv).children('.editorURL').html();
+     var mamFileID = " ";
+     var masterTemplate = $(masterPageDiv).children('.mamFileId').html();
 
-    var popupImage = document.createElement("img");
-    $(popupImage).addClass('popupImage');
-    $(popupImage).addClass('hidden');
-    $(popupImage).attr('src', '../../../graphics/screens/home/images/popup_icon.png');
-    $(popupImage).attr('onclick', 'PagePresenter.openURL(this.parentNode)');
-    if (wbdURL != " ") {
-        $(childPageInnerDiv).removeAttr('ondblclick');
-        $(popupImage).removeClass('hidden');
-    }
-    $(childPageInnerDiv).append(popupImage);
+     var popupImage = document.createElement("img");
+     $(popupImage).addClass('popupImage');
+     $(popupImage).addClass('hidden');
+     $(popupImage).attr('src', '../../../graphics/screens/home/images/popup_icon.png');
+     $(popupImage).attr('onclick', 'PagePresenter.openURL(this.parentNode)');
+     if (wbdURL != " ") {
+     $(childPageInnerDiv).removeAttr('ondblclick');
+     $(popupImage).removeClass('hidden');
+     }
+     $(childPageInnerDiv).append(popupImage);
 
-    var loadingScreen = PagePresenter.createChildPageLoadingScreen(rule);
-    var loadingOverlayDiv = loadingScreen.loadingOverlayDiv;
-    var loadingImage = loadingScreen.loadingImage;
-    $(childPageInnerDiv).append(loadingOverlayDiv);
-    $(childPageInnerDiv).append(loadingImage);
+     var loadingScreen = PagePresenter.createChildPageLoadingScreen(rule);
+     var loadingOverlayDiv = loadingScreen.loadingOverlayDiv;
+     var loadingImage = loadingScreen.loadingImage;
+     $(childPageInnerDiv).append(loadingOverlayDiv);
+     $(childPageInnerDiv).append(loadingImage);
 
 
-    $(childPageInnerDiv).append("<div class='childPageName ruleID' >" + masterPageDiv.id + "</div>");
-    $(childPageInnerDiv).append("<p class='hidden logicalPageID'>" + masterPageDiv.id + "</p>");
-    $(childPageInnerDiv).append("<p class='childPagesText'>Mstr Templ ID: </p>");
-    $(childPageInnerDiv).append("<p class='childPagesText data templateName' >" + masterTemplate + "</p>");
-    $(childPageInnerDiv).append("<p class='hidden data wbdURL'> " + wbdURL + " </p>");
-    $(childPageInnerDiv).append("<p class='hidden data mamFileID'>" + mamFileID + "</p>");*/
+     $(childPageInnerDiv).append("<div class='childPageName ruleID' >" + masterPageDiv.id + "</div>");
+     $(childPageInnerDiv).append("<p class='hidden logicalPageID'>" + masterPageDiv.id + "</p>");
+     $(childPageInnerDiv).append("<p class='childPagesText'>Mstr Templ ID: </p>");
+     $(childPageInnerDiv).append("<p class='childPagesText data templateName' >" + masterTemplate + "</p>");
+     $(childPageInnerDiv).append("<p class='hidden data wbdURL'> " + wbdURL + " </p>");
+     $(childPageInnerDiv).append("<p class='hidden data mamFileID'>" + mamFileID + "</p>");*/
 
 //    var childPageData = PagePresenter.createChildPageData(rule, masterPageDiv);
 //    $(childPageInnerDiv).append(childPageData);
@@ -234,36 +271,42 @@ PagePresenter.createChildPageInnerDiv = function (rule, masterPageDiv, url) {
 /**
  * @description function that binds the childpages to the loadingDone and loadingError events
  */
-PagePresenter.bindChildPagesToCustomLoadingWBDEvent = function () {
-    $('.childPages').bind("loadingDone", function (event, ruleIDFinishLoading, wbdURL) {
-        var $innerDiv = $(this).children('.inner');
-        var ruleIDnew = $innerDiv.children('.ruleID').html();
-        if (ruleIDFinishLoading == ruleIDnew) {
-            var logicalPageID = $innerDiv.children('.logicalPageID').html();
-            PagePresenter.addClickEventForWBDPopup(wbdURL, $innerDiv[0]);
-            $innerDiv.children('.loading-overlay').addClass('hidden');
-            $innerDiv.children('.loading-message').addClass('hidden');
-        }
-    });
+/*PagePresenter.bindChildPagesToCustomLoadingWBDEvent = function () {
+ $('.childPages').bind("loadingDone", function (event, ruleIDFinishLoading, wbdURL) {
+ var $innerDiv = $(this).children('.inner');
+ var ruleIDnew = $innerDiv.children('.ruleID').html();
+ if (ruleIDFinishLoading == ruleIDnew) {
+ var logicalPageID = $innerDiv.children('.logicalPageID').html();
+ PagePresenter.addClickEventForWBDPopup(wbdURL, $innerDiv[0]);
+ $innerDiv.children('.loading-overlay').addClass('hidden');
+ $innerDiv.children('.loading-message').addClass('hidden');
+ }
+ });
 
-    $('.childPages').bind("loadingError", function (event, ruleIDFinishLoading) {
-        var $innerDiv = $(this).children('.inner');
-        var ruleIDnew = $innerDiv.children('.ruleID').html();
-        if (ruleIDFinishLoading == ruleIDnew) {
-            $innerDiv.children('.loading-overlay').addClass('hidden');
-            $innerDiv.children('.loading-message').addClass('hidden');
-        }
-    });
-}
+ $('.childPages').bind("loadingError", function (event, ruleIDFinishLoading) {
+ var $innerDiv = $(this).children('.inner');
+ var ruleIDnew = $innerDiv.children('.ruleID').html();
+ if (ruleIDFinishLoading == ruleIDnew) {
+ $innerDiv.children('.loading-overlay').addClass('hidden');
+ $innerDiv.children('.loading-message').addClass('hidden');
+ }
+ });
+ }*/
 
 PagePresenter.bindLogicalPagesToCustomLoadingWBDEvent = function ($masterPage) {
     $masterPage.bind("loadingDone", function (event, ruleIDFinishLoading, wbdURL) {
         var $masterPageDiv = $(this);
+        var pageType = $masterPageDiv.children('.pageType').html();
         $masterPageDiv.children('.loading-overlay').addClass('hidden');
         $masterPageDiv.children('.loading-message').addClass('hidden');
-        $masterPageDiv.children('.masterPageHoverDiv').addClass('hidden');
-        $masterPageDiv.attr('ondblclick','');
-        PagePresenter.addClickEventForWBDPopup(wbdURL, this);
+        if (pageType == "creative") {
+            $masterPageDiv.children('.masterPageHoverDivCreative').addClass('hidden');
+            PagePresenter.addClickEventForWBDPopup(wbdURL, this);
+        }
+        else {
+            $masterPageDiv.children('.masterPageHoverDivDynamic').addClass('hidden');
+            $masterPageDiv.attr('ondblclick', '');
+        }
     });
 
     $masterPage.bind("loadingError", function (event, ruleIDFinishLoading) {
@@ -287,24 +330,24 @@ PagePresenter.expandCollapseChildPages = function (masterPageDiv) {
         $(masterPageDiv).children('.expand').css('background-image', COLLAPSE_ICON_URL);
         var $itemsToInsert = new Array();
         var mamFileId = $(masterPageDiv).children('.mamFileId').html();
-        GetPageThumbnails.get(mamFileId,PagePresenter.getPageThumbnails);
-            $(masterPageDiv).toggleClass('opened');
+        GetPageThumbnails.get(mamFileId, PagePresenter.getPageThumbnails);
+        $(masterPageDiv).toggleClass('opened');
 
-            $.each(childPagesList, function (key, item) {
+        $.each(childPagesList, function (key, item) {
 //                alert(item)
-                var childPageDiv = document.createElement("div");     //create new div for the child page
-                $(childPageDiv).addClass('childPages');
-                if ($(masterPageDiv).hasClass('odd')) {
-                    $(childPageDiv).addClass('odd');
-                }
-                else {
-                    $(childPageDiv).addClass('even');
-                }
-                var childPageInnerDiv = PagePresenter.createChildPageInnerDiv(key, masterPageDiv,item);
+            var childPageDiv = document.createElement("div");     //create new div for the child page
+            $(childPageDiv).addClass('childPages');
+            if ($(masterPageDiv).hasClass('odd')) {
+                $(childPageDiv).addClass('odd');
+            }
+            else {
+                $(childPageDiv).addClass('even');
+            }
+            var childPageInnerDiv = PagePresenter.createChildPageInnerDiv(key, masterPageDiv, item);
 
-                $(childPageDiv).append(childPageInnerDiv);
-                $itemsToInsert.push(childPageDiv);
-            });
+            $(childPageDiv).append(childPageInnerDiv);
+            $itemsToInsert.push(childPageDiv);
+        });
         IsotopeWrapper.insertChild($itemsToInsert,masterPageDiv);
         //$container.isotope('insert', $($itemsToInsert), $(masterPageDiv));
     }
@@ -326,8 +369,9 @@ PagePresenter.expandCollapseChildPages = function (masterPageDiv) {
 
 var childPagesList = [];
 
-PagePresenter.getPageThumbnails = function(data) {
-   childPagesList = data;
+PagePresenter.getPageThumbnails = function (data) {
+    alert(JSON.stringify(data));
+    childPagesList = data;
 }
 
 

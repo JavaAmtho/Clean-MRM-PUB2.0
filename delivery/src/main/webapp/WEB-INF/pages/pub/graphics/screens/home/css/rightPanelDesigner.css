@@ -171,7 +171,7 @@
     background-repeat:no-repeat;
 }
 
-.masterPageHoverDiv{
+.masterPageHoverDivCreative, .masterPageHoverDivDynamic{
     position : absolute;
     top:0px;
     left:0px;
@@ -182,7 +182,7 @@
     background-color: black;
 }
 
-.masterPageHoverDiv:hover{
+.masterPageHoverDivCreative:hover, .masterPageHoverDivDynamic:hover{
     opacity : 0.6;
     -webkit-transition: all 0.2s ease-in;
     -moz-transition: all 0.2s ease-in;
