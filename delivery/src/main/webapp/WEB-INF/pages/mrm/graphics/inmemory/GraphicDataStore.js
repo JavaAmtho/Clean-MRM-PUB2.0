@@ -9,6 +9,25 @@ var GraphicDataStore = function(){
     var currentFocusedItem;
 }
 
+
+GraphicDataStore.setIfClassesLoaded = function(value){
+    this.ifClassesLoaded =  value;
+}
+
+GraphicDataStore.getIfClassesLoaded = function(){
+    return this.ifClassesLoaded;
+}
+
+GraphicDataStore.setClassesCollecation = function(classesData){
+    this.classesColl = classesData;
+    GraphicDataStore.setIfClassesLoaded(true);
+}
+
+GraphicDataStore.getClassesCollecation = function(){
+    return this.classesColl;
+}
+
+
 GraphicDataStore.setIfMarkersLoaded = function(value){
     this.ifMarkersLoaded =  value;
 }

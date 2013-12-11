@@ -112,9 +112,7 @@ var GanttChart = function(){
      * @description eventListner when user clicks on any of the entries of generated contextmenu
      */
     Grids.OnContextMenu = function(G,row,col,name){
-
         currentRow = row;
-        //console.log(currentRow)
         switch (name) {
             case "Delete":
                 var r=confirm("Are you sure you want to delete "+ row.name+" ?");

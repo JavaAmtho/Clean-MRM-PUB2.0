@@ -3,6 +3,15 @@ function CreateDimensionDialog(){
 }
 
 CreateDimensionDialog.create = function(G,row,col,name){
+
+    if(!GraphicDataStore.getIfClassesLoaded()){
+        ClassPresenter.getAllClasses(function(data){
+            data = eval('(' + data + ')');
+            GraphicDataStore.setClassesCollecation(data);
+            CreateDimensionDialog.fillClassDropDown(data);
+        });
+    }
+
     CreateDimensionDialog.enableAllFields();
 
     var parentNode;
@@ -140,6 +149,21 @@ CreateDimensionDialog.create = function(G,row,col,name){
         })
     });
 
+}
+
+CreateDimensionDialog.fillClassDropDown = function(classesData){
+    for(var i=0; i< classesData.length; i ++){
+        var opt = document.createElement('option');
+        opt.value = classesData[i].id;
+        opt.innerHTML = classesData[i].className;
+        document.getElementById("classDropDown").appendChild(opt);
+    }
+
+}
+
+CreateDimensionDialog.onChangeOfClass = function(){
+     //Need to fetch all the attributes related to this class and show them in a list format with textinput to enter values
+    ClassPresenter.getAttributesForClass();
 }
 
 CreateDimensionDialog.enableAllFields = function(){

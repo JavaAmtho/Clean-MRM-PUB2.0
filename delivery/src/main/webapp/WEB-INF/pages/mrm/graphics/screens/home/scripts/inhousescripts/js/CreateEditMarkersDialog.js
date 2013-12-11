@@ -12,11 +12,7 @@ CreateEditMarkersDialog.tagsDataSource;
 CreateEditMarkersDialog.create = function(G,row,col,name){
     if(!GraphicDataStore.getIfMarkersLoaded()){
        MarkersPresenter.getMarkers(function(data){
-           //data = eval('(' + data + ')');
-           /*$.each(data, function (key, item) {
-               alert(key)
-               alert(JSON.stringify(item))
-           });*/
+           data = eval('(' + data + ')');
            GraphicDataStore.setMarkersCollection(data);
        });
     }

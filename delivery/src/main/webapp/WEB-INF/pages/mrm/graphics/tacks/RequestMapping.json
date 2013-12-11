@@ -8,6 +8,7 @@
     "getAllMarkers":"marker/getAll",
     "addMarkers":"marker/create/",
     "updateMarkersOfDimension":"dimension/updateMarker/",
+    "getAllClasses":"customClasses/getAll",
 
 
     "dragNDrop":"/delivery/"
