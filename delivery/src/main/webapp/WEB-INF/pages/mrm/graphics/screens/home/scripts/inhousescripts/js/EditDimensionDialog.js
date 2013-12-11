@@ -2,11 +2,15 @@ function EditDimensionDialog(){
 
 }
 
+EditDimensionDialog.currentRow;
+EditDimensionDialog.input;
+
 EditDimensionDialog.create = function(G,row,col,name){
     var parentNode;
     var currentPath;
-
+    EditDimensionDialog.currentRow = row;
     EditDimensionDialog.preInsertData(row);
+
 
     $( "#dialog-form" ).dialog({
         height: 490,
@@ -70,36 +74,27 @@ EditDimensionDialog.create = function(G,row,col,name){
                 updateTips(errorMsg);
 
                 if(popupValid == true){
-
-
                     input = new Object();
+                    //Constant values while editing dimension
+                    input.id=row.id;
+                    input.type=row.type;
+                    input.groupId=row.groupId;
+                    input.path=row.path;
+                    input.currency=row.currency
+
+                    //Possible changed values while editing dimension by user
+                    input.title=dimensionName.val();
                     input.name=dimensionName.val();
-                    input.managerName=manager.val();
+                    input.manager=manager.val();
                     input.startDate=startdate.val();
                     input.endDate=enddate.val();
                     input.budgetOwner = budgetowner.val();
                     if(budgetamount.val() != "")
                         input.budget = budgetamount.val() + " " + currency.val();
-                    input.type = name;
-                    input.Items = [];
-                    if(input.name != null && input.name !=""){
-                        parentNode = row;
-                        if(parentNode.type == "root"){
-                            currentPath = "-1";
-                        }
-                        else{
-                            currentPath = parentNode.path+","+ parentNode.title;
-                            if(currentPath.indexOf("-1")==0)
-                                currentPath = currentPath.match(/([^,]*),(.*)/)[2];   //To remove -1 root folder
-                        }
 
-                        input.path=currentPath;
-
-                        var flag = isFolder(name);
-                        var prefix=getUrlPrefix(name,"create");
-                        // newNode = createNewRow(input.name,name,currentPath,"cal1.png");
-                        //GanttChartPresenter.createDimension(prefix,name,input,currentPath,flag,GanttChart.addNode);
-                    }
+                    var prefix =getUrlPrefix(row.type,"update");
+                    EditDimensionDialog.input = input;
+                    GanttChartPresenter.updateDimension(prefix,input,EditDimensionDialog.onUpdate);
 
                 }
             },
@@ -137,6 +132,21 @@ EditDimensionDialog.create = function(G,row,col,name){
 
 }
 
+EditDimensionDialog.onUpdate = function(rowData){
+    closeDimensionDialog();
+    Grids[0].SetValue(EditDimensionDialog.currentRow,"title",EditDimensionDialog.input.title,1);
+    Grids[0].SetValue(EditDimensionDialog.currentRow,"name",EditDimensionDialog.input.name,1);
+    Grids[0].SetValue(EditDimensionDialog.currentRow,"budgetOwner",EditDimensionDialog.input.budgetOwner,1);
+    Grids[0].SetValue(EditDimensionDialog.currentRow,"budget",EditDimensionDialog.input.budget,1);
+    Grids[0].SetValue(EditDimensionDialog.currentRow,"startDate",EditDimensionDialog.input.startDate,1);
+    Grids[0].SetValue(EditDimensionDialog.currentRow,"endDate",EditDimensionDialog.input.endDate,1);
+    Grids[0].SetValue(EditDimensionDialog.currentRow,"manager",EditDimensionDialog.input.manager,1);
+    Grids[0].SetScrollTop(Grids[0].GetScrollTop()+30) ;
+
+    Grids[0].ScrollToDate(input.startDate,"Left");
+    alertify.success(""+input.type+" edited successfully");
+}
+
 EditDimensionDialog.preInsertData = function(rowData){
     EditDimensionDialog.enableAllFields();
     if(rowData.name)
@@ -171,8 +181,4 @@ EditDimensionDialog.enableAllFields = function(rowData){
     $("#currency").attr('disabled', false);
     $("#startdate").attr('disabled', false);
     $("#enddate").attr('disabled', false);
-}
-
-function closeDimensionDialog(){
-    $("#dialog-form").dialog( "close" );
 }

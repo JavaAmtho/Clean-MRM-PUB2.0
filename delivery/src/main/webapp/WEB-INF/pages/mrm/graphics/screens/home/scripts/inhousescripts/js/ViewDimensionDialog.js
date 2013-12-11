@@ -92,7 +92,3 @@ ViewDimensionDialog.disableAllFields = function(rowData){
     $("#startdate").attr('disabled', true);
     $("#enddate").attr('disabled', true);
 }
-
-function closeDimensionDialog(){
-    $("#dialog-form").dialog( "close" );
-}
