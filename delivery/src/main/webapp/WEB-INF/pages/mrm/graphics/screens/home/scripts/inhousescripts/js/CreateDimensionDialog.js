@@ -3,6 +3,8 @@ function CreateDimensionDialog(){
 }
 
 CreateDimensionDialog.create = function(G,row,col,name){
+    CreateDimensionDialog.enableAllFields();
+
     var parentNode;
     var currentPath;
     $( "#dialog-form" ).dialog({
@@ -138,6 +140,16 @@ CreateDimensionDialog.create = function(G,row,col,name){
         })
     });
 
+}
+
+CreateDimensionDialog.enableAllFields = function(){
+    $("#name").attr('disabled', false);
+    $("#manager").attr('disabled', false);
+    $("#budgetOwner").attr('disabled', false);
+    $("#budget").attr('disabled', false);
+    $("#currency").attr('disabled', false);
+    $("#startdate").attr('disabled', false);
+    $("#enddate").attr('disabled', false);
 }
 
 function closeDimensionDialog(){
