@@ -54,8 +54,6 @@ public class MultiDimensionalObject implements Serializable, GenericDomain {
 	
 	private boolean isLazy = true;
 	
-	private Map<String,String> customAttributes;
-	
 	private String classId;
 	
 	public boolean getIsLazy() {
@@ -385,7 +383,6 @@ public class MultiDimensionalObject implements Serializable, GenericDomain {
 		this.tags = tags;
 	}
 	
-	
 
 	public List<String> getMarkers() {
 		return markers;
@@ -394,15 +391,7 @@ public class MultiDimensionalObject implements Serializable, GenericDomain {
 	public void setMarkers(List<String> markers) {
 		this.markers = markers;
 	}
-	
-	
-	public Map<String, String> getCustomAttributes() {
-		return customAttributes;
-	}
 
-	public void setCustomAttributes(Map<String, String> customAttributes) {
-		this.customAttributes = customAttributes;
-	}
 
 	public String getClassId() {
 		return classId;

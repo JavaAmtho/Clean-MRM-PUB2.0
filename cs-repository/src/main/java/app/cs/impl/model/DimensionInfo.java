@@ -1,5 +1,7 @@
 package app.cs.impl.model;
 
+import java.util.Map;
+
 public class DimensionInfo {
 
 	private String actualImage;
@@ -12,7 +14,16 @@ public class DimensionInfo {
 	private String previewImage;
 	private String previewType;
 	private String startDate;
+	private Map<String,String> customAttributes;
+	
+	public Map<String, String> getCustomAttributes() {
+		return customAttributes;
+	}
 
+	public void setCustomAttributes(Map<String, String> customAttributes) {
+		this.customAttributes = customAttributes;
+	}
+	
 	public String getActualImage() {
 		return actualImage;
 	}
