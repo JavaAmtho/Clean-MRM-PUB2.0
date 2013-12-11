@@ -12,6 +12,11 @@ CreateEditMarkersDialog.tagsDataSource;
 CreateEditMarkersDialog.create = function(G,row,col,name){
     if(!GraphicDataStore.getIfMarkersLoaded()){
        MarkersPresenter.getMarkers(function(data){
+           //data = eval('(' + data + ')');
+           /*$.each(data, function (key, item) {
+               alert(key)
+               alert(JSON.stringify(item))
+           });*/
            GraphicDataStore.setMarkersCollection(data);
        });
     }
@@ -54,31 +59,57 @@ CreateEditMarkersDialog.create = function(G,row,col,name){
 
 CreateEditMarkersDialog.createMarkersList = function(row){
     var assignedMarkersList=[];
+    $("#markerList").empty();
     if(row.markers)
         assignedMarkersList = CreateEditMarkersDialog.currentRow.markers;
 
     var markersColl = GraphicDataStore.getMarkersCollection();
-    for(var i=0; i< markersColl.length; i++){
-        markersColl[i].checked = null;
-        if(assignedMarkersList.length>0){
-            for(var j=0; j< assignedMarkersList.length; j++){
-                if(markersColl[i].markerName == assignedMarkersList[j]){
-                    markersColl[i].checked = "checked";
+    var tempId=1;
+    $.each(markersColl, function (key, item) {
+
+            //Need to create labels as many as categories exists
+            var categoryName = document.createElement("Label");
+            categoryName.setAttribute("for", key);
+            categoryName.innerHTML = key;
+            document.getElementById('markerList').appendChild(categoryName);
+
+            //Need to create divs as many as categories exists
+            var categoryDiv = document.createElement('div');
+            //tempId = key.replace(/^\s+|\s+$/g,'')
+            categoryDiv.id = tempId+"categoryDiv";
+            categoryDiv.className = 'categoryList';
+            document.getElementById('markerList').appendChild(categoryDiv);
+
+            //Need to create dataprovider for all category lists
+            var categoryColl = [];
+            var categoryColl = item;
+            for(var i=0; i< categoryColl.length; i++){
+                categoryColl[i].checked = null;
+                if(assignedMarkersList.length>0){
+                    for(var j=0; j< assignedMarkersList.length; j++){
+                        if(categoryColl[i].markerName == assignedMarkersList[j]){
+                            categoryColl[i].checked = "checked";
+                        }
+                    }
                 }
             }
-        }
-    }
 
-    CreateEditMarkersDialog.markersDataSource = new kendo.data.DataSource({
-        data: markersColl
+
+            //Need to create dataSource for all category kendo lists
+            CreateEditMarkersDialog.markersDataSource = new kendo.data.DataSource({
+                data: categoryColl
+            });
+
+            CreateEditMarkersDialog.createKendoList(tempId+"categoryDiv");
+            tempId++;
+
     });
 
-    CreateEditMarkersDialog.createKendoList();
 }
 
 
-CreateEditMarkersDialog.createKendoList = function(){
-    $("#markerList").kendoListView({
+CreateEditMarkersDialog.createKendoList = function(id){
+    $("#"+id).kendoListView({
         dataSource: CreateEditMarkersDialog.markersDataSource,
         template: '<div class="tags move k-block"><input type="checkbox"  id="#:markerName#" onchange="CreateEditMarkersDialog.changeMarkerValue(this)" #:checked#>#:markerName#</div>'
     });
@@ -116,29 +147,38 @@ CreateEditMarkersDialog.onMarkerAdded = function(data){
     CreateEditMarkersDialog.createKendoList();
 }
 
-CreateEditMarkersDialog.changeMarkerValue = function(item){
+CreateEditMarkersDialog.changeMarkerValue = function(itemClicked){
     var matchedIndex;
-    for(var i=0; i< GraphicDataStore.getMarkersCollection().length; i++){
-         if(GraphicDataStore.getMarkersCollection()[i].markerName === item.id){
-             matchedIndex = i+1;
-         }
-    }
+    var matchedCategory;
+    $.each(GraphicDataStore.getMarkersCollection(), function (key, item) {
+        for(var i=0; i< item.length; i++){
+             if(item[i].markerName === itemClicked.id){
+                 matchedIndex = i+1;
+                 matchedCategory = key;
+             }
+        }
+    });
+
     if(matchedIndex){
-        if($(item).is(':checked')){
-            GraphicDataStore.getMarkersCollection()[matchedIndex-1].checked = "checked";
+        if($(itemClicked).is(':checked')){
+            GraphicDataStore.getMarkersCollection()[matchedCategory][matchedIndex-1].checked = "checked";
         }else{
-            GraphicDataStore.getMarkersCollection()[matchedIndex-1].checked = null;
+            GraphicDataStore.getMarkersCollection()[matchedCategory][matchedIndex-1].checked = null;
         }
     }
 }
 
 CreateEditMarkersDialog.updateDimension = function(){
     CreateEditMarkersDialog.markersList = [];
-    for(var i=0; i< GraphicDataStore.getMarkersCollection().length; i++){
-        if(GraphicDataStore.getMarkersCollection()[i].checked){
-            CreateEditMarkersDialog.markersList.push(GraphicDataStore.getMarkersCollection()[i].markerName);
+
+    $.each(GraphicDataStore.getMarkersCollection(), function (key, item) {
+        for(var i=0; i< item.length; i++){
+            if(item[i].checked){
+                CreateEditMarkersDialog.markersList.push(item[i].markerName);
+            }
         }
-    }
+    });
+
     MarkersPresenter.updateMarkersForDimension(CreateEditMarkersDialog.currentRow.id,CreateEditMarkersDialog.markersList,CreateEditMarkersDialog.onDimensionMarkersUpdateSuccess)
 }
 
