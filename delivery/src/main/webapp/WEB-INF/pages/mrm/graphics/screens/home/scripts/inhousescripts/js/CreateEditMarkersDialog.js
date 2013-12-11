@@ -117,17 +117,21 @@ CreateEditMarkersDialog.createKendoList = function(id){
 
 CreateEditMarkersDialog.searchMarkersInMasterList = function(){
     var searchedMarkerName = $("#markerName").val();
-    var searchedColl = $.grep(GraphicDataStore.getMarkersCollection() , function (value) {
-            if(value.markerName.indexOf(searchedMarkerName) !== -1)
-                return true;
-            return false;
-        }
-    );
-    CreateEditMarkersDialog.markersDataSource = new kendo.data.DataSource({
-        data: searchedColl
+    var tempId=1;
+    $.each(GraphicDataStore.getMarkersCollection(), function (key, item) {
+        var searchedColl = $.grep(item , function (value) {
+                if(value.markerName.indexOf(searchedMarkerName) !== -1)
+                    return true;
+                return false;
+            }
+        );
+        CreateEditMarkersDialog.markersDataSource = new kendo.data.DataSource({
+            data: searchedColl
+        });
+        CreateEditMarkersDialog.createKendoList(tempId+"categoryDiv");
+        tempId++;
     });
-    CreateEditMarkersDialog.createKendoList();
-    /*MarkersPresenter.addMarkerToMasterList(markerNameEntered,CreateEditMarkersDialog.onMarkerAdded); Used for adding marker NOT IN USE*/
+
 }
 
 CreateEditMarkersDialog.onMarkerAdded = function(data){
