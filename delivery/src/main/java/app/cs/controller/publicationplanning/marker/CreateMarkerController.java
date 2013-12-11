@@ -28,7 +28,7 @@ public class CreateMarkerController {
 	}
 	
 	
-	@RequestMapping(value = { CREATE }, method = RequestMethod.POST)
+	@RequestMapping(value = { CREATE })
 	public @ResponseBody
 	ResponseModel create(@PathVariable("name") String markerName) {
 		createMarkerRequest.setMarkerName(markerName);

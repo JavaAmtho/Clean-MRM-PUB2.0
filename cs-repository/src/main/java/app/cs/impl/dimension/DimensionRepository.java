@@ -269,7 +269,7 @@ public class DimensionRepository implements IDimensionRepository {
 	public String updateMarkers(String id, List<String> markers){
 		
 		MultiDimensionalObject currentObject = mongoRepository.find(id, MultiDimensionalObject.class);
-		currentObject.setTags(markers);
+		currentObject.setMarkers(markers);
 		save(currentObject);
 		return CommonConstants.SUCCESS_RESPONSE;
 		
