@@ -1,7 +1,9 @@
 package com.cs.integration;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import junit.framework.Assert;
 
@@ -14,6 +16,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.cs.data.core.jpa.entities.SampleDataContainingHashMap;
 import com.cs.data.core.jpa.entities.Student;
 import com.cs.data.core.jpa.entities.Teacher;
 import com.cs.data.core.nosql.mongodb.MongoRepository;
@@ -101,4 +104,22 @@ public class MongoRepositoryIntegrationTests {
 		Assert.assertNotNull(student);
 
 	}
+	
+	@Test
+	public void checkSavingHashMap() {
+
+		SampleDataContainingHashMap sampleData = new SampleDataContainingHashMap();
+		
+		sampleData.setId("12121");
+		Map<String,String> sampleMap = new LinkedHashMap<>();
+		sampleMap.put("Attribute1", "aaa");
+		sampleMap.put("Attribute2", "bbb");
+		sampleMap.put("Attribute3", "ccc");
+		sampleMap.put("Attribute4", "ddd");
+		sampleData.setAttributes(sampleMap);
+		crudRepository.save(sampleData);
+		
+	}
+	
+	
 }

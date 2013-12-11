@@ -2,16 +2,11 @@ package app.cs.impl.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import org.codehaus.jackson.annotate.JsonProperty;
-import org.neo4j.graphdb.Direction;
-import org.springframework.data.neo4j.annotation.Fetch;
-import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.annotation.RelatedToVia;
 import org.springframework.stereotype.Component;
 
 import com.cs.data.api.core.GenericDomain;
@@ -59,7 +54,9 @@ public class MultiDimensionalObject implements Serializable, GenericDomain {
 	
 	private boolean isLazy = true;
 	
+	private Map<String,String> customAttributes;
 	
+	private String classId;
 	
 	public boolean getIsLazy() {
 		return isLazy;
@@ -396,6 +393,23 @@ public class MultiDimensionalObject implements Serializable, GenericDomain {
 
 	public void setMarkers(List<String> markers) {
 		this.markers = markers;
+	}
+	
+	
+	public Map<String, String> getCustomAttributes() {
+		return customAttributes;
+	}
+
+	public void setCustomAttributes(Map<String, String> customAttributes) {
+		this.customAttributes = customAttributes;
+	}
+
+	public String getClassId() {
+		return classId;
+	}
+
+	public void setClassId(String classId) {
+		this.classId = classId;
 	}
 
 	@Override
