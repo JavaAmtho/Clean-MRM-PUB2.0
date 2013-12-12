@@ -71,7 +71,7 @@ DimensionDialogPresenter.disableAllFieldsOfDimensionDialog = function(flag){
     $("#classDropDown").attr('disabled', flag);
 }
 
-DimensionDialogPresenter.showAttributesWithValues = function(attributesData){
+DimensionDialogPresenter.showAttributesWithValues = function(attributesData,disableAttributes){
     $('#classAttributes').empty();
     var i=1;
     $.each(attributesData, function (key, item) {
@@ -80,6 +80,8 @@ DimensionDialogPresenter.showAttributesWithValues = function(attributesData){
         var input = document.createElement('input');
         input.id = key + i;
         input.value  = item;
+        if(disableAttributes)
+            input.disabled = "disable";
         labelDiv.innerHTML = key;
         opt.appendChild(labelDiv);
         opt.appendChild(input);
@@ -89,13 +91,13 @@ DimensionDialogPresenter.showAttributesWithValues = function(attributesData){
 }
 
 
-DimensionDialogPresenter.preInsertDataInDimensionDialog = function(rowData){
+DimensionDialogPresenter.preInsertDataInDimensionDialog = function(rowData,disableAttributes){
     if(rowData.dimensionInfo.classId){
         $('#classDropDown').val(rowData.dimensionInfo.classId);
     }
     if(rowData.dimensionInfo.customAttributes){
         //add in list and flush the existing ones
-        DimensionDialogPresenter.showAttributesWithValues(rowData.dimensionInfo.customAttributes);
+        DimensionDialogPresenter.showAttributesWithValues(rowData.dimensionInfo.customAttributes,disableAttributes);
 
     }
     if(rowData.name)

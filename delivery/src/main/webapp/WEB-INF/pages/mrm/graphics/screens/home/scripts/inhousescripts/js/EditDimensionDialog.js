@@ -13,7 +13,7 @@ EditDimensionDialog.create = function(G,row,col,name){
     DimensionDialogPresenter.loadClassesDataForDimensinDialog();
 
     DimensionDialogPresenter.disableAllFieldsOfDimensionDialog(false);
-    DimensionDialogPresenter.preInsertDataInDimensionDialog(row);
+    DimensionDialogPresenter.preInsertDataInDimensionDialog(row,false);
 
 
     $( "#dialog-form" ).dialog({

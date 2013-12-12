@@ -7,7 +7,7 @@ ViewDimensionDialog.create = function(G,row,col,name){
     var currentPath;
     DimensionDialogPresenter.loadClassesDataForDimensinDialog();
     DimensionDialogPresenter.disableAllFieldsOfDimensionDialog(true);
-    DimensionDialogPresenter.preInsertDataInDimensionDialog(row);
+    DimensionDialogPresenter.preInsertDataInDimensionDialog(row,true);
 
     $( "#dialog-form" ).dialog({
         height: 490,
