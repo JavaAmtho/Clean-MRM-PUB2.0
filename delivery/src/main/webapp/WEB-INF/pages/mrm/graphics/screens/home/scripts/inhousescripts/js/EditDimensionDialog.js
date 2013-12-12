@@ -149,8 +149,11 @@ EditDimensionDialog.onUpdate = function(rowData){
     Grids[0].SetValue(EditDimensionDialog.currentRow,"startDate",EditDimensionDialog.input.startDate,1);
     Grids[0].SetValue(EditDimensionDialog.currentRow,"endDate",EditDimensionDialog.input.endDate,1);
     Grids[0].SetValue(EditDimensionDialog.currentRow,"manager",EditDimensionDialog.input.manager,1);
-    Grids[0].SetScrollTop(Grids[0].GetScrollTop()+30) ;
 
+    var dimensionInfoObj = input;
+    Grids[0].SetValue(EditDimensionDialog.currentRow,"dimensionInfo",dimensionInfoObj,1);
+
+    Grids[0].SetScrollTop(Grids[0].GetScrollTop()+30) ;
     Grids[0].ScrollToDate(input.startDate,"Left");
     alertify.success(""+input.type+" edited successfully");
 }
