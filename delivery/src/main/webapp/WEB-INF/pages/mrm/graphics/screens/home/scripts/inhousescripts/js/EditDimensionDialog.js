@@ -9,7 +9,11 @@ EditDimensionDialog.create = function(G,row,col,name){
     var parentNode;
     var currentPath;
     EditDimensionDialog.currentRow = row;
-    EditDimensionDialog.preInsertData(row);
+
+    DimensionDialogPresenter.loadClassesDataForDimensinDialog();
+
+    DimensionDialogPresenter.disableAllFieldsOfDimensionDialog(false);
+    DimensionDialogPresenter.preInsertDataInDimensionDialog(row);
 
 
     $( "#dialog-form" ).dialog({
@@ -99,7 +103,7 @@ EditDimensionDialog.create = function(G,row,col,name){
                 }
             },
             Cancel: function() {
-                closeDimensionDialog();
+                DimensionDialogPresenter.closeDimensionDialog();
             }
         },
         close: function() {
@@ -133,7 +137,7 @@ EditDimensionDialog.create = function(G,row,col,name){
 }
 
 EditDimensionDialog.onUpdate = function(rowData){
-    closeDimensionDialog();
+    DimensionDialogPresenter.closeDimensionDialog();
     Grids[0].SetValue(EditDimensionDialog.currentRow,"title",EditDimensionDialog.input.title,1);
     Grids[0].SetValue(EditDimensionDialog.currentRow,"name",EditDimensionDialog.input.name,1);
     Grids[0].SetValue(EditDimensionDialog.currentRow,"budgetOwner",EditDimensionDialog.input.budgetOwner,1);
@@ -147,38 +151,4 @@ EditDimensionDialog.onUpdate = function(rowData){
     alertify.success(""+input.type+" edited successfully");
 }
 
-EditDimensionDialog.preInsertData = function(rowData){
-    EditDimensionDialog.enableAllFields();
-    if(rowData.name)
-       $("#name").val(rowData.name);
-    if(rowData.manager)
-       $("#manager").val(rowData.manager);
-    if(rowData.budgetOwner)
-       $("#budgetOwner").val(rowData.budgetOwner);
-    if(rowData.budgetOwner){
-        //Need to extract last charachter for currenct and rest is budget
-        var currency = rowData.budget.substr(rowData.budget.length - 1);
-        var budget = rowData.budget.substring(0, rowData.budget.length - 1);
-        $("#budget").val(budget);
-        $("#currency").val(currency);
-    }
-    if(rowData.startDate){
-        var startDate = new Date(rowData.startDate).toMDY();
-        $("#startdate").val(startDate);
-    }
 
-    if(rowData.endDate){
-        var endDate = new Date(rowData.endDate).toMDY();
-        $("#enddate").val(endDate);
-    }
-}
-
-EditDimensionDialog.enableAllFields = function(rowData){
-    $("#name").attr('disabled', false);
-    $("#manager").attr('disabled', false);
-    $("#budgetOwner").attr('disabled', false);
-    $("#budget").attr('disabled', false);
-    $("#currency").attr('disabled', false);
-    $("#startdate").attr('disabled', false);
-    $("#enddate").attr('disabled', false);
-}

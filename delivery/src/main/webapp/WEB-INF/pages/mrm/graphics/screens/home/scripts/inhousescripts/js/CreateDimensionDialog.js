@@ -4,15 +4,9 @@ function CreateDimensionDialog(){
 
 CreateDimensionDialog.create = function(G,row,col,name){
 
-    if(!GraphicDataStore.getIfClassesLoaded()){
-        ClassPresenter.getAllClasses(function(data){
-            data = eval('(' + data + ')');
-            GraphicDataStore.setClassesCollecation(data);
-            CreateDimensionDialog.fillClassDropDown(data);
-        });
-    }
+    DimensionDialogPresenter.loadClassesDataForDimensinDialog();
 
-    CreateDimensionDialog.enableAllFields();
+    DimensionDialogPresenter.disableAllFieldsOfDimensionDialog(false);
 
     var parentNode;
     var currentPath;
@@ -89,7 +83,7 @@ CreateDimensionDialog.create = function(G,row,col,name){
                     input.endDate=enddate.val();
                     input.budgetOwner = budgetowner.val();
                     input.classId = classId.val();
-                    input.customAttributes = CreateDimensionDialog.getAllAttributes();
+                    input.customAttributes = DimensionDialogPresenter.getAllAttributes();
                     if(budgetamount.val() != "")
                         input.budget = budgetamount.val() + " " + currency.val();
                     input.type = name;
@@ -118,7 +112,7 @@ CreateDimensionDialog.create = function(G,row,col,name){
             },
 
             Cancel: function() {
-                closeDimensionDialog();
+                DimensionDialogPresenter.closeDimensionDialog();
             }
         },
         close: function() {
@@ -152,69 +146,4 @@ CreateDimensionDialog.create = function(G,row,col,name){
         })
     });
 
-}
-
-
-CreateDimensionDialog.getAllAttributes = function(){
-
-    var divContainer = $('#classAttributes');
-
-    var customAttributes = {};
-    for(var i=0;i<divContainer.children().length ;i++){
-        console.log($(divContainer).children()[i]);
-        //console.log(divContainer.childNodes[i]);
-        var attributeName = $(divContainer.children()[i]).children()[0].innerHTML;
-        var attributeValue = $(divContainer.children()[i]).children()[1].value;
-//        var attribute = {};
-        customAttributes[attributeName] = attributeValue;
-//        customAttributes.push(attribute);
-    }
-    return customAttributes;
-    //alert(JSON.stringify(customAttributes));
-}
-
-CreateDimensionDialog.fillClassDropDown = function(classesData){
-    for(var i=0; i< classesData.length; i ++){
-        var opt = document.createElement('option');
-        opt.value = classesData[i].id;
-        opt.innerHTML = classesData[i].className;
-        document.getElementById("classDropDown").appendChild(opt);
-    }
-
-}
-
-CreateDimensionDialog.onChangeOfClass = function(){
-    var selectedClassId = $('#classDropDown').val();
-    ClassPresenter.getAttributesForClass(selectedClassId,CreateDimensionDialog.onAttributesLoaded);
-}
-
-CreateDimensionDialog.onAttributesLoaded = function(data){
-    data = eval('(' + data + ')');
-
-    $('#classAttributes').empty();
-    for(var i=0; i< data.length; i++){
-        var opt = document.createElement('div');
-        var labelDiv = document.createElement('div');
-        var input = document.createElement('input');
-        input.id = data[i] + i;
-        labelDiv.innerHTML = data[i];
-        opt.appendChild(labelDiv);
-        opt.appendChild(input);
-        document.getElementById("classAttributes").appendChild(opt);
-    }
-
-}
-
-CreateDimensionDialog.enableAllFields = function(){
-    $("#name").attr('disabled', false);
-    $("#manager").attr('disabled', false);
-    $("#budgetOwner").attr('disabled', false);
-    $("#budget").attr('disabled', false);
-    $("#currency").attr('disabled', false);
-    $("#startdate").attr('disabled', false);
-    $("#enddate").attr('disabled', false);
-}
-
-function closeDimensionDialog(){
-    $("#dialog-form").dialog( "close" );
 }

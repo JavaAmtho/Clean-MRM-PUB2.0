@@ -526,7 +526,7 @@ var currentRow;
  */
 GanttChart.addNode = function(data){
     if(data !== "error"){
-        closeDimensionDialog();
+        DimensionDialogPresenter.closeDimensionDialog();
         Grids[0].AddRow(currentRow,null,1);
         Grids[0].SetValue(currentRow.lastChild,"name",data.name,1);
         Grids[0].SetValue(currentRow.lastChild,"title",data.title,1);

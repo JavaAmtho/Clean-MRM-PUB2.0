@@ -5,8 +5,9 @@ function ViewDimensionDialog(){
 ViewDimensionDialog.create = function(G,row,col,name){
     var parentNode;
     var currentPath;
-
-    ViewDimensionDialog.preInsertData(row);
+    DimensionDialogPresenter.loadClassesDataForDimensinDialog();
+    DimensionDialogPresenter.disableAllFieldsOfDimensionDialog(true);
+    DimensionDialogPresenter.preInsertDataInDimensionDialog(row);
 
     $( "#dialog-form" ).dialog({
         height: 490,
@@ -23,7 +24,7 @@ ViewDimensionDialog.create = function(G,row,col,name){
         },
         buttons: {
             Close: function() {
-                closeDimensionDialog();
+                DimensionDialogPresenter.closeDimensionDialog();
             }
         },
         close: function() {
@@ -56,39 +57,3 @@ ViewDimensionDialog.create = function(G,row,col,name){
 
 }
 
-ViewDimensionDialog.preInsertData = function(rowData){
-    ViewDimensionDialog.disableAllFields();
-    if(rowData.name)
-        $("#name").val(rowData.name);
-    if(rowData.manager)
-        $("#manager").val(rowData.manager);
-    if(rowData.budgetOwner)
-        $("#budgetOwner").val(rowData.budgetOwner);
-    if(rowData.budgetOwner){
-        //Need to extract last charachter for currenct and rest is budget
-        var currency = rowData.budget.substr(rowData.budget.length - 1);
-        var budget = rowData.budget.substring(0, rowData.budget.length - 1);
-        $("#budget").val(budget);
-        $("#currency").val(currency);
-    }
-    if(rowData.startDate){
-        var startDate = new Date(rowData.startDate).toMDY();
-        $("#startdate").val(startDate);
-    }
-
-    if(rowData.endDate){
-        var endDate = new Date(rowData.endDate).toMDY();
-        $("#enddate").val(endDate);
-    }
-
-}
-
-ViewDimensionDialog.disableAllFields = function(rowData){
-    $("#name").attr('disabled', true);
-    $("#manager").attr('disabled', true);
-    $("#budgetOwner").attr('disabled', true);
-    $("#budget").attr('disabled', true);
-    $("#currency").attr('disabled', true);
-    $("#startdate").attr('disabled', true);
-    $("#enddate").attr('disabled', true);
-}

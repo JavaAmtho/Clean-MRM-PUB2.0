@@ -17,6 +17,6 @@
 	{"id":"btnAddTag", "event":"click", "func":CreateEditTagsDialog.addTagToMasterList},
 	{"id":"btnSearchMarker", "event":"click", "func":CreateEditMarkersDialog.searchMarkersInMasterList},
 	{"id":"btnSearchTag", "event":"click", "func":CreateEditTagsDialog.searchTagsInMasterList},
-	{"id":"classDropDown", "event":"change", "func":CreateDimensionDialog.onChangeOfClass}
+	{"id":"classDropDown", "event":"change", "func":DimensionDialogPresenter.onChangeOfClass}
 
 ]
