@@ -9,6 +9,10 @@
     "addMarkers":"marker/create/",
     "updateMarkersOfDimension":"dimension/updateMarker/",
     "getAllClasses":"customClasses/getAll",
+    "getAttributesForClass":"customClasses/getAttributes/",
+
+
+
 
 
     "dragNDrop":"/delivery/"
