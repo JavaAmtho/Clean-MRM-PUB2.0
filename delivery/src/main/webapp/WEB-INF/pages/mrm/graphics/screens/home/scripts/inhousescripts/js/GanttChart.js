@@ -263,6 +263,8 @@ var GanttChart = function(){
         if(row.id != "AR1"){
             var prefix;
             prefix =getUrlPrefix(row.type,"update");
+            row.classId = row.dimensionInfo.classId;
+            row.customAttributes = row.dimensionInfo.customAttributes;
             GanttChartPresenter.updateDimension(prefix,row,GanttChartPresenter.onUpdate)
             //Make an api call with val
         }else{
@@ -427,6 +429,8 @@ var GanttChart = function(){
             row.endDate = end;
             var prefix;
             prefix =getUrlPrefix(row.type,"update");
+            row.classId = row.dimensionInfo.classId;
+            row.customAttributes = row.dimensionInfo.customAttributes;
             GanttChartPresenter.updateDimension(prefix,row,GanttChartPresenter.onUpdate)
     }
 
