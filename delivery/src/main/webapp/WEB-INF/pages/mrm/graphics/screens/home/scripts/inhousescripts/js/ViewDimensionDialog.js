@@ -36,6 +36,7 @@ ViewDimensionDialog.create = function(G,row,col,name){
             $( "#budgetOwner" ).removeClass("ui-state-error");
             $( "#budget").removeClass("ui-state-error");
             $( "#currency" ).removeClass("ui-state-error");
+            //$('#classDropDown').val("selectClass");
             clearForm();
         },
         autoOpen :true,

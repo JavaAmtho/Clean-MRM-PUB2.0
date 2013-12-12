@@ -49,7 +49,9 @@ DimensionDialogPresenter.onAttributesLoaded = function(data,editMode){
     for(var i=0; i< data.length; i++){
         var opt = document.createElement('div');
         var labelDiv = document.createElement('div');
+        labelDiv.className = 'labelForAttributes';
         var input = document.createElement('input');
+        input.className = "text ui-widget-content ui-corner-all inputForAttributes";
         input.id = data[i] + i;
         labelDiv.innerHTML = data[i];
         opt.appendChild(labelDiv);
@@ -77,7 +79,9 @@ DimensionDialogPresenter.showAttributesWithValues = function(attributesData,disa
     $.each(attributesData, function (key, item) {
         var opt = document.createElement('div');
         var labelDiv = document.createElement('div');
+        labelDiv.className = 'labelForAttributes';
         var input = document.createElement('input');
+        input.className = "text ui-widget-content ui-corner-all inputForAttributes";
         input.id = key + i;
         input.value  = item;
         if(disableAttributes)
@@ -92,10 +96,10 @@ DimensionDialogPresenter.showAttributesWithValues = function(attributesData,disa
 
 
 DimensionDialogPresenter.preInsertDataInDimensionDialog = function(rowData,disableAttributes){
-    if(rowData.dimensionInfo.classId){
+    if(rowData.dimensionInfo && rowData.dimensionInfo.classId){
         $('#classDropDown').val(rowData.dimensionInfo.classId);
     }
-    if(rowData.dimensionInfo.customAttributes){
+    if(rowData.dimensionInfo && rowData.dimensionInfo.customAttributes){
         //add in list and flush the existing ones
         DimensionDialogPresenter.showAttributesWithValues(rowData.dimensionInfo.customAttributes,disableAttributes);
 

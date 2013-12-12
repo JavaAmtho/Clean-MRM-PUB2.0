@@ -521,3 +521,26 @@ div#users-contain table td, div#users-contain table th {
 .GEClassFocusedCell {
     background-color: #eee !important;
 }
+
+.inputForAttributes{
+    position: relative;
+    width: 40% !important;
+    left: 25%;
+    margin-bottom: 4px !important;
+}
+
+
+.labelForAttributes{
+    position: absolute;
+    width: 20% !important;
+    height: 25px;
+    margin-top: 5px;
+}
+
+.classAttributes{
+    left: 18%;
+    width: 90%;
+    height: auto;
+    position: absolute;
+
+}
