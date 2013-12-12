@@ -54,8 +54,6 @@ public class MultiDimensionalObject implements Serializable, GenericDomain {
 	
 	private boolean isLazy = true;
 	
-	private String classId;
-	
 	public boolean getIsLazy() {
 		return isLazy;
 	}
@@ -391,16 +389,7 @@ public class MultiDimensionalObject implements Serializable, GenericDomain {
 	public void setMarkers(List<String> markers) {
 		this.markers = markers;
 	}
-
-
-	public String getClassId() {
-		return classId;
-	}
-
-	public void setClassId(String classId) {
-		this.classId = classId;
-	}
-
+	
 	@Override
 	public String toString() {
 		return "DimensionModel [id=" + id + ", type=" + type + ", path=" + path

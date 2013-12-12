@@ -14,6 +14,7 @@ public class DimensionInfo {
 	private String previewImage;
 	private String previewType;
 	private String startDate;
+	private String classId;
 	private Map<String,String> customAttributes;
 	
 	public Map<String, String> getCustomAttributes() {
@@ -103,4 +104,14 @@ public class DimensionInfo {
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
+
+	public String getClassId() {
+		return classId;
+	}
+
+	public void setClassId(String classId) {
+		this.classId = classId;
+	}
+	
+	
 }
