@@ -18,6 +18,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import app.cs.actions.contentplanning.pim.PimSearch;
 import app.cs.model.request.StringRequest;
+import app.cs.model.response.ObjectResponse;
 import app.cs.model.response.PIMOrMAMNode;
 import app.cs.model.response.StringResponse;
 import app.cs.presentor.JsonFormatter;
@@ -57,7 +58,7 @@ public class PIMSearchControllerUnitTest {
 		// when
 		when(pimSearch.execute(request)).thenReturn(response);
 
-		List<PIMOrMAMNode> actualResult = pimSearchController.searchPIM(key);
+		List<PIMOrMAMNode> actualResult = (List<PIMOrMAMNode>) ((ObjectResponse)pimSearchController.searchPIM(key)).getResponse();
 
 		// then
 		verify(pimSearch).execute(request);

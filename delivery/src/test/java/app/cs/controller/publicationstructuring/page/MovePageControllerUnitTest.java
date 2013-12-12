@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import app.cs.actions.publicationstructuring.page.MovePage;
+import app.cs.controller.pub.publicationstructuring.page.MovePageController;
 import app.cs.impl.model.MultiDimensionalObject;
 import app.cs.model.request.MovePageRequest;
 

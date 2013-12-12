@@ -1,4 +1,4 @@
-package app.cs.controller.contentplanning.assortment;
+/*package app.cs.controller.contentplanning.assortment;
 
 import static org.mockito.Mockito.verify;
 
@@ -49,3 +49,4 @@ public class CopyAssortmentControllerUnitTest {
 	}
 
 }
+*/

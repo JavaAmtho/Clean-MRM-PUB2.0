@@ -38,7 +38,7 @@ public class SwitchPerspectiveControllerUnitTests{
     public void itShouldGetDimensions(){
     	//given
    
-    	TreeResponse treeResponse = new TreeResponse(null);
+    	TreeResponse treeResponse = new TreeResponse(null,"");
     	String structure = "MasterPublication-Campaign-Publication";
     	request.setStringRequest(structure);
     	

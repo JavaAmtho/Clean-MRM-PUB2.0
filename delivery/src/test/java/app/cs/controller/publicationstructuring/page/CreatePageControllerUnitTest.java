@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import app.cs.actions.publicationstructuring.page.CreatePage;
+import app.cs.controller.pub.publicationstructuring.page.CreatePageController;
 import app.cs.impl.model.MultiDimensionalObject;
 import app.cs.impl.model.PageInfo;
 import app.cs.model.request.CreatePageRequest;

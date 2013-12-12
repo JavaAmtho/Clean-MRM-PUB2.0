@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import app.cs.actions.publicationstructuring.chapter.MoveChapter;
+import app.cs.controller.pub.publicationstructuring.chapter.MoveChapterController;
 import app.cs.model.request.MoveChapterRequest;
 
 @RunWith(MockitoJUnitRunner.class)

@@ -1,7 +1,5 @@
 package app.cs.controller.publicationstructuring.chapter;
 
-import static org.fest.assertions.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
@@ -11,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import app.cs.actions.publicationstructuring.chapter.CreateChapter;
+import app.cs.controller.pub.publicationstructuring.chapter.CreateChapterController;
 import app.cs.model.request.CreateChapterRequest;
 import app.cs.model.response.ResponseModel;
 import app.cs.model.response.StringResponse;

@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import app.cs.model.response.EmptyResponseWithStatus;
 import app.cs.utils.FileUtils;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -54,7 +55,7 @@ public class TreeViewStructureControllerUnitTests {
 		when(fileUtils.getFileContents("schema1.json")).thenReturn(content);
 		// when
 
-		String actualContent = structure.getDefault();
+		String actualContent = ((EmptyResponseWithStatus)structure.getDefault()).getResponseString();
 		// then
 		verify(fileUtils).getFileContents("schema1.json");
 		assertThat(actualContent).isEqualTo(content);

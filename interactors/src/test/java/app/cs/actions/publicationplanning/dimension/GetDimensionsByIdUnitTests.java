@@ -11,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import app.cs.impl.dimension.DimensionRepository;
 import app.cs.model.request.GetDimensionByIdRequest;
 import app.cs.model.response.ResponseModel;
+import app.cs.model.response.TreeResponseModel;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -32,7 +33,7 @@ public class GetDimensionsByIdUnitTests {
 		java.util.List<String> groupIds = Collections.EMPTY_LIST;
 		GetDimensionByIdRequest model = new GetDimensionByIdRequest();
 		model.groupIds = groupIds;
-		ResponseModel responseModel = getDimensionsById.execute(model);
+		TreeResponseModel responseModel = getDimensionsById.execute(model);
 
 		verify(dimensionRepository).getDimensionsBy("Publication",
 				model.groupIds);

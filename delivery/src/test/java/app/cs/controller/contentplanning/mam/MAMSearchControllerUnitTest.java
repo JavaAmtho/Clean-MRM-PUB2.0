@@ -18,6 +18,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import app.cs.actions.contentplanning.mam.MamSearch;
 import app.cs.model.request.StringRequest;
+import app.cs.model.response.ObjectResponse;
 import app.cs.model.response.PIMOrMAMNode;
 import app.cs.model.response.StringResponse;
 import app.cs.presentor.JsonFormatter;
@@ -57,7 +58,7 @@ public class MAMSearchControllerUnitTest {
 		// when
 		when(mamSearch.execute(request)).thenReturn(response);
 
-		List<PIMOrMAMNode> actualResult = mamSearchController.searchMAM(key);
+		List<PIMOrMAMNode> actualResult = (List<PIMOrMAMNode>) ((ObjectResponse)mamSearchController.searchMAM(key)).getResponse();
 
 		// then
 		verify(mamSearch).execute(request);

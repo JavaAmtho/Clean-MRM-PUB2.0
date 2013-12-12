@@ -18,6 +18,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import app.cs.actions.contentplanning.mam.GetMAMAssets;
 import app.cs.model.request.StringRequest;
+import app.cs.model.response.ObjectResponse;
 import app.cs.model.response.PIMOrMAMNode;
 import app.cs.model.response.StringResponse;
 import app.cs.presentor.JsonFormatter;
@@ -78,7 +79,7 @@ public class MAMControllerUnitTests {
 		// when
 		when(getMAMAssets.execute(request)).thenReturn(response);
 
-		List<PIMOrMAMNode> actualResult = mamController.list();
+		List<PIMOrMAMNode> actualResult = (List<PIMOrMAMNode>) ((ObjectResponse)mamController.list()).getResponse();
 		// then
 
 		verify(getMAMAssets).execute(request);
