@@ -42,7 +42,9 @@ EditDimensionDialog.create = function(G,row,col,name){
                     enddate = $( "#enddate" ),
                     budgetowner = $( "#budgetOwner" ),
                     budgetamount = $( "#budget"),
-                    currency = $( "#currency" );
+                    currency = $( "#currency"),
+                    classId = $("#classDropDown");
+
 
                 popupValid = checkNull(dimensionName);
                 popupValid = popupValid && checkNull(manager);
@@ -93,6 +95,8 @@ EditDimensionDialog.create = function(G,row,col,name){
                     input.startDate=startdate.val();
                     input.endDate=enddate.val();
                     input.budgetOwner = budgetowner.val();
+                    input.classId = classId.val();
+                    input.customAttributes = DimensionDialogPresenter.getAllAttributes();
                     if(budgetamount.val() != "")
                         input.budget = budgetamount.val() + " " + currency.val();
 

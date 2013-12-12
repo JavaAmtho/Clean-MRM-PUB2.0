@@ -24,21 +24,16 @@ DimensionDialogPresenter.fillClassDropDown = function(classesData){
 
 
 DimensionDialogPresenter.getAllAttributes = function(){
-
     var divContainer = $('#classAttributes');
-
     var customAttributes = {};
     for(var i=0;i<divContainer.children().length ;i++){
         console.log($(divContainer).children()[i]);
         //console.log(divContainer.childNodes[i]);
         var attributeName = $(divContainer.children()[i]).children()[0].innerHTML;
         var attributeValue = $(divContainer.children()[i]).children()[1].value;
-//        var attribute = {};
         customAttributes[attributeName] = attributeValue;
-//        customAttributes.push(attribute);
     }
     return customAttributes;
-    //alert(JSON.stringify(customAttributes));
 }
 
 
@@ -47,7 +42,7 @@ DimensionDialogPresenter.onChangeOfClass = function(){
     ClassPresenter.getAttributesForClass(selectedClassId,DimensionDialogPresenter.onAttributesLoaded);
 }
 
-DimensionDialogPresenter.onAttributesLoaded = function(data){
+DimensionDialogPresenter.onAttributesLoaded = function(data,editMode){
     data = eval('(' + data + ')');
 
     $('#classAttributes').empty();
@@ -76,12 +71,32 @@ DimensionDialogPresenter.disableAllFieldsOfDimensionDialog = function(flag){
     $("#classDropDown").attr('disabled', flag);
 }
 
+DimensionDialogPresenter.showAttributesWithValues = function(attributesData){
+    $('#classAttributes').empty();
+    var i=1;
+    $.each(attributesData, function (key, item) {
+        var opt = document.createElement('div');
+        var labelDiv = document.createElement('div');
+        var input = document.createElement('input');
+        input.id = key + i;
+        input.value  = item;
+        labelDiv.innerHTML = key;
+        opt.appendChild(labelDiv);
+        opt.appendChild(input);
+        document.getElementById("classAttributes").appendChild(opt);
+        i++;
+    });
+}
+
+
 DimensionDialogPresenter.preInsertDataInDimensionDialog = function(rowData){
     if(rowData.dimensionInfo.classId){
         $('#classDropDown').val(rowData.dimensionInfo.classId);
     }
     if(rowData.dimensionInfo.customAttributes){
-        //add   in list and flush the existing ones
+        //add in list and flush the existing ones
+        DimensionDialogPresenter.showAttributesWithValues(rowData.dimensionInfo.customAttributes);
+
     }
     if(rowData.name)
         $("#name").val(rowData.name);
