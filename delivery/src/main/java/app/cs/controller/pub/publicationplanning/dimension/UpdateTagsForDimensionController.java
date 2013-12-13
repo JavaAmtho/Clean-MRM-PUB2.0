@@ -7,12 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import app.cs.actions.publicationplanning.dimension.EditTagsForDimension;
-import app.cs.boundary.delivery.Interactor;
-import app.cs.impl.model.MultiDimensionalObject;
-import app.cs.model.request.EditDimensionRequest;
 import app.cs.model.request.UpdateTagsRequest;
 import app.cs.model.response.ResponseModel;
-import app.cs.model.response.StringResponse;
 
 @Controller
 public class UpdateTagsForDimensionController {

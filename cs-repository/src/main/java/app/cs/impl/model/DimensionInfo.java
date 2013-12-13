@@ -1,5 +1,6 @@
 package app.cs.impl.model;
 
+import java.util.List;
 import java.util.Map;
 
 public class DimensionInfo {
@@ -16,6 +17,7 @@ public class DimensionInfo {
 	private String startDate;
 	private String classId;
 	private Map<String,String> customAttributes;
+	private List<TaskInfo> tasks;
 	
 	public Map<String, String> getCustomAttributes() {
 		return customAttributes;
@@ -112,6 +114,12 @@ public class DimensionInfo {
 	public void setClassId(String classId) {
 		this.classId = classId;
 	}
-	
-	
+
+	public List<TaskInfo> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<TaskInfo> tasks) {
+		this.tasks = tasks;
+	}
 }

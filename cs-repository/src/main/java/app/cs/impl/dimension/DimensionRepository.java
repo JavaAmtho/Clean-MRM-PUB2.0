@@ -14,6 +14,7 @@ import app.cs.impl.delegate.factory.DomainFactory;
 import app.cs.impl.inmemory.InMemoryViewStructure;
 import app.cs.impl.model.MultiDimensionalObject;
 import app.cs.impl.model.PublicationAssetObject;
+import app.cs.impl.model.TaskInfo;
 import app.cs.interfaces.dimension.IDimensionRepository;
 import app.cs.interfaces.dimension.IInMemoryDimensionGroup;
 import app.cs.utils.CommonConstants;
@@ -85,12 +86,7 @@ public class DimensionRepository implements IDimensionRepository {
 	public String editProperty(MultiDimensionalObject objectToEdit){
 		MultiDimensionalObject currentObject = mongoRepository.find(objectToEdit.getId(), MultiDimensionalObject.class);
 		objectToEdit.setGroupId(currentObject.getGroupId());
-		/*currentObject.setTitle(objectToEdit.getTitle());
-		if(objectToEdit.getDimensionInfo() != null){
-			currentObject.setDimensionInfo(objectToEdit.getDimensionInfo());
-		}*/
 		save(objectToEdit);
-//		mongoRepository.updateByIdSetProperty(objectToEdit.getId(), "name", objectToEdit.getTitle(), objectToEdit.getClass());
 		return CommonConstants.SUCCESS_RESPONSE;
 	}
 
@@ -273,7 +269,25 @@ public class DimensionRepository implements IDimensionRepository {
 		currentObject.setMarkers(markers);
 		save(currentObject);
 		return CommonConstants.SUCCESS_RESPONSE;
+	}
+	
+	@Override
+	public String addTaskToDimension(String id, TaskInfo task){
 		
+		MultiDimensionalObject currentObject = mongoRepository.find(id, MultiDimensionalObject.class);
+		List<TaskInfo> existingTasks = currentObject.getDimensionInfo().getTasks();
+		if(existingTasks == null){
+			System.out.println("creating new task list");
+			currentObject.getDimensionInfo().setTasks(new ArrayList<TaskInfo>());
+			existingTasks = currentObject.getDimensionInfo().getTasks();
+		}
+		
+		existingTasks.add(task);
+		System.out.println("Added to existing task");
+		System.out.println(existingTasks);
+		
+		save(currentObject);
+		return CommonConstants.SUCCESS_RESPONSE;
 	}
 
 }

@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import app.cs.impl.model.MultiDimensionalObject;
+import app.cs.impl.model.TaskInfo;
 
 public interface IDimensionRepository {
 
@@ -69,6 +70,8 @@ public interface IDimensionRepository {
 	
 	public String updateTags(String id, List<String> tags);
 
-	String updateMarkers(String id, List<String> markers);
+	public String updateMarkers(String id, List<String> markers);
+
+	public String addTaskToDimension(String id, TaskInfo task);
 
 }
