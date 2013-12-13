@@ -544,6 +544,7 @@ GanttChart.addNode = function(data){
         Grids[0].SetValue(currentRow.lastChild,"endDate",data.endDate,1);
         Grids[0].SetValue(currentRow.lastChild,"manager",data.manager,1);
         Grids[0].SetValue(currentRow.lastChild,"Items",data.Items,1);
+        Grids[0].SetValue(currentRow.lastChild,"dimensionInfo",data.dimensionInfo,1);
         switch(data.type){
             case "MarketingInitiative":
                 Grids[0].SetValue(currentRow.lastChild,"titleIcon","../../../graphics/screens/home/images/cal1.png",1);
