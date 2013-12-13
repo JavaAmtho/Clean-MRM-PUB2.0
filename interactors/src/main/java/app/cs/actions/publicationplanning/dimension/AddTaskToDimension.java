@@ -8,6 +8,7 @@ import app.cs.impl.dimension.DimensionRepository;
 import app.cs.model.request.AddTaskToDimensionRequest;
 import app.cs.model.request.RequestModel;
 import app.cs.model.response.EmptyResponseWithStatus;
+import app.cs.model.response.ObjectResponse;
 import app.cs.model.response.ResponseModel;
 
 @Component
@@ -24,6 +25,6 @@ public class AddTaskToDimension implements Interactor {
 	public ResponseModel execute(RequestModel requestModel) {
 		AddTaskToDimensionRequest request = (AddTaskToDimensionRequest) requestModel;
 		String status = dimensionRepository.addTaskToDimension(request.getDimensionId(), request.getTask());
-		return new EmptyResponseWithStatus(status, request.getDimensionId());
+		return new ObjectResponse(request.getTask(),status);
 	}
 }
